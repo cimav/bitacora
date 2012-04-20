@@ -1,0 +1,24 @@
+!!!
+%html
+  %head
+    %title Servicios de Laboratorio
+    = stylesheet_link_tag    "application", :media => "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags 
+  %body
+    #container 
+      #topbar
+        #title Servicios de Laboratorio
+      #nav
+        .nav-item#home
+          .nav-icon= image_tag('/assets/icons/home.png')
+          .nav-title= "Inicio"
+        .nav-item#new-request
+          .nav-icon= image_tag('/assets/icons/new-request.png')
+          .nav-title= "Nueva solicitud"
+        .nav-item#my-requests.selected
+          .nav-icon= image_tag('/assets/icons/my-requests.png')
+          .nav-title= "Mis solicitudes"
+      #workarea
+        = yield
+        .clearfix

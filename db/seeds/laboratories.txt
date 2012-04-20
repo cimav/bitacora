@@ -1,0 +1,67 @@
+Microscopía de Fuerza Atómica|1
+Propiedades Ópticas y Eléctricas de Películas Delgadas|1
+Microscopía Electrónica de Transmisión|1
+Películas Delgadas|1
+Preparación y Tratamientos Térmicos para Muestras de Microscopía|1
+Caracterización de Materiales Magnéticos I y II|1
+Síntesis de Materiales Magnéticos I y II|1
+Recubrimientos Electroless|1
+Aleado Mecánico I y II|1
+Atomización|1
+Recubrimientos Metálicos|1
+Óptica No- Lineal|1
+Corrosión en Alta Temperatura|1
+Corrosión Electroquímica|1
+Corrosión Asistida por Esfuerzo|1
+Corrosión Asistida por Microorganismos|1
+Recubrimiento por Plasma|1
+Pruebas Mecánicas|1
+Cerámicos Avanzados|1
+Prototipos- Integridad Mecánica|1
+Propiedades Físicas|1
+Beneficio de Minerales|1
+Análisis Térmico|1
+Carbón Activado|1
+Celdas Electroquímicas|1
+Catálisis I|1
+Catálisis II|1
+Materiales Nanoestructurados|1
+Estructura Electrónica de la Materia|1
+Reología|1
+Prototipos-Polímeros|1
+Procesamiento de Polímeros|1
+Química de Polímeros|1
+Sensores Poliméricos|1
+Calidad del Aire|1
+Calidad del Agua|1
+Vigilancia Radiológica|1
+Residuos|1
+Energía Renovable|1
+Microscopía Electrónica de Barrido|1
+Microscopía Electrónica de Barrido de Emisión de Campo|1
+Pruebas de Stress Ambiental y Mecánico|1
+Análisis Químico|1
+Pruebas Mecánicas|1
+Microscopía Óptica|1
+Metalografía y Microscopía Óptica (Chihuahua)|1
+Rayos  X|1
+Metrología|1
+Laboratorio Nacional de Nanotecnología|1
+Nanocosmos|1
+Producción de Hidrógeno|1
+Celdas de Combustible|1
+Cluster de Nanotecnología|1
+Pruebas No Destructivas|1
+Microscopía Electrónica de Transmisión de Alta Resolución|1
+Difracción de Rayos X ( U. Monterrey)|2
+Metalografía y Microscopía Óptica (U.Monterrey)|2
+Análisis Térmico (U.Monterrey)|2
+Análisis Químicos (U.Monterrey)|2
+Microscopía Electrónica de Barrido (U.Monterrey)|2
+Procesamiento I (U.Monterrey)|2
+Procesamiento II (U.Monterrey)|2
+Caracterización Mecánica de Fibras|1
+Espectroscopía UV-VIS NIR y Raman|1
+Síntesis de Polímeros|1
+Simulación de vibración por transporte (PUMA) y Cámara de choque térmico (baja temperatura) (PUMA)|1
+Automatización de Técnicas Analíticas|1

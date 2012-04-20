@@ -1,0 +1,5 @@
+SERVICIO|Servicio Vinculación
+PROYECTO|Proyecto
+TESIS|Tesis
+CONVENIO|Convenio
+ARTICULO|Artículo

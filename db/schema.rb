@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120411035230) do
+ActiveRecord::Schema.define(:version => 20120419190300) do
+
+  create_table "business_units", :force => true do |t|
+    t.string   "prefix",     :limit => 5
+    t.string   "name"
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+  end
 
   create_table "equipment", :force => true do |t|
     t.integer  "laboratory_id"
@@ -26,10 +34,12 @@ ActiveRecord::Schema.define(:version => 20120411035230) do
 
   create_table "laboratories", :force => true do |t|
     t.string   "name"
+    t.string   "prefix",           :limit => 5
     t.text     "description"
+    t.integer  "business_unit_id"
     t.integer  "user_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
   add_index "laboratories", ["user_id"], :name => "index_laboratories_on_user_id"
@@ -84,6 +94,13 @@ ActiveRecord::Schema.define(:version => 20120411035230) do
     t.string   "status",                                    :default => "1"
     t.datetime "created_at",                                                 :null => false
     t.datetime "updated_at",                                                 :null => false
+  end
+
+  create_table "request_types", :force => true do |t|
+    t.string   "short_name", :limit => 20
+    t.string   "name"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
   end
 
   create_table "requested_service_equipments", :force => true do |t|

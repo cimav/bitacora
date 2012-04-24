@@ -10,6 +10,8 @@ $bg-color: #fafafa;
 $bg-selected: #ddd;
 
 $container-width: 1000px;
+$nav-width: 101px;
+$wide-width: $container-width - $nav-width;
 
 $line-color: #ddd;
 $link-color: #06c;

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120419190300) do
+ActiveRecord::Schema.define(:version => 20120424000340) do
 
   create_table "business_units", :force => true do |t|
     t.string   "prefix",     :limit => 5
@@ -38,8 +38,9 @@ ActiveRecord::Schema.define(:version => 20120419190300) do
     t.text     "description"
     t.integer  "business_unit_id"
     t.integer  "user_id"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.integer  "status",                        :default => 1
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
   end
 
   add_index "laboratories", ["user_id"], :name => "index_laboratories_on_user_id"
@@ -55,36 +56,17 @@ ActiveRecord::Schema.define(:version => 20120419190300) do
   add_index "laboratory_members", ["laboratory_id"], :name => "index_laboratory_members_on_laboratory_id"
   add_index "laboratory_members", ["user_id"], :name => "index_laboratory_members_on_user_id"
 
-  create_table "laboratory_requests", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "request_number",  :limit => 20
-    t.integer  "consecutive"
-    t.integer  "laboratory_id"
-    t.integer  "request_type_id"
-    t.string   "request_link"
-    t.text     "description"
-    t.integer  "responsible"
-    t.integer  "status",                        :default => 1
-    t.datetime "request_date"
-    t.datetime "end_date"
-    t.datetime "created_at",                                   :null => false
-    t.datetime "updated_at",                                   :null => false
-  end
-
-  add_index "laboratory_requests", ["laboratory_id"], :name => "index_laboratory_requests_on_laboratory_id"
-  add_index "laboratory_requests", ["request_type_id"], :name => "index_laboratory_requests_on_request_type_id"
-  add_index "laboratory_requests", ["responsible"], :name => "index_laboratory_requests_on_responsible"
-  add_index "laboratory_requests", ["user_id"], :name => "index_laboratory_requests_on_user_id"
-
   create_table "laboratory_services", :force => true do |t|
     t.integer  "laboratory_id"
+    t.integer  "service_type_id"
     t.string   "name"
     t.text     "description"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   add_index "laboratory_services", ["laboratory_id"], :name => "index_laboratory_services_on_laboratory_id"
+  add_index "laboratory_services", ["service_type_id"], :name => "index_laboratory_services_on_service_type_id"
 
   create_table "materials", :force => true do |t|
     t.string   "name"
@@ -155,22 +137,53 @@ ActiveRecord::Schema.define(:version => 20120419190300) do
   add_index "requested_services", ["sample_id"], :name => "index_requested_services_on_sample_id"
 
   create_table "samples", :force => true do |t|
-    t.integer  "laboratory_request_id"
+    t.integer  "service_request_id"
     t.string   "identification"
     t.text     "description"
-    t.string   "status",                :default => "1"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.string   "status",             :default => "1"
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
   end
 
-  add_index "samples", ["laboratory_request_id"], :name => "index_samples_on_laboratory_request_id"
+  add_index "samples", ["service_request_id"], :name => "index_samples_on_service_request_id"
+
+  create_table "service_requests", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "request_type_id"
+    t.string   "request_link"
+    t.text     "description"
+    t.integer  "status",          :default => 1
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+  end
+
+  add_index "service_requests", ["request_type_id"], :name => "index_service_requests_on_request_type_id"
+  add_index "service_requests", ["user_id"], :name => "index_service_requests_on_user_id"
+
+  create_table "service_types", :force => true do |t|
+    t.string   "short_name", :limit => 20
+    t.string   "name"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
+
+  create_table "units", :force => true do |t|
+    t.string   "short_name", :limit => 10
+    t.string   "name"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email"
-    t.string   "access",     :default => "1"
-    t.string   "status",     :default => "1"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
+    t.string   "employee_number"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.decimal  "hourly_wage",     :precision => 6, :scale => 2
+    t.string   "access",                                        :default => "1"
+    t.string   "status",                                        :default => "1"
+    t.datetime "created_at",                                                     :null => false
+    t.datetime "updated_at",                                                     :null => false
   end
 
 end

@@ -17,6 +17,9 @@
   float: left;
   top: 60px;
   bottom: 10px;
+  .inner-area {
+    padding: 20px;
+  }
 }
 
 #topbar {
@@ -36,11 +39,12 @@
   margin-top: 20px;
   position: fixed;
   z-index: 9999;
-  width: 101px;
+  width: $nav-width;
   margin-right: 10px;
   float: left;
   .nav-item {
     text-align: center;
+    cursor: pointer;
     margin-bottom: 20px;
     .nav-icon {
     }
@@ -148,73 +152,41 @@
 .panel-items {
   position: absolute;
   width: 300px;
-  bottom: 70px;
-  top: 151px;
+  bottom: 60px;
+  top: 60px;
   overflow: auto;
+}
+
+.panel-add {
+  position: absolute;
+  width: 280px;
+  bottom: 10px;
+  height: 20px;
+  background: $bg-color;
+  border-top: 1px solid $line-color;
+  border-left: 1px solid $line-color;
+  padding: 10px;
+  text-align: center;
+  &.selected {
+    a { 
+      text-decoration: none;
+      color: $selected-color; 
+      font-weight: bold;
+    }
+  }
 }
 
 .main-panel {
   float: left;
+  overflow: auto;
   width: $container-width - 405;
   position: fixed;
   bottom: 20px;
   top: 70px;
   border: 1px solid $line-color;
   border-left: 0;
-
   margin-left: 302px;
   background: $white;
-  .resource-header {
-    padding: 20px;
-    height: 100px;
-    background-color: #fff;
-    min-width: 500px;
-    .resource-picture {
-      float: left; 
-      font-size: 80%;
-      text-align: center;
-      a {
-        display: none;
-        position: relative;
-        top: -50px;
-        background: #fff;
-        padding: 4px;
-      }
-      &:hover a {
-        display: inline;
-      }
-    }
-    .resource-card {
-      float: left;
-      font-size: 80%;
-      text-align: center;
-    }
-    .resource-title {
-      float: left;
-      padding-top: 10px;
-      margin-left: 20px;
-    }
-    .resource-save {
-      float: right;
-      text-align: right;
-      padding-top: 20px;
-      width: 110px;
-    }
-    .comment { 
-      font-size: 90%;
-      color: $grey;
-    }
-  }
-  #resource-tabs {
-    position: relative;
-    top: -27px;
-    .ui-tabs-panel {
-      margin-right: 10px;
-    }
-    .ui-tabs-nav li.first-tab { 
-      margin-left: 140px;
-    }
-  }
 }
 
 #counter {
@@ -230,4 +202,14 @@
     text-align: center;
     margin-top: 8px;
   }
+}
+
+#wide-area {
+  width: $wide-width;
+  background: #fff;
+  border: 1px solid $line-color;
+  overflow: auto;
+  position: fixed;
+  bottom: 20px;
+  top: 70px;
 }

@@ -6,6 +6,7 @@ class CreateLaboratories < ActiveRecord::Migration
       t.text       :description
       t.references :business_unit
       t.references :user
+      t.integer    :status, :default => 1
       t.timestamps
     end
     add_index('laboratories', 'user_id')

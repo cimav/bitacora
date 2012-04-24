@@ -6,7 +6,7 @@ class ServiceRequestsController < ApplicationController
     render :layout => false
   end
 
-  def new_request
+  def new
     @request = ServiceRequest.new
     render :layout => false
   end

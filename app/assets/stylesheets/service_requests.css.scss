@@ -2,15 +2,141 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#new-request-area {
+  h1 {
+    margin-bottom: 20px;
+  }
+}
+
 #field_service_request_description {
   label {
     display: block;
+    line-height: 2em;
   }
   textarea {
-    width: 100%;
-    height: 100px;
+    width: $main-panel-width - 50;
+    height: 80px;
+    margin-bottom: 10px;
   }
 }
-#field_service_request_type_id {
+#field_service_request_request_type_id {
   float: left;
+}
+
+#new-request-button-area {
+  margin-top: 20px;
+  float: right;
+}
+
+#request-header {
+  border-bottom: 1px solid $line-color;
+  padding: 20px;
+}
+
+#sample {
+  width: 200px;
+  border-right: 1px solid $line-color;
+  position: fixed;
+  top: 170px;
+  bottom: 20px;
+  #sample-header {
+    border-bottom: 1px solid $line-color;
+    padding: 10px;
+  }
+  #sample-image {
+    text-align: center;
+  }
+  #sample-identificator {
+    text-align: center;
+  }
+  #sample-description {
+    text-align: center;
+  }
+  #sample-services {
+    margin-top: 10px;
+    border-top: 1px solid $line-color;
+    ul {
+      li {
+        padding: 4px;
+        border-bottom: 1px solid $line-color;
+        &.title {
+          font-size: 14px;
+          height: 20px;
+          font-weight: bold;
+          .service-button-add {
+            float: right;
+            button {
+              font-size: 10px;
+              font-weight: bold;
+              height: 20px;
+              padding: 2px 5px;
+            }
+          }
+        }
+        &.selected {
+          background: $selected-color;
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+
+#requested-service {
+  float: left;
+  margin-left: 200px;
+  #requested-service-header {
+    padding-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    h2 {
+      margin-bottom: 10px;
+    }
+    .laboratory {
+    }
+  }
+}
+
+#requested-service-tabs {
+  border-bottom: 1px solid $line-color;
+  height: 27px;
+  width: 100%;
+  .tab { 
+    border: 1px solid $line-color;
+    border-bottom: 0;
+    background: $light-grey;
+    color: $grey;
+    float: left;
+    margin: 0 5px;
+    padding: 5px;
+    &.selected {
+      background: $white;
+      color: $black;
+      font-weight: bold;
+    }
+  }
+}
+
+#requested-service-log {
+  margin-top: 10px;
+  padding: 10px;
+  table {
+    border-collapse: collapse;
+    font-size: 10px;
+    tr {
+      th {
+        border: 1px solid $line-color;
+        background: $selected-color;
+        color: $white; 
+        text-align: left;
+        font-weight: bold;
+        padding: 4px;
+      }
+      td {
+        border: 1px solid $line-color;
+        padding: 4px;
+      }
+    }
+  }
 }

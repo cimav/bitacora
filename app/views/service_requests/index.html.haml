@@ -3,6 +3,90 @@
     = form_tag '/search', :id => 'live-search', :method => 'get', :remote => true do
       = text_field_tag :q, nil, :id => 'search-box', :placeholder => 'Busqueda'
 #items-list.panel-items
+  %ul.panel-list
+    %li.selected
+      .item-title
+        .item-request-number= "1200002"
+        .item-request-description= "Revisión de fracturas en clusters de Visteon"
+      .item-association
+        .item-request-type= "Servicio"
+        .item-request-link= "12/002"
+    %li
+      .item-title
+        .item-request-number= "1200002"
+        .item-request-description= "Analisis para Tesis de Elcin"
+      .item-association
+        .item-request-type= "Tesis"
+        .item-request-link= "Elcin Coskun"
+    %li
+      .item-title
+        .item-request-number= "1200001"
+        .item-request-description= "Servicio GCC. Ing. Chaparro"
+      .item-association
+        .item-request-type= "Servicio"
+        .item-request-link= "12/001"
 .panel-add
   = link_to  'Crear nuevo servicio', {:action => 'new'},  {:id => 'new-request', :method => :get, :remote => true, :'data-type' => 'html'}
 #content-panel.main-panel
+  #request-header
+    %h1= "#1200002"
+    %h2= "Revisión de fracturas en clusters de Visteon"
+    %p= "Servicio 12/002"
+  #request-workarea
+    #sample
+      #sample-header
+        %h2= "Muestra 1 de 3"
+      #sample-image
+        = image_tag('/assets/icons/sample-80.jpeg')
+      #sample-identificator
+        = "CL2012-1"
+      #sample-description
+        = "Cluster de Honda Civic 2012"
+      #sample-services
+        %ul
+          %li.title
+            = "Servicios solicitados"
+            .service-button-add
+              = button_tag "+"
+          %li= "Analisis Fractura"
+          %li.selected= "Microscopia SEM"
+          %li= "Analisis Dureza"
+    #requested-service 
+      #requested-service-header 
+        %h2= "Microscopia SEM"
+        .laboratory= "Laboratorio Microscopía Electrónica de Barrido de Emisión de Campo"
+      #requested-service-tabs
+        .tab.selected= "Bitacora"
+        .tab= "Recursos utilizados"
+      #requested-service-log
+        %table
+          %tr
+            %th= "Fecha" 
+            %th= "Quien"
+            %th= "Mensaje"
+          %tr
+            %td= "2012-04-24 20:17"
+            %td= "Jonathan Hernandez"
+            %td= "Servicio finalizado"
+          %tr
+            %td= "2012-04-24 20:14"
+            %td= "Jonathan Hernandez"
+            %td= "Este mensaje esta escrito en la bitacora manualmente"
+          %tr
+            %td= "2012-04-24 20:12"
+            %td= "Jonathan Hernandez"
+            %td= "Servicio iniciado"
+          %tr
+            %td= "2012-04-24 20:12"
+            %td= "Jonathan Hernandez"
+            %td= "Asignación de servicio a Jonathan Hernandez"
+          %tr
+            %td= "2012-04-24 20:10"
+            %td= "Jonathan Hernandez"
+            %td= "Muestra recibida"
+          %tr
+            %td= "2012-04-24 20:10"
+            %td= "Jonathan Hernandez"
+            %td= "Solicitud de servicio"
+         
+

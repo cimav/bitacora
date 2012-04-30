@@ -11,7 +11,10 @@ $bg-selected: #ddd;
 
 $container-width: 1000px;
 $nav-width: 101px;
+$work-area-width: $container-width - $nav-width;
 $wide-width: $container-width - $nav-width;
+$side-panel-width: 250px;
+$main-panel-width: $container-width - $side-panel-width - $nav-width;
 
 $line-color: #ddd;
 $link-color: #06c;
@@ -23,4 +26,4 @@ $table-line-color: $line-color;
 $table-head-bg: #f0f0f0;
 $table-head-color: #333;
 
-$selected-color: $red;
+$selected-color: $link-color;

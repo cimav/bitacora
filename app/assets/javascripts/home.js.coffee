@@ -2,6 +2,16 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+#------------
+# MY REQUESTS
+#------------
+$('#new-request')
+  .live('ajax:success', (data, status, xhr) ->
+    $('#content-panel').html(status)
+  )
+
+
+
 #-----------
 # NAVIGATION
 #-----------

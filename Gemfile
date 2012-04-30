@@ -28,6 +28,6 @@ gem 'jquery-rails'
 
 gem 'omniauth-google-oauth2'
 
-gem 'carrierwave'
+gem 'carrierwave', '0.5.8'
 gem 'rmagick'
 gem 'mini_magick'

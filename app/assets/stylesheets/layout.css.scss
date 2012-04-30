@@ -12,8 +12,8 @@
   padding: 10px;
   border: 1px solid $line-color;
   position: fixed;
-  margin-left: 100px;
-  width: $container-width - 100;
+  margin-left: $nav-width - 1;
+  width: $work-area-width;
   float: left;
   top: 60px;
   bottom: 10px;
@@ -31,6 +31,7 @@
     padding-left: 80px;
     height: 48px;
     font-size: 26px;
+    margin-top: 5px;
     padding-top: 13px;
   }
 }
@@ -64,7 +65,7 @@
 
 .side-panel {
   float: left;
-  width: 300px;
+  width: $side-panel-width;
   position: fixed;
   bottom: 20px;
   top: 70px;
@@ -79,7 +80,7 @@
   height: 30px;
 
   input[type=text] {
-    width: 276px;
+    width: $side-panel-width - 25;
     background-color: #fff;
     padding: 2px;
   }
@@ -106,16 +107,35 @@
 }
 
 .panel-list {
-  font-size: 90%;
   li {
     padding: 10px;
     border-bottom: 1px solid $line-color;
     height: 48px;
-	img {
-	  float: left;
-	  margin-right: 10px;
-	  padding-bottom: 20px;
-	}
+    .item-title {
+      display: block;
+      .item-request-number {
+        float: left;
+        font-weight: bold;
+      }
+      .item-request-description {
+        float: left;
+      }
+    }
+    .item-association {
+      clear: both;
+      color: $grey;
+      .item-request-type {
+        float: left;
+      }
+      .item-request-link {
+        float: left;
+      }
+    }
+    img {
+      float: left;
+      margin-right: 10px;
+      padding-bottom: 20px;
+    }
     a {  
       color: #000; 
       display: block; 
@@ -151,7 +171,7 @@
 
 .panel-items {
   position: absolute;
-  width: 300px;
+  width: $side-panel-width;
   bottom: 60px;
   top: 60px;
   overflow: auto;
@@ -159,7 +179,7 @@
 
 .panel-add {
   position: absolute;
-  width: 280px;
+  width: $side-panel-width - 20;
   bottom: 10px;
   height: 20px;
   background: $bg-color;
@@ -179,13 +199,13 @@
 .main-panel {
   float: left;
   overflow: auto;
-  width: $container-width - 405;
+  width: $main-panel-width;
   position: fixed;
   bottom: 20px;
   top: 70px;
   border: 1px solid $line-color;
   border-left: 0;
-  margin-left: 302px;
+  margin-left: $side-panel-width + 2;
   background: $white;
 }
 

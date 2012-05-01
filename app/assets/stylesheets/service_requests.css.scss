@@ -8,6 +8,15 @@
   }
 }
 
+#my-requests-area {
+  position: fixed;
+  top: 110px;
+  bottom: 20px;
+  background-color: $white;
+  border: 1px solid $line-color;
+  width: $work-area-width - 2;
+}
+
 #field_service_request_description {
   label {
     display: block;
@@ -28,54 +37,73 @@
   float: right;
 }
 
-#request-header {
-  border-bottom: 1px solid $line-color;
-  padding: 20px;
-}
-
 #sample {
+  position: fixed;
+  top: 177px;
+  bottom: 20px;
   width: 200px;
   border-right: 1px solid $line-color;
-  position: fixed;
-  top: 170px;
-  bottom: 20px;
   #sample-header {
     border-bottom: 1px solid $line-color;
     padding: 10px;
+    background: transparent url(/assets/arrow-down.png) no-repeat center right;
+    cursor: pointer;
   }
-  #sample-image {
-    text-align: center;
-  }
-  #sample-identificator {
-    text-align: center;
-  }
-  #sample-description {
-    text-align: center;
+  .sample-details {
+    padding: 20px 10px;
+    border-bottom: 1px solid $line-color;
+    .sample-consecutive {
+      font-size: 10px;
+      padding: 4px;
+      @include rounded(4px);
+      background-color: $link-color;
+      color: $white;
+      text-align: center;
+      width: 48px;
+      float: right;
+    }
+    .sample-identificator {
+      font-weight: bold;
+    }
+    .sample-description {
+    }
   }
   #sample-services {
-    margin-top: 10px;
-    border-top: 1px solid $line-color;
+    padding: 10px;
+    .title {
+      font-weight: bold;
+    }
     ul {
       li {
         padding: 4px;
-        border-bottom: 1px solid $line-color;
-        &.title {
-          font-size: 14px;
-          height: 20px;
-          font-weight: bold;
-          .service-button-add {
-            float: right;
-            button {
-              font-size: 10px;
-              font-weight: bold;
-              height: 20px;
-              padding: 2px 5px;
-            }
-          }
-        }
+        cursor: pointer;
         &.selected {
           background: $selected-color;
           color: #fff;
+        }
+        .service-bullet {
+          font-size: 10px;
+          padding: 4px;
+          @include rounded(4px);
+          background-color: $bullet-color;
+          color: $white;
+          text-align: center;
+          width: 10px;
+          float: left;
+          &.add {
+            background-color: $green;
+          }
+        }
+        .service-name {
+          margin: 2px 0 0 24px;
+        }
+        &.no-service {
+          .service-bullet {
+            background-color: $med-grey;
+          }
+          .service-name {
+            color: $grey;
+          }
         }
       }
     }
@@ -139,4 +167,55 @@
       }
     }
   }
+}
+
+#empty-requests {
+  text-align: center;
+  font-size: 28px;
+  color: #ddd;
+  margin-top: 100px;
+}
+
+#service-request-header {
+  padding: 10px;
+  border-bottom: 1px solid $line-color;
+  height: 45px;
+  overflow: hidden;
+  .number {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    width: 70px;
+    float: left;  
+  }
+  .description {
+    float: left;
+    .service-link {
+      font-weight: bold;
+    }
+  }
+}
+
+#sample-list {
+  display: none;
+  position: fixed;
+  top: 217px;
+  bottom: 21px;
+  width: 200px;
+  background: #fff;
+  .sample-details {
+    cursor: pointer;
+  }
+  #add-new-sample {
+    position: fixed;
+    bottom: 21px;
+    width: 200px;
+    height: 50px;
+    text-align: center;
+    border-top: 1px solid $line-color;
+    button {
+      margin: 10px;
+    }
+  }
+  
 }

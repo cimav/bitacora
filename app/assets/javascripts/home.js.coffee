@@ -5,11 +5,24 @@
 #------------
 # MY REQUESTS
 #------------
-$('#new-request')
-  .live('ajax:success', (data, status, xhr) ->
-    $('#content-panel').html(status)
+$('#add-new-button')
+  .live('click', () ->
+    url = '/service_requests/new'
+    $.get(url, {}, (html) ->
+      $('#my-requests-area').html(html)
+    )
   )
 
+@getServiceRequest = getServiceRequest = (id) ->
+  url = '/service_requests/' + id
+  $.get(url, {}, (html) ->
+    $('#my-requests-area').html(html)
+  )
+
+$('#sample-header')
+  .live('click', () ->
+    $('#sample-list').toggle()
+  )
 
 
 #-----------
@@ -21,14 +34,6 @@ $('#nav-home')
     setHash('#!/home', true)
     $('.nav-item').removeClass('selected')
     $('#nav-home').addClass('selected')
-  )
-
-$('#nav-new-request')
-  .live('click', () ->
-    url = '/new-request'
-    setHash('#!' + url, true)
-    $('.nav-item').removeClass('selected')
-    $('#nav-new-request').addClass('selected')
   )
 
 $('#nav-my-requests')

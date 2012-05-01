@@ -1,0 +1,10 @@
+- @request.sample.each do |sample|
+  .sample-details{:sample_id => sample.id}
+    .sample-consecutive
+      = "%04d-%03d" % [@request.id, sample.consecutive]
+    .sample-identificator
+      = sample.identification
+    .sample-description
+      = sample.description
+#add-new-sample
+  = button_tag "Agregar nueva muestra", {:id => 'add-new-sample-button'}

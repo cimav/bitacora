@@ -1,14 +1,14 @@
 #new-request-area.inner-area
   %h1 Solicitud de servicio
   = form_for @request, :remote => true, :html => {:'data-type' => 'html', :id => 'new-request-form'} do |f|
-    .field#field_service_request_description
-      = f.label :description, 'Descripción'
-      = f.text_area :description
     .field#field_service_request_request_type_id
       = f.label :request_type_id, 'Tipo'
       = f.collection_select :request_type_id, RequestType.order(:name), :id, :name, options = {:prompt => "Selecciona el tipo"} 
     .field#field_service_request_request_link
       = f.label :request_link, 'No. Servicio Vinculación'
       = f.text_field :request_link
+    .field#field_service_request_description
+      = f.label :description, 'Descripción'
+      = f.text_area :description
     #new-request-button-area
       = f.submit "Crear nuevo servicio"

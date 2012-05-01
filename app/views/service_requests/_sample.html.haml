@@ -1,0 +1,25 @@
+#sample
+  #sample-header{:service_request_id => sample.service_request.id}
+    %h2= "Muestra #{sample.consecutive} de #{request.sample.count}"
+  #sample-list
+    = render :partial => 'sample_list', :locals => {:request => request }
+  #current-sample
+    .sample-details
+      .sample-consecutive
+        = "%04d-%03d" % [sample.service_request.id, sample.consecutive]
+      .sample-identificator
+        = sample.identification
+      .sample-description
+        = sample.description
+    #sample-services
+      .title= "Servicios solicitados"
+      %ul
+        - if sample.requested_service.count == 0
+          %li.no-service
+            .service-bullet= "-"
+            .service-name= "Ninguno"
+        - else 
+          %li= "TODO"
+        %li#add-service
+          .service-bullet.add= "+"
+          .service-name= "Agregar servicio"

@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -137,6 +138,7 @@ ActiveRecord::Schema.define(:version => 20120424000340) do
 
   create_table "samples", :force => true do |t|
     t.integer  "service_request_id"
+    t.integer  "consecutive"
     t.string   "identification"
     t.text     "description"
     t.string   "status",             :default => "1"

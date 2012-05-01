@@ -1,8 +1,10 @@
 $white: #fff;
 $black: #000;
 $grey: #777;
-$light-grey: #eee;
+$med-grey: #ddd;
+$light-grey: #fafafa;
 $red: #b01;
+$green: #62c462;
 $strong-color: #222;
 $strong-color2: #444;
 $light-bg: #f8f8f8;
@@ -18,6 +20,7 @@ $main-panel-width: $container-width - $side-panel-width - $nav-width;
 
 $line-color: #ddd;
 $link-color: #06c;
+$bullet-color: #666;
 
 $button-gradient-from: #62c462;
 $button-gradient-to: #57a957;
@@ -27,3 +30,6 @@ $table-head-bg: #f0f0f0;
 $table-head-color: #333;
 
 $selected-color: $link-color;
+
+$workarea-bar-bg: #62c462;
+$workarea-bar-border: #57a957;

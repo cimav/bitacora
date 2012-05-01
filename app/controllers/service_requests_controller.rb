@@ -4,12 +4,22 @@ class ServiceRequestsController < ApplicationController
 
   def index
     # Mis solicitudes
-    @requests = ServiceRequest.where(:user_id => current_user.id)
+    @latest_request = ServiceRequest.where(:user_id => current_user.id).order('created_at DESC').first
     render :layout => false
   end
 
   def live_search
     render :inline => "TODO"
+  end
+
+  def sample_list
+    @request = ServiceRequest.find(params[:id])
+    render :layout => false
+  end
+
+  def show
+    @request = ServiceRequest.find(params[:id])
+    render :layout => false
   end
 
   def new
@@ -30,7 +40,7 @@ class ServiceRequestsController < ApplicationController
             json[:flash] = flash
             render :json => json
           else
-            render :inline => "Esta acción debe ser accesada via XHR"
+            render :inline => "Esta accion debe ser accesada via XHR"
           end
         end
       end

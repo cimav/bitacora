@@ -19,6 +19,38 @@
   bottom: 10px;
   .inner-area {
     padding: 20px;
+    background: #fff;
+  }
+  .workarea-bar {
+    height: 30px;
+    border: 1px solid $line-color;
+    background: $workarea-bar-bg;
+    padding: 4px;
+    h2 {
+      margin: 5px 0 0 10px;
+      width: $work-area-width - 298;
+      float: left;
+      color: $white;
+    }
+    #search-area {
+      float: left;
+      input {
+        width: 200px;
+        margin-top: 1px;
+        margin-right: 10px;
+        border: 1px solid $workarea-bar-border;
+      }
+    }
+    #add-new-button-area {
+      float: left;
+      width: 40px;
+      margin-top: 2px;
+      margin-right: 10px;
+      border-right: 1px solid $workarea-bar-border;
+      button {
+        font-weight: bold;
+      }
+    }
   }
 }
 

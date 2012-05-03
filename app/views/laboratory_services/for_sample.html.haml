@@ -1,0 +1,16 @@
+- @requested_service = RequestedService.new
+= form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'new-requested-service-form'} do |f|
+  = f.hidden_field :laboratory_service_id, {:value => @laboratory_service.id}
+  = f.hidden_field :sample_id, {:value => @sample.id}
+  %h1= @laboratory_service.name
+  %p= @laboratory_service.description
+  %p
+    %strong= "Laboratorio: "
+    = "#{@laboratory_service.laboratory.name}"
+  #field_requested_service_details
+    %div
+      %strong= "Anotaciones particulares:"
+    = f.text_area :details
+
+  #service-detail-submit-area
+    = f.submit "Agregar servicio"

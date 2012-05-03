@@ -63,15 +63,16 @@
     padding-left: 80px;
     height: 48px;
     font-size: 26px;
-    margin-top: 5px;
     padding-top: 13px;
+    top: 7px;
+    position: absolute;
   }
 }
 
 #nav {
   margin-top: 20px;
   position: fixed;
-  z-index: 9999;
+  z-index: 800;
   width: $nav-width;
   margin-right: 10px;
   float: left;

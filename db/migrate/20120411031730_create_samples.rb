@@ -3,6 +3,7 @@ class CreateSamples < ActiveRecord::Migration
     create_table :samples do |t|
       t.references :service_request
       t.integer    :consecutive
+      t.string     :number, :limit => 20
       t.string     :identification
       t.text       :description
       t.string     :status, :default => 1 

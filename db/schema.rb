@@ -139,23 +139,25 @@ ActiveRecord::Schema.define(:version => 20120424000340) do
   create_table "samples", :force => true do |t|
     t.integer  "service_request_id"
     t.integer  "consecutive"
+    t.string   "number",             :limit => 20
     t.string   "identification"
     t.text     "description"
-    t.string   "status",             :default => "1"
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
+    t.string   "status",                           :default => "1"
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
   end
 
   add_index "samples", ["service_request_id"], :name => "index_samples_on_service_request_id"
 
   create_table "service_requests", :force => true do |t|
     t.integer  "user_id"
+    t.string   "number",          :limit => 20
     t.integer  "request_type_id"
     t.string   "request_link"
     t.text     "description"
-    t.integer  "status",          :default => 1
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.integer  "status",                        :default => 1
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
   end
 
   add_index "service_requests", ["request_type_id"], :name => "index_service_requests_on_request_type_id"

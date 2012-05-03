@@ -1,0 +1,15 @@
+#requested-service-header 
+  #requested-service-status
+    = @requested_service.status_text
+  %h1= @requested_service.laboratory_service.name
+  %h2= @requested_service.laboratory_service.laboratory.name
+
+
+%p= @requested_service.laboratory_service.description
+
+%p
+  %strong Anotaciones particulares:
+  %div= @requested_service.details
+
+#requested_service_log
+

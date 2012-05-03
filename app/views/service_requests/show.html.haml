@@ -1,8 +1,11 @@
 #service-request-header
-  .number= "%04d" % [@request.id]
+  .number= @request.number
   .description
     .service-link= "#{@request.request_type.name} #{@request.request_link}"
     = simple_format(@request.description)
   .clearfix
 #request-workarea
-  = render :partial => 'sample', :locals => {:request => @request, :sample => @request.sample[0] }
+:javascript
+  $(function() {
+    getSample(#{@request.id},  #{@request.sample[0].id})
+  })

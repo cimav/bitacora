@@ -1,0 +1,16 @@
+.title= "Servicios solicitados"
+%ul
+  - if sample.requested_service.count == 0
+    %li.no-service
+      .service-bullet= "-"
+      .service-name= "Ninguno"
+  - else
+    - c = 0
+    - sample.requested_service.each do |rs|
+      - c += 1
+      %li.requested_service{:requested_service_id => rs.id, :id => "requested_service_#{rs.id}"}
+        .service-bullet= c
+        .service-name= rs.laboratory_service.name
+  %li#add-service
+    .service-bullet.add= "+"
+    .service-name= "Agregar servicio"

@@ -1,0 +1,42 @@
+#sample
+  #sample-header{:service_request_id => sample.service_request.id}
+    %h2= "Muestra #{sample.consecutive} de #{sample.service_request.sample.count}"
+  #sample-list
+    = render :partial => 'samples/sample_list', :locals => {:request => sample.service_request, :current => sample }
+  #current-sample
+    .sample-details
+      .sample-consecutive
+        = sample.number
+      .sample-identificator
+        = sample.identification
+      .sample-description
+        = sample.description
+    #sample-services
+      = render :partial => 'samples/requested_services_list', :locals => {:sample => sample}
+#sample-workarea
+
+#add-service-dialog{:title => 'Agregar servicio'}
+  #services-panel
+    #services-search-panel
+      = form_tag laboratory_services_path, :id => 'laboratory-services-live-search', :method => 'get', :remote => true do
+        - service_type_options = "<option value=\"0\">Todos los tipos</option>"
+        - service_types = ServiceType.order('name')
+        - service_types.each do |st|
+          - service_type_options += "<option value=\"#{st.id}\">#{st.name}</option>" 
+        = select_tag "service_type", service_type_options.html_safe
+      
+        - laboratory_options = "<option value=\"0\">Todos los laboratorios</option>"
+        - laboratories = Laboratory.order('name')
+        - laboratories.each do |lab|
+          - laboratory_options += "<option value=\"#{lab.id}\">#{lab.name}</option>"    
+        = select_tag "laboratory", laboratory_options.html_safe
+
+        = text_field_tag :q, nil, :id => 'laboratory-services-search-box', :placeholder => 'Busqueda'
+    #laboratory-services-list
+  #service-details
+
+:javascript
+  $(function() {
+    $("#add-service-dialog").dialog({ autoOpen: false, width: 640, height: 600, modal:true })
+  });
+

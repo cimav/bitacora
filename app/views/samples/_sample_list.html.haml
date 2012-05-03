@@ -1,0 +1,33 @@
+- request.sample.each do |s|
+  - if current.id == s.id
+    - klass = 'selected'
+  - else
+    - klass = ''
+  .sample-details{:service_request_id => s.service_request_id, :sample_id => s.id, :class => klass}
+    .sample-consecutive
+      = s.number
+    .sample-identificator
+      = s.identification
+    .sample-description
+      = s.description
+#add-new-sample
+  = button_tag "Agregar nueva muestra", {:id => 'add-new-sample-button'}
+
+#new-sample-dialog{:title => 'Nueva muestra'}
+  %h1 Agregar nueva muestra
+  = form_for ([request, Sample.new]), :remote => true, :html => {:'data-type' => 'html', :id => 'new-sample-form'} do |f|
+    #field_service_request_sample_identification
+      = f.label :identification, 'Identificación de muestra:'
+      = f.text_field :identification, :placeholder => 'Identificación de muestra'
+    .clearfix
+    #field_service_request_sample_description
+      = f.label :description, 'Descripción:'
+      = f.text_area :description, :placeholder => 'Descripción de la muestra'
+    .clearfix
+    #dialog-submit-button-area 
+      = f.submit "Agregar muestra"
+
+:javascript
+  $(function() {
+    $("#new-sample-dialog").dialog({ autoOpen: false, width: 340, height: 380, modal:true })
+  });

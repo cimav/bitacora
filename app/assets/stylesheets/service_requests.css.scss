@@ -16,6 +16,10 @@
   border: 1px solid $line-color;
   width: $work-area-width - 2;
 }
+#field_service_request_request_type_id, 
+#field_service_request_request_link {
+  margin-bottom: 1em;
+}
 
 #field_service_request_description {
   label {
@@ -23,13 +27,10 @@
     line-height: 2em;
   }
   textarea {
-    width: $main-panel-width - 50;
+    width: 100%;
     height: 80px;
     margin-bottom: 10px;
   }
-}
-#field_service_request_request_type_id {
-  float: left;
 }
 
 #new-request-button-area {
@@ -41,7 +42,7 @@
   position: fixed;
   top: 177px;
   bottom: 20px;
-  width: 200px;
+  width: $sample-list-width;
   border-right: 1px solid $line-color;
   #sample-header {
     border-bottom: 1px solid $line-color;
@@ -52,6 +53,9 @@
   .sample-details {
     padding: 20px 10px;
     border-bottom: 1px solid $line-color;
+    &.selected {
+      background-color: $bg-selected;
+    }
     .sample-consecutive {
       font-size: 10px;
       padding: 4px;
@@ -76,26 +80,33 @@
     ul {
       li {
         padding: 4px;
+        margin: 2px 0;
         cursor: pointer;
         &.selected {
-          background: $selected-color;
-          color: #fff;
+          background: $light-grey;
+          color: #000;
+          .service-bullet {
+            background-color: $selected-color;
+            color: $white;
+            font-weight: bold;
+          }
         }
         .service-bullet {
           font-size: 10px;
           padding: 4px;
           @include rounded(4px);
           background-color: $bullet-color;
-          color: $white;
+          color: $grey;
           text-align: center;
           width: 10px;
           float: left;
           &.add {
             background-color: $green;
+            color: $white;
           }
         }
         .service-name {
-          margin: 2px 0 0 24px;
+          margin: 3px 0 3px 24px;
         }
         &.no-service {
           .service-bullet {
@@ -113,7 +124,7 @@
 
 #requested-service {
   float: left;
-  margin-left: 200px;
+  margin-left: $sample-list-width;
   #requested-service-header {
     padding-left: 10px;
     margin-top: 10px;
@@ -200,8 +211,9 @@
   display: none;
   position: fixed;
   top: 217px;
-  bottom: 21px;
-  width: 200px;
+  bottom: 72px;
+  width: $sample-list-width;
+  overflow: auto;
   background: #fff;
   .sample-details {
     cursor: pointer;
@@ -209,7 +221,7 @@
   #add-new-sample {
     position: fixed;
     bottom: 21px;
-    width: 200px;
+    width: $sample-list-width;
     height: 50px;
     text-align: center;
     border-top: 1px solid $line-color;
@@ -219,3 +231,117 @@
   }
   
 }
+
+#new-sample-dialog {
+  padding: 20px;
+}
+
+#field_service_request_sample_identification {
+  margin-bottom: 10px;
+  label {
+    margin-bottom: 5px;
+    display: block;
+  }
+  input {
+    width: 300px;
+  }
+}
+#field_service_request_sample_description {
+  margin-bottom: 10px;
+  margin-top: 20px;
+  label {
+    margin-bottom: 5px;
+    display: block;
+  }
+  textarea {
+    width: 300px;
+    height: 100px;
+  }
+}
+
+#sample-workarea {
+  width: $sample-workarea-width;
+  margin-left: $sample-list-width;
+  padding: 10px;
+}
+
+#services-panel {
+  width: $lab-services-list-width;
+  border-right: 1px solid $line-color;
+  background: $bg-color;
+  position: absolute;
+  top: 30px;
+  bottom: 16px;
+  #services-search-panel {
+    padding-top: 10px;
+    margin-bottom: 10px;
+    select {
+      width: $lab-services-list-width - 10;
+      margin: 2px 5px;
+    }
+    input {
+      margin: 2px 5px;
+      width: $lab-services-list-width - 20;
+    }
+  }
+  #laboratory-services-list {
+    border: 1px solid $line-color;
+    overflow: auto;
+    position: absolute;
+    top: 95px;
+    bottom: 16px;
+    .lab-service-item {
+      cursor: pointer;
+      padding: 5px;
+      height: 64px;
+      overflow: hidden;
+      border-bottom: 1px solid $line-color;
+      .lab-service-name {
+        font-weight: bold;
+      }
+      .lab-service-laboratory {
+        font-size: 11px;
+        color: $grey;
+      }
+      &.selected {
+        background-color: $selected-color;
+        color: $white;
+        .lab-service-laboratory {
+          color: $selected-color-light;
+        }
+      }
+    }
+  }
+}
+
+#service-details {
+  margin-left: $lab-services-list-width + 10;
+  margin-top: 10px;
+  #service-detail-submit-area {
+    margin-top: 10px;
+    margin-right: 10px;
+    float: right;
+  }
+}
+
+#field_requested_service_details {
+  div {
+    margin-bottom: 5px;
+  }
+  textarea {
+    width: 360px;
+    height: 100px;
+  }
+}
+
+
+#requested-service-status {
+  float: right;
+  font-size: 12px;
+  padding: 4px 10px;
+  @include rounded(4px);
+  background-color: $link-color;
+  color: $white;
+  text-align: center;
+}
+

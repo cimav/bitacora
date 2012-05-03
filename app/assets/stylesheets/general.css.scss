@@ -171,3 +171,67 @@ input[type=submit] {
   background: #fff;
   padding: 10px;
 }
+
+.loading {
+  background-image: url(/assets/ajax-loader.gif);
+  background-position: right bottom;
+  background-repeat: no-repeat;
+}
+
+.error, .alert, .notice, .success, .info {
+  padding: 10px;
+  margin-bottom: 1em;
+  border: 2px solid #ddd;
+}
+
+.error, .alert {
+  background: $error-bg;
+  color: $error-color;
+  border-color: $error-border-color;
+}
+
+.notice {
+  background: $notice-bg;
+  color: $notice-color;
+  border-color: $notice-border-color;
+}
+
+.success {
+  background: $success-bg;
+  color: $success-color;
+  border-color: $success-border-color;
+}
+
+.info {
+  background: $info-bg;
+  color: $info-color;
+  border-color: $info-border-color;
+}
+
+.error a, .alert a {
+  color: $error-color;
+}
+
+.notice a {
+  color: $notice-color;
+}
+
+.success a {
+  color: $success-color;
+}
+
+.info a {
+  color: $info-color;
+}
+
+#flash-notice {
+  z-index: 8888;
+  display: none;
+  width: 400px;
+  font-weight: bold;
+  position: absolute;
+  bottom: 0px;
+  right: 20px;
+  height: 20px;
+  padding: 5px 10px;
+}

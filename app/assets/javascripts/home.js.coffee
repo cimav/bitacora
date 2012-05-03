@@ -2,6 +2,8 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+current_sample = 0
+
 #------------
 # MY REQUESTS
 #------------
@@ -24,6 +26,147 @@ $('#sample-header')
     $('#sample-list').toggle()
   )
 
+$("#add-new-sample-button")
+  .live("click", () ->
+    $("#new-sample-dialog").dialog('open')
+  )
+
+@getSample = getSample = (id) ->
+    url = '/samples/' + id
+    current_sample = id
+    $.get(url, {}, (html) ->
+      $('#request-workarea').html(html)
+    )
+
+$('.sample-details')
+  .live('click', () ->
+    getSample($(this).attr('sample_id'))
+  )
+
+$('#add-service')
+  .live('click', () ->
+    $("#add-service-dialog").dialog('open')
+  )
+
+$('#add-service-dialog')
+  .live("dialogopen", (event, ui) ->
+    labServicesLiveSearch()
+  )
+
+
+labServicesLiveSearch = () ->
+  $("#laboratory-services-search-box").addClass("loading")
+  form = $("#laboratory-services-live-search")
+  url = '/laboratory_services/live_search'
+  formData = form.serialize()
+  $.get(url, formData, (html) ->
+    $("#laboratory-services-search-box").removeClass("loading")
+    $("#laboratory-services-list").html(html)
+    $("#laboratory-services-list .lab-service-item:first").click()
+  )
+
+$('.lab-service-item')
+  .live('click', () ->
+    $('.lab-service-item').removeClass('selected')
+    $(this).addClass('selected')
+    url = '/laboratory_services/' + $(this).attr('laboratory_service_id') + '/for_sample/' + current_sample
+    $.get(url, {}, (html) ->
+      $('#service-details').html(html)
+    )
+  )
+
+$('#new-requested-service-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $submitButton = $(this).find('input[type="submit"]')
+    $submitButton.data('origText', $(this).text())
+    $submitButton.text("Agregando...")
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    $("#add-service-dialog").dialog('close')
+    getSampleRequestedServices(res['sample_id'])
+    getRequestedService(res['sample_id'], res['id'])
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+    $submitButton = $(this).find('input[type="submit"]')
+    $submitButton.text($(this).data('origText'))
+    $submitButton.attr('disabled', 'disabled').addClass('disabled')
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+@getRequestedService = getRequestedService = (sample_id, id) ->
+  url = '/samples/' + sample_id + '/requested_services/' + id
+  current_requested_service = id
+  $.get(url, {}, (html) ->
+    $('.requested_service').removeClass('selected')
+    $('#requested_service_' + id).addClass('selected')
+    $('#sample-workarea').html(html)
+  )
+
+getSampleRequestedServices = (sample_id) ->
+  url = '/samples/' + sample_id + '/requested_services_list'
+  $.get(url, {}, (html) ->
+    $('#sample-services').html(html)
+  )
+
+$('.requested_service')
+  .live('click', () ->
+    getRequestedService(current_sample, $(this).attr('requested_service_id'))
+  )
+
+$('#new-sample-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $submitButton = $(this).find('input[type="submit"]')
+    $submitButton.data('origText', $(this).text())
+    $submitButton.text("Creando...")
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    $("#new-sample-dialog").dialog('close')
+    getSample(res['id'])
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+    $submitButton = $(this).find('input[type="submit"]')
+    $submitButton.text($(this).data('origText'))
+    $submitButton.attr('disabled', 'disabled').addClass('disabled')
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+$('#new-request-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $submitButton = $(this).find('input[type="submit"]')
+    $submitButton.data('origText', $(this).text())
+    $submitButton.text("Creando...")
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    getServiceRequest(res['id'])
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+    $submitButton = $(this).find('input[type="submit"]')
+    $submitButton.text($(this).data('origText'))
+    $submitButton.attr('disabled', 'disabled').addClass('disabled')
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
 
 #-----------
 # NAVIGATION
@@ -43,6 +186,29 @@ $('#nav-my-requests')
     $('.nav-item').removeClass('selected')
     $('#nav-my-requests').addClass('selected')
   )
+
+#-------
+# ERRORS
+#-------
+showFormErrors = (xhr, status, error) ->
+  try 
+    res = $.parseJSON(xhr.responseText)
+  catch err
+    res['errors'] = { generic_error: "Error:" + err.description }
+
+  showFlash(res['flash']['error'], 'error')
+
+  for e in res['errors']  
+    errorMsg = $('<div>' + res['errors'][e] + '</div>').addClass('error-message')
+    $('#field_' + model_name + '_' + e.replace('.', '_')).addClass('with-errors').append(errorMsg)
+  
+
+showFlash = (msg, type) ->
+  $("#flash-notice").removeClass('success').removeClass('notice').removeClass('info')
+  $("#flash-notice").addClass(type).html(msg)
+  $("#flash-notice").slideDown()
+  $("#flash-notice").delay(1500).slideUp() if (type != 'error') 
+
 
 
 

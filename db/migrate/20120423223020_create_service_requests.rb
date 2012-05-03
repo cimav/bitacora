@@ -2,6 +2,7 @@ class CreateServiceRequests < ActiveRecord::Migration
   def change
     create_table :service_requests do |t|
       t.references :user
+      t.string     :number, :limit => 20
       t.references :request_type
       t.string     :request_link
       t.text       :description

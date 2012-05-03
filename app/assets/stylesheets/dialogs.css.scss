@@ -1,0 +1,84 @@
+.ui-dialog { 
+  position: relative; 
+  padding: 2px; 
+  width: 300px; 
+  background: transparent url(/assets/bg-dialog.png); 
+  text-align: left; 
+  h1 {
+    margin-bottom: 20px;
+  }
+  .ui-dialog-titlebar { 
+    height: 28px; 
+    position: relative;  
+    background: transparent; 
+  }
+  .ui-dialog-title { 
+    float: left; 
+    margin: 6px 0 0 8px; 
+    font-size: 16px; 
+    font-weight: bold; 
+    color: #fff; 
+    text-shadow: #00122e 0px 1px 0px; 
+  }
+  .ui-dialog-titlebar-close { 
+    position: absolute; 
+    right: 8px; 
+    top: 6px; 
+    background: transparent url(/assets/bg-dialog-titlebar-close.gif) no-repeat; 
+    text-indent: -99999px; 
+    overflow: hidden; width: 14px;
+    span { 
+      display: block; 
+      margin: 1px; 
+    }
+    &:hover, &:focus { 
+      padding: 0; 
+    }
+  }
+  .ui-dialog-content { 
+    border: 0; 
+    padding: 0;
+    background: #fff; 
+    overflow: auto; 
+    zoom: 1; 
+  }
+  .ui-dialog-buttonpane { 
+    text-align: left; 
+    border-width: 1px 0 0 0; 
+    background: #fff; 
+    padding: 16px; 
+    border-top: 1px solid #cde; 
+    button { 
+      float: right; 
+      margin-left: 8px; 
+      cursor: pointer; 
+      width: auto; 
+      overflow: visible; 
+    }
+  }
+  .ui-resizable-se { 
+    width: 14px; 
+    height: 14px; 
+    right: 3px; 
+    bottom: 3px; 
+  }
+  &.ui-corner-all { 
+    @include rounded(8px);
+  }
+  .button { float: right; }
+  p { 
+    margin: 0.5em 0 1em 0; 
+  }
+}
+
+.ui-draggable {
+  .ui-dialog-titlebar { 
+    cursor: move; 
+  }
+}
+
+
+#dialog-submit-button-area {
+  text-align: center;
+  margin-top: 20px;
+}

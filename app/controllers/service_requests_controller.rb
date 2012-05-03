@@ -61,4 +61,37 @@ class ServiceRequestsController < ApplicationController
     end
   end
 
+  def update 
+    @request = ServiceRequest.find(params[:id])
+
+    if @request.update_attributes(params[:service_request])
+      flash[:notice] = "Servicio actualizado"
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            render :json => json
+          else 
+            redirect_to @request
+          end
+        end
+      end
+    else
+      flash[:error] = "Error al actualizar el servicio."
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:errors] = @request.errors
+            render :json => json, :status => :unprocessable_entity
+          else 
+            redirect_to @request
+          end
+        end
+      end
+    end
+  end
+
 end

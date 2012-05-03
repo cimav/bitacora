@@ -9,18 +9,21 @@ $strong-color: #222;
 $strong-color2: #444;
 $light-bg: #f8f8f8;
 $bg-color: #fafafa;
-$bg-selected: #ddd;
+$bg-selected: #efefef;
 
 $container-width: 1000px;
 $nav-width: 101px;
 $work-area-width: $container-width - $nav-width;
 $wide-width: $container-width - $nav-width;
+$sample-list-width: 200px;
+$sample-workarea-width: $work-area-width - $sample-list-width - 20;
 $side-panel-width: 250px;
 $main-panel-width: $container-width - $side-panel-width - $nav-width;
+$lab-services-list-width: 250px;
 
 $line-color: #ddd;
 $link-color: #06c;
-$bullet-color: #666;
+$bullet-color: #ddd;
 
 $button-gradient-from: #62c462;
 $button-gradient-to: #57a957;
@@ -30,6 +33,23 @@ $table-head-bg: #f0f0f0;
 $table-head-color: #333;
 
 $selected-color: $link-color;
+$selected-color-light: #67b3ff;
 
 $workarea-bar-bg: #62c462;
 $workarea-bar-border: #57a957;
+
+$error-bg: #fbe3e4;
+$error-color: #8a1f11;
+$error-border-color: #fbc2c4;
+
+$notice-bg: #fff6bf; 
+$notice-color: #514721; 
+$notice-border-color: #ffd324;
+
+$success-bg: #e6efc2; 
+$success-color: #264409; 
+$success-border-color: #c6d880;
+
+$info-bg: #d5edf8; 
+$info-color: #205791; 
+$info-border-color: #92cae4;

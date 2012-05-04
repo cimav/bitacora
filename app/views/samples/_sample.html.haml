@@ -38,5 +38,6 @@
 :javascript
   $(function() {
     $("#add-service-dialog").dialog({ autoOpen: false, width: 640, height: 600, modal:true })
+    getRequestedService(#{sample.id}, #{sample.requested_service[0].id})
   });
 

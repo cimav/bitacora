@@ -11,7 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120424000340) do
+ActiveRecord::Schema.define(:version => 20120503191711) do
+
+  create_table "activity_logs", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "service_request_id"
+    t.integer  "sample_id"
+    t.integer  "requested_service_id"
+    t.text     "message"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+  end
+
+  add_index "activity_logs", ["requested_service_id"], :name => "index_activity_logs_on_requested_service_id"
+  add_index "activity_logs", ["sample_id"], :name => "index_activity_logs_on_sample_id"
+  add_index "activity_logs", ["service_request_id"], :name => "index_activity_logs_on_service_request_id"
+  add_index "activity_logs", ["user_id"], :name => "index_activity_logs_on_user_id"
 
   create_table "business_units", :force => true do |t|
     t.string   "prefix",     :limit => 5

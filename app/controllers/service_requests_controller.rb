@@ -32,6 +32,10 @@ class ServiceRequestsController < ApplicationController
     @service_request = ServiceRequest.new(params[:service_request])
     if (@service_request.save) 
       flash[:notice] = "Nuevo servicio creado satisfactoriamente (#{@service_request.id})"
+      
+      # LOG
+      @service_request.activity_log.create(user_id: current_user, message: 'Carpeta creada')
+
       respond_with do |format|
         format.html do
           if request.xhr?

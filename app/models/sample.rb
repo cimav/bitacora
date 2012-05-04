@@ -3,6 +3,7 @@ class Sample < ActiveRecord::Base
 
   belongs_to :service_request
   has_many :requested_service
+  has_many :activity_log
 
   after_create :set_consecutive
 

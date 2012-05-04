@@ -3,6 +3,7 @@ class RequestedService < ActiveRecord::Base
   attr_accessible :laboratory_service_id, :sample_id, :details
   belongs_to :sample
   belongs_to :laboratory_service
+  has_many :activity_log
 
   INITIAL   = 1
   RECEIVED  = 2

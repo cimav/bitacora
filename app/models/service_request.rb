@@ -15,7 +15,6 @@ class ServiceRequest < ActiveRecord::Base
   def add_extra
     self.number = "%04d" % [self.id]
     self.save() 
-    self.sample.create(identification: 'Muestra 1', description: 'Sin descripción')
   end
 
 end

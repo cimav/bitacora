@@ -34,7 +34,9 @@ class ServiceRequestsController < ApplicationController
       flash[:notice] = "Nuevo servicio creado satisfactoriamente (#{@service_request.id})"
       
       # LOG
-      @service_request.activity_log.create(user_id: current_user, message: 'Carpeta creada')
+      @service_request.activity_log.create(user_id: current_user, 
+                                           message_type: 'CREATE', 
+                                           message: "Carpeta #{@service_request.number} creada")
 
       respond_with do |format|
         format.html do

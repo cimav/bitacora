@@ -18,6 +18,12 @@ class SamplesController < ApplicationController
     if @sample.save
       flash[:notice] = "Muestra agregada."
 
+      # LOG
+      @sample.activity_log.create(user_id: current_user, 
+                                           service_request_id: @sample.service_request_id, 
+                                           message_type: 'CREATE', 
+                                           message: "Muestra #{@sample.number} agregada")
+
       respond_with do |format|
         format.html do
           if request.xhr?

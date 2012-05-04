@@ -12,6 +12,13 @@ class RequestedServicesController < ApplicationController
     if @requested_service.save
       flash[:notice] = "Servicio agregado."
 
+      # LOG
+      @requested_service.activity_log.create(user_id: current_user,
+                                             service_request_id: @requested_service.sample.service_request_id,
+                                             sample_id: @requested_service.sample_id,
+                                             message_type: 'CREATE',
+                                             message: "#{@requested_service.laboratory_service.name} agregado a la muestra #{@requested_service.sample.number}")
+
       respond_with do |format|
         format.html do
           if request.xhr?

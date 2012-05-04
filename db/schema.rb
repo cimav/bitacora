@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(:version => 20120503191711) do
     t.integer  "service_request_id"
     t.integer  "sample_id"
     t.integer  "requested_service_id"
+    t.string   "message_type"
     t.text     "message"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false

@@ -1,0 +1,14 @@
+%h2 Bitácora
+%ul.activity-list
+  - activity_log.each do |activity|
+    %li
+      .log-display
+        = image_tag ("http://cimav.edu.mx/foto/#{activity.user.email.split('@')[0]}/48")
+      .log-date
+        = l activity.created_at, :format => :long
+      .log-msg-area
+        .log-user
+          = activity.user.full_name 
+        .log-message
+          = activity.message
+      .clearfix

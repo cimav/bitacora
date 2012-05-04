@@ -11,5 +11,7 @@
   %strong Anotaciones particulares:
   %div= @requested_service.details
 
-#requested_service_log
+#activity_log
+  = render :partial => 'activity_log/activity_log', :locals => {:activity_log => @activity_log}
+
 

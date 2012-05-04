@@ -183,7 +183,7 @@
 #empty-requests {
   text-align: center;
   font-size: 28px;
-  color: #ddd;
+  color: #999;
   margin-top: 100px;
 }
 
@@ -345,3 +345,12 @@
   text-align: center;
 }
 
+#no-samples {
+  text-align: center;
+  font-size: 28px;
+  color: #999;
+  margin-top: 100px;
+  a {
+    cursor: pointer;
+  }
+}

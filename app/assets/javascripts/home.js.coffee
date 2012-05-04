@@ -31,10 +31,16 @@ $("#add-new-sample-button")
     $("#new-sample-dialog").dialog('open')
   )
 
+$("#add-new-sample-link")
+  .live("click", () ->
+    $("#new-sample-dialog").dialog('open')
+  )
+
 @getSample = getSample = (id) ->
     url = '/samples/' + id
     current_sample = id
     $.get(url, {}, (html) ->
+      $('#no-samples').remove()
       $('#request-workarea').html(html)
     )
 

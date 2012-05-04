@@ -13,8 +13,6 @@ class SamplesController < ApplicationController
   end
 
   def create
-    params[:sample][:service_request_id] = params[:service_request_id]
-    puts params.inspect
     @sample = Sample.new(params[:sample])
 
     if @sample.save

@@ -3,6 +3,8 @@ class CreateRequestedServices < ActiveRecord::Migration
     create_table :requested_services do |t|
       t.references :laboratory_service 
       t.references :sample
+      t.integer    :consecutive
+      t.string     :number, :limit => 20
       t.text       :details
       t.string :status, :default => 1 
       t.timestamps

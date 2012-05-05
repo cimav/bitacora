@@ -143,10 +143,12 @@ ActiveRecord::Schema.define(:version => 20120503191711) do
   create_table "requested_services", :force => true do |t|
     t.integer  "laboratory_service_id"
     t.integer  "sample_id"
+    t.integer  "consecutive"
+    t.string   "number",                :limit => 20
     t.text     "details"
-    t.string   "status",                :default => "1"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.string   "status",                              :default => "1"
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
   end
 
   add_index "requested_services", ["laboratory_service_id"], :name => "index_requested_services_on_laboratory_service_id"

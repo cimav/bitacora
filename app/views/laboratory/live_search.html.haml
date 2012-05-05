@@ -1,0 +1,10 @@
+- @requested_services.each do |rs|
+  .lab-req-serv-item{:requested_service_id => rs.id}
+    .rs-consecutive
+      = rs.number
+    .sample-requested-service
+      = rs.laboratory_service.name
+    .sample-identificator
+      = rs.sample.identification
+    .sample-description
+      = rs.sample.description

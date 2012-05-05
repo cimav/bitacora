@@ -38,6 +38,30 @@
   float: right;
 }
 
+.sample-details,
+.lab-sample-details {
+  padding: 20px 10px;
+  border-bottom: 1px solid $line-color;
+  &.selected {
+    background-color: $bg-selected;
+  }
+  .sample-consecutive {
+    font-size: 10px;
+    padding: 4px;
+    @include rounded(4px);
+    background-color: $link-color;
+    color: $white;
+    text-align: center;
+    width: 48px;
+    float: right;
+  }
+  .sample-identificator {
+    font-weight: bold;
+  }
+  .sample-description {
+  }
+}
+
 #sample {
   position: fixed;
   top: 177px;
@@ -49,28 +73,6 @@
     padding: 10px;
     background: transparent url(/assets/arrow-down.png) no-repeat center right;
     cursor: pointer;
-  }
-  .sample-details {
-    padding: 20px 10px;
-    border-bottom: 1px solid $line-color;
-    &.selected {
-      background-color: $bg-selected;
-    }
-    .sample-consecutive {
-      font-size: 10px;
-      padding: 4px;
-      @include rounded(4px);
-      background-color: $link-color;
-      color: $white;
-      text-align: center;
-      width: 48px;
-      float: right;
-    }
-    .sample-identificator {
-      font-weight: bold;
-    }
-    .sample-description {
-    }
   }
   #sample-services {
     padding: 10px;

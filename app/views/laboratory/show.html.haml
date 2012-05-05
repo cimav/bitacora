@@ -1,0 +1,33 @@
+#laboratory-bar.workarea-bar
+  %h2= @laboratory.name
+#laboratory-workarea
+  #lab-samples-panel.side-panel
+    .panel-search
+      = form_tag '/samples', :id => 'live-search', :method => 'get', :remote => true do
+        = text_field_tag :q, nil, :id => 'search-box', :placeholder => 'Busqueda'
+
+        - status_options = "<option value=\"0\">Todos los estados</option>"
+        = select_tag "status", status_options.html_safe
+
+        - requestor_options = "<option value=\"0\">Todos los solicitantes</option>"
+        = select_tag "requestor", requestor_options.html_safe
+  
+        - assigned_to_options = "<option value=\"0\">Cualquier asignado</option>"
+        - @laboratory.users.each do |assigned_to|
+          - assigned_to_options += "<option value=\"#{assigned_to.id}\">#{assigned_to.full_name}</option>" 
+        = select_tag "assigned_to", assigned_to_options.html_safe
+
+  #lab-samples-list.panel-items
+    - klass = ''
+    .lab-sample-details{:sample_id => 99, :class => klass}
+      .sample-consecutive
+        = "99"
+      .sample-identificator
+        = "M1"
+      .sample-description
+        = "The description"
+    
+
+  #lab-main-panel.main-panel
+    #lab-sample-workarea
+      %h1= "SAMPLE 99"

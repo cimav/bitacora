@@ -1,0 +1,18 @@
+// Place all the styles related to the Laboratory controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#lab-samples-list {
+  bottom: 20px;
+  top: 160px;
+}
+
+#lab-samples-panel {
+  .panel-search {
+    height: 90px;
+  }
+}
+
+#lab-sample-workarea {
+  padding: 20px;
+}

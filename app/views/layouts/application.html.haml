@@ -17,7 +17,7 @@
           .nav-icon= image_tag('/assets/icons/my-requests.png')
           .nav-title= "Mis solicitudes"
         - current_user.laboratories.each do |laboratory|
-          .nav-item{:id => "nav_laboratory_#{laboratory.id}", :laboratory_id => laboratory.id}
+          .nav-item.nav-lab{:id => "nav-laboratory-#{laboratory.id}", :laboratory_id => laboratory.id}
             .nav-icon= image_tag('/assets/icons/my-requests.png')
             .nav-title= laboratory.name
        

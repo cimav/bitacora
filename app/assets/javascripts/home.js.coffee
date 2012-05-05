@@ -193,6 +193,15 @@ $('#nav-my-requests')
     $('#nav-my-requests').addClass('selected')
   )
 
+$('.nav-lab') 
+  .live('click', () ->
+    lab_id = $(this).attr('laboratory_id')
+    url = '/laboratory/' + lab_id
+    setHash('#!' + url, true)
+    $('.nav-item').removeClass('selected')
+    $('#nav-laboratory-' + lab_id).addClass('selected')
+  )
+
 #-------
 # ERRORS
 #-------

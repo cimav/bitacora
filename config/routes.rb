@@ -13,6 +13,7 @@ Bitacora::Application.routes.draw do
   match '/laboratory_services/:id/for_sample/:sample_id' => 'laboratory_services#for_sample'
   resources :laboratory_services
   resources :requested_services
+  match '/laboratory/:id' => 'laboratory#show'
 
   match '/auth/:provider/callback' => 'sessions#create'
   match '/auth/failure' => 'sessions#failure'

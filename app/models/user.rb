@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   STATUS_SUSPENDED = 3
 
   has_many :service_request
+  has_many :laboratory_members
+  has_many :laboratories, :through => :laboratory_members
   has_many :activity_log
 
   def full_name

@@ -6,6 +6,7 @@ class CreateActivityLogs < ActiveRecord::Migration
       t.references :sample
       t.references :requested_service
       t.string     :message_type
+      t.integer    :requested_service_status
       t.text       :message
       t.timestamps
     end

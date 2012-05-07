@@ -6,10 +6,12 @@ class CreateRequestedServices < ActiveRecord::Migration
       t.integer    :consecutive
       t.string     :number, :limit => 20
       t.text       :details
+      t.references :user
       t.string :status, :default => 1 
       t.timestamps
     end
     add_index('requested_services', 'sample_id')
     add_index('requested_services', 'laboratory_service_id')
+    add_index('requested_services', 'user_id')
   end
 end

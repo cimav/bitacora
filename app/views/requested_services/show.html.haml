@@ -1,6 +1,57 @@
 #requested-service-header 
-  #requested-service-status
-    = @requested_service.status_text
+  #requested-service-actions
+    #requested-service-status{:class => "status_#{@requested_service.status}"}
+      = @requested_service.status_text
+    #action-list
+
+      - im_lab_admin = @requested_service.laboratory_service.laboratory.user_id == current_user.id
+      - im_service_tech = @requested_service.user_id == current_user.id
+      - im_requestor = @requested_service.sample.service_request.user_id == current_user.id
+
+      - initial_action =  @requested_service.status.to_i > RequestedService::INITIAL && im_lab_admin
+      - received_action = @requested_service.status.to_i == RequestedService::INITIAL && im_lab_admin
+      - assigned_action = @requested_service.status.to_i == RequestedService::RECEIVED && im_lab_admin
+      - suspended_action = (@requested_service.status.to_i == RequestedService::IN_PROGRESS || @requested_service.status.to_i == RequestedService::REINIT) && (im_lab_admin || im_service_tech)
+      - reinit_action = (@requested_service.status.to_i == RequestedService::SUSPENDED) && (im_lab_admin || im_service_tech)
+      - in_progress_action = @requested_service.status.to_i == RequestedService::ASSIGNED && (im_lab_admin || im_service_tech)
+      - finished_action = (@requested_service.status.to_i == RequestedService::IN_PROGRESS || @requested_service.status.to_i == RequestedService::REINIT) && (im_lab_admin || im_service_tech)
+      - canceled_action = (@requested_service.status.to_i > RequestedService::INITIAL && im_lab_admin) || ((@requested_service.status.to_i == RequestedService::INITIAL || @requested_service.status.to_i == RequestedService::SUSPENDED) && im_requestor ) 
+
+      %ul
+        - if initial_action
+          - klass = "status_#{RequestedService::INITIAL}"
+          %li{:status_action => RequestedService::INITIAL, :class => klass, :id => 'change_status_initial'}= "Regresar a inicio"
+
+        - if received_action
+          - klass = "status_#{RequestedService::RECEIVED}"
+          %li{:status_action => RequestedService::RECEIVED, :class => klass, :id => 'change_status_received'}= "Recibir muestra"
+
+        - if assigned_action
+          - klass = "status_#{RequestedService::ASSIGNED}"
+          %li{:status_action => RequestedService::ASSIGNED, :class => klass}= "Asignar técnico"
+
+        - if suspended_action
+          - klass = "status_#{RequestedService::SUSPENDED}"
+          %li{:status_action => RequestedService::SUSPENDED, :class => klass}= "Suspender servicio"
+
+        - if reinit_action
+          - klass = "status_#{RequestedService::REINIT}"
+          %li{:status_action => RequestedService::REINIT, :class => klass}= "Reiniciar servicio"
+
+        - if in_progress_action
+          - klass = "status_#{RequestedService::IN_PROGRESS}"
+          %li{:status_action => RequestedService::IN_PROGRESS, :class => klass}= "Empezar servicio"
+
+        - if finished_action
+          - klass = "status_#{RequestedService::FINISHED}"
+          %li{:status_action => RequestedService::FINISHED, :class => klass}= "Finalizar servicio"
+
+        - if canceled_action
+          - klass = "status_#{RequestedService::CANCELED}"
+          %li{:status_action => RequestedService::CANCELED, :class => klass}= "Cancelar servicio"
+
+   
+
   %h1= @requested_service.laboratory_service.name
   %h2= @requested_service.laboratory_service.laboratory.name
 
@@ -15,4 +66,42 @@
                                                                 :service_request_id => @requested_service.sample.service_request_id, 
                                                                 :sample_id => @requested_service.sample_id, 
                                                                 :requested_service_id => @requested_service.id}
+
+
+- if initial_action
+  #initial-sample-dialog{:title => 'Regresar muestra a inicio'}
+    .inner-area
+      %h1= "Regresar muestra #{@requested_service.sample.number} a inicio"
+      = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'initial-sample-form'} do |f|
+        = f.hidden_field :status, {:value => RequestedService::INITIAL}
+        #field_service_request_sample_description
+          = label_tag 'activity_log_msg', 'Notas:'
+          = text_area_tag 'activity_log_msg'
+        .clearfix
+        #dialog-submit-button-area
+          = f.submit "Regresar a inicio"
+
+  :javascript
+    $(function() {
+      $("#initial-sample-dialog").dialog({ autoOpen: false, width: 340, height: 340, modal:true })
+    });
+
+- if received_action
+  #receive-sample-dialog{:title => 'Recibir muestra'}
+    .inner-area
+      %h1= "Recibir muestra #{@requested_service.sample.number}"
+      = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'receive-sample-form'} do |f|
+        = f.hidden_field :status, {:value => RequestedService::RECEIVED}
+        #field_service_request_sample_description
+          = label_tag 'activity_log_msg', 'Notas:'
+          = text_area_tag 'activity_log_msg'
+        .clearfix
+        #dialog-submit-button-area
+          = f.submit "Recibir muestra"
+
+  :javascript
+    $(function() {
+      $("#receive-sample-dialog").dialog({ autoOpen: false, width: 340, height: 340, modal:true })
+    });
+
 

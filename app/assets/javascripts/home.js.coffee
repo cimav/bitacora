@@ -232,6 +232,73 @@ $('#new-activity-log-form')
     showFormErrors(xhr, status, error)
   )
 
+#--------
+# ACTIONS
+#--------
+$('#requested-service-status')
+  .live('click', () ->
+    $('#action-list').toggle()
+  )
+
+$('#change_status_received') 
+  .live('click', () ->
+    $('#receive-sample-dialog').dialog('open')
+  )
+
+$('#receive-sample-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $submitButton = $(this).find('input[type="submit"]')
+    $submitButton.data('origText', $(this).text())
+    $submitButton.text("Recibiendo...")
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    getRequestedService(res['sample_id'], res['id'])
+    $("#receive-sample-dialog").dialog('close')
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+    $submitButton = $(this).find('input[type="submit"]')
+    $submitButton.text($(this).data('origText'))
+    $submitButton.attr('disabled', 'disabled').addClass('disabled')
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+
+$('#change_status_initial')
+  .live('click', () ->
+    $('#initial-sample-dialog').dialog('open')
+  )
+
+$('#initial-sample-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $submitButton = $(this).find('input[type="submit"]')
+    $submitButton.data('origText', $(this).text())
+    $submitButton.text("Recibiendo...")
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    getRequestedService(res['sample_id'], res['id'])
+    $("#initial-sample-dialog").dialog('close')
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+    $submitButton = $(this).find('input[type="submit"]')
+    $submitButton.text($(this).data('origText'))
+    $submitButton.attr('disabled', 'disabled').addClass('disabled')
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
 
 
 #-----------

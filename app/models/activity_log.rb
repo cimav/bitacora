@@ -1,5 +1,5 @@
 class ActivityLog < ActiveRecord::Base
-  attr_accessible :message_type, :message, :user_id, :service_request_id, :sample_id, :requested_service_id
+  attr_accessible :message_type, :message, :user_id, :service_request_id, :sample_id, :requested_service_id, :requested_service_status
 
   belongs_to :user
   belongs_to :service_request

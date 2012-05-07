@@ -305,17 +305,61 @@
   }
 }
 
-
-#requested-service-status {
+#requested-service-actions {
   float: right;
-  font-size: 12px;
-  padding: 4px 10px;
-  margin-right: 10px;
-  @include rounded(4px);
-  background-color: $link-color;
-  color: $white;
-  text-align: center;
+  width: 200px;
+  #requested-service-status {
+    width: 180px;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 8px 10px;
+    margin-right: 10px;
+    @include rounded(4px);
+    background-image: url(/assets/arrow-down-white.png);
+    background-position: center right;
+    background-repeat: no-repeat;
+    color: $white;
+    text-align: left;
+  }
+  #action-list {
+    display: none;
+    border: 1px solid $line-color;
+    background: $bg-color;
+    width: 200px;
+    padding: 10px 0;
+    position: absolute;
+    ul {
+      li {
+        @include rounded(4px);
+        margin: 4px 10px;
+        padding: 4px;
+        color: $white;
+        position: relative;
+        @include opacity(0.8);
+        cursor: pointer;
+      }
+
+
+    }
+  }
 }
+
+// INITIAL
+.status_1 { background-color: #666666; }
+// RECEIVED
+.status_2 { background-color: #37a8ba; }
+// ASSIGNED
+.status_3 { background-color: #37bab2; }
+// SUSPENDED
+.status_4 { background-color: #d3c75b; }
+// REINIT
+.status_5 { background-color: #0066cc; }
+// CANCELED
+.status_-1 { background-color: #b83543; }
+// IN_PROGRESS
+.status_7 { background-color: #0066cc; }
+// FINISHED
+.status_99 { background-color: #90c847; }
 
 #no-samples {
   text-align: center;

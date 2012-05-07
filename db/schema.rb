@@ -19,9 +19,10 @@ ActiveRecord::Schema.define(:version => 20120503191711) do
     t.integer  "sample_id"
     t.integer  "requested_service_id"
     t.string   "message_type"
+    t.integer  "requested_service_status"
     t.text     "message"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
   end
 
   add_index "activity_logs", ["requested_service_id"], :name => "index_activity_logs_on_requested_service_id"
@@ -146,6 +147,7 @@ ActiveRecord::Schema.define(:version => 20120503191711) do
     t.integer  "consecutive"
     t.string   "number",                :limit => 20
     t.text     "details"
+    t.integer  "user_id"
     t.string   "status",                              :default => "1"
     t.datetime "created_at",                                           :null => false
     t.datetime "updated_at",                                           :null => false
@@ -153,6 +155,7 @@ ActiveRecord::Schema.define(:version => 20120503191711) do
 
   add_index "requested_services", ["laboratory_service_id"], :name => "index_requested_services_on_laboratory_service_id"
   add_index "requested_services", ["sample_id"], :name => "index_requested_services_on_sample_id"
+  add_index "requested_services", ["user_id"], :name => "index_requested_services_on_user_id"
 
   create_table "samples", :force => true do |t|
     t.integer  "service_request_id"

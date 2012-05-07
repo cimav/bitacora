@@ -1,29 +1,30 @@
 # coding: utf-8
 class RequestedService < ActiveRecord::Base
-  attr_accessible :laboratory_service_id, :sample_id, :details
+  attr_accessible :laboratory_service_id, :sample_id, :details, :status
   belongs_to :sample
   belongs_to :laboratory_service
   has_many :activity_log
 
   after_create :set_consecutive
 
-  INITIAL   = 1
-  RECEIVED  = 2
-  ASSIGNED  = 3
-  SUSPENDED = 4
-  REINIT    = 5
-  CANCELED  = 6
-  PROGRESS  = 7
-  FINISH    = 99 
+  CANCELED     = -1
+  INITIAL      = 1
+  RECEIVED     = 2
+  ASSIGNED     = 3
+  SUSPENDED    = 4
+  REINIT       = 5
+  IN_PROGRESS  = 6
+  FINISHED     = 99 
 
   STATUS = {
-    INITIAL   => 'Inicio',
-    RECEIVED  => 'Muestra Recibida',
-    ASSIGNED  => 'Técnico Asignado',
-    SUSPENDED => 'Servicio Suspendido',
-    REINIT    => 'Servicio Reiniciado',
-    CANCELED  => 'Servicio Cancelado',
-    PROGRESS  => 'En Progreso'
+    INITIAL      => 'Inicio',
+    RECEIVED     => 'Muestra Recibida',
+    ASSIGNED     => 'Técnico Asignado',
+    SUSPENDED    => 'Servicio Suspendido',
+    REINIT       => 'Servicio Reiniciado',
+    CANCELED     => 'Servicio Cancelado',
+    IN_PROGRESS  => 'En Progreso',
+    FINISHED     => 'Finalizado'
   }
 
   def status_text

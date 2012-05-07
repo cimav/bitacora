@@ -17,10 +17,6 @@
   float: left;
   top: 60px;
   bottom: 10px;
-  .inner-area {
-    padding: 20px;
-    background: #fff;
-  }
   .workarea-bar {
     height: 30px;
     border: 1px solid $line-color;
@@ -267,4 +263,9 @@
   position: fixed;
   bottom: 20px;
   top: 70px;
+}
+
+.inner-area {
+  padding: 20px;
+  background: #fff;
 }

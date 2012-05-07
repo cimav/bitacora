@@ -4,14 +4,15 @@
   %h1= @requested_service.laboratory_service.name
   %h2= @requested_service.laboratory_service.laboratory.name
 
-
-%p= @requested_service.laboratory_service.description
-
-%p
+#requested-service-lab-serv-desc
+  = @requested_service.laboratory_service.description
+#requested-service-details
   %strong Anotaciones particulares:
   %div= @requested_service.details
 
 #activity_log
-  = render :partial => 'activity_log/activity_log', :locals => {:activity_log => @activity_log}
-
+  = render :partial => 'activity_log/activity_log', :locals => {:activity_log => @activity_log, 
+                                                                :service_request_id => @requested_service.sample.service_request_id, 
+                                                                :sample_id => @requested_service.sample_id, 
+                                                                :requested_service_id => @requested_service.id}
 

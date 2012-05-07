@@ -14,6 +14,9 @@ Bitacora::Application.routes.draw do
   resources :laboratory_services
   resources :requested_services
   match '/laboratory/:id' => 'laboratory#show'
+  match '/laboratory/:id/live_search' => 'laboratory#live_search'
+
+  resources :activity_log, :as => :activity_logs
 
   match '/auth/:provider/callback' => 'sessions#create'
   match '/auth/failure' => 'sessions#failure'

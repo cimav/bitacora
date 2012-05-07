@@ -4,6 +4,7 @@
 
 .activity-list {
   border: 1px solid $line-color;
+  width: 580px;
   li {
     border-bottom: 1px solid $line-color;
     padding: 5px;
@@ -12,6 +13,19 @@
       float: left;
       img {
         @include rounded(5px);
+      }
+    }
+    .log-msg-form {
+      width: 500px;
+      margin-left: 10px;
+      float: left;
+      textarea {
+        width: 490px;
+        height: 40px;
+        margin-bottom: 10px;
+      }
+      input {
+        float: right;
       }
     }
     .log-date {

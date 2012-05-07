@@ -6,8 +6,8 @@ class RequestedServicesController < ApplicationController
     @requested_service = RequestedService.find(params['id'])
     @activity_log = ActivityLog.where("user_id = :u
                                       AND (
-                                        (service_request_id = :service_request AND sample_id IS NULL AND requested_service_id IS NULL)
-                                        OR (service_request_id = :service_request AND sample_id = :sample AND requested_service_id IS NULL)
+                                        (service_request_id = :service_request AND sample_id = 0 AND requested_service_id = 0)
+                                        OR (service_request_id = :service_request AND sample_id = :sample AND requested_service_id = 0)
                                         OR (service_request_id = :service_request AND sample_id = :sample AND requested_service_id = :requested_service)
                                       )
                                     ", {:u => current_user,

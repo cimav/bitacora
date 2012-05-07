@@ -1,5 +1,17 @@
-%h2 Bitácora
 %ul.activity-list
+  %li
+    .log-display
+      = image_tag ("http://cimav.edu.mx/foto/#{current_user.email.split('@')[0]}/48")
+    .log-msg-form
+      = form_for ActivityLog.new, :remote => true, :html => {:'data-type' => 'html', :id => 'new-activity-log-form'} do |f|
+        = f.hidden_field :service_request_id, {:value => service_request_id}
+        = f.hidden_field :sample_id, {:value => sample_id}
+        = f.hidden_field :requested_service_id, {:value => requested_service_id}
+          
+        = f.hidden_field :message_type, {:value => 'USER'}
+        = f.text_area :message, :placeholder => 'Escribe aquí tu mensaje'
+        = f.submit "Enviar"
+    .clearfix
   - activity_log.each do |activity|
     %li
       .log-display

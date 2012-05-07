@@ -36,6 +36,8 @@ class ServiceRequestsController < ApplicationController
       # LOG
       @service_request.activity_log.create(user_id: current_user, 
                                            message_type: 'CREATE', 
+                                           sample_id: 0,
+                                           requested_service_id: 0,
                                            message: "Carpeta #{@service_request.number} creada")
 
       respond_with do |format|

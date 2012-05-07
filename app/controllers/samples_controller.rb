@@ -21,6 +21,7 @@ class SamplesController < ApplicationController
       # LOG
       @sample.activity_log.create(user_id: current_user, 
                                            service_request_id: @sample.service_request_id, 
+                                           requested_service_id: 0, 
                                            message_type: 'CREATE', 
                                            message: "Muestra #{@sample.number} agregada")
 

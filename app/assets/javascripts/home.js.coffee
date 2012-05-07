@@ -173,6 +173,66 @@ $('#new-request-form')
     showFormErrors(xhr, status, error)
   )
 
+#-----------
+# LABORATORY
+#-----------
+@labReqServicesLiveSearch = labReqServicesLiveSearch = () ->
+  $("#lab-req-serv-search-box").addClass("loading")
+  form = $("#lab-req-serv-live-search")
+  url = '/laboratory/' + form.attr('laboratory_id')  + '/live_search'
+  formData = form.serialize()
+  $.get(url, formData, (html) ->
+    $("#lab-req-serv-search-box").removeClass("loading")
+    $("#lab-req-serv-list").html(html)
+    $("#lab-req-serv-list .lab-req-serv-item:first").click()
+  )
+
+$('.lab-req-serv-item')
+  .live('click', () ->
+    $('.lab-req-serv-item').removeClass('selected')
+    $(this).addClass('selected')
+    sample_id = $(this).attr('sample_id')
+    req_serv_id = $(this).attr('requested_service_id')
+    url = '/samples/' + sample_id + '/requested_services/' + req_serv_id
+    current_requested_service = req_serv_id
+    $.get(url, {}, (html) ->
+      $('#lab-req-serv-workarea').html(html)
+    )
+  )
+
+#-------------
+# ACTIVITY LOG
+#-------------
+getActivityLog = (id) ->
+  url = '/activity_log/' + id
+  $.get(url, {}, (html) ->
+    $('#activity_log').html(html)
+  )
+
+$('#new-activity-log-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $submitButton = $(this).find('input[type="submit"]')
+    $submitButton.data('origText', $(this).text())
+    $submitButton.text("Enviando...")
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    getActivityLog(res['id'])
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+    $submitButton = $(this).find('input[type="submit"]')
+    $submitButton.text($(this).data('origText'))
+    $submitButton.attr('disabled', 'disabled').addClass('disabled')
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+
 
 #-----------
 # NAVIGATION

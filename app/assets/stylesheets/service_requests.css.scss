@@ -123,62 +123,28 @@
 }
 
 
-#requested-service {
-  float: left;
-  margin-left: $sample-list-width;
-  #requested-service-header {
-    padding-left: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    h2 {
-      margin-bottom: 10px;
-    }
-    .laboratory {
-    }
-  }
-}
-
-#requested-service-tabs {
-  border-bottom: 1px solid $line-color;
-  height: 27px;
-  width: 100%;
-  .tab { 
-    border: 1px solid $line-color;
-    border-bottom: 0;
-    background: $light-grey;
-    color: $grey;
-    float: left;
-    margin: 0 5px;
-    padding: 5px;
-    &.selected {
-      background: $white;
-      color: $black;
-      font-weight: bold;
-    }
-  }
-}
-
-#requested-service-log {
+#requested-service-header {
   margin-top: 10px;
-  padding: 10px;
-  table {
-    border-collapse: collapse;
-    font-size: 10px;
-    tr {
-      th {
-        border: 1px solid $line-color;
-        background: $selected-color;
-        color: $white; 
-        text-align: left;
-        font-weight: bold;
-        padding: 4px;
-      }
-      td {
-        border: 1px solid $line-color;
-        padding: 4px;
-      }
-    }
+  width: 580px;
+  h1 {
+    width: 500px;
   }
+  h2 {
+    width: 500px;
+    margin-bottom: 10px;
+  }
+  .laboratory {
+  }
+}
+
+#requested-service-lab-serv-desc {
+  width: 580px;
+  margin-bottom: 20px;
+}
+
+#requested-service-details {
+  width: 580px;
+  margin-bottom: 20px;
 }
 
 #empty-requests {
@@ -263,7 +229,11 @@
 #sample-workarea {
   width: $sample-workarea-width;
   margin-left: $sample-list-width;
-  padding: 10px;
+  overflow: auto;
+  position: fixed;
+  padding: 20px;
+  top: 177px;
+  bottom: 20px;
 }
 
 #services-panel {
@@ -340,6 +310,7 @@
   float: right;
   font-size: 12px;
   padding: 4px 10px;
+  margin-right: 10px;
   @include rounded(4px);
   background-color: $link-color;
   color: $white;

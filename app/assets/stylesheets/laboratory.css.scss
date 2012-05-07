@@ -2,17 +2,45 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#lab-samples-list {
+#lab-req-serv-list {
   bottom: 20px;
   top: 160px;
 }
 
-#lab-samples-panel {
+#lab-req-serv-panel {
   .panel-search {
     height: 90px;
   }
 }
 
-#lab-sample-workarea {
+#lab-req-serv-workarea {
   padding: 20px;
+}
+
+.lab-req-serv-item {
+  cursor: pointer;
+  padding: 20px 10px;
+  margin-left: 1px;
+  border-bottom: 1px solid $line-color;
+  &.selected {
+    background-color: $bg-selected;
+  }
+  .sample-requested-service {
+    font-weight: bold;
+  }
+  .rs-consecutive {
+    font-size: 10px;
+    padding: 4px;
+    @include rounded(4px);
+    background-color: $link-color;
+    color: $white;
+    text-align: center;
+    width: 64px;
+    float: right;
+  }
+  .sample-identificator {
+    font-weight: bold;
+  }
+  .sample-description {
+  }
 }

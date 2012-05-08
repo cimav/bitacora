@@ -304,11 +304,12 @@
     }
   }
   #laboratory-services-list {
-    border: 1px solid $line-color;
+    border-top: 1px solid $line-color;
     overflow: auto;
     position: absolute;
     top: 95px;
-    bottom: 16px;
+    bottom: 0px;
+    background: $white;
     .lab-service-item {
       cursor: pointer;
       padding: 5px;
@@ -323,11 +324,7 @@
         color: $grey;
       }
       &.selected {
-        background-color: $selected-color;
-        color: $white;
-        .lab-service-laboratory {
-          color: $selected-color-light;
-        }
+        background-color: $bg-selected;
       }
     }
   }

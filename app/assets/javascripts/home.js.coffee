@@ -162,6 +162,7 @@ $('#new-request-form')
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
+    $("#new-sample-dialog").remove()
     getServiceRequest(res['id'])
   )
   .live('ajax:complete', (evt, xhr, status) ->

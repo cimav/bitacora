@@ -63,7 +63,7 @@
 
 #sample {
   position: fixed;
-  top: 177px;
+  top: 196px;
   bottom: 20px;
   width: $sample-list-width;
   border-right: 1px solid $line-color;
@@ -158,19 +158,26 @@
 #service-request-header {
   padding: 10px;
   border-bottom: 1px solid $line-color;
-  height: 45px;
+  height: 64px;
   overflow: hidden;
   .number {
-    font-size: 20px;
+    background: transparent url('/assets/icons/folder64.png') no-repeat;
+    color: #cce4fc;
+    width: 74px;
+    height: 64px;
+    font-size: 16px;
     font-weight: bold;
-    text-align: center;
-    width: 70px;
+    padding-top: 28px;
+    padding-left: 16px;
     float: left;  
   }
   .description {
     float: left;
+    font-size: 14px;
+    margin-top: 14px;
     .service-link {
       font-weight: bold;
+      margin-bottom: 5px;
     }
   }
 }
@@ -178,7 +185,7 @@
 #sample-list {
   display: none;
   position: fixed;
-  top: 217px;
+  top: 236px;
   bottom: 72px;
   width: $sample-list-width;
   overflow: auto;
@@ -233,7 +240,7 @@
   overflow: auto;
   position: fixed;
   padding: 20px;
-  top: 177px;
+  top: 196px;
   bottom: 20px;
 }
 

@@ -16,6 +16,46 @@
   border: 1px solid $line-color;
   width: $work-area-width - 2;
 }
+
+.service-request-item {
+  cursor: pointer;
+  padding: 5px;
+  height: 64px;
+  overflow: hidden;
+  background: $white;
+  border-bottom: 1px solid $line-color;
+  .service-request-number {
+    font-weight: bold;
+    color: #cce4fc;
+    background: transparent url('/assets/icons/my-requests.png') no-repeat;
+    width: 48px;
+    height: 48px;
+    float: left;
+    padding-top: 20px;
+    padding-left: 12px;
+  }
+  .service-request-link {
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 58px;
+  }
+  .service-request-description {
+    margin-left: 58px;
+    font-size: 11px;
+    color: $grey;
+  }
+  &.selected {
+    background-color: $selected-color;
+    color: $white;
+    .lab-service-laboratory {
+      color: $selected-color-light;
+    }
+  }
+}
+
+
+
 #field_service_request_request_type_id, 
 #field_service_request_request_link {
   margin-bottom: 1em;

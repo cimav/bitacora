@@ -9,7 +9,11 @@ class ServiceRequestsController < ApplicationController
   end
 
   def live_search
-    render :inline => "TODO"
+    @requests = ServiceRequest.where(:user_id => current_user.id).order('created_at DESC')
+    if !params[:q].blank?
+      @requests = @requests.where("(description LIKE :q OR number LIKE :q OR request_link LIKE :q)", {:q => "%#{params[:q]}%"}) 
+    end
+    render :layout => false
   end
 
   def sample_list

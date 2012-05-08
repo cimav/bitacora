@@ -37,6 +37,18 @@
         border: 1px solid $workarea-bar-border;
       }
     }
+    #search-results {
+      display: none;
+      border: 1px solid $line-color;
+      background: $white;
+      width: 240px;
+      position: absolute;
+      top: 49px;
+      right: 10px;
+      bottom: 10px;
+      z-index: 777;
+      overflow: auto;
+    }
     #add-new-button-area {
       float: left;
       width: 40px;

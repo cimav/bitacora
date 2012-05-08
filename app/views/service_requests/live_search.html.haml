@@ -1,0 +1,5 @@
+- @requests.each do |r|
+  .service-request-item{:service_request_id => r.id}
+    .service-request-number= r.number
+    .service-request-link= "#{r.request_type.name} #{r.request_link}"
+    .service-request-description= r.description

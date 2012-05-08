@@ -7,6 +7,33 @@ current_sample = 0
 #------------
 # MY REQUESTS
 #------------
+my_request_search_results = false
+
+requestsLiveSearch = () -> 
+  #return false if $("#search-box").val().length < 3
+  form = $('#live-search')
+  url = '/service_requests/live_search'
+  formData = form.serialize()
+  $.get(url, formData, (html) ->
+    $('#search-results').html(html)
+    $('#search-results').show()
+  )
+
+$('#search-box')
+  .live('keyup', () ->
+    requestsLiveSearch() 
+  )
+  .live('click', () ->
+    requestsLiveSearch() 
+  )
+
+$('.service-request-item')
+  .live('click', () ->
+    $('#search-results').hide()
+    getServiceRequest($(this).attr('service_request_id'))
+  )
+
+
 $('#add-new-button')
   .live('click', () ->
     url = '/service_requests/new'

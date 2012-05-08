@@ -1,5 +1,5 @@
 #new-request-area.inner-area
-  %h1 Solicitud de servicio
+  %h1 Nueva carpeta
   = form_for @request, :remote => true, :html => {:'data-type' => 'html', :id => 'new-request-form'} do |f|
     .field#field_service_request_request_type_id
       = f.label :request_type_id, 'Tipo:'

@@ -1,6 +1,6 @@
 - @requested_services.each do |rs|
   .lab-req-serv-item{:requested_service_id => rs.id, :sample_id => rs.sample_id}
-    .rs-consecutive
+    .rs-consecutive{:class => "status_#{rs.status}"}
       = rs.number
     .sample-requested-service
       = rs.laboratory_service.name

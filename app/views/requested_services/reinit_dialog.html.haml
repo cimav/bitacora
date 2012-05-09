@@ -1,0 +1,11 @@
+.inner-area
+  %h1= "Reiniciar servicio #{@requested_service.number}"
+  = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'reinit-sample-form'} do |f|
+    = f.hidden_field :status, {:value => RequestedService::REINIT}
+    #field_service_request_sample_description
+      = label_tag 'activity_log_msg', 'Notas:'
+      = text_area_tag 'activity_log_msg'
+    .clearfix
+    #dialog-submit-button-area
+      = f.submit "Reiniciar Servicio"
+

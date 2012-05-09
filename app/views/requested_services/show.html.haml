@@ -28,27 +28,27 @@
 
         - if assigned_action
           - klass = "status_#{RequestedService::ASSIGNED}"
-          %li{:status_action => RequestedService::ASSIGNED, :class => klass}= "Asignar técnico"
+          %li{:status_action => RequestedService::ASSIGNED, :class => klass, :id => 'change_status_assigned'}= "Asignar técnico"
 
         - if suspended_action
           - klass = "status_#{RequestedService::SUSPENDED}"
-          %li{:status_action => RequestedService::SUSPENDED, :class => klass}= "Suspender servicio"
+          %li{:status_action => RequestedService::SUSPENDED, :class => klass, :id => 'change_status_suspended'}= "Suspender servicio"
 
         - if reinit_action
           - klass = "status_#{RequestedService::REINIT}"
-          %li{:status_action => RequestedService::REINIT, :class => klass}= "Reiniciar servicio"
+          %li{:status_action => RequestedService::REINIT, :class => klass, :id => 'change_status_reinit'}= "Reiniciar servicio"
 
         - if in_progress_action
           - klass = "status_#{RequestedService::IN_PROGRESS}"
-          %li{:status_action => RequestedService::IN_PROGRESS, :class => klass}= "Empezar servicio"
+          %li{:status_action => RequestedService::IN_PROGRESS, :class => klass, :id => 'change_status_in_progress'}= "Empezar servicio"
 
         - if finished_action
           - klass = "status_#{RequestedService::FINISHED}"
-          %li{:status_action => RequestedService::FINISHED, :class => klass}= "Finalizar servicio"
+          %li{:status_action => RequestedService::FINISHED, :class => klass, :id => 'change_status_finished'}= "Finalizar servicio"
 
         - if canceled_action
           - klass = "status_#{RequestedService::CANCELED}"
-          %li{:status_action => RequestedService::CANCELED, :class => klass}= "Cancelar servicio"
+          %li{:status_action => RequestedService::CANCELED, :class => klass, :id => 'change_status_canceled'}= "Cancelar servicio"
   %h1= @requested_service.laboratory_service.name
   %h2= @requested_service.laboratory_service.laboratory.name
 

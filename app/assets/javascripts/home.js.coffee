@@ -297,6 +297,187 @@ $('#receive-sample-form')
     showFormErrors(xhr, status, error)
   )
 
+# ASSIGN
+$('#change_status_assigned')
+  .live('click', () ->
+    $("#assign-sample-dialog").remove()
+    $('#container').append('<div title="Asignar Servicio" id="assign-sample-dialog"></div>')
+    $("#assign-sample-dialog").dialog({ autoOpen: true, width: 340, height: 400, modal:true })
+    url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/assign_dialog'
+    $.get(url, {}, (html) ->
+      $('#assign-sample-dialog').empty().html(html)
+    )
+  )
+
+$('#assign-sample-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    getRequestedService(res['sample_id'], res['id'])
+    $("#assign-sample-dialog").dialog('close').dialog('destroy').remove()
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+# SUSPEND
+$('#change_status_suspended')
+  .live('click', () ->
+    $("#suspend-sample-dialog").remove()
+    $('#container').append('<div title="Suspender Servicio" id="suspend-sample-dialog"></div>')
+    $("#suspend-sample-dialog").dialog({ autoOpen: true, width: 340, height: 400, modal:true })
+    url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/suspend_dialog'
+    $.get(url, {}, (html) ->
+      $('#suspend-sample-dialog').empty().html(html)
+    )
+  )
+
+$('#suspend-sample-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    getRequestedService(res['sample_id'], res['id'])
+    $("#suspend-sample-dialog").dialog('close').dialog('destroy').remove()
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+# REINIT
+$('#change_status_reinit')
+  .live('click', () ->
+    $("#reinit-sample-dialog").remove()
+    $('#container').append('<div title="Reiniciar Servicio" id="reinit-sample-dialog"></div>')
+    $("#reinit-sample-dialog").dialog({ autoOpen: true, width: 340, height: 400, modal:true })
+    url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/reinit_dialog'
+    $.get(url, {}, (html) ->
+      $('#reinit-sample-dialog').empty().html(html)
+    )
+  )
+
+$('#reinit-sample-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    getRequestedService(res['sample_id'], res['id'])
+    $("#reinit-sample-dialog").dialog('close').dialog('destroy').remove()
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+# START
+$('#change_status_in_progress')
+  .live('click', () ->
+    $("#start-sample-dialog").remove()
+    $('#container').append('<div title="Iniciar Servicio" id="start-sample-dialog"></div>')
+    $("#start-sample-dialog").dialog({ autoOpen: true, width: 340, height: 400, modal:true })
+    url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/start_dialog'
+    $.get(url, {}, (html) ->
+      $('#start-sample-dialog').empty().html(html)
+    )
+  )
+
+$('#start-sample-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    getRequestedService(res['sample_id'], res['id'])
+    $("#start-sample-dialog").dialog('close').dialog('destroy').remove()
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+# FINISH
+$('#change_status_finished')
+  .live('click', () ->
+    $("#finish-sample-dialog").remove()
+    $('#container').append('<div title="Finalizar Servicio" id="finish-sample-dialog"></div>')
+    $("#finish-sample-dialog").dialog({ autoOpen: true, width: 340, height: 400, modal:true })
+    url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/finish_dialog'
+    $.get(url, {}, (html) ->
+      $('#finish-sample-dialog').empty().html(html)
+    )
+  )
+
+$('#finish-sample-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    getRequestedService(res['sample_id'], res['id'])
+    $("#finish-sample-dialog").dialog('close').dialog('destroy').remove()
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+# CANCEL
+$('#change_status_canceled')
+  .live('click', () ->
+    $("#cancel-sample-dialog").remove()
+    $('#container').append('<div title="Cancelar Servicio" id="cancel-sample-dialog"></div>')
+    $("#cancel-sample-dialog").dialog({ autoOpen: true, width: 340, height: 400, modal:true })
+    url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/cancel_dialog'
+    $.get(url, {}, (html) ->
+      $('#cancel-sample-dialog').empty().html(html)
+    )
+  )
+
+$('#cancel-sample-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    getRequestedService(res['sample_id'], res['id'])
+    $("#cancel-sample-dialog").dialog('close').dialog('destroy').remove()
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+
 
 #-----------
 # NAVIGATION

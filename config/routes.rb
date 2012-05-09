@@ -12,6 +12,12 @@ Bitacora::Application.routes.draw do
       member do
         get 'initial_dialog'
         get 'receive_dialog'
+        get 'assign_dialog'
+        get 'suspend_dialog'
+        get 'reinit_dialog'
+        get 'start_dialog'
+        get 'finish_dialog'
+        get 'cancel_dialog'
       end
     end
   end

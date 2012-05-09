@@ -13,6 +13,37 @@ class RequestedServicesController < ApplicationController
     render :layout => false
   end
 
+  def assign_dialog
+    @requested_service = RequestedService.find(params['id'])
+    render :layout => false
+  end
+
+  def suspend_dialog
+    @requested_service = RequestedService.find(params['id'])
+    render :layout => false
+  end
+
+  def reinit_dialog
+    @requested_service = RequestedService.find(params['id'])
+    render :layout => false
+  end
+
+  def start_dialog
+    @requested_service = RequestedService.find(params['id'])
+    render :layout => false
+  end
+
+  def finish_dialog
+    @requested_service = RequestedService.find(params['id'])
+    render :layout => false
+  end
+
+  def cancel_dialog
+    @requested_service = RequestedService.find(params['id'])
+    render :layout => false
+  end
+
+
   def show
     @requested_service = RequestedService.find(params['id'])
     @activity_log = ActivityLog.where("user_id = :u
@@ -84,6 +115,12 @@ class RequestedServicesController < ApplicationController
         # LOG
         msg = "Muestra para el análisis #{@requested_service.number} regresada a estado inicial" if @requested_service.status.to_i == RequestedService::INITIAL
         msg = "Muestra para el análisis #{@requested_service.number} recibida" if @requested_service.status.to_i == RequestedService::RECEIVED
+        msg = "El análisis #{@requested_service.number} ha sido asignada a ????" if @requested_service.status.to_i == RequestedService::ASSIGNED
+        msg = "El análisis #{@requested_service.number} ha sido suspendida" if @requested_service.status.to_i == RequestedService::SUSPENDED
+        msg = "El análisis #{@requested_service.number} ha reiniciado" if @requested_service.status.to_i == RequestedService::REINIT
+        msg = "El análisis #{@requested_service.number} ha iniciado" if @requested_service.status.to_i == RequestedService::IN_PROGRESS
+        msg = "El análisis #{@requested_service.number} ha finalizado" if @requested_service.status.to_i == RequestedService::FINISHED
+        msg = "El análisis #{@requested_service.number} ha sido cancelado" if @requested_service.status.to_i == RequestedService::CANCELED
         
         @requested_service.activity_log.create(user_id: current_user,
                                                service_request_id: @requested_service.sample.service_request_id,

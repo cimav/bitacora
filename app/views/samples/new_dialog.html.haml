@@ -1,0 +1,13 @@
+%h1 Agregar nueva muestra
+= form_for Sample.new, :remote => true, :html => {:'data-type' => 'html', :id => 'new-sample-form'} do |f|
+  = f.hidden_field :service_request_id, {:value => @request.id}
+  #field_service_request_sample_identification
+    = f.label :identification, 'Identificación de muestra:'
+    = f.text_field :identification, :placeholder => 'Identificación de muestra'
+  .clearfix
+  #field_service_request_sample_description
+    = f.label :description, 'Descripción:'
+    = f.text_area :description, :placeholder => 'Descripción de la muestra'
+  .clearfix
+  #dialog-submit-button-area
+    = f.submit "Agregar muestra"

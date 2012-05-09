@@ -6,6 +6,7 @@ Bitacora::Application.routes.draw do
   match '/service_requests/live_search' => 'service_requests#live_search'
   resources :service_requests 
   match '/samples/:id/requested_services_list' => 'samples#requested_services_list'
+  match '/samples/new_dialog/:service_request_id' => 'samples#new_dialog'
   resources :samples do
     resources :requested_services
   end

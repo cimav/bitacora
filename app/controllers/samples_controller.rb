@@ -12,6 +12,11 @@ class SamplesController < ApplicationController
     render :layout => false
   end
 
+  def new_dialog
+    @request = ServiceRequest.find(params[:service_request_id])
+    render :layout => false
+  end
+
   def create
     @sample = Sample.new(params[:sample])
 

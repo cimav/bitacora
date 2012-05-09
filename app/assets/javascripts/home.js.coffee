@@ -58,7 +58,7 @@ $('#sample-header')
 
 newSampleDialog = () ->
    $("#new-sample-dialog").remove();
-   $('#container').append('<div title="New Muestra" id="new-sample-dialog"></div>');
+   $('#container').append('<div title="Agregar Muestra" id="new-sample-dialog"></div>');
    $("#new-sample-dialog").dialog({ autoOpen: true, width: 340, height: 400, modal:true }); 
 
 $("#add-new-sample-button")

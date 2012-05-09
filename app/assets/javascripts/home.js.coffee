@@ -115,6 +115,16 @@ labServicesLiveSearch = () ->
     $("#laboratory-services-list .lab-service-item:first").click()
   )
 
+$('.lab-service-item')
+  .live('click', () ->
+    $('.lab-service-item').removeClass('selected')
+    $(this).addClass('selected')
+    url = '/laboratory_services/' + $(this).attr('laboratory_service_id') + '/for_sample/' + current_sample
+    $.get(url, {}, (html) ->
+      $('#service-details').html(html)
+    )
+  )
+
 $('#new-requested-service-form')
   .live("ajax:beforeSend", (evt, xhr, settings) ->
     $('.error-message').remove()

@@ -1,0 +1,10 @@
+.inner-area
+  %h1= "Recibir muestra #{@requested_service.sample.number}"
+  = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'receive-sample-form'} do |f|
+    = f.hidden_field :status, {:value => RequestedService::RECEIVED}
+    #field_service_request_sample_description
+      = label_tag 'activity_log_msg', 'Notas:'
+      = text_area_tag 'activity_log_msg'
+    .clearfix
+    #dialog-submit-button-area
+      = f.submit "Recibir muestra"

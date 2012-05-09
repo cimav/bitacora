@@ -1,0 +1,11 @@
+.inner-area
+  %h1= "Regresar muestra #{@requested_service.sample.number} a inicio"
+  = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'initial-sample-form'} do |f|
+    = f.hidden_field :status, {:value => RequestedService::INITIAL}
+    #field_service_request_sample_description
+      = label_tag 'activity_log_msg', 'Notas:'
+      = text_area_tag 'activity_log_msg'
+    .clearfix
+    #dialog-submit-button-area
+      = f.submit "Regresar a inicio"
+

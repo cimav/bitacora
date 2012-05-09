@@ -4,6 +4,7 @@
 
 current_sample = 0
 current_request = 0
+current_requested_service = 0
 
 #------------
 # MY REQUESTS
@@ -57,9 +58,9 @@ $('#sample-header')
 
 
 newSampleDialog = () ->
-   $("#new-sample-dialog").remove();
-   $('#container').append('<div title="Agregar Muestra" id="new-sample-dialog"></div>');
-   $("#new-sample-dialog").dialog({ autoOpen: true, width: 340, height: 400, modal:true }); 
+   $("#new-sample-dialog").remove()
+   $('#container').append('<div title="Agregar Muestra" id="new-sample-dialog"></div>')
+   $("#new-sample-dialog").dialog({ autoOpen: true, width: 340, height: 400, modal:true })
 
 $("#add-new-sample-button")
   .live("click", () ->
@@ -114,16 +115,6 @@ labServicesLiveSearch = () ->
     $("#laboratory-services-list .lab-service-item:first").click()
   )
 
-$('.lab-service-item')
-  .live('click', () ->
-    $('.lab-service-item').removeClass('selected')
-    $(this).addClass('selected')
-    url = '/laboratory_services/' + $(this).attr('laboratory_service_id') + '/for_sample/' + current_sample
-    $.get(url, {}, (html) ->
-      $('#service-details').empty().html(html)
-    )
-  )
-
 $('#new-requested-service-form')
   .live("ajax:beforeSend", (evt, xhr, settings) ->
     $('.error-message').remove()
@@ -149,7 +140,7 @@ $('#new-requested-service-form')
   $.get(url, {}, (html) ->
     $('.requested_service').removeClass('selected')
     $('#requested_service_' + id).addClass('selected')
-    $('#sample-workarea').empty().html(html)
+    $('#requested-service-workarea').empty().html(html)
   )
 
 getSampleRequestedServices = (sample_id) ->
@@ -160,7 +151,7 @@ getSampleRequestedServices = (sample_id) ->
 
 $('.requested_service')
   .live('click', () ->
-    getRequestedService(current_sample, $(this).attr('requested_service_id'))
+    getRequestedService($(this).attr('sample_id'), $(this).attr('requested_service_id'))
   )
 
 $('#new-sample-form')
@@ -212,19 +203,6 @@ $('#new-request-form')
     $("#lab-req-serv-list .lab-req-serv-item:first").click()
   )
 
-$('.lab-req-serv-item')
-  .live('click', () ->
-    $('.lab-req-serv-item').removeClass('selected')
-    $(this).addClass('selected')
-    sample_id = $(this).attr('sample_id')
-    req_serv_id = $(this).attr('requested_service_id')
-    url = '/samples/' + sample_id + '/requested_services/' + req_serv_id
-    current_requested_service = req_serv_id
-    $.get(url, {}, (html) ->
-      $('#lab-req-serv-workarea').empty().html(html)
-    )
-  )
-
 #-------------
 # ACTIVITY LOG
 #-------------
@@ -259,33 +237,16 @@ $('#requested-service-status')
     $('#action-list').toggle()
   )
 
-$('#change_status_received') 
+# INITIAL
+$('#change_status_initial') 
   .live('click', () ->
-    $('#receive-sample-dialog').dialog('open')
-  )
-
-$('#receive-sample-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
-    $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
-  )
-  .live("ajax:success", (evt, data, status, xhr) ->
-    $form = $(this)
-    res = $.parseJSON(xhr.responseText)
-    showFlash(res['flash']['notice'], 'success')
-    getRequestedService(res['sample_id'], res['id'])
-    $("#receive-sample-dialog").dialog('close')
-  )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
-    showFormErrors(xhr, status, error)
-  )
-
-
-$('#change_status_initial')
-  .live('click', () ->
-    $('#initial-sample-dialog').dialog('open')
+    $("#initial-sample-dialog").remove()
+    $('#container').append('<div title="Agregar Muestra" id="initial-sample-dialog"></div>')
+    $("#initial-sample-dialog").dialog({ autoOpen: true, width: 340, height: 400, modal:true })
+    url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/initial_dialog'
+    $.get(url, {}, (html) ->
+      $('#initial-sample-dialog').empty().html(html)
+    )
   )
 
 $('#initial-sample-form')
@@ -298,7 +259,7 @@ $('#initial-sample-form')
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     getRequestedService(res['sample_id'], res['id'])
-    $("#initial-sample-dialog").dialog('close')
+    $("#initial-sample-dialog").dialog('close').dialog('destroy').remove()
   )
   .live('ajax:complete', (evt, xhr, status) ->
   )
@@ -306,6 +267,35 @@ $('#initial-sample-form')
     showFormErrors(xhr, status, error)
   )
 
+# RECEIVED
+$('#change_status_received') 
+  .live('click', () ->
+    $("#receive-sample-dialog").remove()
+    $('#container').append('<div title="xxxRecibir Muestra" id="receive-sample-dialog"></div>')
+    $("#receive-sample-dialog").dialog({ autoOpen: true, width: 340, height: 400, modal:true })
+    url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/receive_dialog'
+    $.get(url, {}, (html) ->
+      $('#receive-sample-dialog').empty().html(html)
+    )
+  )
+
+$('#receive-sample-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    getRequestedService(res['sample_id'], res['id'])
+    $("#receive-sample-dialog").dialog('close').dialog('destroy').remove()
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
 
 
 #-----------

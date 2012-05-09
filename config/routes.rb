@@ -8,8 +8,15 @@ Bitacora::Application.routes.draw do
   match '/samples/:id/requested_services_list' => 'samples#requested_services_list'
   match '/samples/new_dialog/:service_request_id' => 'samples#new_dialog'
   resources :samples do
-    resources :requested_services
+    resources :requested_services do
+      member do
+        get 'initial_dialog'
+        get 'receive_dialog'
+      end
+    end
   end
+
+
   match '/laboratory_services/live_search' => 'laboratory_services#live_search'
   match '/laboratory_services/:id/for_sample/:sample_id' => 'laboratory_services#for_sample'
   resources :laboratory_services

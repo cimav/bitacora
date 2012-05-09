@@ -3,6 +3,16 @@ class RequestedServicesController < ApplicationController
   before_filter :auth_required
   respond_to :html, :json
 
+  def initial_dialog
+    @requested_service = RequestedService.find(params['id'])
+    render :layout => false
+  end
+ 
+  def receive_dialog
+    @requested_service = RequestedService.find(params['id'])
+    render :layout => false
+  end
+
   def show
     @requested_service = RequestedService.find(params['id'])
     @activity_log = ActivityLog.where("user_id = :u

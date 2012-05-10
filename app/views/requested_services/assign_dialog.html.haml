@@ -2,6 +2,17 @@
   %h1= "Asignar servicio #{@requested_service.number}"
   = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'assign-sample-form'} do |f|
     = f.hidden_field :status, {:value => RequestedService::ASSIGNED}
+    #field_service_request_user_id
+    = label_tag :user_id, 'Técnico:'
+    - members = LaboratoryMember.where(:laboratory_id => @requested_service.laboratory_service.laboratory_id)
+    - u_options = ''
+    - members.each do |m|
+      - if m.user_id == @requested_service.suggested_user_id
+        - sug = '* '
+      - else 
+        - sug = ''
+      - u_options += "<option value=\"#{m.user_id}\">#{sug}#{m.user.full_name}</option>"
+    = f.select :user_id, u_options.html_safe
     #field_service_request_sample_description
       = label_tag 'activity_log_msg', 'Notas:'
       = text_area_tag 'activity_log_msg'

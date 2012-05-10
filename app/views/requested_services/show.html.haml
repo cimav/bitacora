@@ -2,14 +2,14 @@
 - im_service_tech = @requested_service.user_id == current_user.id
 - im_requestor = @requested_service.sample.service_request.user_id == current_user.id
 
-- initial_action =  @requested_service.status.to_i > RequestedService::INITIAL && im_lab_admin
+- initial_action =  @requested_service.status.to_i > RequestedService::INITIAL && @requested_service.status.to_i < RequestedService::FINISHED && im_lab_admin
 - received_action = @requested_service.status.to_i == RequestedService::INITIAL && im_lab_admin
 - assigned_action = @requested_service.status.to_i == RequestedService::RECEIVED && im_lab_admin
 - suspended_action = (@requested_service.status.to_i == RequestedService::IN_PROGRESS || @requested_service.status.to_i == RequestedService::REINIT) && (im_lab_admin || im_service_tech)
 - reinit_action = (@requested_service.status.to_i == RequestedService::SUSPENDED) && (im_lab_admin || im_service_tech)
 - in_progress_action = @requested_service.status.to_i == RequestedService::ASSIGNED && (im_lab_admin || im_service_tech)
 - finished_action = (@requested_service.status.to_i == RequestedService::IN_PROGRESS || @requested_service.status.to_i == RequestedService::REINIT) && (im_lab_admin || im_service_tech)
-- canceled_action = (@requested_service.status.to_i > RequestedService::INITIAL && im_lab_admin) || ((@requested_service.status.to_i == RequestedService::INITIAL || @requested_service.status.to_i == RequestedService::SUSPENDED) && im_requestor ) 
+- canceled_action = (@requested_service.status.to_i > RequestedService::INITIAL && @requested_service.status.to_i < RequestedService::FINISHED && im_lab_admin) || ((@requested_service.status.to_i == RequestedService::INITIAL || @requested_service.status.to_i == RequestedService::SUSPENDED) && im_requestor ) 
 
 
 #requested-service-header 
@@ -55,6 +55,9 @@
   #suggested-user
     %strong= "Técnico Sugerido: "
     = "#{(@requested_service.suggested_user.full_name rescue 'Cualquier Técnico')}"
+    - if !@requested_service.user_id.blank?
+      %strong= "/ Técnico Asignado: "
+      = "#{(@requested_service.user.full_name)}"
 
 #requested-service-details
   %strong Anotaciones Particulares:

@@ -115,7 +115,7 @@ class RequestedServicesController < ApplicationController
         # LOG
         msg = "Muestra para el análisis #{@requested_service.number} regresada a estado inicial" if @requested_service.status.to_i == RequestedService::INITIAL
         msg = "Muestra para el análisis #{@requested_service.number} recibida" if @requested_service.status.to_i == RequestedService::RECEIVED
-        msg = "El análisis #{@requested_service.number} ha sido asignada a ????" if @requested_service.status.to_i == RequestedService::ASSIGNED
+        msg = "El análisis #{@requested_service.number} ha sido asignada a #{@requested_service.user.full_name}" if @requested_service.status.to_i == RequestedService::ASSIGNED
         msg = "El análisis #{@requested_service.number} ha sido suspendida" if @requested_service.status.to_i == RequestedService::SUSPENDED
         msg = "El análisis #{@requested_service.number} ha reiniciado" if @requested_service.status.to_i == RequestedService::REINIT
         msg = "El análisis #{@requested_service.number} ha iniciado" if @requested_service.status.to_i == RequestedService::IN_PROGRESS

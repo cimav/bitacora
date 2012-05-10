@@ -49,16 +49,15 @@
         - if canceled_action
           - klass = "status_#{RequestedService::CANCELED}"
           %li{:status_action => RequestedService::CANCELED, :class => klass, :id => 'change_status_canceled'}= "Cancelar servicio"
+
   %h1= @requested_service.laboratory_service.name
   %h2= @requested_service.laboratory_service.laboratory.name
+  #suggested-user
+    %strong= "Técnico Sugerido: "
+    = "#{(@requested_service.suggested_user.full_name rescue 'Cualquier Técnico')}"
 
-   
-
-
-#requested-service-lab-serv-desc
-  = @requested_service.laboratory_service.description
 #requested-service-details
-  %strong Anotaciones particulares:
+  %strong Anotaciones Particulares:
   %div= @requested_service.details
 
 #activity_log

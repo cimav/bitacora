@@ -148,6 +148,7 @@ ActiveRecord::Schema.define(:version => 20120503191711) do
     t.string   "number",                :limit => 20
     t.text     "details"
     t.integer  "user_id"
+    t.integer  "suggested_user_id"
     t.string   "status",                              :default => "1"
     t.datetime "created_at",                                           :null => false
     t.datetime "updated_at",                                           :null => false
@@ -155,6 +156,7 @@ ActiveRecord::Schema.define(:version => 20120503191711) do
 
   add_index "requested_services", ["laboratory_service_id"], :name => "index_requested_services_on_laboratory_service_id"
   add_index "requested_services", ["sample_id"], :name => "index_requested_services_on_sample_id"
+  add_index "requested_services", ["suggested_user_id"], :name => "index_requested_services_on_suggested_user_id"
   add_index "requested_services", ["user_id"], :name => "index_requested_services_on_user_id"
 
   create_table "samples", :force => true do |t|

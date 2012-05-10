@@ -7,6 +7,14 @@
   %p
     %strong= "Laboratorio: "
     = "#{@laboratory_service.laboratory.name}"
+  %p
+    %strong= "Técnico Sugerido: "
+    - members = LaboratoryMember.where(:laboratory_id => @laboratory_service.laboratory_id)
+    - sug_options = "<option value=\"\">Cualquier Técnico</option>"
+    - members.each do |m|
+      - sug_options += "<option value=\"#{m.user_id}\">#{m.user.full_name}</option>"
+    = f.select "suggested_user_id", sug_options.html_safe
+
   #field_requested_service_details
     %div
       %strong= "Anotaciones particulares:"

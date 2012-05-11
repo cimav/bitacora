@@ -9,7 +9,7 @@ gem 'mysql2'
 
 gem 'json'
 
-gem 'haml'
+gem 'haml', '3.1.4'
 
 
 # Gems used only for assets and not required
@@ -28,6 +28,6 @@ gem 'jquery-rails'
 
 gem 'omniauth-google-oauth2'
 
-gem 'carrierwave', '0.5.8'
+gem 'carrierwave'
 gem 'rmagick'
 gem 'mini_magick'

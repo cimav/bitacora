@@ -32,6 +32,11 @@ Bitacora::Application.routes.draw do
 
   resources :activity_log, :as => :activity_logs
 
+  match '/service_files/ui/:service_request_id' => 'service_files#ui'
+  match '/service_files/ui/:service_request_id/:sample_id' => 'service_files#ui'
+  match '/service_files/ui/:service_request_id/:sample_id/:requested_service_id' => 'service_files#ui'
+  resources :service_files
+
   match '/auth/:provider/callback' => 'sessions#create'
   match '/auth/failure' => 'sessions#failure'
   match "/logout" => 'sessions#destroy'

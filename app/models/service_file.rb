@@ -9,4 +9,5 @@ class ServiceFile < ActiveRecord::Base
   def delete_linked_file
     self.remove_file!
   end
+
 end

@@ -63,10 +63,20 @@
   %strong Anotaciones Particulares:
   %div= @requested_service.details
 
-#activity_log
-  = render :partial => 'activity_log/activity_log', :locals => {:activity_log => @activity_log, 
-                                                                :service_request_id => @requested_service.sample.service_request_id, 
-                                                                :sample_id => @requested_service.sample_id, 
-                                                                :requested_service_id => @requested_service.id}
+#requested-service-tabs.tabs
+  %ul
+    %li.selected
+      %a{:id => 'activity-tab-link'}= "Bitácora"
+    %li
+      %a{:id => 'files-tab-link'}= "Archivos"
+
+#activity-tab.tab-content
+  #activity_log
+    = render :partial => 'activity_log/activity_log', :locals => {:activity_log => @activity_log, 
+                                                                  :service_request_id => @requested_service.sample.service_request_id, 
+                                                                  :sample_id => @requested_service.sample_id, 
+                                                                  :requested_service_id => @requested_service.id}
+#files-tab.tab-content
+  %iframe{"name" => "submit_iframe", "id" => "files_iframe", "width" => "100%", "height" => "250", "src" => "/service_files/ui/#{@requested_service.sample.service_request_id}/#{@requested_service.sample_id}/#{@requested_service.id}", "scrolling" => "no", "onLoad" => "calcFrameHeight(this.id);" }
 
 

@@ -281,3 +281,33 @@
   padding: 20px;
   background: #fff;
 }
+
+.tabs {
+  height: 23px;
+  border-bottom: 1px solid $line-color;
+  margin-bottom: 10px;
+  ul {
+    li {
+      float: left;
+      margin: 0 4px;
+      border: 1px solid $line-color;
+      background: $bg-color;
+      padding: 5px 10px;
+      &.selected {
+        background: $white;
+        border-bottom: 1px solid #fff;
+        a {
+          font-weight: bold;
+        }
+      }
+      a {
+        display: block;
+        cursor: pointer;
+        color: $black;
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}

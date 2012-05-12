@@ -56,6 +56,22 @@ $('#sample-header')
     $('#sample-list').toggle()
   )
 
+$('#activity-tab-link') 
+  .live('click', () ->
+    $('#requested-service-tabs ul li').removeClass('selected')
+    $(this).closest('li').addClass("selected"); 
+    $('.tab-content').hide()
+    $('#activity-tab').show()
+  )
+
+$('#files-tab-link') 
+  .live('click', () ->
+    $('#requested-service-tabs ul li').removeClass('selected')
+    $(this).closest('li').addClass("selected"); 
+    $('.tab-content').hide()
+    $('#files-tab').show()
+  )
+
 
 newSampleDialog = () ->
    $("#new-sample-dialog").remove()

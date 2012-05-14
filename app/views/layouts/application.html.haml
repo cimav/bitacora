@@ -10,15 +10,12 @@
       #topbar
         #title Servicios de Laboratorio
       #nav
-        .nav-item#nav-home.selected
-          .nav-icon= image_tag('/assets/icons/home.png')
-          .nav-title= "Inicio"
         .nav-item#nav-my-requests
           .nav-icon= image_tag('/assets/icons/my-requests.png')
           .nav-title= "Mis carpetas"
         - current_user.laboratories.each do |laboratory|
           .nav-item.nav-lab{:id => "nav-laboratory-#{laboratory.id}", :laboratory_id => laboratory.id}
-            .nav-icon= image_tag('/assets/icons/my-requests.png')
+            .nav-icon= image_tag('/assets/icons/lab-folder.png')
             .nav-title= laboratory.name
        
       #workarea

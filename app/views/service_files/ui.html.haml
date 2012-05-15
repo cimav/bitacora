@@ -12,12 +12,20 @@
     $("#item-upload-file-form").submit();
   });
 
+  $('.file_type_combo').live('change', function() {
+    $(this).closest('form').submit();
+  });
+
+
   $('.file-desc-form')
     .live("ajax:success", function(evt, data, status, xhr) {
       var res = $.parseJSON(xhr.responseText);
       id = res['id'];
       $("#file-" + id + " .file-desc-form").hide();
       $("#file-" + id + " .file-desc").show();
+      $("#file-" + id + " .file-desc").removeClass('file_type_1');
+      $("#file-" + id + " .file-desc").removeClass('file_type_99');
+      $("#file-" + id + " .file-desc").addClass('file_type_' + res['newtype']);
       $("#file-" + id + " .file-desc a").html(res['newdesc']);
       $("#file-" + id + " .file-details").show();
     })
@@ -44,30 +52,40 @@
 
     });
 
-= form_for(ServiceFile.new, :url => { :action => "upload_file" }, :html => {:id => 'item-upload-file-form', :multipart => true}) do |f|
-  = f.hidden_field :service_request_id, {:value => @service_request_id }
-  = f.hidden_field :sample_id, {:value => @sample_id }
-  = f.hidden_field :requested_service_id, {:value => @requested_service_id }
-  #upload-box
-    = f.file_field :file, {"multiple" => "multiple"}
-    .upload Subir archivos
-    .upload-msg Puedes seleccionar varios archivos a la vez para subir.
-#files-area
-  %table{'class' => 'files-table'}
-    - @files.each do |service_file|
-      %tr{'id' => "file-#{service_file.id}"}
-        - if File.extname(service_file.file.to_s) == ''
-          - ext = 'unknown'
-        - else 
-          - ext = File.extname(service_file.file.to_s)[1..-1]
-        %td{"class" => "file-entry type-unknown type-" + ext, "title" => File.basename(service_file.file.to_s)}
-          = form_for(service_file, :remote => true, :html => {:'data-type' => 'html', :class => 'file-desc-form'}) do |ff|
-            = ff.text_field :description
-          %span.file-desc
-            %a{'href' => "/estudiantes//archivo/#{service_file.id}"}= service_file.description
-          %br
-          %span.file-details= ext.upcase + ", " + number_to_human_size(File.size(service_file.file.to_s))
-          %span.file-edit
-            = link_to_function 'Editar descripción', "edit_description(#{service_file.id})"
-            |
-            = link_to 'Eliminar archivo', @service_file, :confirm => '¿Estás seguro?', :method => 'delete', :remote => true, :class => 'delete-file'
+#upload-area
+  - @service_file = ServiceFile.new
+  = form_for(@service_file, :html => {:id => 'item-upload-file-form', :multipart => true}) do |f|
+    = f.hidden_field :service_request_id, {:value => @service_request_id }
+    = f.hidden_field :sample_id, {:value => @sample_id }
+    = f.hidden_field :requested_service_id, {:value => @requested_service_id }
+    #upload-box
+      = f.file_field :file, {"multiple" => "multiple"}
+      .upload Subir archivos
+      .upload-msg Puedes seleccionar varios archivos a la vez para subir.
+  #files-area
+    %table{'class' => 'files-table'}
+      - @files.each do |service_file|
+        %tr{'id' => "file-#{service_file.id}"}
+          - if File.extname(service_file.file.to_s) == ''
+            - ext = 'unknown'
+          - else 
+            - ext = File.extname(service_file.file.to_s)[1..-1]
+          %td{"class" => "file-entry type-unknown type-" + ext, "title" => File.basename(service_file.file.to_s)}
+            = form_for(service_file, :remote => true, :html => {:'data-type' => 'html', :class => 'file-desc-form'}) do |ff|
+              - t_options = "<option value=\"#{ServiceFile::FILE}\">Documento</option>"
+              - t_options += "<option value=\"#{ServiceFile::FINAL_REPORT}\">Reporte Final</option>"
+              = ff.select :file_type, t_options.html_safe, {}, {:class => 'file_type_combo', :id => "file_type_id_#{service_file.id}"}
+              = ff.text_field :description, :class => 'description_field', :id => "description_#{service_file.id}"
+            %span.file-desc{:class => "file_type_#{service_file.file_type}", :title => service_file.type_text}
+              %a{'href' => "/service_files/#{service_file.id}/file"}
+                = service_file.description
+            %br
+            %span.file-details= ext.upcase + ", " + number_to_human_size(File.size(service_file.file.to_s))
+            %span.file-edit
+              = link_to_function 'Editar', "edit_description(#{service_file.id})"
+              |
+              = link_to 'Eliminar', @service_file, :confirm => '¿Estás seguro?', :method => 'delete', :remote => true, :class => 'delete-file'
+
+  .clearfix
+
+.clearfix

@@ -427,3 +427,124 @@
 #files-tab {
   display: none;
 }
+
+#upload-area {
+  background: $white;
+}
+
+#upload-box {
+  float: right;
+  position: relative;
+  width: 140px;
+}
+
+#upload-box input[type=file] {
+  position: absolute;
+  text-align: right;
+  font-size: 60px;
+  height: 150px;
+  @include opacity(0);
+  top: 0px;
+  left: 0px;
+  z-index: 2;
+  cursor: pointer; cursor: hand;
+}
+
+.upload {
+  z-index: 1;
+  width: 150px;
+  text-align: center;
+  border: 0;
+  margin: 0;
+  padding: 6px 8px;
+  outline: none;
+  color: #333;
+  font-weight: bold;
+  text-shadow: #fff 0px 1px 0px;
+  border: 1px solid #ccc;
+  @include gradient(#eee, #ccc);
+  @include rounded(5px);
+  @include shadow_inset(0,1px,1px,#fff);
+  font-size: 14px;
+  cursor: pointer; 
+  height: 20px;
+}
+
+#upload-box .upload {
+  width: 120px;
+  padding: 50px 8px 6px 8px;
+  background: #eee url(/assets/up.png) center 5px no-repeat;
+}
+
+.upload-msg {
+  text-align: left;
+  font-size: 11px;
+  margin-top: 20px;
+  color: $grey;
+}
+
+#files-area {
+  margin-right: 160px;
+}
+
+.files-table {
+  width: 100%;
+}
+
+.files-table td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.file-entry {
+  border-bottom: 1px solid $line-color;
+  height: 60px;
+
+
+  .file-desc-form {
+    display: none;
+    select {
+      width: 100px;
+    }
+    input {
+      width: 300px;
+      margin-top: 10px;
+    }
+  }
+
+  .file-desc {
+    padding-left: 18px;
+    font-size: 15px;
+  }
+
+  .file-details {
+    color: $grey;
+    font-size: 11px;
+    padding-top: 5px;
+  }
+
+  .file-edit {
+    position: fixed;
+    right: 160px; 
+    font-size: 10px;
+    display: none;
+    padding: 4px;
+    color: $line-color;
+  }
+
+  &:hover .file-edit {
+   display: inline;
+  }
+}
+
+
+#files_iframe {
+}
+
+.file_type_1 {
+  background: #fff url(/assets/file_type_1.png) no-repeat;
+}
+
+.file_type_99 {
+  background: #fff url(/assets/file_type_99.png) no-repeat;
+}

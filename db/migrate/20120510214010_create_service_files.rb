@@ -5,7 +5,7 @@ class CreateServiceFiles < ActiveRecord::Migration
       t.references :service_request
       t.references :sample
       t.references :requested_service
-      t.string     :file_type
+      t.integer    :file_type
       t.string     :description
       t.string     :file
       t.timestamps

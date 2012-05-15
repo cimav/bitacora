@@ -6,6 +6,27 @@ current_sample = 0
 current_request = 0
 current_requested_service = 0
 
+#--------
+# HELPERS
+#--------
+@calcFrameHeight = calcFrameHeight = (id) ->
+  iframe = document.getElementById(id)
+  try
+
+    if iframe.contentDocument
+      innerDoc = iframe.contentDocument
+    else
+      innerDoc = iframe.contentWindow.document
+
+    if innerDoc.body.offsetHeight
+      iframe.height = innerDoc.body.offsetHeight + 400
+    else 
+      if iframe.Document && iframe.Document.body.scrollHeight
+        iframe.height = iframe.Document.body.scrollHeight + 400
+
+  catch err
+    alert(err.message)
+
 #------------
 # MY REQUESTS
 #------------
@@ -70,6 +91,7 @@ $('#files-tab-link')
     $(this).closest('li').addClass("selected"); 
     $('.tab-content').hide()
     $('#files-tab').show()
+    calcFrameHeight('files_iframe')
   )
 
 

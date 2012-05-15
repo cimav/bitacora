@@ -177,7 +177,7 @@ ActiveRecord::Schema.define(:version => 20120510214010) do
     t.integer  "service_request_id"
     t.integer  "sample_id"
     t.integer  "requested_service_id"
-    t.string   "file_type"
+    t.integer  "file_type"
     t.string   "description"
     t.string   "file"
     t.datetime "created_at",           :null => false

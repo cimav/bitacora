@@ -1,0 +1,9 @@
+!!!
+%html
+  %head
+    %title Servicios de Laboratorio
+    = stylesheet_link_tag    "application", :media => "all"
+    = javascript_include_tag "standalone"
+    = csrf_meta_tags 
+  %body#standalone
+    = yield

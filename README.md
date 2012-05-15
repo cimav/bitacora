@@ -7,3 +7,4 @@ Autores
 -------
 
 Jonathan Hernández <ion@cimav.edu.mx>
+Ivan Templeton <ivan.templeton@cimav.edu.mx>

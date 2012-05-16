@@ -9,9 +9,11 @@
     - members.each do |m|
       - if m.user_id == @requested_service.suggested_user_id
         - sug = '* '
+        - sel = 'selected="selected"'
       - else 
         - sug = ''
-      - u_options += "<option value=\"#{m.user_id}\">#{sug}#{m.user.full_name}</option>"
+        - sel = ''
+      - u_options += "<option value=\"#{m.user_id}\" #{sel}>#{sug}#{m.user.full_name}</option>"
     = f.select :user_id, u_options.html_safe
     #field_service_request_sample_description
       = label_tag 'activity_log_msg', 'Notas:'

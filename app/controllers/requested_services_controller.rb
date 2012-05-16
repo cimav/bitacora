@@ -58,6 +58,7 @@ class RequestedServicesController < ApplicationController
 
   def create
     @requested_service = RequestedService.new(params[:requested_service])
+    flash = {}
     if @requested_service.save
       flash[:notice] = "Servicio agregado."
 
@@ -102,6 +103,7 @@ class RequestedServicesController < ApplicationController
   def update
     @requested_service = RequestedService.find(params[:id])
 
+    flash = {}
     prev_status = @requested_service.status
 
     if @requested_service.update_attributes(params[:requested_service])

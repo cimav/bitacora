@@ -34,6 +34,7 @@ class ServiceRequestsController < ApplicationController
   def create 
     params[:service_request][:user_id] = current_user.id
     @service_request = ServiceRequest.new(params[:service_request])
+    flash = {}
     if (@service_request.save) 
       flash[:notice] = "Nuevo servicio creado satisfactoriamente (#{@service_request.id})"
       
@@ -76,6 +77,7 @@ class ServiceRequestsController < ApplicationController
   def update 
     @request = ServiceRequest.find(params[:id])
 
+    flash = {}
     if @request.update_attributes(params[:service_request])
       flash[:notice] = "Servicio actualizado"
       respond_with do |format|

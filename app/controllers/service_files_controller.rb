@@ -12,6 +12,7 @@ class ServiceFilesController < ApplicationController
   end
 
   def create
+    flash = {}
     params[:service_file]['file'].each do |f|
       @service_file = ServiceFile.new
       @service_file.user_id = current_user.id
@@ -33,6 +34,7 @@ class ServiceFilesController < ApplicationController
 
   def destroy
     @service_file = ServiceFile.find(params[:id])
+    flash = {}
     if @service_file.destroy
       flash[:notice] = "Archivo eliminado"
       # LOG
@@ -66,6 +68,7 @@ class ServiceFilesController < ApplicationController
 
   def update
     @service_file = ServiceFile.find(params[:id])
+    flash = {}
 
     if @service_file.update_attributes(params[:service_file])
       flash[:notice] = "Descripción actualizada."

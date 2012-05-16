@@ -20,6 +20,7 @@ class ActivityLogController < ApplicationController
   def create
     params[:activity_log][:user_id] = current_user.id
     @log = ActivityLog.new(params[:activity_log])
+    flash = {}
 
     if @log.save
       flash[:notice] = "Comentario agregado a la bitacora."

@@ -20,6 +20,7 @@ class SamplesController < ApplicationController
   def create
     @sample = Sample.new(params[:sample])
 
+    flash = {}
     if @sample.save
       flash[:notice] = "Muestra agregada."
 
@@ -63,6 +64,7 @@ class SamplesController < ApplicationController
   def update 
     @sample = Sample.find(params[:id])
 
+    flash = {}
     if @sample.update_attributes(params[:sample])
       flash[:notice] = "Muestra actualizada."
       respond_with do |format|

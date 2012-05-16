@@ -24,7 +24,7 @@ class SamplesController < ApplicationController
       flash[:notice] = "Muestra agregada."
 
       # LOG
-      @sample.activity_log.create(user_id: current_user, 
+      @sample.activity_log.create(user_id: current_user.id, 
                                            service_request_id: @sample.service_request_id, 
                                            requested_service_id: 0, 
                                            message_type: 'CREATE', 

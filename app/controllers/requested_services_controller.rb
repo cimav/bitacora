@@ -46,14 +46,10 @@ class RequestedServicesController < ApplicationController
 
   def show
     @requested_service = RequestedService.find(params['id'])
-    @activity_log = ActivityLog.where("user_id = :u
-                                      AND (
-                                        (service_request_id = :service_request AND sample_id = 0 AND requested_service_id = 0)
+    @activity_log = ActivityLog.where(" (service_request_id = :service_request AND sample_id = 0 AND requested_service_id = 0)
                                         OR (service_request_id = :service_request AND sample_id = :sample AND requested_service_id = 0)
                                         OR (service_request_id = :service_request AND sample_id = :sample AND requested_service_id = :requested_service)
-                                      )
-                                    ", {:u => current_user,
-                                        :service_request => @requested_service.sample.service_request.id,
+                                    ", {:service_request => @requested_service.sample.service_request.id,
                                         :sample => @requested_service.sample_id,
                                         :requested_service => @requested_service.id
                                        }).order('created_at DESC')
@@ -66,7 +62,7 @@ class RequestedServicesController < ApplicationController
       flash[:notice] = "Servicio agregado."
 
       # LOG
-      @requested_service.activity_log.create(user_id: current_user,
+      @requested_service.activity_log.create(user_id: current_user.id,
                                              service_request_id: @requested_service.sample.service_request_id,
                                              sample_id: @requested_service.sample_id,
                                              message_type: 'CREATE',
@@ -122,7 +118,7 @@ class RequestedServicesController < ApplicationController
         msg = "El análisis #{@requested_service.number} ha finalizado" if @requested_service.status.to_i == RequestedService::FINISHED
         msg = "El análisis #{@requested_service.number} ha sido cancelado" if @requested_service.status.to_i == RequestedService::CANCELED
         
-        @requested_service.activity_log.create(user_id: current_user,
+        @requested_service.activity_log.create(user_id: current_user.id,
                                                service_request_id: @requested_service.sample.service_request_id,
                                                sample_id: @requested_service.sample_id,
                                                message_type: 'STATUS',

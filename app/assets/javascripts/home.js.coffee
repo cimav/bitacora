@@ -141,6 +141,21 @@ $('#add-service-dialog')
     labServicesLiveSearch()
   )
 
+$('#service_type')
+  .live('change', () ->
+    labServicesLiveSearch()
+  )
+
+$('#laboratory')
+  .live('change', () ->
+    labServicesLiveSearch()
+  )
+
+$('#laboratory-services-search-box')
+  .live('keyup', () ->
+    labServicesLiveSearch()
+  )
+
 
 labServicesLiveSearch = () ->
   $("#laboratory-services-search-box").addClass("loading")

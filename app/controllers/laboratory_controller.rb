@@ -5,7 +5,19 @@ class LaboratoryController < ApplicationController
   end
 
   def live_search
-    @requested_services = RequestedService.where('laboratory_service_id IN (SELECT id FROM laboratory_services WHERE laboratory_id = :lab)',  {:lab => params[:id]})
+    @requested_services = RequestedService.joins(:sample).joins(:laboratory_service).where('laboratory_id = :lab',  {:lab => params[:id]})
+    if params[:lrs_status] != '0'
+      @requested_services = @requested_services.where('requested_services.status' => params[:lrs_status])
+    end
+    if params[:lrs_requestor] != '0'
+      @requested_services = @requested_services.where('samples.service_request_id IN (SELECT id FROM service_requests WHERE user_id = :req)', {:req => params[:lrs_requestor]})
+    end
+    if params[:lrs_assigned_to] != '0'
+      @requested_services = @requested_services.where('requested_services.user_id' => params[:lrs_assigned_to])
+    end
+    if !params[:q].blank?
+      @requested_services = @requested_services.where("(description LIKE :q OR name LIKE :q)", {:q => "%#{params[:q]}%"})
+    end
     render :layout => false
   end
 

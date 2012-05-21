@@ -4,18 +4,23 @@
   #lab-req-serv-panel.side-panel
     .panel-search
       = form_tag '/samples', :id => 'lab-req-serv-live-search', :laboratory_id => @laboratory.id, :method => 'get', :remote => true do
-        = text_field_tag :q, nil, :id => 'search-box', :placeholder => 'Busqueda'
+        = text_field_tag :q, nil, :id => 'req-serv-search-box', :placeholder => 'Busqueda'
 
         - status_options = "<option value=\"0\">Todos los estados</option>"
-        = select_tag "status", status_options.html_safe
+        - sts = [-1,1,2,3,4,5,6,99]
+        - sts.each do |st| 
+          - status_options += "<option value=\"#{st}\">#{RequestedService::STATUS[st]}</option>"
+        = select_tag "lrs_status", status_options.html_safe
 
         - requestor_options = "<option value=\"0\">Todos los solicitantes</option>"
-        = select_tag "requestor", requestor_options.html_safe
+        - User.order('first_name, last_name').each do |u|
+          - requestor_options += "<option value=\"#{u.id}\">#{u.full_name}</option>"
+        = select_tag "lrs_requestor", requestor_options.html_safe
   
         - assigned_to_options = "<option value=\"0\">Cualquier asignado</option>"
         - @laboratory.users.each do |assigned_to|
           - assigned_to_options += "<option value=\"#{assigned_to.id}\">#{assigned_to.full_name}</option>" 
-        = select_tag "assigned_to", assigned_to_options.html_safe
+        = select_tag "lrs_assigned_to", assigned_to_options.html_safe
 
   #lab-req-serv-list.panel-items
 

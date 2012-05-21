@@ -266,6 +266,26 @@ $('#new-request-form')
     $("#lab-req-serv-list .lab-req-serv-item:first").click()
   )
 
+$('#lrs_status')
+  .live('change', () ->
+    labReqServicesLiveSearch()
+  )
+
+$('#lrs_requestor')
+  .live('change', () ->
+    labReqServicesLiveSearch()
+  )
+
+$('#lrs_assigned_to')
+  .live('change', () ->
+    labReqServicesLiveSearch()
+  )
+
+$('#req-serv-search-box')
+  .live('keyup', () ->
+    labReqServicesLiveSearch()
+  )
+
 #-------------
 # ACTIVITY LOG
 #-------------

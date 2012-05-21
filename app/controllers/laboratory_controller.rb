@@ -16,7 +16,7 @@ class LaboratoryController < ApplicationController
       @requested_services = @requested_services.where('requested_services.user_id' => params[:lrs_assigned_to])
     end
     if !params[:q].blank?
-      @requested_services = @requested_services.where("(description LIKE :q OR name LIKE :q)", {:q => "%#{params[:q]}%"})
+      @requested_services = @requested_services.where("(laboratory_services.description LIKE :q OR laboratory_services.name LIKE :q OR samples.identification LIKE :q OR samples.identification LIKE :q OR samples.description LIKE :q)", {:q => "%#{params[:q]}%"})
     end
     render :layout => false
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120510214010) do
+ActiveRecord::Schema.define(:version => 20120604222534) do
 
   create_table "activity_logs", :force => true do |t|
     t.integer  "user_id"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(:version => 20120510214010) do
     t.string   "status",        :default => "1"
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
+    t.string   "access",        :default => "1"
   end
 
   add_index "laboratory_members", ["laboratory_id"], :name => "index_laboratory_members_on_laboratory_id"
@@ -198,9 +199,11 @@ ActiveRecord::Schema.define(:version => 20120510214010) do
     t.integer  "status",                        :default => 1
     t.datetime "created_at",                                   :null => false
     t.datetime "updated_at",                                   :null => false
+    t.integer  "supervisor_id"
   end
 
   add_index "service_requests", ["request_type_id"], :name => "index_service_requests_on_request_type_id"
+  add_index "service_requests", ["supervisor_id"], :name => "index_service_requests_on_supervisor_id"
   add_index "service_requests", ["user_id"], :name => "index_service_requests_on_user_id"
 
   create_table "service_types", :force => true do |t|
@@ -227,6 +230,11 @@ ActiveRecord::Schema.define(:version => 20120510214010) do
     t.string   "status",                                        :default => "1"
     t.datetime "created_at",                                                     :null => false
     t.datetime "updated_at",                                                     :null => false
+    t.integer  "supervisor1_id"
+    t.integer  "supervisor2_id"
   end
+
+  add_index "users", ["supervisor1_id"], :name => "index_users_on_supervisor1_id"
+  add_index "users", ["supervisor2_id"], :name => "index_users_on_supervisor2_id"
 
 end

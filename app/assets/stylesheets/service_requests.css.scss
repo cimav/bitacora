@@ -20,14 +20,19 @@
 .service-request-item {
   cursor: pointer;
   padding: 5px;
-  height: 64px;
-  overflow: hidden;
+  min-height: 64px;
   background: $white;
   border-bottom: 1px solid $line-color;
+  &.service-mine .service-request-number {
+    background: transparent url('/assets/icons/folder.png') no-repeat;
+    color: #cce4fc;
+  }
+  &.service-supervised .service-request-number {
+    background: transparent url('/assets/icons/supervised-folder.png') no-repeat;
+    color: #a28500;
+  }
   .service-request-number {
     font-weight: bold;
-    color: #cce4fc;
-    background: transparent url('/assets/icons/folder.png') no-repeat;
     width: 48px;
     height: 48px;
     float: left;
@@ -39,8 +44,10 @@
     font-size: 12px;
     font-weight: bold;
     margin-left: 58px;
+    color: #000;
   }
-  .service-request-description {
+  .service-request-description,
+  .service-request-add-info {
     margin-left: 58px;
     font-size: 11px;
     color: $grey;

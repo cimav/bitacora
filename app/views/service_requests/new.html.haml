@@ -11,7 +11,7 @@
     .field#field_service_supervisor
       - supervisor_options = ''
       - if current_user.supervisor1_id.blank? && current_user.supervisor2_id.blank?
-        - supervisor_options += "<option value=\"0\">Ninguno</option>"
+        - supervisor_options += "<option value=\"\">Ninguno</option>"
       - User.where("access >= :a", {:a => User::ACCESS_EMPLOYEE}).order('first_name, last_name').each do |u|
         - if current_user.supervisor1_id == u.id
           - selected = 'selected = "selected"'

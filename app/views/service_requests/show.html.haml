@@ -1,8 +1,17 @@
 #service-request-header
-  .number= @request.number
+  - if @request.supervisor_id.blank? 
+    - klass = 'folder-supervised'
+  - else
+    - klass = 'folder-mine'
+  .number{:class => klass}= @request.number
   .description
     .service-link= "#{@request.request_type.name} #{@request.request_link}"
     = simple_format(@request.description)
+    - if !@request.supervisor_id.blank? 
+      - if current_user.id == @request.supervisor_id
+        .service-owner= "Dueño: #{@request.user.full_name}"
+      - else
+        .service-supervisor= "Supervisor: #{@request.supervisor.full_name}"
   .clearfix
 #request-workarea
 - if @request.sample.count == 0

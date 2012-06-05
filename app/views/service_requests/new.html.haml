@@ -8,5 +8,17 @@
     .field#field_service_request_description
       = f.label :description, 'Descripción:'
       = f.text_area :description
+    .field#field_service_supervisor
+      - supervisor_options = ''
+      - if current_user.supervisor1_id.blank? && current_user.supervisor2_id.blank?
+        - supervisor_options += "<option value=\"0\">Ninguno</option>"
+      - User.where("access >= :a", {:a => User::ACCESS_EMPLOYEE}).order('first_name, last_name').each do |u|
+        - if current_user.supervisor1_id == u.id
+          - selected = 'selected = "selected"'
+        - else
+          - selected = ''
+        - supervisor_options += "<option value=\"#{u.id}\" #{selected}>#{u.full_name}</option>"
+      = f.label :supervisor_id, 'Supervisor:'
+      = f.select :supervisor_id, supervisor_options.html_safe
     #new-request-button-area
       = f.submit "Crear nuevo servicio"

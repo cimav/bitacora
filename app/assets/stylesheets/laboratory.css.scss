@@ -20,28 +20,44 @@
 
 .lab-req-serv-item {
   cursor: pointer;
-  padding: 20px 10px;
+  padding: 5px 5px 10px 5px;
   margin-left: 1px;
   border-bottom: 1px solid $line-color;
   &.selected {
     background-color: $bg-selected;
   }
-  .sample-requested-service {
-    font-weight: bold;
-  }
-  .rs-consecutive {
-    font-size: 10px;
-    padding: 4px;
-    @include rounded(4px);
-    background-color: $link-color;
-    color: $white;
+  .sample-tag {
+    background: $bg-color;
+    border: 1px solid $line-color;
     text-align: center;
-    width: 64px;
-    float: right;
+    width: 70px;
+    float: left;
+    .rs-consecutive {
+      font-size: 10px;
+      padding: 4px;
+      background-color: $link-color;
+      color: $white;
+    }
+    .sample-identificator {
+      font-size: 11px;
+      padding: 4px;
+      margin-bottom: 10px;
+    }
   }
-  .sample-identificator {
-    font-weight: bold;
-  }
-  .sample-description {
+  .requested-service-details {
+    margin-left: 5px; 
+    width: 135px;
+    float: left;
+    .sample-requested-service {
+      font-weight: bold;
+    }
+    .sample-requested-service-date {
+      font-size: 90%;
+      color: $grey;
+      border-bottom: 1px dotted $line-color;
+      margin-bottom: 5px;
+    }
+    .sample-description {
+    }
   }
 }

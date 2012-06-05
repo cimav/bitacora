@@ -1,10 +1,15 @@
 - @requested_services.each do |rs|
   .requested_service.lab-req-serv-item{:requested_service_id => rs.id, :sample_id => rs.sample_id, :id => "requested_service_#{rs.id}"}
-    .rs-consecutive{:class => "status_#{rs.status}"}
-      = rs.number
-    .sample-requested-service
-      = rs.laboratory_service.name
-    .sample-identificator
-      = rs.sample.identification
-    .sample-description
-      = rs.sample.description
+    .sample-tag
+      .rs-consecutive{:class => "status_#{rs.status}"}
+        = rs.number
+      .sample-identificator
+        = rs.sample.identification
+    .requested-service-details
+      .sample-requested-service-date
+        = l rs.created_at, :format => :long
+      .sample-requested-service
+        = rs.laboratory_service.name
+      .sample-description
+        = rs.sample.description
+    .clearfix

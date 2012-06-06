@@ -75,6 +75,28 @@
     top: 7px;
     position: absolute;
   }
+
+  #account {
+    @include rounded(4px);
+    border: 1px solid $line-color;
+    padding: 4px;
+    background-color: #fff;
+    margin-top: 10px;
+    float: right;
+    text-align: left;
+    height: 32px;
+    margin-right: 20px;
+    .account-display {
+      float: left; 
+      img {
+        @include rounded(4px);
+      }
+    }
+    .account-name {
+      padding: 8px 16px 0 4px;
+      float: left;
+    }
+  }
 }
 
 #nav {

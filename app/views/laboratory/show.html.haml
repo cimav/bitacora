@@ -22,7 +22,7 @@
         - @laboratory.laboratory_members.where("access <> :a", {:a => LaboratoryMember::ACCESS_TRAINED}).each do |assigned_to|
           - assigned_to_options += "<option value=\"#{assigned_to.user.id}\">#{assigned_to.user.full_name}</option>" 
         - if @laboratory.laboratory_members.where("access = :a", {:a => LaboratoryMember::ACCESS_TRAINED}).count > 0
-          - assigned_to_options += '<optgroup label="Capacitados">'
+          - assigned_to_options += '<optgroup label="Facultados">'
           - @laboratory.laboratory_members.where("access = :a", {:a => LaboratoryMember::ACCESS_TRAINED}).each do |assigned_to|
             - assigned_to_options += "<option value=\"#{assigned_to.user.id}\">#{assigned_to.user.full_name}</option>" 
         = select_tag "lrs_assigned_to", assigned_to_options.html_safe

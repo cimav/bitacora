@@ -418,6 +418,12 @@
 // FINISHED
 .status_99 { background-color: #90c847 !important; }
 
+#no-actions {
+  padding: 10px;
+  color: $grey;
+  font-size: 11px;
+}
+
 #no-samples {
   text-align: center;
   font-size: 28px;

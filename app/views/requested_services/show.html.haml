@@ -17,6 +17,7 @@
   #requested-service-actions
     #requested-service-status{:class => "status_#{@requested_service.status}"}
       = @requested_service.status_text
+    - klass = ''
     #action-list
       %ul
         - if initial_action
@@ -50,6 +51,9 @@
         - if canceled_action
           - klass = "status_#{RequestedService::CANCELED}"
           %li{:status_action => RequestedService::CANCELED, :class => klass, :id => 'change_status_canceled'}= "Cancelar servicio"
+      - if klass == ''
+        #no-actions= "No existen acciones que se puedan realizar en este momento"
+          
 
   %h1= @requested_service.laboratory_service.name
   %h2= @requested_service.laboratory_service.laboratory.name

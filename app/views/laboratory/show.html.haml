@@ -16,8 +16,7 @@
         = select_tag "lrs_status", status_options.html_safe
 
         - requestor_options = "<option value=\"0\">Todos los solicitantes</option>"
-        //- User.order('first_name, last_name').each do |u|
-        - User.find_by_sql("SELECT DISTINCT u.id, u.first_name, u.last_name FROM Users u INNER JOIN requested_services rs ON u.id = rs.user_id INNER JOIN laboratory_services ls ON laboratory_service_id = ls.id WHERE laboratory_id = #{@laboratory.id} ORDER BY first_name, last_name").each do |u|
+        - User.find_by_sql("SELECT DISTINCT u.id, u.first_name, u.last_name FROM Users u INNER JOIN service_requests sr ON sr.user_id = u.id INNER JOIN samples sam ON sam.service_request_id = sr.id INNER JOIN requested_services rs ON sam.id = rs.sample_id INNER JOIN laboratory_services ls ON laboratory_service_id = ls.id WHERE laboratory_id = #{@laboratory.id} ORDER BY first_name, last_name").each do |u|
           - requestor_options += "<option value=\"#{u.id}\">#{u.first_name} #{u.last_name}</option>"
 
         = select_tag "lrs_requestor", requestor_options.html_safe

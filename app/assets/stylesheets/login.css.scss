@@ -1,0 +1,23 @@
+// Place all the styles related to the Login controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#login-area {
+  background: $white url(/assets/splash.png) no-repeat;
+  @include shadow(4px,1px,1px,#333);
+  width: 400px;
+  margin: 200px auto 0 auto;
+  padding: 48px 0 0 500px;
+  min-height: 300px;
+  .login-message {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  .login-methods {
+    margin-top: 20px;
+    .login-method {
+      margin-bottom: 10px;
+    }
+  }
+}
+

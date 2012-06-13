@@ -81,10 +81,10 @@
     border: 1px solid $line-color;
     padding: 4px;
     background-color: #fff;
-    margin-top: 10px;
+    margin-top: 4px;
     float: right;
     text-align: left;
-    height: 32px;
+    height: 44px;
     margin-right: 20px;
     .account-display {
       float: left; 
@@ -95,6 +95,10 @@
     .account-name {
       padding: 8px 16px 0 4px;
       float: left;
+    }
+    .account-actions {
+      font-size: 11px;
+      text-align: right; 
     }
   }
 }

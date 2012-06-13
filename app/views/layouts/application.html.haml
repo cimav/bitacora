@@ -14,6 +14,8 @@
             = image_tag ("http://cimav.edu.mx/foto/#{current_user.email.split('@')[0]}/32")
           .account-name
             = current_user.full_name
+          .account-actions
+            = link_to "Salir", "/logout"
       #nav
         .nav-item#nav-my-requests
           .nav-icon= image_tag('/assets/icons/my-requests.png')

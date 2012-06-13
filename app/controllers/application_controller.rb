@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   helper_method :authenticated?
 
   def auth_required
-    redirect_to '/auth/google_oauth2' unless authenticated?
+    redirect_to '/login' unless authenticated?
   end
 
   helper_method :current_user

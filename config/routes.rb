@@ -1,5 +1,6 @@
 Bitacora::Application.routes.draw do
   root :to => 'home#index'
+  match '/login' => 'login#index'
 
   match '/my-requests' => 'service_requests#index'
   match '/service_requests/:id/sample_list' => 'service_requests#sample_list'

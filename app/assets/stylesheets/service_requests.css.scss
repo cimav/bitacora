@@ -119,6 +119,12 @@
     padding: 10px;
     background: transparent url(/assets/arrow-down.png) no-repeat center right;
     cursor: pointer;
+    h2 {
+      color: $black;
+      text-decoration: none;
+      border: 0;
+      font-style: normal;
+    }
   }
   #sample-services {
     padding: 10px;

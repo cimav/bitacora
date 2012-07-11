@@ -1,4 +1,5 @@
 - @requested_services.each do |rs|
+  - next if rs.sample.service_request.status == ServiceRequest::DELETED
   .requested_service.lab-req-serv-item{:requested_service_id => rs.id, :sample_id => rs.sample_id, :id => "requested_service_#{rs.id}"}
     .sample-tag
       .rs-consecutive{:class => "status_#{rs.status}"}

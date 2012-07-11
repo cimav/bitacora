@@ -4,12 +4,12 @@ class ServiceRequestsController < ApplicationController
 
   def index
     # Mis solicitudes
-    @latest_request = ServiceRequest.where(:user_id => current_user.id).order('created_at DESC').first
+    @latest_request = ServiceRequest.where(:user_id => current_user.id, :status => ServiceRequest::ACTIVE).order('created_at DESC').first
     render :layout => false
   end
 
   def live_search
-    @requests = ServiceRequest.where('(user_id = :u OR supervisor_id = :u)', {:u => current_user.id}).order('created_at DESC')
+    @requests = ServiceRequest.where('status = :s AND (user_id = :u OR supervisor_id = :u)', {:s => ServiceRequest::ACTIVE, :u => current_user.id}).order('created_at DESC')
     if !params[:q].blank?
       @requests = @requests.where("(description LIKE :q OR number LIKE :q OR request_link LIKE :q)", {:q => "%#{params[:q]}%"}) 
     end
@@ -23,7 +23,11 @@ class ServiceRequestsController < ApplicationController
 
   def show
     @request = ServiceRequest.find(params[:id])
-    render :layout => false
+    if (@request.status == ServiceRequest::ACTIVE) 
+      render :layout => false
+    else
+      render :inline => "Carpeta eliminada"
+    end
   end
 
   def new

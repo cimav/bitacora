@@ -13,6 +13,9 @@ class ServiceRequest < ActiveRecord::Base
 
   after_create :add_extra
 
+  ACTIVE = 1
+  DELETED = 2
+
   def add_extra
     self.number = "%04d" % [self.id]
     self.save() 

@@ -9,6 +9,13 @@ current_requested_service = 0
 #--------
 # HELPERS
 #--------
+$('html').click( (e) ->
+  if e.target.id != 'search-results'
+    $('#search-input').val('')
+    $('#search-results').hide()
+)
+
+
 @calcFrameHeight = calcFrameHeight = (id) ->
   iframe = document.getElementById(id)
   try

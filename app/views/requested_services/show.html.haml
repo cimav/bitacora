@@ -57,16 +57,19 @@
 
   %h1= @requested_service.laboratory_service.name
   %h2= @requested_service.laboratory_service.laboratory.name
+  #folder-info
+    %strong= "#{@requested_service.sample.service_request.request_type.name}: "
+    = @requested_service.sample.service_request.request_link
   #suggested-user
     %strong= "Técnico Sugerido: "
     = "#{(@requested_service.suggested_user.full_name rescue 'Cualquier Técnico')}"
     - if !@requested_service.user_id.blank?
       %strong= "/ Técnico Asignado: "
       = "#{(@requested_service.user.full_name)}"
-
-#requested-service-details
-  %strong Anotaciones Particulares:
-  %div= @requested_service.details
+  - if !@requested_service.details.blank?
+    #requested-service-details
+      %strong Anotaciones Particulares:
+      %div= @requested_service.details
 
 #requested-service-tabs.tabs
   %ul

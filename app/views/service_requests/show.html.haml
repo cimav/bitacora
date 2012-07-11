@@ -5,7 +5,7 @@
     - klass = 'folder-mine'
   .number{:class => klass}= @request.number
   .description
-    .service-link= "#{@request.request_type.name} #{@request.request_link}"
+    .service-link= "#{@request.request_type.name} #{@request.request_link}" rescue "Sin tipo"
     = simple_format(@request.description)
     - if !@request.supervisor_id.blank? 
       - if current_user.id == @request.supervisor_id

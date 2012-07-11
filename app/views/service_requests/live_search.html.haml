@@ -7,6 +7,6 @@
     - add_info = ''
   .service-request-item{:service_request_id => r.id, :class => klass}
     .service-request-number= r.number
-    .service-request-link= "#{r.request_type.name} #{r.request_link}"
+    .service-request-link= "#{r.request_type.name} #{r.request_link}" rescue "Sin tipo"
     .service-request-description= r.description
     .service-request-add-info= add_info

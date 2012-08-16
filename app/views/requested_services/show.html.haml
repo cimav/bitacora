@@ -58,7 +58,7 @@
   %h1= @requested_service.laboratory_service.name
   %h2= @requested_service.laboratory_service.laboratory.name
   #folder-info
-    %strong= "#{@requested_service.sample.service_request.request_type.name}: "
+    %strong= "#{(@requested_service.sample.service_request.request_type.name rescue 'Sin Tipo')}: "
     = @requested_service.sample.service_request.request_link
   #suggested-user
     %strong= "Técnico Sugerido: "

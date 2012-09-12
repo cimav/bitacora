@@ -10,7 +10,8 @@ $strong-color: #222;
 $strong-color2: #444;
 $light-bg: #f8f8f8;
 $bg-color: #fafafa;
-$bg-selected: #f9f4c1;
+$bg-selected: #4b95e6;
+$selected-color: #fafafa;
 
 $container-width: 1000px;
 $nav-width: 101px;
@@ -26,15 +27,13 @@ $line-color: #ddd;
 $link-color: #06c;
 $bullet-color: #ddd;
 
-$button-gradient-from: #666;
-$button-gradient-to: #444;
+$button-gradient-from: #fafafa;
+$button-gradient-to: #eaeaea;
 
 $table-line-color: $line-color;
 $table-head-bg: #f0f0f0;
 $table-head-color: #333;
 
-$selected-color: $black;
-$selected-color-light: #ddd;
 
 $workarea-bar-bg: #333;
 $workarea-bar-border: #222;

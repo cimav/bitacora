@@ -53,10 +53,10 @@
     color: $grey;
   }
   &.selected {
-    background-color: $selected-color;
-    color: $white;
+    background-color: $bg-selected;
+    color: $selected-color;
     .lab-service-laboratory {
-      color: $selected-color-light;
+      color: $selected-color;
     }
   }
 }
@@ -90,6 +90,7 @@
   border-bottom: 1px solid $line-color;
   &.selected {
     background-color: $bg-selected;
+    color: $selected-color;
   }
   .sample-consecutive {
     font-size: 10px;
@@ -126,11 +127,33 @@
       font-style: normal;
     }
   }
-  #sample-services {
-    padding: 10px;
-    .title {
-      font-weight: bold;
+  #current-sample {
+    .sample-details {
+      height: 40px;
+      overflow: hidden;
     }
+    .sample-description {
+      font-size: 11px;
+      color: $grey;
+    }
+  }
+  #sample-services-header {
+    height: 20px;
+    border-bottom: 1px solid $line-color;
+    background-color: $light-grey;
+    .title {
+      padding-top: 3px;
+      padding-left: 6px;
+      font-weight: bold;
+      color: $grey;
+      text-transform: uppercase;
+    }
+  }
+  #sample-services {
+    position: absolute;
+    overflow: auto;
+    top: 142px;
+    bottom: 76px;
     ul {
       li {
         padding: 4px;
@@ -138,8 +161,8 @@
         cursor: pointer;
         color: $black;
         &.selected {
-          background: $light-grey;
-          color: #000;
+          background: $bg-selected;
+          color: $selected-color;
           font-weight: bold;
           .service-bullet {
             background-color: $selected-color;
@@ -239,25 +262,28 @@
   display: none;
   position: fixed;
   top: 236px;
-  bottom: 72px;
+  bottom: 21px;
   width: $sample-list-width;
-  overflow: auto;
   background: #fff;
+  overflow: auto;
+  border-bottom: 1px solid $line-color;
+  z-index: 100;
   .sample-details {
     cursor: pointer;
+  } 
+}
+
+#sample-list-actions {
+  position: fixed;
+  bottom: 21px;
+  width: $sample-list-width;
+  height: 74px;
+  text-align: center;
+  border-top: 1px solid $line-color;
+  button {
+    margin: 5px;
+    width: $sample-list-width - 10;
   }
-  #add-new-sample {
-    position: fixed;
-    bottom: 21px;
-    width: $sample-list-width;
-    height: 50px;
-    text-align: center;
-    border-top: 1px solid $line-color;
-    button {
-      margin: 10px;
-    }
-  }
-  
 }
 
 #new-sample-dialog {
@@ -338,6 +364,10 @@
       }
       &.selected {
         background-color: $bg-selected;
+        color: $selected-color;
+        .lab-service-laboratory {
+          color: #a3cbfd;
+        }
       }
     }
   }

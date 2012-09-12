@@ -84,6 +84,11 @@ $('#sample-header')
     $('#sample-list').toggle()
   )
 
+$('#select-sample-sample-button')
+  .live('click', () ->
+    $('#sample-list').toggle()
+  )
+
 $('#activity-tab-link') 
   .live('click', () ->
     $('#requested-service-tabs ul li').removeClass('selected')

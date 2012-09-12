@@ -11,8 +11,15 @@
         = sample.identification
       .sample-description
         = sample.description
+    #sample-services-header
+      .title= "Servicios solicitados"
     #sample-services
       = render :partial => 'samples/requested_services_list', :locals => {:sample => sample}
+  #sample-list-actions
+    #select-sample
+      = button_tag "Seleccionar muestra ", {:id => 'select-sample-sample-button'}
+    #add-new-sample
+      = button_tag "Agregar nueva muestra", {:id => 'add-new-sample-button'}
 #sample-workarea
   #requested-service-workarea
 

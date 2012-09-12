@@ -25,6 +25,7 @@
   border-bottom: 1px solid $line-color;
   &.selected {
     background-color: $bg-selected;
+    color: $selected-color;
   }
   .sample-tag {
     background: $bg-color;

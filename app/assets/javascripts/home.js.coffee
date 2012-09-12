@@ -110,7 +110,7 @@ $('#files-tab-link')
 newSampleDialog = () ->
    $("#new-sample-dialog").remove()
    $('#container').append('<div title="Agregar Muestra" id="new-sample-dialog"></div>')
-   $("#new-sample-dialog").dialog({ autoOpen: true, width: 340, height: 400, modal:true })
+   $("#new-sample-dialog").dialog({ autoOpen: true, width: 350, height: 430, modal:true })
 
 $("#add-new-sample-button")
   .live("click", () ->
@@ -379,7 +379,7 @@ $('#initial-sample-form')
 $('#change_status_received') 
   .live('click', () ->
     $("#receive-sample-dialog").remove()
-    $('#container').append('<div title="xxxRecibir Muestra" id="receive-sample-dialog"></div>')
+    $('#container').append('<div title="Recibir Muestra" id="receive-sample-dialog"></div>')
     $("#receive-sample-dialog").dialog({ autoOpen: true, width: 340, height: 400, modal:true })
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/receive_dialog'
     $.get(url, {}, (html) ->

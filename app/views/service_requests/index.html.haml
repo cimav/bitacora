@@ -1,7 +1,7 @@
 #my-requests-bar.workarea-bar
   %h2 Mis carpetas
   #add-new-button-area
-    = button_tag " + ", {:id => 'add-new-button', :title => 'Crear nueva carpeta'}
+    = button_tag " + Crear nueva carpeta ", {:id => 'add-new-button', :title => 'Crear nueva carpeta'}
   #search-area
     = form_tag '/search', :id => 'live-search', :method => 'get', :remote => true do
       = text_field_tag :q, nil, :id => 'search-box', :placeholder => 'Busqueda'

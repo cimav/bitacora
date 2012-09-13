@@ -9,5 +9,10 @@
     = f.label :description, 'Descripción:'
     = f.text_area :description, :placeholder => 'Descripción de la muestra'
   .clearfix
+  #field_service_request_sample_quantity
+    = f.label :quantity, 'Cantidad:'
+    = f.select :quantity, 1..200
+    .hint= "Seleccionar mas de 1 si son muestras a las que se les hará exactamente lo mismo" 
+  .clearfix
   #dialog-submit-button-area
     = f.submit "Agregar muestra"

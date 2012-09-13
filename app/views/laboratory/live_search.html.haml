@@ -6,6 +6,9 @@
         = rs.number
       .sample-identificator
         = rs.sample.identification
+      - if rs.sample.quantity > 1
+        .rs-quantity{:class => "status_#{rs.status}"}
+          = "#{rs.sample.quantity} muestras"
     .requested-service-details
       .sample-requested-service-date
         = l rs.created_at, :format => :long

@@ -6,6 +6,9 @@
   .sample-details{:service_request_id => s.service_request_id, :sample_id => s.id, :class => klass}
     .sample-consecutive
       = s.number
+      - if s.quantity > 1
+        %strong= s.quantity
+        = " muestras"
     .sample-identificator
       = s.identification
     .sample-description

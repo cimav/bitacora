@@ -39,7 +39,14 @@
       background-color: $link-color;
       color: $white;
     }
+    .rs-quantity {
+      font-size: 10px;
+      padding: 4px;
+      background-color: $link-color;
+      color: $white;
+    }
     .sample-identificator {
+      color: $black;
       font-size: 11px;
       padding: 4px;
       margin-bottom: 10px;
@@ -54,7 +61,6 @@
     }
     .sample-requested-service-date {
       font-size: 90%;
-      color: $grey;
       border-bottom: 1px dotted $line-color;
       margin-bottom: 5px;
     }

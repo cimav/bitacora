@@ -1,5 +1,9 @@
 .inner-area
-  %h1= "Recibir muestra #{@requested_service.sample.number}"
+  - if @requested_service.sample.quantity > 1 
+    %h1= "[#{@requested_service.sample.number}] Recibir #{@requested_service.sample.quantity} muestras"
+  - else
+    %h1= "[#{@requested_service.sample.number}] Recibir muestra"
+
   = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'receive-sample-form'} do |f|
     = f.hidden_field :status, {:value => RequestedService::RECEIVED}
     #field_service_request_sample_description

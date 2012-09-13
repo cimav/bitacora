@@ -101,6 +101,11 @@
     text-align: center;
     width: 48px;
     float: right;
+    strong {
+      font-size: 12px;
+      font-weight: bold;
+      color: $white;
+    }
   }
   .sample-identificator {
     font-weight: bold;
@@ -129,7 +134,7 @@
   }
   #current-sample {
     .sample-details {
-      height: 40px;
+      height: 48px;
       overflow: hidden;
     }
     .sample-description {
@@ -152,7 +157,7 @@
   #sample-services {
     position: absolute;
     overflow: auto;
-    top: 142px;
+    top: 150px;
     bottom: 76px;
     ul {
       width: $sample-list-width;
@@ -271,6 +276,7 @@
   z-index: 100;
   .sample-details {
     cursor: pointer;
+    min-height: 54px;
   } 
 }
 

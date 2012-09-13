@@ -334,15 +334,10 @@ $('#requested-service-status')
 
 # Change color
 changeSampleTagColor = (rs, new_status) ->
-  $("#requested_service_" + rs + " .sample-tag .rs-consecutive").removeClass("status_-1")
-  $("#requested_service_" + rs + " .sample-tag .rs-consecutive").removeClass("status_1")
-  $("#requested_service_" + rs + " .sample-tag .rs-consecutive").removeClass("status_2")
-  $("#requested_service_" + rs + " .sample-tag .rs-consecutive").removeClass("status_3")
-  $("#requested_service_" + rs + " .sample-tag .rs-consecutive").removeClass("status_4")
-  $("#requested_service_" + rs + " .sample-tag .rs-consecutive").removeClass("status_5")
-  $("#requested_service_" + rs + " .sample-tag .rs-consecutive").removeClass("status_6")
-  $("#requested_service_" + rs + " .sample-tag .rs-consecutive").removeClass("status_99")
+  $("#requested_service_" + rs + " .sample-tag .rs-consecutive").removeClass("status_-1").removeClass("status_1").removeClass("status_2").removeClass("status_3").removeClass("status_4").removeClass("status_5").removeClass("status_6").removeClass("status_99")
+  $("#requested_service_" + rs + " .sample-tag .rs-quantity").removeClass("status_-1").removeClass("status_1").removeClass("status_2").removeClass("status_3").removeClass("status_4").removeClass("status_5").removeClass("status_6").removeClass("status_99")
   $("#requested_service_" + rs + " .sample-tag .rs-consecutive").addClass("status_" + new_status)
+  $("#requested_service_" + rs + " .sample-tag .rs-quantity").addClass("status_" + new_status)
 
 # INITIAL
 $('#change_status_initial') 

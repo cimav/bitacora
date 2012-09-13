@@ -1,5 +1,5 @@
 class Sample < ActiveRecord::Base
-  attr_accessible :identification, :description, :status, :consecutive, :service_request_id
+  attr_accessible :identification, :description, :status, :consecutive, :service_request_id, :quantity
 
   belongs_to :service_request
   has_many :requested_service

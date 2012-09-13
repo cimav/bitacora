@@ -7,6 +7,9 @@
     .sample-details
       .sample-consecutive
         = sample.number
+        - if sample.quantity > 1
+          %strong= sample.quantity
+          = " muestras"
       .sample-identificator
         = sample.identification
       .sample-description

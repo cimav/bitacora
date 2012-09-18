@@ -22,4 +22,19 @@ class LaboratoryController < ApplicationController
     render :layout => false
   end
 
+  def admin
+    @laboratory = Laboratory.find(params[:id])
+    render :layout => false
+  end
+
+  def admin_users
+    @laboratory = Laboratory.find(params[:id])
+    render :layout => false
+  end
+  
+  def admin_services
+    @laboratory = Laboratory.find(params[:id])
+    render :layout => false
+  end
+
 end

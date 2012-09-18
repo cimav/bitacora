@@ -617,6 +617,56 @@ $('.nav-lab')
     $('#nav-laboratory-' + lab_id).addClass('selected')
   )
 
+#----------
+# LAB ADMIN
+#----------
+
+$('.admin-lab')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    lab_id = $(this).attr('laboratory_id')
+    url = '/laboratory/' + lab_id + '/admin'
+    setHash('#!' + url, false)
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $('#laboratory-workarea').empty().html(data)
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    alert('Error')
+  )
+
+$('.admin-services')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    lab_id = $(this).attr('laboratory_id')
+    url = '/laboratory/' + lab_id + '/admin_services'
+    setHash('#!' + url, false)
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $('#laboratory-workarea').empty().html(data)
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    alert('Error')
+  )
+
+$('.admin-users')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    lab_id = $(this).attr('laboratory_id')
+    url = '/laboratory/' + lab_id + '/admin_users'
+    setHash('#!' + url, false)
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $('#laboratory-workarea').empty().html(data)
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    alert('Error')
+  )
+
+
 #-------
 # ERRORS
 #-------

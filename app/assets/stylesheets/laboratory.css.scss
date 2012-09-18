@@ -68,3 +68,24 @@
     }
   }
 }
+
+.admin-toolbar {
+  float: right;
+  margin: 8px 10px 0 0;
+  a {
+    font-weight: bold;
+    color: $white;
+  }
+}
+
+#admin-area {
+  border: 1px solid $line-color;
+  border-top: none;
+  position: fixed;
+  width: $work-area-width - 2;
+  float: left;
+  top: 110px;
+  bottom: 20px;
+  padding-top: 20px;
+  background: #fff;
+}

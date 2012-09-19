@@ -636,6 +636,25 @@ $('.admin-lab')
     alert('Error')
   )
 
+$('#edit-laboratory-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    $("#nav-title-#{res['id']}").html(res['name'])
+    $("#laboratory-bar h2").html(res['name'])
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+
 $('.admin-services')
   .live("ajax:beforeSend", (evt, xhr, settings) ->
     lab_id = $(this).attr('laboratory_id')

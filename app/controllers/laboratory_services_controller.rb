@@ -1,4 +1,6 @@
 class LaboratoryServicesController < ApplicationController
+  before_filter :auth_required
+  respond_to :html, :json
   def live_search
     @laboratory_services = LaboratoryService.order('name')
 

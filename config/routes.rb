@@ -28,11 +28,11 @@ Bitacora::Application.routes.draw do
   match '/laboratory_services/:id/for_sample/:sample_id' => 'laboratory_services#for_sample'
   resources :laboratory_services
   resources :requested_services
-  match '/laboratory/:id' => 'laboratory#show'
   match '/laboratory/:id/live_search' => 'laboratory#live_search'
   match '/laboratory/:id/admin' => 'laboratory#admin'
   match '/laboratory/:id/admin_services' => 'laboratory#admin_services'
   match '/laboratory/:id/admin_users' => 'laboratory#admin_users'
+  resources :laboratory
 
   resources :activity_log, :as => :activity_logs
 

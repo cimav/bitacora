@@ -1,5 +1,5 @@
 class Laboratory < ActiveRecord::Base
-  attr_accessible :name, :business_unit_id
+  attr_accessible :name, :business_unit_id, :prefix, :description, :user_id
   has_many :laboratory_requests
   has_many :laboratory_services
   has_many :laboratory_members

@@ -26,13 +26,22 @@ Bitacora::Application.routes.draw do
 
   match '/laboratory_services/live_search' => 'laboratory_services#live_search'
   match '/laboratory_services/:id/for_sample/:sample_id' => 'laboratory_services#for_sample'
-  resources :laboratory_services
+  resources :laboratory_services do
+    member do
+      get 'edit'
+    end
+  end
   resources :requested_services
-  match '/laboratory/:id/live_search' => 'laboratory#live_search'
-  match '/laboratory/:id/admin' => 'laboratory#admin'
-  match '/laboratory/:id/admin_services' => 'laboratory#admin_services'
-  match '/laboratory/:id/admin_users' => 'laboratory#admin_users'
-  resources :laboratory
+  resources :laboratory do
+    member do
+      get 'live_search'
+      get 'admin'
+      get 'admin_services'
+      get 'admin_lab_services_live_search'
+      get 'new_service'
+      get 'admin_users'
+    end
+  end
 
   resources :activity_log, :as => :activity_logs
 

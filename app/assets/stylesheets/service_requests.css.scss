@@ -349,14 +349,16 @@
       width: $lab-services-list-width - 20;
     }
   }
-  #laboratory-services-list {
+  #laboratory-services-list, 
+  #admin-lab-services-list {
     border-top: 1px solid $line-color;
     overflow: auto;
     position: absolute;
     top: 95px;
     bottom: 0px;
     background: $white;
-    .lab-service-item {
+    .lab-service-item,
+    .admin-lab-service-item {
       cursor: pointer;
       padding: 5px;
       height: 64px;

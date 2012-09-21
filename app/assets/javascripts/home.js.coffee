@@ -654,7 +654,9 @@ $('#edit-laboratory-form')
     showFormErrors(xhr, status, error)
   )
 
-
+#-------------------
+# LAB ADMIN SERVICES
+#-------------------
 $('.admin-services')
   .live("ajax:beforeSend", (evt, xhr, settings) ->
     lab_id = $(this).attr('laboratory_id')
@@ -669,6 +671,87 @@ $('.admin-services')
   .live("ajax:error", (evt, xhr, status, error) ->
     alert('Error')
   )
+
+$('#admin_lab_service_type')
+  .live('change', () ->
+    adminLabServicesLiveSearch()
+  )
+
+$('#admin-lab-services-search-box')
+  .live('keyup', () ->
+    adminLabServicesLiveSearch()
+  )
+
+
+@adminLabServicesLiveSearch = adminLabServicesLiveSearch = () ->
+  $("#admin-lab-services-search-box").addClass("loading")
+  form = $("#admin-lab-services-live-search")
+  lab_id = form.attr('lab_id')
+  url = "/laboratory/#{lab_id}/admin_lab_services_live_search"
+  formData = form.serialize()
+  $.get(url, formData, (html) ->
+    $("#admin-lab-services-search-box").removeClass("loading")
+    $("#admin-lab-services-list").empty().html(html)
+    $("#admin-lab-services-list .admin-lab-service-item:first").click()
+  )
+
+$('.admin-lab-service-item')
+  .live('click', () ->
+    $('.admin-lab-service-item').removeClass('selected')
+    $(this).addClass('selected')
+    url = '/laboratory_services/' + $(this).attr('laboratory_service_id') + '/edit'
+    $.get(url, {}, (html) ->
+      $('#service-details').html(html)
+    )
+  )
+
+$('#edit-laboratory-service-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+$('#add-new-service-button')
+  .live('click', () ->
+    url = '/laboratory/' + $(this).attr('lab_id') + '/new_service'
+    $.get(url, {}, (html) ->
+      $('#service-details').empty().html(html)
+    )
+  )
+
+$('#new-laboratory-service-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    $('#admin-lab-services-search-box').val(res['name'])
+    adminLabServicesLiveSearch()
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+
+
+#----------------
+# LAB ADMIN USERS 
+#----------------
 
 $('.admin-users')
   .live("ajax:beforeSend", (evt, xhr, settings) ->

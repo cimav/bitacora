@@ -1,5 +1,6 @@
 #admin-area 
   = render :partial => 'tabs', :locals => {:laboratory => @laboratory, :option_selected => 'details'}
+  %h1= "Editar detalles del laboratorio"
   = form_for @laboratory, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-laboratory-form'} do |f|
     .field#field_laboratory_name
       = f.label :name, 'Nombre:'

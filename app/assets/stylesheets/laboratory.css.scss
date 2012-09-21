@@ -114,4 +114,44 @@
       font-weight: bold;
     }
   }
+  
+  h1 {
+    margin-bottom: 20px;
+    margin-left: 10px;
+  }
+
+  #services-panel {
+    top: 44px !important;
+    bottom: 0px !important;
+    #services-search-panel {
+      border-top: 1px solid $line-color !important;
+    }
+    #admin-lab-services-list { 
+      top: 75px !important;
+      bottom: 35px !important;
+      width: $side-panel-width;
+      .lab-service-desc {
+        color: $grey;
+        font-size: 11px;
+      }
+      .admin-lab-service-item.selected {
+        .lab-service-desc {
+          color: #a3cbfd;
+        }
+      }
+    }
+    #admin-lab-services-buttons {
+      width: $side-panel-width;
+      position: absolute;
+      text-align: center;
+      bottom: 0px;
+      height: 35px;
+      border-top: 1px solid $line-color;
+      button {
+        width: $side-panel-width - 10;
+        margin: 5px;
+      }
+    }
+  }
+
 }

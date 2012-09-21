@@ -1,3 +1,21 @@
 #admin-area 
   = render :partial => 'tabs', :locals => {:laboratory => @laboratory, :option_selected => 'services'}
-  
+  #services-panel
+    #services-search-panel
+      = form_tag laboratory_services_path, :id => 'admin-lab-services-live-search', :method => 'get', :remote => true, :lab_id => @laboratory.id do
+        - service_type_options = "<option value=\"0\">Todos los tipos</option>"
+        - service_types = ServiceType.order('name')
+        - service_types.each do |st|
+          - service_type_options += "<option value=\"#{st.id}\">#{st.name}</option>"
+        = select_tag "admin_lab_service_type", service_type_options.html_safe
+        = text_field_tag :q, nil, :id => 'admin-lab-services-search-box', :placeholder => 'Busqueda'
+    #admin-lab-services-list
+    #admin-lab-services-buttons
+      = button_tag "Agregar nuevo servicio", {:id => 'add-new-service-button', :lab_id => @laboratory.id}
+      
+  #service-details
+
+:javascript 
+  $(function() {
+    adminLabServicesLiveSearch()
+  })

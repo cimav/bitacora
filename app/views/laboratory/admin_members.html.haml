@@ -1,0 +1,21 @@
+#admin-area 
+  = render :partial => 'tabs', :locals => {:laboratory => @laboratory, :option_selected => 'users'}
+  #members-panel
+    #members-search-panel
+      = form_tag laboratory_services_path, :id => 'admin-lab-members-live-search', :method => 'get', :remote => true, :lab_id => @laboratory.id do
+        - service_type_options = "<option value=\"0\">Todos los tipos</option>"
+        - service_type_options += "<option value=\"#{LaboratoryMember::ACCESS_MEMBER}\">Miembros</option>"
+        - service_type_options += "<option value=\"#{LaboratoryMember::ACCESS_TRAINED}\">Facultados</option>"
+        - service_type_options += "<option value=\"#{LaboratoryMember::ACCESS_ADMIN}\">Administradores</option>"
+        = select_tag "admin_lab_member_access", service_type_options.html_safe
+        = text_field_tag :q, nil, :id => 'admin-lab-members-search-box', :placeholder => 'Busqueda'
+    #admin-lab-members-list
+    #admin-lab-members-buttons
+      = button_tag "Agregar nuevo miembro", {:id => 'add-new-member-button', :lab_id => @laboratory.id}
+
+  #member-details
+:javascript 
+  $(function() {
+    adminLabMembersLiveSearch()
+  })
+  

@@ -31,6 +31,11 @@ Bitacora::Application.routes.draw do
       get 'edit'
     end
   end
+  resources :laboratory_members do
+    member do
+      get 'edit'
+    end
+  end
   resources :requested_services
   resources :laboratory do
     member do
@@ -39,7 +44,9 @@ Bitacora::Application.routes.draw do
       get 'admin_services'
       get 'admin_lab_services_live_search'
       get 'new_service'
-      get 'admin_users'
+      get 'admin_members'
+      get 'admin_lab_members_live_search'
+      get 'new_member'
     end
   end
 

@@ -27,6 +27,14 @@
   filter:Alpha(Opacity=$opacity*100);
 }
 
+@mixin desaturate() {
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+}
+
 @mixin gradient($from, $to) {
   background-color: $to;
   background-color: $to;

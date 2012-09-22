@@ -120,10 +120,12 @@
     margin-left: 10px;
   }
 
-  #services-panel {
+  #services-panel,
+  #members-panel {
     top: 44px !important;
     bottom: 0px !important;
-    #services-search-panel {
+    #services-search-panel,
+    #members-search-panel {
       border-top: 1px solid $line-color !important;
     }
     #admin-lab-services-list { 
@@ -140,7 +142,27 @@
         }
       }
     }
-    #admin-lab-services-buttons {
+    #admin-lab-members-list {
+      top: 75px !important;
+      bottom: 35px !important;
+      width: $side-panel-width;
+      .lab-member-desc {
+        color: $grey;
+        font-size: 11px;
+      }
+      .lab-member-display {
+        float: left; 
+        margin-right: 10px;
+      }
+      .admin-lab-member-item.selected {
+        .lab-member-desc {
+          color: #a3cbfd;
+        }
+      }
+    }
+
+    #admin-lab-services-buttons,
+    #admin-lab-members-buttons {
       width: $side-panel-width;
       position: absolute;
       text-align: center;

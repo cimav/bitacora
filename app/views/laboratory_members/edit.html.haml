@@ -1,0 +1,28 @@
+= form_for @laboratory_member, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-laboratory-member-form'} do |f|
+  %h1= "Editar Miembro"
+  .field#field_laboratory_member_name
+    %label= "Nombre:"
+    = @laboratory_member.user.full_name
+  .field#field_laboratory_member_access
+    = f.label :access, 'Acceso:'
+    - sel_member = sel_trained = sel_admin = ''
+    - sel_member = 'selected="selected"' if @laboratory_member.access.to_i == LaboratoryMember::ACCESS_MEMBER
+    - sel_trained = 'selected="selected"' if @laboratory_member.access.to_i == LaboratoryMember::ACCESS_TRAINED
+    - sel_admin = 'selected="selected"' if @laboratory_member.access.to_i == LaboratoryMember::ACCESS_ADMIN
+    - acc_options = ''
+    - acc_options += "<option #{sel_member} value=\"#{LaboratoryMember::ACCESS_MEMBER}\">Miembro</option>"
+    - acc_options += "<option #{sel_trained} value=\"#{LaboratoryMember::ACCESS_TRAINED}\">Facultado</option>"
+    - acc_options += "<option #{sel_admin} value=\"#{LaboratoryMember::ACCESS_ADMIN}\">Administrador</option>"
+    = f.select :access, acc_options.html_safe
+  .field#field_laboratory_member_status
+    = f.label :status, 'Estado:'
+    - sel_active = sel_inactive = ''
+    - sel_active = 'selected="selected"' if @laboratory_member.status.to_i == LaboratoryMember::ACTIVE
+    - sel_inactive = 'selected="selected"' if @laboratory_member.status.to_i == LaboratoryMember::INACTIVE
+    - st_options = ''
+    - st_options += "<option #{sel_active} value=\"#{LaboratoryMember::ACTIVE}\">Activo</option>"
+    - st_options += "<option #{sel_inactive} value=\"#{LaboratoryMember::INACTIVE}\">Inactivo</option>"
+    = f.select :status, st_options.html_safe
+
+  .submit-button
+    = f.submit "Actualizar miembro"

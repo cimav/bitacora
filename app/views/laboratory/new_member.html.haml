@@ -1,0 +1,26 @@
+= form_for @laboratory_member, :remote => true, :html => {:'data-type' => 'html', :id => 'new-laboratory-member-form'} do |f|
+  %h1= "Agregar miembro al laboratorio"
+  = f.hidden_field :laboratory_id, {:value => @laboratory.id}
+  .field#field_laboratory_member_name
+    = f.label :user_id, 'Nuevo miembro:'
+    - u_options = ''
+    - u_access = 0
+    - User.where("status = :s AND id NOT IN (SELECT user_id FROM laboratory_members WHERE laboratory_id = :lab)", {:s => User::STATUS_ACTIVE, :lab => @laboratory.id}).order('access,first_name, last_name').each do |u|
+      - if u_access != u.access 
+        - u_access = u.access
+        - u_options += "<optgroup label=\"#{u.access_text}\">"
+      - u_options += "<option value=\"#{u.id}\">#{u.full_name}</option>"
+    = f.select :user_id, u_options.html_safe
+  .field#field_laboratory_member_access
+    = f.label :access, 'Acceso:'
+    - sel_member = sel_trained = sel_admin = ''
+    - sel_member = 'selected="selected"' if @laboratory_member.access.to_i == LaboratoryMember::ACCESS_MEMBER
+    - sel_trained = 'selected="selected"' if @laboratory_member.access.to_i == LaboratoryMember::ACCESS_TRAINED
+    - sel_admin = 'selected="selected"' if @laboratory_member.access.to_i == LaboratoryMember::ACCESS_ADMIN
+    - acc_options = ''
+    - acc_options += "<option #{sel_member} value=\"#{LaboratoryMember::ACCESS_MEMBER}\">Miembro</option>"
+    - acc_options += "<option #{sel_trained} value=\"#{LaboratoryMember::ACCESS_TRAINED}\">Facultado</option>"
+    - acc_options += "<option #{sel_admin} value=\"#{LaboratoryMember::ACCESS_ADMIN}\">Administrador</option>"
+    = f.select :access, acc_options.html_safe
+  .submit-button
+    = f.submit "Agregar miembro"

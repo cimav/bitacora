@@ -752,11 +752,10 @@ $('#new-laboratory-service-form')
 #----------------
 # LAB ADMIN USERS 
 #----------------
-
 $('.admin-users')
   .live("ajax:beforeSend", (evt, xhr, settings) ->
     lab_id = $(this).attr('laboratory_id')
-    url = '/laboratory/' + lab_id + '/admin_users'
+    url = '/laboratory/' + lab_id + '/admin_members'
     setHash('#!' + url, false)
   )
   .live("ajax:success", (evt, data, status, xhr) ->
@@ -767,6 +766,82 @@ $('.admin-users')
   .live("ajax:error", (evt, xhr, status, error) ->
     alert('Error')
   )
+
+$('#admin_lab_member_access')
+  .live('change', () ->
+    adminLabMembersLiveSearch()
+  )
+
+$('#admin-lab-members-search-box')
+  .live('keyup', () ->
+    adminLabMembersLiveSearch()
+  )
+
+
+@adminLabMembersLiveSearch = adminLabMembersLiveSearch = () ->
+  $("#admin-lab-members-search-box").addClass("loading")
+  form = $("#admin-lab-members-live-search")
+  lab_id = form.attr('lab_id')
+  url = "/laboratory/#{lab_id}/admin_lab_members_live_search"
+  formData = form.serialize()
+  $.get(url, formData, (html) ->
+    $("#admin-lab-members-search-box").removeClass("loading")
+    $("#admin-lab-members-list").empty().html(html)
+    $("#admin-lab-members-list .admin-lab-member-item:first").click()
+  )
+
+$('.admin-lab-member-item')
+  .live('click', () ->
+    $('.admin-lab-member-item').removeClass('selected')
+    $(this).addClass('selected')
+    url = '/laboratory_members/' + $(this).attr('laboratory_member_id') + '/edit'
+    $.get(url, {}, (html) ->
+      $('#member-details').html(html)
+    )
+  )
+
+$('#edit-laboratory-member-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+$('#add-new-member-button')
+  .live('click', () ->
+    url = '/laboratory/' + $(this).attr('lab_id') + '/new_member'
+    $.get(url, {}, (html) ->
+      $('#member-details').empty().html(html)
+    )
+  )
+
+$('#new-laboratory-member-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    $('#admin-lab-members-search-box').val(res['name'])
+    adminLabMembersLiveSearch()
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
 
 
 #-------

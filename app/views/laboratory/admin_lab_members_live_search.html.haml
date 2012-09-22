@@ -1,0 +1,8 @@
+- @laboratory_members.each do |member|
+  .admin-lab-member-item{:laboratory_member_id => member.id}
+    .lab-member-display
+      - klass = ''
+      - klass = 'inactive' if member.status.to_i == LaboratoryMember::INACTIVE
+      = image_tag ("http://cimav.edu.mx/foto/#{member.user.email.split('@')[0]}/48"), :class => klass
+    .lab-member-name= member.user.full_name
+    .lab-member-desc= member.access_text

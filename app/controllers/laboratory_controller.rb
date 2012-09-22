@@ -30,7 +30,7 @@ class LaboratoryController < ApplicationController
     render :layout => false
   end
 
-  def admin_users
+  def admin_members
     @laboratory = Laboratory.find(params[:id])
     render :layout => false
   end
@@ -102,6 +102,29 @@ class LaboratoryController < ApplicationController
   def new_service
     @laboratory = Laboratory.find(params[:id])
     @laboratory_service = @laboratory.laboratory_services.new
+    render :layout => false
+  end
+
+  def admin_lab_members_live_search
+    @laboratory = Laboratory.find(params[:id])
+
+    @laboratory_members = @laboratory.laboratory_members
+
+    if params[:admin_lab_member_access] != '0'
+      @laboratory_members = @laboratory_members.includes(:user).where(:access => params[:admin_lab_member_access])
+    end
+
+
+    if !params[:q].blank?
+      @laboratory_members = @laboratory_members.includes(:user).where("(users.first_name LIKE :q OR users.last_name LIKE :q)", {:q => "%#{params[:q]}%"})
+    end
+
+    render :layout => false
+  end
+
+  def new_member
+    @laboratory = Laboratory.find(params[:id])
+    @laboratory_member = @laboratory.laboratory_members.new
     render :layout => false
   end
 

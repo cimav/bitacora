@@ -10,6 +10,14 @@ class User < ActiveRecord::Base
   ACCESS_EMPLOYEE         = 4
   ACCESS_ADMIN            = 99
 
+  ACCESS_TYPES = {
+    ACCESS_STUDENT          => 'Estudiante',
+    ACCESS_INTERNSHIP       => 'Servicio o Post-Doctorado',
+    ACCESS_PROJECT_EMPLOYEE => 'Por proyecto',
+    ACCESS_EMPLOYEE         => 'Empleado',
+    ACCESS_ADMIN            => 'Administrador',
+  }
+
   has_many :service_request
   has_many :laboratory_members
   has_many :requested_service
@@ -20,4 +28,9 @@ class User < ActiveRecord::Base
   def full_name
     "#{first_name} #{last_name}"
   end
+
+  def access_text
+    ACCESS_TYPES[access.to_i]
+  end
+
 end

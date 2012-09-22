@@ -245,3 +245,8 @@ input[type=submit] {
   font-size: 11px;
   margin: 4px 0;
 }
+
+img.inactive {
+  @include desaturate();
+  @include opacity(.5);
+}

@@ -2,6 +2,8 @@
 class ServiceRequest < ActiveRecord::Base
   attr_accessible :request_type_id, :description, :user_id, :request_link, :sample_attributes, :supervisor_id
 
+  has_one :external_service
+
   has_many :activity_log
 
   has_many :sample

@@ -2,7 +2,7 @@ class CreateRequestedServiceOthers < ActiveRecord::Migration
   def change
     create_table :requested_service_others do |t|
       t.integer    :other_type
-      t.concept    :string 
+      t.string     :concept
       t.text       :details
       t.decimal    :price, :precision => 6, :scale => 2
       t.timestamps

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120912221905) do
+ActiveRecord::Schema.define(:version => 20121203195952) do
 
   create_table "activity_logs", :force => true do |t|
     t.integer  "user_id"
@@ -37,6 +37,54 @@ ActiveRecord::Schema.define(:version => 20120912221905) do
     t.datetime "updated_at",              :null => false
   end
 
+  create_table "client_contacts", :force => true do |t|
+    t.integer  "client_id"
+    t.string   "name"
+    t.string   "phone"
+    t.string   "email"
+    t.integer  "status",     :default => 1
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "client_contacts", ["client_id"], :name => "index_client_contacts_on_client_id"
+
+  create_table "client_types", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "status",      :default => 1
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+  end
+
+  create_table "clients", :force => true do |t|
+    t.string   "name"
+    t.integer  "client_type_id"
+    t.string   "rfc"
+    t.string   "address1"
+    t.string   "address2"
+    t.string   "city"
+    t.integer  "state_id"
+    t.integer  "country_id"
+    t.string   "phone"
+    t.string   "fax"
+    t.string   "email"
+    t.integer  "status",         :default => 1
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
+  add_index "clients", ["client_type_id"], :name => "index_clients_on_client_type_id"
+  add_index "clients", ["country_id"], :name => "index_clients_on_country_id"
+  add_index "clients", ["state_id"], :name => "index_clients_on_state_id"
+
+  create_table "countries", :force => true do |t|
+    t.string   "name"
+    t.string   "code"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "equipment", :force => true do |t|
     t.integer  "laboratory_id"
     t.string   "name"
@@ -48,6 +96,17 @@ ActiveRecord::Schema.define(:version => 20120912221905) do
   end
 
   add_index "equipment", ["laboratory_id"], :name => "index_equipment_on_laboratory_id"
+
+  create_table "external_requests", :force => true do |t|
+    t.integer  "service_request_id"
+    t.date     "request_date"
+    t.string   "service_number"
+    t.boolean  "is_acredited"
+    t.text     "client_agreements"
+    t.text     "notes"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
 
   create_table "laboratories", :force => true do |t|
     t.string   "name"
@@ -128,6 +187,18 @@ ActiveRecord::Schema.define(:version => 20120912221905) do
 
   add_index "requested_service_materials", ["material_id"], :name => "index_requested_service_materials_on_material_id"
   add_index "requested_service_materials", ["requested_service_id"], :name => "index_requested_service_materials_on_requested_service_id"
+
+  create_table "requested_service_others", :force => true do |t|
+    t.integer  "requested_service_id"
+    t.integer  "other_type"
+    t.string   "concept"
+    t.text     "details"
+    t.decimal  "price",                :precision => 6, :scale => 2
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
+  end
+
+  add_index "requested_service_others", ["requested_service_id"], :name => "index_requested_service_others_on_requested_service_id"
 
   create_table "requested_service_technicians", :force => true do |t|
     t.integer  "requested_service_id"
@@ -212,6 +283,13 @@ ActiveRecord::Schema.define(:version => 20120912221905) do
     t.string   "name"
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
+  end
+
+  create_table "states", :force => true do |t|
+    t.string   "name"
+    t.string   "code"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "units", :force => true do |t|

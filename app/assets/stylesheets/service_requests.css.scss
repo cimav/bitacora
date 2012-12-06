@@ -8,15 +8,6 @@
   }
 }
 
-#my-requests-area {
-  position: fixed;
-  top: 110px;
-  bottom: 20px;
-  background-color: $white;
-  border: 1px solid $line-color;
-  width: $work-area-width - 2;
-}
-
 .service-request-item {
   cursor: pointer;
   padding: 5px;
@@ -116,20 +107,29 @@
 
 #sample {
   position: fixed;
-  top: 196px;
-  bottom: 20px;
+  top: 96px;
+  bottom: 0px;
+  left: $sample-list-width + 2;
   width: $sample-list-width;
   border-right: 1px solid $line-color;
   #sample-header {
     border-bottom: 1px solid $line-color;
-    padding: 10px;
-    background: transparent url(/assets/arrow-down.png) no-repeat center right;
+    height: 40px;
     cursor: pointer;
-    h2 {
+    .sample-n {
+      float: left;
+      width: $sample-list-width / 2;
+      font-weight: bold;
       color: $black;
-      text-decoration: none;
-      border: 0;
-      font-style: normal;
+      margin: 10px 0 0 10px;
+    }
+    .btn-toolbar {
+      float: right;
+      padding: 0;
+      margin: 0;
+      .btn-group {
+        margin: 5px 5px 0 0;
+      }
     }
   }
   #current-sample {
@@ -143,7 +143,7 @@
     }
   }
   #sample-services-header {
-    height: 20px;
+    height: 24px;
     border-bottom: 1px solid $line-color;
     background-color: $light-grey;
     .title {
@@ -157,11 +157,14 @@
   #sample-services {
     position: absolute;
     overflow: auto;
-    top: 150px;
-    bottom: 76px;
+    top: 154px;
+    bottom: 0px;
     ul {
+      margin: 0px;
       width: $sample-list-width;
+      list-style: none;
       li {
+        list-style: none;
         padding: 4px;
         margin: 2px 0;
         cursor: pointer;
@@ -205,29 +208,67 @@
   }
 }
 
-
 #requested-service-header {
-  margin-top: 10px;
-  width: 580px;
-  h1 {
-    width: 400px;
-  }
-  h2 {
-    width: 400px;
-    margin-bottom: 10px;
-  }
-  .laboratory {
+  left: ($sample-list-width * 2) + 4;
+  right: 0px;
+  position: fixed;
+  top: 96px;
+  height: 40px;
+  border-bottom: 1px solid $line-color;
+  #requested-service-name {
+    padding: 10px;
+    position: fixed;
+    left: ($sample-list-width * 2) + 4;
+    right: 200px;
+    font-size: 24px;
+    color: $black;
+    font-weight: normal;
   }
 }
 
-#requested-service-lab-serv-desc {
-  width: 580px;
-  margin-bottom: 20px;
+#requested-service-info {
+  position: fixed;
+  left: ($sample-list-width * 2) + 4;
+  right: 0px;
+  top: 146px;
+  .info-row {
+    height: 24px;
+    div {
+      float: left;
+      padding: 4px 10px 0 10px;
+    }
+    .laboratory-name {
+
+    }
+    .suggested-user {
+      
+    }
+    .folder-type {
+
+    }
+    .folder-owner {
+
+    }
+    .service-details {
+
+    }
+  }
 }
 
-#requested-service-details {
-  width: 580px;
-  margin-bottom: 20px;
+#requested-service-tabs {
+  position: fixed;
+  left: ($sample-list-width * 2) + 14;
+  right: 0px;
+  top: 232px;
+  height: 40px;
+}
+
+#requested-service-tabs-content {
+  position: fixed;
+  left: ($sample-list-width * 2) + 14;
+  right: 0px;
+  bottom: 0px;
+  top: 272px; 
 }
 
 #empty-requests {
@@ -237,42 +278,15 @@
   margin-top: 100px;
 }
 
-#service-request-header {
-  padding: 10px;
-  border-bottom: 1px solid $line-color;
-  height: 64px;
-  overflow: hidden;
-  .number {
-    background: transparent url('/assets/icons/folder64.png') no-repeat;
-    color: #cce4fc;
-    width: 74px;
-    height: 64px;
-    font-size: 16px;
-    font-weight: bold;
-    padding-top: 28px;
-    padding-left: 16px;
-    float: left;  
-  }
-  .description {
-    float: left;
-    font-size: 14px;
-    margin-top: 14px;
-    .service-link {
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-  }
-}
-
 #sample-list {
   display: none;
   position: fixed;
-  top: 236px;
-  bottom: 21px;
+  top: 136px;
+  bottom: 0px;
   width: $sample-list-width;
   background: #fff;
   overflow: auto;
-  border-bottom: 1px solid $line-color;
+  border: 1px solid $line-color;
   z-index: 100;
   .sample-details {
     cursor: pointer;
@@ -321,13 +335,11 @@
 }
 
 #sample-workarea {
-  width: $sample-workarea-width;
-  margin-left: $sample-list-width;
-  overflow: auto;
+  left: ($sample-list-width * 2) + 4;
+  right: 0px;
   position: fixed;
-  padding: 20px;
-  top: 196px;
-  bottom: 20px;
+  top: 96px;
+  bottom: 0px;
 }
 
 #services-panel,

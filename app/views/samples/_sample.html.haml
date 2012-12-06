@@ -1,6 +1,12 @@
 #sample
-  #sample-header{:service_request_id => sample.service_request.id}
-    %h2= "Muestra #{sample.consecutive} de #{sample.service_request.sample.count}"
+  #sample-header
+    .sample-n= "Muestra #{sample.consecutive} de #{sample.service_request.sample.count}"
+    .btn-toolbar
+      .btn-group
+        %a.btn#add-new-sample-button
+          %i.icon-file
+        %a.btn#select-sample-sample-button
+          %i.icon-list
   #sample-list
     = render :partial => 'samples/sample_list', :locals => {:request => sample.service_request, :current => sample }
   #current-sample
@@ -15,14 +21,9 @@
       .sample-description
         = sample.description
     #sample-services-header
-      .title= "Servicios solicitados"
+      .nav-header= "Servicios solicitados"
     #sample-services
       = render :partial => 'samples/requested_services_list', :locals => {:sample => sample}
-  #sample-list-actions
-    #select-sample
-      = button_tag "Seleccionar muestra ", {:id => 'select-sample-sample-button'}
-    #add-new-sample
-      = button_tag "Agregar nueva muestra", {:id => 'add-new-sample-button'}
 #sample-workarea
   #requested-service-workarea
 

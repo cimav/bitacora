@@ -6,26 +6,41 @@
     = javascript_include_tag "application"
     = csrf_meta_tags 
   %body
-    #container 
-      #topbar
-        #title Bitácora Electrónica
-        #account
-          .account-display
-            = image_tag ("http://cimav.edu.mx/foto/#{current_user.email.split('@')[0]}/32")
-          .account-name
-            = current_user.full_name
-          .account-actions
-            = link_to "Salir", "/logout"
-      #nav
-        .nav-item#nav-my-requests
-          .nav-icon= image_tag('/assets/icons/my-requests.png')
-          .nav-title= "Mis carpetas"
-        - current_user.laboratories.each do |laboratory|
-          .nav-item.nav-lab{:id => "nav-laboratory-#{laboratory.id}", :laboratory_id => laboratory.id}
-            .nav-icon= image_tag('/assets/icons/lab-folder.png')
-            .nav-title{:id => "nav-title-#{laboratory.id}"}= laboratory.name
-       
-      #workarea
-        = yield
-        .clearfix
-      #flash-notice
+    .navbar.navbar-fixed-top.navbar-inverse
+      .navbar-inner
+        .container-fluid
+          %a.btn.btn-navbar{'data-toggle' => 'collapse', 'data-target' => '.nav-collapse'}
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          = link_to 'Bitácora Electrónica', '/#!/folders', {:class => 'brand'}
+          .nav-collapse
+            %ul.nav
+              %li= link_to 'Carpetas', '/#!/folders'
+              - if current_user.laboratories.count > 0
+                - if current_user.laboratories.count < 2
+                  - current_user.laboratories.each do |laboratory|
+                    %li= link_to laboratory.name, "#!/laboratory/#{laboratory.id}"
+                - else
+                  %li.dropdown
+                    %a{:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'}
+                      = "Laboratorios"
+                      %b.caret
+                      %ul{:class => 'dropdown-menu'}
+                        - current_user.laboratories.each do |laboratory|
+                          %li= link_to laboratory.name, "#!/laboratory/#{laboratory.id}"
+
+            %ul.nav.pull-right
+              %li.dropdown
+                %a{:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'}
+                  = image_tag ("http://cimav.edu.mx/foto/#{current_user.email.split('@')[0]}/24")
+                  = current_user.full_name
+                  %b.caret
+                %ul{:class => 'dropdown-menu'}
+                  %li
+                    = link_to "/logout" do
+                      %i.icon-off
+                      = "Salir"
+    #flash-notice
+    #workarea
+      = yield

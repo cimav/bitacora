@@ -1,340 +1,93 @@
-#container {
-  width: $container-width + 40;
-  margin: 0 auto;
-  min-height: 100%;
-  background: transparent;
-  padding: 0;
-}
-
 #workarea {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+}
+#header-bar {
   background: $light-grey;
-  @include rounded(5px);
-  padding: 10px;
-  border: 1px solid $line-color;
+  border-bottom: 1px solid $line-color;
+  height: 48px;
   position: fixed;
-  margin-left: $nav-width - 1;
-  width: $work-area-width;
-  float: left;
-  top: 60px;
-  bottom: 10px;
-  .workarea-bar {
-    height: 30px;
-    border: 1px solid $line-color;
-    background: $workarea-bar-bg;
-    padding: 4px;
-    h2 {
-      margin: 5px 0 0 10px;
-      width: 480px;
-      float: left;
-      color: $white;
-    }
-    #search-area {
-      float: left;
-      input {
-        width: 200px;
-        margin-top: 1px;
-        margin-right: 10px;
-        border: 1px solid $workarea-bar-border;
-      }
-    }
-    #search-results {
-      display: none;
-      border: 1px solid $line-color;
-      background: $white;
-      width: 240px;
-      position: absolute;
-      top: 49px;
-      right: 10px;
-      bottom: 10px;
-      z-index: 777;
-      overflow: auto;
-    }
-    #add-new-button-area {
-      float: left;
-      width: 150px;
-      margin-top: 2px;
-      margin-right: 10px;
-      border-right: 1px solid $workarea-bar-border;
-      button {
-        font-weight: bold;
-      }
-    }
+  top: 48px;
+  width: 100%;
+  h2 {
+    color: $red;
+    font-size: 24px;
+    font-weight: normal;
+    margin: 0;
+    padding-left: 20px;
+    padding-top: 0px;
   }
 }
 
-#topbar {
-  font-weight: bold;
-  height: 60px;
-  #title {
-    margin-left: 20px;
-    background: transparent url('/assets/logo.png') no-repeat;
-    padding-left: 80px;
-    height: 48px;
-    font-size: 26px;
-    padding-top: 13px;
-    top: 7px;
-    position: absolute;
-  }
-
-  #account {
-    @include rounded(4px);
-    border: 1px solid $line-color;
-    padding: 4px;
-    background-color: #fff;
-    margin-top: 4px;
-    float: right;
-    text-align: left;
-    height: 44px;
-    margin-right: 20px;
-    .account-display {
-      float: left; 
-      img {
-        @include rounded(4px);
-      }
-    }
-    .account-name {
-      padding: 8px 16px 0 4px;
-      float: left;
-    }
-    .account-actions {
-      font-size: 11px;
-      text-align: right; 
-    }
-  }
-}
-
-#nav {
-  margin-top: 20px;
-  position: fixed;
-  z-index: 800;
-  width: $nav-width;
-  margin-right: 10px;
-  float: left;
-  .nav-item {
-    text-align: center;
-    cursor: pointer;
-    margin-bottom: 20px;
-    padding-right: 10px;
-    .nav-icon {
-    }
-    .nav-title {
-      color: $grey;
-      font-size: 11px;
-    }
-    &.selected {
-      background: transparent url('/assets/nav-item-selected.png') right top no-repeat;
-      .nav-title {
-        color: $black;
-        font-weight: bold;
-      }
-    }
-  }
-}
-
-.side-panel {
-  float: left;
+#folder-panel {
   width: $side-panel-width;
   position: fixed;
-  bottom: 20px;
-  top: 110px;
-  background-color: #fff;
-  border: 1px solid $line-color;
-}
-
-.panel-search {
-  background: $bg-color;
-  border-bottom: 1px solid $line-color; 
-  padding: 10px;
-  height: 30px;
-
-  input[type=text] {
-    width: $side-panel-width - 25;
-    background-color: #fff;
-    padding: 2px;
-    margin-bottom: 2px;
-  }
-
-  select {
-    width: $side-panel-width - 18;
-    background-color: #fff;
-    padding: 2px;
-    margin: 2px 0;
-  }
-  input[type=checkbox] {
-    background-color: #fff;
-  }
-  .cbs {
-    padding-top: 0;
-    color: #7ea0c3;
-    label {
-      font-size: 12px;
-      padding: 0;
-      margin: 0;
-	  &:after { content: none; }
-    }
-    span { margin-right: 10px; }
-  }
-}
-
-.panel-list {
-  li {
-    padding: 10px;
-    border-bottom: 1px solid $line-color;
-    height: 48px;
-    .item-title {
-      display: block;
-      .item-request-number {
-        float: left;
-        font-weight: bold;
-      }
-      .item-request-description {
-        float: left;
-      }
-    }
-    .item-association {
-      clear: both;
-      color: $grey;
-      .item-request-type {
-        float: left;
-      }
-      .item-request-link {
-        float: left;
-      }
-    }
-    img {
-      float: left;
-      margin-right: 10px;
-      padding-bottom: 20px;
-    }
-    a {  
-      color: #000; 
-      display: block; 
-      width: 100%; 
-      height: 58px;
-      text-decoration: none;
-	  .title { 
-	    font-weight: bold;
-	    font-size: 110%;
-	    margin-bottom: 2px;
-            overflow: hidden;
-	  }
-	  .comment { 
-	    color: $grey;
-	    font-size: 90%;
-	  }
-    }
-    &:hover { background-color: $bg-color; }
-	&.selected {
-	  background: $selected-color;
-	  color: #fff;
-	  .title {
-	    color: #fff;
-	    text-shadow: #113f7d 0px 1px 1px;
-	  }
-	  .comment { color: #fff; }
-    }
-    &.loading {
-      background-position: 240px 56px;
-    }
-  }
-}
-
-.panel-items {
-  position: absolute;
-  width: $side-panel-width;
-  bottom: 60px;
-  top: 100px;
-  overflow: auto;
-}
-
-.panel-add {
-  position: absolute;
-  width: $side-panel-width - 20;
-  bottom: 10px;
-  height: 20px;
-  background: $bg-color;
+  bottom: 0px;
+  top: 96px;
+  left: 0px;
+  background-color: $light-bg;
   border-top: 1px solid $line-color;
   border-left: 1px solid $line-color;
-  padding: 10px;
-  text-align: center;
-  &.selected {
-    a { 
-      text-decoration: none;
-      color: $selected-color; 
-      font-weight: bold;
+  border-right: 1px solid $line-color;
+  .search-box {
+    padding: 5px;
+    select {
+      margin-bottom: 5px;
+      width: $side-panel-width - 10;
+    }
+    input {
+      width: $side-panel-width - 25;
+    }
+  }
+  .items-placeholder {
+    background-color: $white;
+    overflow: auto;
+    position: absolute;
+    width: $side-panel-width;
+    bottom: 40px;
+    top: 75px;
+    border-top: 1px solid $line-color;
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      li:nth-child(odd) {
+        background-color: $strip-color;
+      }
+      li.item {
+      }
+    }
+    .items-counter {
+      position: fixed;
+      width: $side-panel-width;
+      height: 30px;
+      bottom: 40px;
+      border-top: 1px solid $line-color;
+      background-color: $light-grey;
+      .items-counter-inner {
+        font-size: 90%;
+        text-align: center;
+        padding-top: 5px;
+      }
+    }
+  }
+  .bottom-box {
+    position: absolute;
+    width: 250px;
+    height: 40px;
+    bottom: 0px;
+    border-top: 1px solid $line-color;
+    .bottom-box-inner {
+      margin: 5px 10px;
     }
   }
 }
 
-.main-panel {
-  float: left;
-  overflow: auto;
-  width: $main-panel-width;
-  position: fixed;
-  bottom: 20px;
-  top: 110px;
-  border: 1px solid $line-color;
-  border-left: 0;
-  margin-left: $side-panel-width + 2;
-  background: $white;
+#folder-main-panel {
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+  top: 96px;
 }
 
-#counter {
-  position: fixed;
-  bottom: 40px;
-  height: 30px;
-  width: 290px;
-  color: $grey;
-  background: $white;
-  border-top: 1px solid $line-color;
-  padding-left: 10px;
-  .inner {
-    text-align: center;
-    margin-top: 8px;
-  }
-}
-
-#wide-area {
-  width: $wide-width;
-  background: #fff;
-  border: 1px solid $line-color;
-  overflow: auto;
-  position: fixed;
-  bottom: 20px;
-  top: 70px;
-}
-
-.inner-area {
-  padding: 20px;
-  background: #fff;
-}
-
-.tabs {
-  height: 23px;
-  border-bottom: 1px solid $line-color;
-  margin-bottom: 10px;
-  ul {
-    li {
-      float: left;
-      margin: 0 4px;
-      border: 1px solid $line-color;
-      background: $bg-color;
-      padding: 5px 10px;
-      &.selected {
-        background: $white;
-        border-bottom: 1px solid #fff;
-        a {
-          font-weight: bold;
-        }
-      }
-      a {
-        display: block;
-        cursor: pointer;
-        color: $black;
-        &:hover {
-          text-decoration: none;
-        }
-      }
-    }
-  }
-}

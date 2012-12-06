@@ -3,12 +3,21 @@
   = form_for @request, :remote => true, :html => {:'data-type' => 'html', :id => 'new-request-form'} do |f|
     .field#field_service_request_request_type_id
       = f.label :request_type_id, 'Tipo:'
+      - options = '<option value="-">Selecciona el tipo</option>'
+      - RequestType.order(:name).each do |request_type|
+        - if request_type.short_name == 'SERVICE'
+          - if current_user.can_create_external_services? 
+            - options += "<option value=\"#{request_type.id}\">#{request_type.name}</option>"
+        - else
+          - options += "<option value=\"#{request_type.id}\">#{request_type.name}</option>"
       = f.collection_select :request_type_id, RequestType.order(:name), :id, :name, options = {:prompt => "Selecciona el tipo"} 
+    .field#field_service_request_request_link{:style => 'display: none'}
+      = f.label :request_link, 'Nombre:'
       = f.text_field :request_link
-    .field#field_service_request_description
+    .field#field_service_request_description{:style => 'display: none'}
       = f.label :description, 'Descripción:'
       = f.text_area :description
-    .field#field_service_supervisor
+    .field#field_service_supervisor{:style => 'display: none'}
       - supervisor_options = ''
       - if current_user.supervisor1_id.blank? && current_user.supervisor2_id.blank?
         - supervisor_options += "<option value=\"\">Ninguno</option>"
@@ -20,5 +29,6 @@
         - supervisor_options += "<option value=\"#{u.id}\" #{selected}>#{u.full_name}</option>"
       = f.label :supervisor_id, 'Supervisor:'
       = f.select :supervisor_id, supervisor_options.html_safe
-    #new-request-button-area
+    #extra-form
+    #new-request-button-area{:style => 'display: none'}
       = f.submit "Crear nueva carpeta"

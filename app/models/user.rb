@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   ACCESS_INTERNSHIP       = 2
   ACCESS_PROJECT_EMPLOYEE = 3
   ACCESS_EMPLOYEE         = 4
+  ACCESS_CUSTOMER_SERVICE = 5
   ACCESS_ADMIN            = 99
 
   ACCESS_TYPES = {
@@ -15,6 +16,7 @@ class User < ActiveRecord::Base
     ACCESS_INTERNSHIP       => 'Servicio o Post-Doctorado',
     ACCESS_PROJECT_EMPLOYEE => 'Por proyecto',
     ACCESS_EMPLOYEE         => 'Empleado',
+    ACCESS_CUSTOMER_SERVICE => 'Servicio al cliente',
     ACCESS_ADMIN            => 'Administrador',
   }
 
@@ -31,6 +33,10 @@ class User < ActiveRecord::Base
 
   def access_text
     ACCESS_TYPES[access.to_i]
+  end
+
+  def can_create_external_services?
+    access.to_i == ACCESS_ADMIN || access.to_i == ACCESS_CUSTOMER_SERVICE
   end
 
 end

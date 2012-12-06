@@ -112,4 +112,10 @@ class ServiceRequestsController < ApplicationController
     end
   end
 
+  def form
+    @request_type = RequestType.find(params[:request_type_id])
+    template = @request_type.short_name
+    render template, :layout => false
+  end
+
 end

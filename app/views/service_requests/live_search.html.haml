@@ -1,12 +1,16 @@
-- @requests.each do |r|
-  - if current_user.id == r.supervisor_id 
-    - klass = 'service-supervised'
-    - add_info = "Dueño: #{r.user.full_name}"
-  - else
-    - klass = 'service-mine' 
-    - add_info = ''
-  .service-request-item{:service_request_id => r.id, :class => klass}
-    .service-request-number= r.number
-    .service-request-link= "#{r.request_type.name} #{r.request_link}" rescue "Sin tipo"
-    .service-request-description= r.description
-    .service-request-add-info= add_info
+.items
+  - @requests.each do |r|
+    - if current_user.id == r.supervisor_id 
+      - klass = 'service-supervised'
+      - add_info = "Dueño: #{r.user.full_name}"
+    - else
+      - klass = 'service-mine' 
+      - add_info = ''
+    .service-request-item{:service_request_id => r.id, :class => klass}
+      .service-request-number= r.number
+      .service-request-link= "#{r.request_type.name} #{r.request_link}" rescue "Sin tipo"
+      .service-request-description= r.description
+      .service-request-add-info= add_info
+.items-counter
+  .items-counter-inner
+    = "#{@requests.count} carpetas"

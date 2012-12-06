@@ -5,6 +5,7 @@
 current_sample = 0
 current_request = 0
 current_requested_service = 0
+hash = false
 
 #--------
 # HELPERS
@@ -39,27 +40,25 @@ $('html').click( (e) ->
 #------------
 my_request_search_results = false
 
-requestsLiveSearch = () -> 
+@foldersLiveSearch = foldersLiveSearch = () -> 
   #return false if $("#search-box").val().length < 3
-  form = $('#live-search')
+  form = $('#folder-live-search')
   url = '/service_requests/live_search'
   formData = form.serialize()
   $.get(url, formData, (html) ->
-    $('#search-results').empty().html(html)
-    $('#search-results').show()
+    $('#folder-panel .items-placeholder').empty().html(html)
   )
 
 $('#search-box')
   .live('keyup', () ->
-    requestsLiveSearch() 
+    foldersLiveSearch() 
   )
   .live('click', () ->
-    requestsLiveSearch() 
+    foldersLiveSearch() 
   )
 
 $('.service-request-item')
   .live('click', () ->
-    $('#search-results').hide()
     getServiceRequest($(this).attr('service_request_id'))
   )
 
@@ -68,7 +67,7 @@ $('#add-new-button')
   .live('click', () ->
     url = '/service_requests/new'
     $.get(url, {}, (html) ->
-      $('#my-requests-area').empty().html(html)
+      $('#folder-main-panel').empty().html(html)
     )
   )
 
@@ -76,12 +75,7 @@ $('#add-new-button')
   url = '/service_requests/' + id
   $.get(url, {}, (html) ->
     current_request = id
-    $('#my-requests-area').empty().html(html)
-  )
-
-$('#sample-header')
-  .live('click', () ->
-    $('#sample-list').toggle()
+    $('#folder-main-panel').empty().html(html)
   )
 
 $('#select-sample-sample-button')
@@ -885,3 +879,6 @@ checkHash = () ->
       $.get(url, {}, (html) ->
         $('#workarea').empty().html(html)
       )
+
+hashTimer = setInterval(checkHash, 1000)
+

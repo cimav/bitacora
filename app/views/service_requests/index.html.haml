@@ -1,16 +1,19 @@
-#my-requests-bar.workarea-bar
-  %h2 Mis carpetas
-  #add-new-button-area
-    = button_tag " + Crear nueva carpeta ", {:id => 'add-new-button', :title => 'Crear nueva carpeta'}
-  #search-area
-    = form_tag '/search', :id => 'live-search', :method => 'get', :remote => true do
+#header-bar
+  %h2 Carpetas
+#folder-panel
+  .search-box
+    = form_tag '/search', :id => 'folder-live-search', :method => 'get', :remote => true do
+      %select#search-filter{:name => 'filter'}
+        %option{:value => '*'}= "Todos"
       = text_field_tag :q, nil, :id => 'search-box', :placeholder => 'Busqueda'
-  #search-results
-#my-requests-area
-  - if @latest_request.nil?
-    #empty-requests= "No existen carpetas."
-  - else 
-    :javascript
-      $(function() {
-        getServiceRequest("#{@latest_request.id}");
-      });
+  .items-placeholder
+
+  .bottom-box
+    .bottom-box-inner
+      = button_tag "Crear nueva carpeta", {:id => 'add-new-folder-button', :class => 'btn btn-primary btn-block', :title => 'Crear nueva carpeta'}
+#folder-main-panel
+
+:javascript 
+  $(document).ready(function() {
+    foldersLiveSearch();
+  });

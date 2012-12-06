@@ -14,6 +14,7 @@
 
 
 #requested-service-header 
+  #requested-service-name= @requested_service.laboratory_service.name
   #requested-service-actions
     #requested-service-status{:class => "status_#{@requested_service.status}"}
       = @requested_service.status_text
@@ -54,37 +55,52 @@
       - if klass == ''
         #no-actions= "No existen acciones que se puedan realizar en este momento"
           
+#requested-service-info
+  .info-row
+    .laboratory-name
+      %i.icon-asterisk
+      %strong= "Laboratorio: " 
+      = @requested_service.laboratory_service.laboratory.name
+    .suggested-user
+      %i.icon-star
+      %strong= "Técnico Sugerido: "
+      = "#{(@requested_service.suggested_user.full_name rescue 'Cualquier Técnico')}"
+      - if !@requested_service.user_id.blank?
+        %strong= "/ Técnico Asignado: "
+        = "#{(@requested_service.user.full_name)}"
+  .info-row
+    .folder-type
+      %i.icon-folder-open
+      %strong= "#{(@requested_service.sample.service_request.request_type.name rescue 'Sin Tipo')}: "
+      = @requested_service.sample.service_request.request_link
+    .folder-owner
+      %i.icon-user
+      %strong= "Dueño: "
+      = "El dueño"
+  .info-row
+    .service-details
+      %i.icon-comment
+      %strong= "Anotaciones Particulares: "
+      - if !@requested_service.details.blank?
+        = @requested_service.details
+      - else
+        = "Ninguna"
 
-  %h1= @requested_service.laboratory_service.name
-  %h2= @requested_service.laboratory_service.laboratory.name
-  #folder-info
-    %strong= "#{(@requested_service.sample.service_request.request_type.name rescue 'Sin Tipo')}: "
-    = @requested_service.sample.service_request.request_link
-  #suggested-user
-    %strong= "Técnico Sugerido: "
-    = "#{(@requested_service.suggested_user.full_name rescue 'Cualquier Técnico')}"
-    - if !@requested_service.user_id.blank?
-      %strong= "/ Técnico Asignado: "
-      = "#{(@requested_service.user.full_name)}"
-  - if !@requested_service.details.blank?
-    #requested-service-details
-      %strong Anotaciones Particulares:
-      %div= @requested_service.details
-
-#requested-service-tabs.tabs
-  %ul
-    %li.selected
+#requested-service-tabs
+  %ul.nav.nav-tabs
+    %li.active
       %a{:id => 'activity-tab-link'}= "Bitácora"
     %li
       %a{:id => 'files-tab-link'}= "Archivos"
 
-#activity-tab.tab-content
-  #activity_log
-    = render :partial => 'activity_log/activity_log', :locals => {:activity_log => @activity_log, 
+#requested-service-tabs-content
+  #activity-tab.tab-content
+    #activity_log
+      = render :partial => 'activity_log/activity_log', :locals => {:activity_log => @activity_log, 
                                                                   :service_request_id => @requested_service.sample.service_request_id, 
                                                                   :sample_id => @requested_service.sample_id, 
                                                                   :requested_service_id => @requested_service.id}
-#files-tab.tab-content
-  %iframe{"name" => "submit_iframe", "id" => "files_iframe", "width" => "100%", "height" => "1250", "src" => "/service_files/ui/#{@requested_service.sample.service_request_id}/#{@requested_service.sample_id}/#{@requested_service.id}", "scrolling" => "no" }
+  #files-tab.tab-content
+    %iframe{"name" => "submit_iframe", "id" => "files_iframe", "width" => "100%", "height" => "1250", "src" => "/service_files/ui/#{@requested_service.sample.service_request_id}/#{@requested_service.sample_id}/#{@requested_service.id}", "scrolling" => "no" }
 
 

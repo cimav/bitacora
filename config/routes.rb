@@ -2,9 +2,10 @@ Bitacora::Application.routes.draw do
   root :to => 'home#index'
   match '/login' => 'login#index'
 
-  match '/my-requests' => 'service_requests#index'
+  match '/folders' => 'service_requests#index'
   match '/service_requests/:id/sample_list' => 'service_requests#sample_list'
   match '/service_requests/live_search' => 'service_requests#live_search'
+  match '/service_requests/form/:request_type_id' => 'service_requests#form'
   resources :service_requests 
   match '/samples/:id/requested_services_list' => 'samples#requested_services_list'
   match '/samples/new_dialog/:service_request_id' => 'samples#new_dialog'

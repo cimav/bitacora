@@ -1,10 +1,9 @@
-@import "reset";
+@import "bootstrap";
+@import "bootstrap-responsive";
 @import "config";
 @import "mixins";
-@import "general";
-@import "ui";
-@import "dialogs";
 @import "layout";
+@import "dialogs";
 @import "home";
 @import "service_requests";
 @import "activity_log";

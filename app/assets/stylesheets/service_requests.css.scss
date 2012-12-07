@@ -179,7 +179,7 @@
           border-bottom: 1px solid $line-color;
           background: $bg-selected;
           color: $selected-color;
-          
+           
           .service-bullet {
             background-color: $selected-color;
             color: $white;
@@ -395,17 +395,6 @@
         }
       }
     }
-  }
-}
-
-#member-details,
-#service-details {
-  margin-left: $lab-services-list-width + 10;
-  margin-top: 10px;
-  #service-detail-submit-area {
-    margin-top: 10px;
-    margin-right: 10px;
-    float: right;
   }
 }
 

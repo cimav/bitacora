@@ -19,6 +19,10 @@ class LaboratoryServicesController < ApplicationController
     render :layout => false
   end
 
+  def add_service_dialog
+    render :layout => false
+  end
+
   def for_sample
     @laboratory_service = LaboratoryService.find(params[:id])
     @sample = Sample.find(params[:sample_id])

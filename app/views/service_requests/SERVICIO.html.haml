@@ -1,0 +1,8 @@
+.field#field_service_request_request_date
+  = f.label :request_date, 'Fecha de recepción:'
+  = "student[contact_attributes][address1]"
+  = f.text_field :request_date
+
+.field#field_service_request_description
+  = f.label :description, 'Descripción:'
+  = f.text_area :description

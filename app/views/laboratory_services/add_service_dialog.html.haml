@@ -1,0 +1,27 @@
+#add-service-modal.modal.hide.fade{:tabindex => "-1", :role => "dialog", "aria-labelledby" => "add-service-modal-label", "aria-hidden" => "true"}
+  .modal-header
+    %button.close{"data-dismiss" => "modal", "aria-hidden" => "true"}= "×"
+    %h3#add-service-modal-label= "Agregar servicio"
+  .modal-body
+    #add-service-modal-panel
+      .search-area
+        = form_tag laboratory_services_path, :id => 'laboratory-services-live-search', :method => 'get', :remote => true do
+          - service_type_options = "<option value=\"0\">Todos los tipos</option>"
+          - service_types = ServiceType.order('name')
+          - service_types.each do |st|
+            - service_type_options += "<option value=\"#{st.id}\">#{st.name}</option>" 
+          = select_tag "service_type", service_type_options.html_safe
+      
+          - laboratory_options = "<option value=\"0\">Todos los laboratorios</option>"
+          - laboratories = Laboratory.order('name')
+          - laboratories.each do |lab|
+            - laboratory_options += "<option value=\"#{lab.id}\">#{lab.name}</option>"    
+          = select_tag "laboratory", laboratory_options.html_safe
+
+          = text_field_tag :q, nil, :id => 'laboratory-services-search-box', :placeholder => 'Busqueda'
+      #laboratory-services-list
+    #service-details
+        
+  .modal-footer
+    = button_tag "Agregar servicio", {:class => "btn btn-primary", :id => "add-service-modal-submit"}
+    %button.btn{"data-dismiss" => "modal", "aria-hidden" => "true"}= "Cerrar"

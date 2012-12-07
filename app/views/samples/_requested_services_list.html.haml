@@ -10,4 +10,5 @@
         .service-name= rs.laboratory_service.name
   %li#add-service
     .service-bullet.add= "+"
-    .service-name= "Agregar servicio"
+    .service-name
+      %a#open-add-service-modal= "Agregar servicio"

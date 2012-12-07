@@ -26,6 +26,7 @@ Bitacora::Application.routes.draw do
 
 
   match '/laboratory_services/live_search' => 'laboratory_services#live_search'
+  match '/laboratory_services/add_service_dialog' => 'laboratory_services#add_service_dialog'
   match '/laboratory_services/:id/for_sample/:sample_id' => 'laboratory_services#for_sample'
   resources :laboratory_services do
     member do

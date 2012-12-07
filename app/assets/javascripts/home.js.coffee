@@ -118,14 +118,19 @@ $('.sample-details')
     getSample($(this).attr('sample_id'))
   )
 
-$('#add-service')
-  .live('click', () ->
-    $("#add-service-dialog").dialog('open')
+addServiceDialog = () ->
+  $("#add-service-dialog").remove()
+  $('body').append('<div id="add-service-dialog"></div>')
+  url = '/laboratory_services/add_service_dialog/'
+  $.get(url, {}, (html) ->
+    $('#add-service-dialog').empty().html(html)
+    $('#add-service-modal').modal({ keyboard:true, backdrop:true, show: true })
+    labServicesLiveSearch()
   )
 
-$('#add-service-dialog')
-  .live("dialogopen", (event, ui) ->
-    labServicesLiveSearch()
+$('#open-add-service-modal')
+  .live('click', () ->
+    addServiceDialog()
   )
 
 $('#service_type')
@@ -165,6 +170,11 @@ $('.lab-service-item')
     )
   )
 
+$('#add-service-modal-submit')
+  .live('click', () ->
+    $('#new-requested-service-form').submit();
+  )
+
 $('#new-requested-service-form')
   .live("ajax:beforeSend", (evt, xhr, settings) ->
     $('.error-message').remove()
@@ -174,7 +184,7 @@ $('#new-requested-service-form')
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
-    $("#add-service-dialog").dialog('close')
+    $('#add-service-modal').modal('hide').remove()
     getSampleRequestedServices(res['sample_id'])
     getRequestedService(res['sample_id'], res['id'])
   )

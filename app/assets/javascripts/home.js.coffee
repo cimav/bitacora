@@ -47,6 +47,7 @@ my_request_search_results = false
   formData = form.serialize()
   $.get(url, formData, (html) ->
     $('#folder-panel .items-placeholder').empty().html(html)
+    $("#folder-panel .items-placeholder .items .service-request-item:first").click();
   )
 
 $('#search-box')
@@ -59,11 +60,13 @@ $('#search-box')
 
 $('.service-request-item')
   .live('click', () ->
+    $('.service-request-item').removeClass('selected')
+    $(this).addClass('selected')
     getServiceRequest($(this).attr('service_request_id'))
   )
 
 
-$('#add-new-button')
+$('#add-new-folder-button')
   .live('click', () ->
     url = '/service_requests/new'
     $.get(url, {}, (html) ->
@@ -83,45 +86,23 @@ $('#select-sample-sample-button')
     $('#sample-list').toggle()
   )
 
-$('#activity-tab-link') 
-  .live('click', () ->
-    $('#requested-service-tabs ul li').removeClass('selected')
-    $(this).closest('li').addClass("selected"); 
-    $('.tab-content').hide()
-    $('#activity-tab').show()
-  )
-
-$('#files-tab-link') 
-  .live('click', () ->
-    $('#requested-service-tabs ul li').removeClass('selected')
-    $(this).closest('li').addClass("selected"); 
-    $('.tab-content').hide()
-    $('#files-tab').show()
-    calcFrameHeight('files_iframe')
-  )
-
-
 newSampleDialog = () ->
-   $("#new-sample-dialog").remove()
-   $('#container').append('<div title="Agregar Muestra" id="new-sample-dialog"></div>')
-   $("#new-sample-dialog").dialog({ autoOpen: true, width: 350, height: 430, modal:true })
+  $("#new-sample-dialog").remove()
+  $('body').append('<div id="new-sample-dialog"></div>')
+  url = '/samples/new_dialog/' + current_request
+  $.get(url, {}, (html) ->
+    $('#new-sample-dialog').empty().html(html)
+    $('#add-new-sample-modal').modal({ keyboard:true, backdrop:true, show: true });
+  )
 
 $("#add-new-sample-button")
   .live("click", () ->
     newSampleDialog()
   )
 
-$("#add-new-sample-link")
+$("#open-new-sample-modal-link")
   .live("click", () ->
     newSampleDialog()
-  )
-
-$( "#new-sample-dialog" )
-  .live("dialogopen", (event, ui) ->
-    url = '/samples/new_dialog/' + current_request
-    $.get(url, {}, (html) ->
-      $('#new-sample-dialog').empty().html(html)
-    )
   )
 
 @getSample = getSample = (id) ->
@@ -232,7 +213,7 @@ $('#new-sample-form')
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
-    $("#new-sample-dialog").dialog('close').dialog('destroy').remove()
+    $('#add-new-sample-modal').modal('hide').remove()
     getSample(res['id'])
   )
   .live('ajax:complete', (evt, xhr, status) ->
@@ -250,7 +231,10 @@ $('#new-request-form')
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
-    getServiceRequest(res['id'])
+    $('#search-filter').val('*')
+    $('#search-box').val(res['id'])
+    foldersLiveSearch()
+    #getServiceRequest(res['id'])
   )
   .live('ajax:complete', (evt, xhr, status) ->
   )

@@ -3,6 +3,11 @@
   top: 0;
   bottom: 0;
 }
+
+.inner-area {
+  padding: 20px;
+}
+
 #header-bar {
   background: $light-grey;
   border-bottom: 1px solid $line-color;
@@ -85,8 +90,10 @@
 }
 
 #folder-main-panel {
-  width: 100%;
-  position: absolute;
+  position: fixed;
+  left: $side-panel-width + 1;
+  overflow: auto;
+  right: 0px;
   bottom: 0px;
   top: 96px;
 }

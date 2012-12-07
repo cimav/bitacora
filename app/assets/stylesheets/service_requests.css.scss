@@ -29,6 +29,7 @@
     float: left;
     padding-top: 20px;
     padding-left: 12px;
+    font-size: 11px;
   }
   .service-request-link {
     margin-top: 10px;
@@ -45,7 +46,7 @@
   }
   &.selected {
     background-color: $bg-selected;
-    color: $selected-color;
+    color: $selected-color !important;
     .lab-service-laboratory {
       color: $selected-color;
     }
@@ -90,6 +91,7 @@
     background-color: $link-color;
     color: $white;
     text-align: center;
+    line-height: 1.4em;
     width: 48px;
     float: right;
     strong {
@@ -164,15 +166,20 @@
       width: $sample-list-width;
       list-style: none;
       li {
+        font-size: 90%;
         list-style: none;
         padding: 4px;
         margin: 2px 0;
         cursor: pointer;
         color: $black;
+        border-top: 1px solid #fff;
+        border-bottom: 1px solid #fff;
         &.selected {
+          border-top: 1px solid $line-color;
+          border-bottom: 1px solid $line-color;
           background: $bg-selected;
           color: $selected-color;
-          font-weight: bold;
+          
           .service-bullet {
             background-color: $selected-color;
             color: $white;
@@ -209,17 +216,17 @@
 }
 
 #requested-service-header {
+  background: #fff;
   left: ($sample-list-width * 2) + 4;
   right: 0px;
   position: fixed;
   top: 96px;
-  height: 40px;
+  height: 48px;
+  border-top: 1px solid $line-color;
   border-bottom: 1px solid $line-color;
   #requested-service-name {
-    padding: 10px;
-    position: fixed;
-    left: ($sample-list-width * 2) + 4;
-    right: 200px;
+    padding: 14px 10px 14px 20px;
+    white-space: pre;
     font-size: 24px;
     color: $black;
     font-weight: normal;
@@ -227,10 +234,11 @@
 }
 
 #requested-service-info {
-  position: fixed;
-  left: ($sample-list-width * 2) + 4;
+  display: none;
+  position: absolute;
+  left: ($sample-list-width * 2) + 14;
   right: 0px;
-  top: 146px;
+  top: 150px;
   .info-row {
     height: 24px;
     div {
@@ -255,20 +263,29 @@
   }
 }
 
-#requested-service-tabs {
+#requested-service-actions {
   position: fixed;
-  left: ($sample-list-width * 2) + 14;
-  right: 0px;
-  top: 232px;
-  height: 40px;
+  top: 96px;
+  right: 10px;
+  background: #fff;
+  width: 200px;
+  margin-top: 10px;
+  ul {
+    width: 200px;
+    li {
+      
+    }
+  }
+}
+
+#requested-service-tabs {
+  padding-top: 64px;
+  padding-left: 10px;
+  background: $light-grey;
 }
 
 #requested-service-tabs-content {
-  position: fixed;
-  left: ($sample-list-width * 2) + 14;
-  right: 0px;
-  bottom: 0px;
-  top: 272px; 
+  padding-left: 10px;
 }
 
 #empty-requests {
@@ -292,23 +309,6 @@
     cursor: pointer;
     min-height: 54px;
   } 
-}
-
-#sample-list-actions {
-  position: fixed;
-  bottom: 21px;
-  width: $sample-list-width;
-  height: 74px;
-  text-align: center;
-  border-top: 1px solid $line-color;
-  button {
-    margin: 5px;
-    width: $sample-list-width - 10;
-  }
-}
-
-#new-sample-dialog {
-  padding: 20px;
 }
 
 #field_service_request_sample_identification {
@@ -409,59 +409,6 @@
   }
 }
 
-#field_requested_service_details {
-  div {
-    margin-bottom: 5px;
-  }
-  textarea {
-    width: 360px;
-    height: 100px;
-  }
-}
-
-#suggested-user {
-  margin-bottom: 10px;
-}
-
-#requested-service-actions {
-  float: right;
-  width: 200px;
-  #requested-service-status {
-    width: 180px;
-    cursor: pointer;
-    font-size: 14px;
-    padding: 8px 10px;
-    margin-right: 10px;
-    margin-left: 5px;
-    @include rounded(4px);
-    background-image: url(/assets/arrow-down-white.png);
-    background-position: center right;
-    background-repeat: no-repeat;
-    color: $white;
-    text-align: left;
-  }
-  #action-list {
-    display: none;
-    border: 1px solid $line-color;
-    background: $bg-color;
-    width: 200px;
-    padding: 10px 0;
-    position: absolute;
-    ul {
-      li {
-        @include rounded(4px);
-        margin: 4px 10px;
-        padding: 4px;
-        color: $white;
-        position: relative;
-        @include opacity(0.8);
-        cursor: pointer;
-      }
-
-
-    }
-  }
-}
 
 // INITIAL
 .status_1 { background-color: #666666 !important; }
@@ -500,10 +447,6 @@
   border: 0;
 }
 
-#files-tab {
-  display: none;
-}
-
 #upload-area {
   background: $white;
 }
@@ -511,6 +454,7 @@
 #upload-box {
   float: right;
   position: relative;
+  margin-right: 10px;
   width: 140px;
 }
 
@@ -560,7 +504,8 @@
 }
 
 #files-area {
-  margin-right: 160px;
+  margin-right: 180px;
+  margin-left: 10px;
 }
 
 .files-table {
@@ -602,7 +547,7 @@
 
   .file-edit {
     position: fixed;
-    right: 160px; 
+    right: 200px; 
     font-size: 10px;
     display: none;
     padding: 4px;
@@ -614,14 +559,8 @@
   }
 }
 
-
-#files_iframe {
+#add-new-sample-modal form {
+  margin: 0;
+  padding: 0;
 }
 
-.file_type_1 {
-  background: #fff url(/assets/file_type_1.png) no-repeat;
-}
-
-.file_type_99 {
-  background: #fff url(/assets/file_type_99.png) no-repeat;
-}

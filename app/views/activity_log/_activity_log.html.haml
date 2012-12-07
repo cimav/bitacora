@@ -1,26 +1,23 @@
-%ul.activity-list
-  %li
-    .log-display
-      = image_tag ("http://cimav.edu.mx/foto/#{current_user.email.split('@')[0]}/48")
-    .log-msg-form
-      = form_for ActivityLog.new, :remote => true, :html => {:'data-type' => 'html', :id => 'new-activity-log-form'} do |f|
-        = f.hidden_field :service_request_id, {:value => service_request_id}
-        = f.hidden_field :sample_id, {:value => sample_id}
-        = f.hidden_field :requested_service_id, {:value => requested_service_id}
-          
-        = f.hidden_field :message_type, {:value => 'USER'}
+.media.write-message
+  %a.pull-left{:href => '#'}
+    = image_tag ("http://cimav.edu.mx/foto/#{current_user.email.split('@')[0]}/48"), :class => "media-object"
+  .media-body
+    = form_for ActivityLog.new, :remote => true, :html => {:'data-type' => 'html', :id => 'new-activity-log-form'} do |f|
+      = f.hidden_field :service_request_id, {:value => service_request_id}
+      = f.hidden_field :sample_id, {:value => sample_id}
+      = f.hidden_field :requested_service_id, {:value => requested_service_id}
+         
+      = f.hidden_field :message_type, {:value => 'USER'}
+      .activity-textarea
         = f.text_area :message, :placeholder => 'Escribe aquí tu mensaje'
-        = f.submit "Enviar"
-    .clearfix
+      = f.submit "Enviar", :class => "btn btn-info"
+%ul.media-list
   - activity_log.each do |activity|
-    %li
-      .log-display
-        = image_tag ("http://cimav.edu.mx/foto/#{activity.user.email.split('@')[0]}/48")
-      .log-date
-        = l activity.created_at, :format => :long
-      .log-msg-area
-        .log-user
+    %li.media.activity-message
+      %a.pull-left{:href => '#'}
+        = image_tag ("http://cimav.edu.mx/foto/#{activity.user.email.split('@')[0]}/48"), :class => "media-object"
+      .media-body
+        %h4.media-heading
           = activity.user.full_name 
-        .log-message
-          = activity.message
-      .clearfix
+          %span.timestamp= l activity.created_at, :format => :long
+        = activity.message

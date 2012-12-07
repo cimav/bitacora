@@ -2,7 +2,7 @@
 - if @request.sample.count == 0
   #no-samples
     = 'La carpeta aún no tiene muestras.'
-    %a{:id => 'add-new-sample-link'}= '¿Deseas agregar una?'
+    %a{:id => 'open-new-sample-modal-link'}= '¿Deseas agregar una?'
 - else
   :javascript
     $(function() {

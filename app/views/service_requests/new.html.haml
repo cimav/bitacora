@@ -1,34 +1,45 @@
 #new-request-area.inner-area
-  %h1 Nueva carpeta
-  = form_for @request, :remote => true, :html => {:'data-type' => 'html', :id => 'new-request-form'} do |f|
-    .field#field_service_request_request_type_id
-      = f.label :request_type_id, 'Tipo:'
-      - options = '<option value="-">Selecciona el tipo</option>'
-      - RequestType.order(:name).each do |request_type|
-        - if request_type.short_name == 'SERVICE'
-          - if current_user.can_create_external_services? 
+  %h2 Nueva carpeta
+  = form_for @request, :remote => true, :html => {:'data-type' => 'html', :id => 'new-request-form', :class => "form-horizontal"} do |f|
+    
+    .control-group#cg_ServiceRequest_type_id
+      = f.label :request_type_id, "Tipo", {:class => 'control-label'}
+      .controls
+        - options = '<option value="-">Selecciona el tipo</option>'
+        - RequestType.order(:name).each do |request_type|
+          - if request_type.short_name == 'SERVICE'
+            - if current_user.can_create_external_services? 
+              - options += "<option value=\"#{request_type.id}\">#{request_type.name}</option>"
+          - else
             - options += "<option value=\"#{request_type.id}\">#{request_type.name}</option>"
-        - else
-          - options += "<option value=\"#{request_type.id}\">#{request_type.name}</option>"
-      = f.collection_select :request_type_id, RequestType.order(:name), :id, :name, options = {:prompt => "Selecciona el tipo"} 
-    .field#field_service_request_request_link{:style => 'display: none'}
-      = f.label :request_link, 'Nombre:'
-      = f.text_field :request_link
-    .field#field_service_request_description{:style => 'display: none'}
-      = f.label :description, 'Descripción:'
-      = f.text_area :description
-    .field#field_service_supervisor{:style => 'display: none'}
-      - supervisor_options = ''
-      - if current_user.supervisor1_id.blank? && current_user.supervisor2_id.blank?
-        - supervisor_options += "<option value=\"\">Ninguno</option>"
-      - User.where("access >= :a", {:a => User::ACCESS_EMPLOYEE}).order('first_name, last_name').each do |u|
-        - if current_user.supervisor1_id == u.id
-          - selected = 'selected = "selected"'
-        - else
-          - selected = ''
-        - supervisor_options += "<option value=\"#{u.id}\" #{selected}>#{u.full_name}</option>"
-      = f.label :supervisor_id, 'Supervisor:'
-      = f.select :supervisor_id, supervisor_options.html_safe
+        = f.collection_select :request_type_id, RequestType.order(:name), :id, :name, options = {:prompt => "Selecciona el tipo"} 
+
+
+    .control-group#cg_ServiceRequest_link
+      = f.label :request_link, 'Nombre:', {:class => 'control-label'}
+      .controls
+        = f.text_field :request_link, {:class => 'input-xxlarge'}
+
+    .control-group#cg_ServiceRequest_description
+      = f.label :description, 'Descripción:', {:class => 'control-label'}
+      .controls
+        = f.text_area :description, {:class => 'input-xxlarge',:rows => 4}
+
+    .control-group#cg_ServiceRequest_supervisor
+      = f.label :supervisor_id, 'Supervisor:', {:class => 'control-label'}
+      .controls
+        - supervisor_options = ''
+        - if current_user.supervisor1_id.blank? && current_user.supervisor2_id.blank?
+          - supervisor_options += "<option value=\"\">Ninguno</option>"
+        - User.where("access >= :a", {:a => User::ACCESS_EMPLOYEE}).order('first_name, last_name').each do |u|
+          - if current_user.supervisor1_id == u.id
+            - selected = 'selected = "selected"'
+          - else
+            - selected = ''
+          - supervisor_options += "<option value=\"#{u.id}\" #{selected}>#{u.full_name}</option>"
+    
+        = f.select :supervisor_id, supervisor_options.html_safe
     #extra-form
-    #new-request-button-area{:style => 'display: none'}
-      = f.submit "Crear nueva carpeta"
+    .control-group
+      .controls
+        = f.submit "Crear nueva carpeta", {:class => "btn btn-primary"}

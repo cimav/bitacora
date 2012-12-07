@@ -16,44 +16,74 @@
 #requested-service-header 
   #requested-service-name= @requested_service.laboratory_service.name
   #requested-service-actions
-    #requested-service-status{:class => "status_#{@requested_service.status}"}
-      = @requested_service.status_text
-    - klass = ''
-    #action-list
-      %ul
+    .btn-group
+      %a.btn.dropdown-toggle{"data-toggle" => "dropdown"}
+        %span{:class => "badge status_#{@requested_service.status}"}
+          %i.icon-tags.icon-white
+        = @requested_service.status_text
+        %span.caret
+      %ul.dropdown-menu
+        - klass = ''
         - if initial_action
-          - klass = "status_#{RequestedService::INITIAL}"
-          %li{:status_action => RequestedService::INITIAL, :class => klass, :id => 'change_status_initial'}= "Regresar a inicio"
+          - klass = "badge status_#{RequestedService::INITIAL}"
+          %li
+            %a{:status_action => RequestedService::INITIAL, :id => 'change_status_initial'}
+              %span{:class => klass}
+                %i.icon-tags.icon-white
+              = "Regresar a inicio"
 
         - if received_action
-          - klass = "status_#{RequestedService::RECEIVED}"
-          %li{:status_action => RequestedService::RECEIVED, :class => klass, :id => 'change_status_received'}= "Recibir muestra"
+          - klass = "badge status_#{RequestedService::RECEIVED}"
+          %li
+            %a{:status_action => RequestedService::RECEIVED, :id => 'change_status_received'}
+              %span{:class => klass}
+                %i.icon-tags.icon-white
+              = "Recibir muestra"
 
         - if assigned_action
-          - klass = "status_#{RequestedService::ASSIGNED}"
-          %li{:status_action => RequestedService::ASSIGNED, :class => klass, :id => 'change_status_assigned'}= "Asignar técnico"
+          - klass = "badge status_#{RequestedService::ASSIGNED}"
+          %li{:status_action => RequestedService::ASSIGNED, :id => 'change_status_assigned'}
+            %span{:class => klass}
+              %i.icon-tags.icon-white
+            = "Asignar técnico"
 
         - if suspended_action
-          - klass = "status_#{RequestedService::SUSPENDED}"
-          %li{:status_action => RequestedService::SUSPENDED, :class => klass, :id => 'change_status_suspended'}= "Suspender servicio"
+          - klass = "badge status_#{RequestedService::SUSPENDED}"
+          %li{:status_action => RequestedService::SUSPENDED, :id => 'change_status_suspended'}
+            %span{:class => klass}
+              %i.icon-tags.icon-white
+            = "Suspender servicio"
 
         - if reinit_action
-          - klass = "status_#{RequestedService::REINIT}"
-          %li{:status_action => RequestedService::REINIT, :class => klass, :id => 'change_status_reinit'}= "Reiniciar servicio"
+          - klass = "badge status_#{RequestedService::REINIT}"
+          %li{:status_action => RequestedService::REINIT, :id => 'change_status_reinit'}
+            %span{:class => klass}
+              %i.icon-tags.icon-white
+            = "Reiniciar servicio"
 
         - if in_progress_action
-          - klass = "status_#{RequestedService::IN_PROGRESS}"
-          %li{:status_action => RequestedService::IN_PROGRESS, :class => klass, :id => 'change_status_in_progress'}= "Empezar servicio"
+          - klass = "badge status_#{RequestedService::IN_PROGRESS}"
+          %li{:status_action => RequestedService::IN_PROGRESS, :id => 'change_status_in_progress'}
+            %span{:class => klass}
+              %i.icon-tags.icon-white
+            = "Empezar servicio"
 
         - if finished_action
-          - klass = "status_#{RequestedService::FINISHED}"
-          %li{:status_action => RequestedService::FINISHED, :class => klass, :id => 'change_status_finished'}= "Finalizar servicio"
+          - klass = "badge status_#{RequestedService::FINISHED}"
+          %li{:status_action => RequestedService::FINISHED, :id => 'change_status_finished'}
+            %span{:class => klass}
+              %i.icon-tags.icon-white
+            = "Finalizar servicio"
 
         - if canceled_action
-          - klass = "status_#{RequestedService::CANCELED}"
-          %li{:status_action => RequestedService::CANCELED, :class => klass, :id => 'change_status_canceled'}= "Cancelar servicio"
-      - if klass == ''
-        #no-actions= "No existen acciones que se puedan realizar en este momento"
+          - klass = "badge status_#{RequestedService::CANCELED}"
+          %li
+            %a{:status_action => RequestedService::CANCELED, :id => 'change_status_canceled'}
+              %span{:class => klass}
+                %i.icon-tags.icon-minus-sign.icon-white
+              = "Cancelar servicio"
+        - if klass == ''
+          %li.no-actions= "No existen acciones"
           
 #requested-service-info
   .info-row
@@ -88,19 +118,30 @@
 
 #requested-service-tabs
   %ul.nav.nav-tabs
-    %li.active
-      %a{:id => 'activity-tab-link'}= "Bitácora"
     %li
-      %a{:id => 'files-tab-link'}= "Archivos"
+      %a{:href => "#detalles", "data-toggle" => "tab"}= "Detalles"
+    %li.active
+      %a{:href => "#bitacora", "data-toggle" => "tab"}= "Bitácora"
+    %li
+      %a{:href => "#archivos", "data-toggle" => "tab"}= "Archivos"
+    %li
+      %a{:href => "#costeo", "data-toggle" => "tab"}= "Costeo"
 
-#requested-service-tabs-content
-  #activity-tab.tab-content
+#requested-service-tabsx-content.tab-content
+
+  #detalles.tab-pane
+    = "Por implementar"
+
+  #bitacora.tab-pane.active
     #activity_log
       = render :partial => 'activity_log/activity_log', :locals => {:activity_log => @activity_log, 
                                                                   :service_request_id => @requested_service.sample.service_request_id, 
                                                                   :sample_id => @requested_service.sample_id, 
                                                                   :requested_service_id => @requested_service.id}
-  #files-tab.tab-content
+  #archivos.tab-pane
     %iframe{"name" => "submit_iframe", "id" => "files_iframe", "width" => "100%", "height" => "1250", "src" => "/service_files/ui/#{@requested_service.sample.service_request_id}/#{@requested_service.sample_id}/#{@requested_service.id}", "scrolling" => "no" }
+
+  #costeo.tab-pane
+    = "Por implementar"
 
 

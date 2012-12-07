@@ -23,9 +23,9 @@
       id = res['id'];
       $("#file-" + id + " .file-desc-form").hide();
       $("#file-" + id + " .file-desc").show();
-      $("#file-" + id + " .file-desc").removeClass('file_type_1');
-      $("#file-" + id + " .file-desc").removeClass('file_type_99');
-      $("#file-" + id + " .file-desc").addClass('file_type_' + res['newtype']);
+      $("#file-" + id + " .file-desc").removeClass('icon-ok');
+      $("#file-" + id + " .file-desc").removeClass('icon-file');
+      $("#file-" + id + " .file-icon").addClass(res['newtypeicon']);
       $("#file-" + id + " .file-desc a").html(res['newdesc']);
       $("#file-" + id + " .file-details").show();
     })
@@ -76,7 +76,8 @@
               - t_options += "<option value=\"#{ServiceFile::FINAL_REPORT}\">Reporte Final</option>"
               = ff.select :file_type, t_options.html_safe, {}, {:class => 'file_type_combo', :id => "file_type_id_#{service_file.id}"}
               = ff.text_field :description, :class => 'description_field', :id => "description_#{service_file.id}"
-            %span.file-desc{:class => "file_type_#{service_file.file_type}", :title => service_file.type_text}
+            %span.file-desc{:title => service_file.type_text}
+              %i{:class => "file-icon #{service_file.file_type_icon}"}
               %a{'href' => "/service_files/#{service_file.id}/file"}
                 = service_file.description
             %br

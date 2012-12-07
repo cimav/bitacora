@@ -2,45 +2,67 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.activity-list {
+#activity_log {
   border: 1px solid $line-color;
-  width: 580px;
-  li {
+  position: fixed;
+  left: ($sample-list-width * 2) + 14;
+  bottom: 10px;
+  top: 216px;
+  right: 10px;
+  @include rounded(6px);
+  .write-message {
+    background: $light-grey;
     border-bottom: 1px solid $line-color;
+  }
+
+  #new-activity-log-form {
+    margin-right: 5px;
+  }
+
+  .btn {
+    float: right;
+  }
+
+  .activity-textarea {
     padding: 5px;
-    margin: 5px 0 0 0;
-    .log-display {
-      float: left;
-      img {
-        @include rounded(5px);
-      }
+    margin-bottom: 5px;
+    background: #fff;
+    border: 1px solid $line-color;
+    @include rounded(6px);
+    textarea {
+      resize: none;
+      padding: 0;
+      width: 100%;
+      height: 40px;
+      border: none;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
     }
-    .log-msg-form {
-      width: 500px;
-      margin: 0 0 10px 10px;
-      float: left;
-      textarea {
-        width: 490px;
-        height: 40px;
-        margin-bottom: 10px;
-      }
-      input {
-        float: right;
-      }
-    }
-    .log-date {
-      color: $grey; 
-      float: right;
-      font-size: 10px;
-    }
-    .log-msg-area {
-      margin-left: 58px;
-      .log-user {
-        font-weight: bold;
-      }
-      .log-message {
-        margin-top: 5px;
-      }
-    }
+  }
+
+  .media-list {
+    position: absolute;
+    overflow: auto;
+    width: 100%;
+    top: 118px;
+    bottom: 0px;
+  }
+
+  .media {
+    padding: 10px;
+    margin: 0;
+  }
+  .activity-message {
+    border-bottom: 1px solid $line-color;
+  }
+  h4 {
+    font-size: 14px;
+  }
+  .timestamp {
+    font-weight: normal;
+    float: right;
+    font-size: 11px;
+    color: $grey;
   }
 }

@@ -80,7 +80,7 @@ class ServiceFilesController < ApplicationController
             json[:flash] = flash
             json[:id] = params[:id]
             json[:newdesc] = params[:service_file][:description]
-            json[:newtype] = params[:service_file][:file_type]
+            json[:newtypeicon] = @service_file.file_type_icon
             render :json => json
           else
             redirect_to @service_file
@@ -96,7 +96,7 @@ class ServiceFilesController < ApplicationController
             json[:flash] = flash
             json[:id] = params[:id]
             json[:newdesc] = params[:service_file][:description]
-            json[:newtype] = params[:service_file][:file_type]
+            json[:newtypeicon] = @service_file.file_type_icon
             json[:errors] = @service_file.errors
             render :json => json, :status => :unprocessable_entity
           else

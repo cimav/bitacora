@@ -1,18 +1,25 @@
-%h1 Agregar nueva muestra
-= form_for Sample.new, :remote => true, :html => {:'data-type' => 'html', :id => 'new-sample-form'} do |f|
-  = f.hidden_field :service_request_id, {:value => @request.id}
-  #field_service_request_sample_identification
-    = f.label :identification, 'Identificación de muestra:'
-    = f.text_field :identification, :placeholder => 'Identificación de muestra'
-  .clearfix
-  #field_service_request_sample_description
-    = f.label :description, 'Descripción:'
-    = f.text_area :description, :placeholder => 'Descripción de la muestra'
-  .clearfix
-  #field_service_request_sample_quantity
-    = f.label :quantity, 'Cantidad:'
-    = f.select :quantity, 1..200
-    .hint= "Seleccionar mas de 1 si son muestras a las que se les hará exactamente lo mismo" 
-  .clearfix
-  #dialog-submit-button-area
-    = f.submit "Agregar muestra"
+#add-new-sample-modal.modal.hide.fade{:tabindex => "-1", :role => "dialog", "aria-labelledby" => "add-new-sample-modal-label", "aria-hidden" => "true"}
+  = form_for Sample.new, :remote => true, :html => {:'data-type' => 'html', :id => 'new-sample-form', :class => 'form-horizontal'} do |f|
+    .modal-header
+      %button.close{"data-dismiss" => "modal", "aria-hidden" => "true"}= "×"
+      %h3#add-new-sample-modal-label= "Nueva muestra"
+    .modal-body
+      = f.hidden_field :service_request_id, {:value => @request.id}
+      
+      .control-group#cg_Sample_identification
+        = f.label :identification, 'Identificación de muestra:', {:class => 'control-label'}
+        .controls
+          = f.text_field :identification, {:class => 'input-xlarge', :placeholder => 'Identificación de muestra'}
+      .control-group#cg_Sample_description
+        = f.label :description, 'Descripción:', {:class => 'control-label'}
+        .controls
+          = f.text_area :description, {:class => 'input-xlarge', :rows => 4, :placeholder => 'Descripción de la muestra'}
+      .control-group#cg_Sample_quantity
+        = f.label :quantity, 'Cantidad:', {:class => 'control-label'}
+        .controls
+          = f.select :quantity, 1..200
+          %span.help-block= "Seleccionar mas de 1 si son muestras a las que se les hará exactamente lo mismo" 
+        
+    .modal-footer
+      = f.submit "Agregar muestra", {:class => "btn btn-primary"}
+      %button.btn{"data-dismiss" => "modal", "aria-hidden" => "true"}= "Cerrar"

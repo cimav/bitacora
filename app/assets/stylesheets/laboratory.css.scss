@@ -78,13 +78,12 @@
 }
 
 .requested-by {
-  border-bottom: 1px solid $line-color;
-  background: $light-grey;
+  background: $link-color;
+  color: #fff;
   padding: 2px 2px 2px 10px;
   font-size: 10px;
   text-transform: uppercase;
   font-weight: bold;
-  color: $grey;
 }
 
 .admin-toolbar {

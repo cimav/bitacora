@@ -8,7 +8,7 @@ class LaboratoryController < ApplicationController
   end
 
   def live_search
-    @requested_services = RequestedService.joins(:sample).joins(:laboratory_service).where('laboratory_id = :lab',  {:lab => params[:id]})
+    @requested_services = RequestedService.joins(:sample).joins(:laboratory_service).joins('LEFT OUTER JOIN service_requests ON service_requests.id = samples.service_request_id').joins('LEFT OUTER JOIN users ON users.id = service_requests.user_id').where('laboratory_id = :lab',  {:lab => params[:id]})
     if params[:lrs_status] != '0'
       @requested_services = @requested_services.where('requested_services.status' => params[:lrs_status])
     end
@@ -21,7 +21,7 @@ class LaboratoryController < ApplicationController
     if !params[:q].blank?
       @requested_services = @requested_services.where("(laboratory_services.description LIKE :q OR laboratory_services.name LIKE :q OR samples.identification LIKE :q OR samples.identification LIKE :q OR samples.description LIKE :q)", {:q => "%#{params[:q]}%"})
     end
-    @requested_services = @requested_services.order('requested_services.created_at DESC')
+    @requested_services = @requested_services.order('users.first_name, users.last_name, requested_services.created_at DESC')
     render :layout => false
   end
 

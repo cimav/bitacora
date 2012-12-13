@@ -1,7 +1,10 @@
+- current_user = ''
 - @requested_services.each do |rs|
   - next if rs.sample.service_request.status == ServiceRequest::DELETED
-  .requested-by
-    = rs.sample.service_request.user.full_name
+  - if current_user != rs.sample.service_request.user.full_name
+    - current_user = rs.sample.service_request.user.full_name
+    .requested-by
+      = rs.sample.service_request.user.full_name
   .requested_service.lab-req-serv-item{:requested_service_id => rs.id, :sample_id => rs.sample_id, :id => "requested_service_#{rs.id}"}
     .req-serv-item-inner{:class => "req_serv_status_#{rs.status}"}
       .sample-tag

@@ -1,14 +1,17 @@
-.inner-area
-  - if @requested_service.sample.quantity > 1 
-    %h1= "[#{@requested_service.sample.number}] Recibir #{@requested_service.sample.quantity} muestras"
-  - else
-    %h1= "[#{@requested_service.sample.number}] Recibir muestra"
-
+#receive-modal.modal.hide.fade{:tabindex => "-1", :role => "dialog", "aria-labelledby" => "receive-modal-label", "aria-hidden" => "true"}
   = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'receive-sample-form'} do |f|
-    = f.hidden_field :status, {:value => RequestedService::RECEIVED}
-    #field_service_request_sample_description
-      = label_tag 'activity_log_msg', 'Notas:'
-      = text_area_tag 'activity_log_msg'
-    .clearfix
-    #dialog-submit-button-area
-      = f.submit "Recibir muestra"
+    .modal-header
+      %button.close{"data-dismiss" => "modal", "aria-hidden" => "true"}= "×"
+      %h3#receive-modal-label
+        - if @requested_service.sample.quantity > 1 
+          = "[#{@requested_service.sample.number}] Recibir #{@requested_service.sample.quantity} muestras"
+        - else
+          = "[#{@requested_service.sample.number}] Recibir muestra"
+    .modal-body
+      = f.hidden_field :status, {:value => RequestedService::RECEIVED}
+      #field_service_request_sample_description
+        = label_tag 'activity_log_msg', 'Notas:'
+        = text_area_tag 'activity_log_msg', '', {:style => 'width: 515px;', :rows => 8}
+    .modal-footer
+      = button_tag "Recibir", {:class => "btn btn-primary", :type => "submit"}
+      %button.btn{"data-dismiss" => "modal", "aria-hidden" => "true"}= "Cerrar"

@@ -1,11 +1,15 @@
-.inner-area
-  %h1= "Cancelar servicio #{@requested_service.number}"
+#cancel-modal.modal.hide.fade{:tabindex => "-1", :role => "dialog", "aria-labelledby" => "cancel-modal-label", "aria-hidden" => "true"}
   = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'cancel-sample-form'} do |f|
-    = f.hidden_field :status, {:value => RequestedService::CANCELED}
-    #field_service_request_sample_description
-      = label_tag 'activity_log_msg', 'Razones:'
-      = text_area_tag 'activity_log_msg'
-    .clearfix
-    #dialog-submit-button-area
-      = f.submit "Cancelar Servicio"
+    .modal-header
+      %button.close{"data-dismiss" => "modal", "aria-hidden" => "true"}= "×"
+      %h3#cancel-modal-label= "Cancelar servicio #{@requested_service.number}"
+    .modal-body
+      = f.hidden_field :status, {:value => RequestedService::CANCELED}
+      #field_service_request_sample_description
+        = label_tag 'activity_log_msg', 'Razones:'
+        = text_area_tag 'activity_log_msg', '', {:style => 'width: 515px;', :rows => 8}
+    .modal-footer
+      = button_tag "Cancelar servicio", {:class => "btn btn-primary", :type => "submit"}
+      %button.btn{"data-dismiss" => "modal", "aria-hidden" => "true"}= "Cerrar"
+
 

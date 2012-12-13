@@ -9,6 +9,7 @@
         .service-bullet{:class => "status_#{rs.status}"}= "%02d" %  rs.consecutive
         .service-name= rs.laboratory_service.name
   %li#add-service
-    .service-bullet.add= "+"
+    .service-bullet.add
+      %i.icon-white.icon-plus
     .service-name
       %a#open-add-service-modal= "Agregar servicio"

@@ -322,20 +322,18 @@ $('#requested-service-status')
 
 # Change color
 changeSampleTagColor = (rs, new_status) ->
-  $("#requested_service_" + rs + " .sample-tag .rs-consecutive").removeClass("status_-1").removeClass("status_1").removeClass("status_2").removeClass("status_3").removeClass("status_4").removeClass("status_5").removeClass("status_6").removeClass("status_99")
-  $("#requested_service_" + rs + " .sample-tag .rs-quantity").removeClass("status_-1").removeClass("status_1").removeClass("status_2").removeClass("status_3").removeClass("status_4").removeClass("status_5").removeClass("status_6").removeClass("status_99")
-  $("#requested_service_" + rs + " .sample-tag .rs-consecutive").addClass("status_" + new_status)
-  $("#requested_service_" + rs + " .sample-tag .rs-quantity").addClass("status_" + new_status)
+  $("#requested_service_" + rs + " .service-bullet").removeClass("status_-1").removeClass("status_1").removeClass("status_2").removeClass("status_3").removeClass("status_4").removeClass("status_5").removeClass("status_6").removeClass("status_99")
+  $("#requested_service_" + rs + " .service-bullet").addClass("status_" + new_status)
 
 # INITIAL
-$('#change_status_initial') 
+$('#change_status_initial')
   .live('click', () ->
-    $("#initial-sample-dialog").remove()
-    $('#container').append('<div title="Agregar Muestra" id="initial-sample-dialog"></div>')
-    $("#initial-sample-dialog").dialog({ autoOpen: true, width: 340, height: 400, modal:true })
+    $("#initial-dialog").remove()
+    $('body').append('<div id="initial-dialog"></div>')
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/initial_dialog'
     $.get(url, {}, (html) ->
-      $('#initial-sample-dialog').empty().html(html)
+      $('#initial-dialog').empty().html(html)
+      $('#initial-modal').modal({ keyboard:true, backdrop:true, show: true });
     )
   )
 
@@ -349,7 +347,7 @@ $('#initial-sample-form')
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     getRequestedService(res['sample_id'], res['id'])
-    $("#initial-sample-dialog").dialog('close').dialog('destroy').remove()
+    $('#initial-modal').modal('hide').remove()
     changeSampleTagColor(res['id'], 1)
   )
   .live('ajax:complete', (evt, xhr, status) ->
@@ -359,14 +357,14 @@ $('#initial-sample-form')
   )
 
 # RECEIVED
-$('#change_status_received') 
+$('#change_status_received')
   .live('click', () ->
-    $("#receive-sample-dialog").remove()
-    $('#container').append('<div title="Recibir Muestra" id="receive-sample-dialog"></div>')
-    $("#receive-sample-dialog").dialog({ autoOpen: true, width: 340, height: 400, modal:true })
+    $("#receive-dialog").remove()
+    $('body').append('<div id="receive-dialog"></div>')
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/receive_dialog'
     $.get(url, {}, (html) ->
-      $('#receive-sample-dialog').empty().html(html)
+      $('#receive-dialog').empty().html(html)
+      $('#receive-modal').modal({ keyboard:true, backdrop:true, show: true });
     )
   )
 
@@ -380,7 +378,7 @@ $('#receive-sample-form')
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     getRequestedService(res['sample_id'], res['id'])
-    $("#receive-sample-dialog").dialog('close').dialog('destroy').remove()
+    $('#receive-modal').modal('hide').remove()
     changeSampleTagColor(res['id'], 2)
   )
   .live('ajax:complete', (evt, xhr, status) ->
@@ -392,12 +390,12 @@ $('#receive-sample-form')
 # ASSIGN
 $('#change_status_assigned')
   .live('click', () ->
-    $("#assign-sample-dialog").remove()
-    $('#container').append('<div title="Asignar Servicio" id="assign-sample-dialog"></div>')
-    $("#assign-sample-dialog").dialog({ autoOpen: true, width: 340, height: 400, modal:true })
+    $("#assign-dialog").remove()
+    $('body').append('<div id="assign-dialog"></div>')
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/assign_dialog'
     $.get(url, {}, (html) ->
-      $('#assign-sample-dialog').empty().html(html)
+      $('#assign-dialog').empty().html(html)
+      $('#assign-modal').modal({ keyboard:true, backdrop:true, show: true });
     )
   )
 
@@ -411,7 +409,7 @@ $('#assign-sample-form')
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     getRequestedService(res['sample_id'], res['id'])
-    $("#assign-sample-dialog").dialog('close').dialog('destroy').remove()
+    $('#assign-modal').modal('hide').remove()
     changeSampleTagColor(res['id'], 3)
   )
   .live('ajax:complete', (evt, xhr, status) ->
@@ -423,12 +421,12 @@ $('#assign-sample-form')
 # SUSPEND
 $('#change_status_suspended')
   .live('click', () ->
-    $("#suspend-sample-dialog").remove()
-    $('#container').append('<div title="Suspender Servicio" id="suspend-sample-dialog"></div>')
-    $("#suspend-sample-dialog").dialog({ autoOpen: true, width: 340, height: 400, modal:true })
+    $("#suspend-dialog").remove()
+    $('body').append('<div id="suspend-dialog"></div>')
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/suspend_dialog'
     $.get(url, {}, (html) ->
-      $('#suspend-sample-dialog').empty().html(html)
+      $('#suspend-dialog').empty().html(html)
+      $('#suspend-modal').modal({ keyboard:true, backdrop:true, show: true });
     )
   )
 
@@ -442,7 +440,7 @@ $('#suspend-sample-form')
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     getRequestedService(res['sample_id'], res['id'])
-    $("#suspend-sample-dialog").dialog('close').dialog('destroy').remove()
+    $('#suspend-modal').modal('hide').remove()
     changeSampleTagColor(res['id'], 4)
   )
   .live('ajax:complete', (evt, xhr, status) ->
@@ -454,12 +452,12 @@ $('#suspend-sample-form')
 # REINIT
 $('#change_status_reinit')
   .live('click', () ->
-    $("#reinit-sample-dialog").remove()
-    $('#container').append('<div title="Reiniciar Servicio" id="reinit-sample-dialog"></div>')
-    $("#reinit-sample-dialog").dialog({ autoOpen: true, width: 340, height: 400, modal:true })
+    $("#reinit-dialog").remove()
+    $('body').append('<div id="reinit-dialog"></div>')
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/reinit_dialog'
     $.get(url, {}, (html) ->
-      $('#reinit-sample-dialog').empty().html(html)
+      $('#reinit-dialog').empty().html(html)
+      $('#reinit-modal').modal({ keyboard:true, backdrop:true, show: true });
     )
   )
 
@@ -473,7 +471,7 @@ $('#reinit-sample-form')
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     getRequestedService(res['sample_id'], res['id'])
-    $("#reinit-sample-dialog").dialog('close').dialog('destroy').remove()
+    $('#reinit-modal').modal('hide').remove()
     changeSampleTagColor(res['id'], 5)
   )
   .live('ajax:complete', (evt, xhr, status) ->
@@ -485,12 +483,12 @@ $('#reinit-sample-form')
 # START
 $('#change_status_in_progress')
   .live('click', () ->
-    $("#start-sample-dialog").remove()
-    $('#container').append('<div title="Iniciar Servicio" id="start-sample-dialog"></div>')
-    $("#start-sample-dialog").dialog({ autoOpen: true, width: 340, height: 400, modal:true })
+    $("#start-dialog").remove()
+    $('body').append('<div id="start-dialog"></div>')
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/start_dialog'
     $.get(url, {}, (html) ->
-      $('#start-sample-dialog').empty().html(html)
+      $('#start-dialog').empty().html(html)
+      $('#start-modal').modal({ keyboard:true, backdrop:true, show: true });
     )
   )
 
@@ -504,7 +502,7 @@ $('#start-sample-form')
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     getRequestedService(res['sample_id'], res['id'])
-    $("#start-sample-dialog").dialog('close').dialog('destroy').remove()
+    $('#start-modal').modal('hide').remove()
     changeSampleTagColor(res['id'], 6)
   )
   .live('ajax:complete', (evt, xhr, status) ->
@@ -516,12 +514,12 @@ $('#start-sample-form')
 # FINISH
 $('#change_status_finished')
   .live('click', () ->
-    $("#finish-sample-dialog").remove()
-    $('#container').append('<div title="Finalizar Servicio" id="finish-sample-dialog"></div>')
-    $("#finish-sample-dialog").dialog({ autoOpen: true, width: 340, height: 400, modal:true })
+    $("#finish-dialog").remove()
+    $('body').append('<div id="finish-dialog"></div>')
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/finish_dialog'
     $.get(url, {}, (html) ->
-      $('#finish-sample-dialog').empty().html(html)
+      $('#finish-dialog').empty().html(html)
+      $('#finish-modal').modal({ keyboard:true, backdrop:true, show: true });
     )
   )
 
@@ -535,7 +533,7 @@ $('#finish-sample-form')
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     getRequestedService(res['sample_id'], res['id'])
-    $("#finish-sample-dialog").dialog('close').dialog('destroy').remove()
+    $('#finish-modal').modal('hide').remove()
     changeSampleTagColor(res['id'], 99)
   )
   .live('ajax:complete', (evt, xhr, status) ->
@@ -547,12 +545,12 @@ $('#finish-sample-form')
 # CANCEL
 $('#change_status_canceled')
   .live('click', () ->
-    $("#cancel-sample-dialog").remove()
-    $('#container').append('<div title="Cancelar Servicio" id="cancel-sample-dialog"></div>')
-    $("#cancel-sample-dialog").dialog({ autoOpen: true, width: 340, height: 400, modal:true })
+    $("#cancel-dialog").remove()
+    $('body').append('<div id="cancel-dialog"></div>')
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/cancel_dialog'
     $.get(url, {}, (html) ->
-      $('#cancel-sample-dialog').empty().html(html)
+      $('#cancel-dialog').empty().html(html)
+      $('#cancel-modal').modal({ keyboard:true, backdrop:true, show: true });
     )
   )
 
@@ -566,7 +564,7 @@ $('#cancel-sample-form')
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     getRequestedService(res['sample_id'], res['id'])
-    $("#cancel-sample-dialog").dialog('close').dialog('destroy').remove()
+    $('#cancel-modal').modal('hide').remove()
     changeSampleTagColor(res['id'], -1)
   )
   .live('ajax:complete', (evt, xhr, status) ->
@@ -830,6 +828,13 @@ $('#new-laboratory-member-form')
     showFormErrors(xhr, status, error)
   )
 
+#-------------
+# ACTIONS LIST
+#-------------
+$('#requested-service-actions .btn')
+  .live('click', () ->
+    
+  )
 
 
 #-------

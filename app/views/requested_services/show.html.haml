@@ -19,7 +19,7 @@
     .btn-group
       %a.btn.dropdown-toggle{"data-toggle" => "dropdown"}
         %span{:class => "badge status_#{@requested_service.status}"}
-          %i.icon-tags.icon-white
+          %i.icon-white{:class => @requested_service.icon_class}
         = @requested_service.status_text
         %span.caret
       %ul.dropdown-menu
@@ -29,7 +29,7 @@
           %li
             %a{:status_action => RequestedService::INITIAL, :id => 'change_status_initial'}
               %span{:class => klass}
-                %i.icon-tags.icon-white
+                %i.icon-asterisk.icon-white
               = "Regresar a inicio"
 
         - if received_action
@@ -37,84 +37,58 @@
           %li
             %a{:status_action => RequestedService::RECEIVED, :id => 'change_status_received'}
               %span{:class => klass}
-                %i.icon-tags.icon-white
+                %i.icon-check.icon-white
               = "Recibir muestra"
 
         - if assigned_action
           - klass = "badge status_#{RequestedService::ASSIGNED}"
-          %li{:status_action => RequestedService::ASSIGNED, :id => 'change_status_assigned'}
-            %span{:class => klass}
-              %i.icon-tags.icon-white
-            = "Asignar técnico"
+          %li
+            %a{:status_action => RequestedService::ASSIGNED, :id => 'change_status_assigned'}
+              %span{:class => klass}
+                %i.icon-user.icon-white
+              = "Asignar técnico"
 
         - if suspended_action
           - klass = "badge status_#{RequestedService::SUSPENDED}"
-          %li{:status_action => RequestedService::SUSPENDED, :id => 'change_status_suspended'}
-            %span{:class => klass}
-              %i.icon-tags.icon-white
-            = "Suspender servicio"
+          %li
+            %a{:status_action => RequestedService::SUSPENDED, :id => 'change_status_suspended'}
+              %span{:class => klass}
+                %i.icon-minus.icon-white
+              = "Suspender servicio"
 
         - if reinit_action
           - klass = "badge status_#{RequestedService::REINIT}"
-          %li{:status_action => RequestedService::REINIT, :id => 'change_status_reinit'}
-            %span{:class => klass}
-              %i.icon-tags.icon-white
-            = "Reiniciar servicio"
+          %li
+            %a{:status_action => RequestedService::REINIT, :id => 'change_status_reinit'}
+              %span{:class => klass}
+                %i.icon-repeat.icon-white
+              = "Reiniciar servicio"
 
         - if in_progress_action
           - klass = "badge status_#{RequestedService::IN_PROGRESS}"
-          %li{:status_action => RequestedService::IN_PROGRESS, :id => 'change_status_in_progress'}
-            %span{:class => klass}
-              %i.icon-tags.icon-white
-            = "Empezar servicio"
+          %li
+            %a{:status_action => RequestedService::IN_PROGRESS, :id => 'change_status_in_progress'}
+              %span{:class => klass}
+                %i.icon-play.icon-white
+              = "Empezar servicio"
 
         - if finished_action
           - klass = "badge status_#{RequestedService::FINISHED}"
-          %li{:status_action => RequestedService::FINISHED, :id => 'change_status_finished'}
-            %span{:class => klass}
-              %i.icon-tags.icon-white
-            = "Finalizar servicio"
+          %li
+            %a{:status_action => RequestedService::FINISHED, :id => 'change_status_finished'}
+              %span{:class => klass}
+                %i.icon-ok.icon-white
+              = "Finalizar servicio"
 
         - if canceled_action
           - klass = "badge status_#{RequestedService::CANCELED}"
           %li
             %a{:status_action => RequestedService::CANCELED, :id => 'change_status_canceled'}
               %span{:class => klass}
-                %i.icon-tags.icon-minus-sign.icon-white
+                %i.icon-remove.icon-white
               = "Cancelar servicio"
         - if klass == ''
-          %li.no-actions= "No existen acciones"
-          
-#requested-service-info
-  .info-row
-    .laboratory-name
-      %i.icon-asterisk
-      %strong= "Laboratorio: " 
-      = @requested_service.laboratory_service.laboratory.name
-    .suggested-user
-      %i.icon-star
-      %strong= "Técnico Sugerido: "
-      = "#{(@requested_service.suggested_user.full_name rescue 'Cualquier Técnico')}"
-      - if !@requested_service.user_id.blank?
-        %strong= "/ Técnico Asignado: "
-        = "#{(@requested_service.user.full_name)}"
-  .info-row
-    .folder-type
-      %i.icon-folder-open
-      %strong= "#{(@requested_service.sample.service_request.request_type.name rescue 'Sin Tipo')}: "
-      = @requested_service.sample.service_request.request_link
-    .folder-owner
-      %i.icon-user
-      %strong= "Dueño: "
-      = "El dueño"
-  .info-row
-    .service-details
-      %i.icon-comment
-      %strong= "Anotaciones Particulares: "
-      - if !@requested_service.details.blank?
-        = @requested_service.details
-      - else
-        = "Ninguna"
+          %li.no-actions= "No hay acciones que realizar"
 
 #requested-service-tabs
   %ul.nav.nav-tabs
@@ -131,7 +105,35 @@
 .tab-content
 
   #detalles.tab-pane
-    = "Por implementar"
+    .info-row
+      .laboratory-name
+        %i.icon-asterisk
+        %strong= "Laboratorio: " 
+        = @requested_service.laboratory_service.laboratory.name
+      .suggested-user
+        %i.icon-star
+        %strong= "Técnico Sugerido: "
+        = "#{(@requested_service.suggested_user.full_name rescue 'Cualquier Técnico')}"
+        - if !@requested_service.user_id.blank?
+          %strong= "/ Técnico Asignado: "
+          = "#{(@requested_service.user.full_name)}"
+    .info-row
+      .folder-type
+        %i.icon-folder-open
+        %strong= "#{(@requested_service.sample.service_request.request_type.name rescue 'Sin Tipo')}: "
+        = @requested_service.sample.service_request.request_link
+      .folder-owner
+        %i.icon-user
+        %strong= "Dueño: "
+        = "El dueño"
+    .info-row
+      .service-details
+        %i.icon-comment
+        %strong= "Anotaciones Particulares: "
+        - if !@requested_service.details.blank?
+          %div= @requested_service.details
+        - else
+          = "Ninguna"
 
   #bitacora.tab-pane.active
     #activity_log

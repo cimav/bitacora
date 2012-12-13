@@ -46,4 +46,16 @@ class RequestedService < ActiveRecord::Base
     self.save(:validate => false)
   end
 
+  def icon_class
+    icon = 'icon-asterisk' if status.to_i == INITIAL
+    icon = 'icon-check'    if status.to_i == RECEIVED
+    icon = 'icon-user'     if status.to_i == ASSIGNED
+    icon = 'icon-minus'    if status.to_i == SUSPENDED
+    icon = 'icon-repeat'   if status.to_i == REINIT
+    icon = 'icon-play'     if status.to_i == IN_PROGRESS
+    icon = 'icon-ok'       if status.to_i == FINISHED
+    icon = 'icon-remove'   if status.to_i == CANCELED
+    icon
+  end
+
 end

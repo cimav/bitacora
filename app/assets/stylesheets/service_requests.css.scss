@@ -166,7 +166,7 @@
       width: $sample-list-width;
       list-style: none;
       li {
-        font-size: 90%;
+        font-size: 95%;
         list-style: none;
         padding: 4px;
         margin: 2px 0;
@@ -187,12 +187,13 @@
           }
         }
         .service-bullet {
-          font-size: 10px;
-          padding: 4px;
+          font-size: 12px;
+          padding: 2px 2px 4px 2px;
           @include rounded(4px);
           color: $white;
           text-align: center;
-          width: 10px;
+          width: 20px;
+          height: 20px;
           float: left;
           &.add {
             background-color: $green;
@@ -200,7 +201,7 @@
           }
         }
         .service-name {
-          margin: 3px 0 3px 24px;
+          margin: 3px 0 3px 32px;
         }
         &.no-service {
           .service-bullet {
@@ -217,10 +218,10 @@
 
 #requested-service-header {
   background: #fff;
-  left: ($sample-list-width * 2) + 4;
+  left: 0px;
   right: 0px;
-  position: fixed;
-  top: 96px;
+  position: absolute;
+  top: 0;
   height: 48px;
   border-top: 1px solid $line-color;
   border-bottom: 1px solid $line-color;
@@ -270,18 +271,20 @@
   background: #fff;
   width: 200px;
   margin-top: 10px;
+  z-index: 99999;
   ul {
-    width: 200px;
     li {
       
     }
   }
+
 }
 
 #requested-service-tabs {
   padding-top: 64px;
   padding-left: 10px;
   background: $light-grey;
+  
 }
 
 #requested-service-tabs-content {
@@ -400,11 +403,11 @@
 
 
 // INITIAL
-.status_1 { background-color: #666666 !important; }
+.status_1 { background-color: #999999 !important; }
 // RECEIVED
 .status_2 { background-color: #37a8ba !important; }
 // ASSIGNED
-.status_3 { background-color: #37bab2 !important; }
+.status_3 { background-color: #5ca6ec !important; }
 // SUSPENDED
 .status_4 { background-color: #d3c75b !important; }
 // REINIT
@@ -412,9 +415,9 @@
 // CANCELED
 .status_-1 { background-color: #b83543 !important; }
 // IN_PROGRESS
-.status_6 { background-color: #0066cc !important; }
+.status_6 { background-color: #00bb00 !important; }
 // FINISHED
-.status_99 { background-color: #90c847 !important; }
+.status_99 { background-color: #0066cc !important; }
 
 #no-actions {
   padding: 10px;

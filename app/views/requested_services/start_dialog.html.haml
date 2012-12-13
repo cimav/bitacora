@@ -1,11 +1,13 @@
-.inner-area
-  %h1= "Empezar servicio #{@requested_service.number}"
+#start-modal.modal.hide.fade{:tabindex => "-1", :role => "dialog", "aria-labelledby" => "start-modal-label", "aria-hidden" => "true"}
   = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'start-sample-form'} do |f|
-    = f.hidden_field :status, {:value => RequestedService::IN_PROGRESS}
-    #field_service_request_sample_description
-      = label_tag 'activity_log_msg', 'Notas:'
-      = text_area_tag 'activity_log_msg'
-    .clearfix
-    #dialog-submit-button-area
-      = f.submit "Empezar"
-
+    .modal-header
+      %button.close{"data-dismiss" => "modal", "aria-hidden" => "true"}= "×"
+      %h3#start-modal-label= "Empezar servicio #{@requested_service.number}"
+    .modal-body
+      = f.hidden_field :status, {:value => RequestedService::IN_PROGRESS}
+      #field_service_request_sample_description
+        = label_tag 'activity_log_msg', 'Notas:'
+        = text_area_tag 'activity_log_msg', '', {:style => 'width: 515px;', :rows => 8}
+    .modal-footer
+      = button_tag "Iniciar servicio", {:class => "btn btn-primary", :type => "submit"}
+      %button.btn{"data-dismiss" => "modal", "aria-hidden" => "true"}= "Cerrar"

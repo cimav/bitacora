@@ -1,11 +1,13 @@
-.inner-area
-  %h1= "Regresar muestra #{@requested_service.sample.number} a inicio"
+#initial-modal.modal.hide.fade{:tabindex => "-1", :role => "dialog", "aria-labelledby" => "initial-modal-label", "aria-hidden" => "true"}
   = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'initial-sample-form'} do |f|
-    = f.hidden_field :status, {:value => RequestedService::INITIAL}
-    #field_service_request_sample_description
-      = label_tag 'activity_log_msg', 'Notas:'
-      = text_area_tag 'activity_log_msg'
-    .clearfix
-    #dialog-submit-button-area
-      = f.submit "Regresar a inicio"
-
+    .modal-header
+      %button.close{"data-dismiss" => "modal", "aria-hidden" => "true"}= "×"
+      %h3#initial-modal-label= "Regresar muestra #{@requested_service.sample.number} a inicio"
+    .modal-body
+      = f.hidden_field :status, {:value => RequestedService::INITIAL}
+      #field_service_request_sample_description
+        = label_tag 'activity_log_msg', 'Notas:'
+        = text_area_tag 'activity_log_msg', '', {:style => 'width: 515px;', :rows => 8}
+    .modal-footer
+      = button_tag "Regresar al inicio", {:class => "btn btn-primary", :type => "submit"}
+      %button.btn{"data-dismiss" => "modal", "aria-hidden" => "true"}= "Cerrar"

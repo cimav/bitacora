@@ -828,14 +828,6 @@ $('#new-laboratory-member-form')
     showFormErrors(xhr, status, error)
   )
 
-#-------------
-# ACTIONS LIST
-#-------------
-$('#requested-service-actions .btn')
-  .live('click', () ->
-    
-  )
-
 
 #-------
 # ERRORS

@@ -66,3 +66,7 @@
     color: $grey;
   }
 }
+
+#lab-main-panel #activity_log {
+  left: $sample-list-width + 14;
+}

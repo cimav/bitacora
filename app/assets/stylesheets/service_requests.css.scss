@@ -72,11 +72,6 @@
   }
 }
 
-#new-request-button-area {
-  margin-top: 20px;
-  float: right;
-}
-
 .sample-details {
   padding: 20px 10px;
   border-bottom: 1px solid $line-color;
@@ -403,21 +398,30 @@
 
 
 // INITIAL
-.status_1 { background-color: #999999 !important; }
+.status_1 { background-color: $status_1 !important; }
 // RECEIVED
-.status_2 { background-color: #37a8ba !important; }
+.status_2 { background-color: $status_2 !important; }
 // ASSIGNED
-.status_3 { background-color: #5ca6ec !important; }
+.status_3 { background-color: $status_3 !important; }
 // SUSPENDED
-.status_4 { background-color: #d3c75b !important; }
+.status_4 { background-color: $status_4 !important; }
 // REINIT
-.status_5 { background-color: #0066cc !important; }
+.status_5 { background-color: $status_5 !important; }
 // CANCELED
-.status_-1 { background-color: #b83543 !important; }
+.status_-1 { background-color: $status_-1 !important; }
 // IN_PROGRESS
-.status_6 { background-color: #00bb00 !important; }
+.status_6 { background-color: $status_6 !important; }
 // FINISHED
-.status_99 { background-color: #0066cc !important; }
+.status_99 { background-color: $status_99 !important; }
+
+.req_serv_status_1 { border-left: 5px solid $status_1; }
+.req_serv_status_2 { border-left: 5px solid $status_2; }
+.req_serv_status_3 { border-left: 5px solid $status_3; }
+.req_serv_status_4 { border-left: 5px solid $status_4; }
+.req_serv_status_5 { border-left: 5px solid $status_5; }
+.req_serv_status_6 { border-left: 5px solid $status_6; }
+.req_serv_status_-1 { border-left: 5px solid $status_-1; }
+.req_serv_status_99 { border-left: 5px solid $status_99; }
 
 #no-actions {
   padding: 10px;

@@ -1,19 +1,22 @@
 - @requested_services.each do |rs|
   - next if rs.sample.service_request.status == ServiceRequest::DELETED
+  .requested-by
+    = rs.sample.service_request.user.full_name
   .requested_service.lab-req-serv-item{:requested_service_id => rs.id, :sample_id => rs.sample_id, :id => "requested_service_#{rs.id}"}
-    .sample-tag
-      .rs-consecutive{:class => "status_#{rs.status}"}
-        = rs.number
-      .sample-identificator
-        = rs.sample.identification
-      - if rs.sample.quantity > 1
-        .rs-quantity{:class => "status_#{rs.status}"}
-          = "#{rs.sample.quantity} muestras"
-    .requested-service-details
-      .sample-requested-service-date
-        = l rs.created_at, :format => :long
-      .sample-requested-service
-        = rs.laboratory_service.name
-      .sample-description
-        = rs.sample.description
-    .clearfix
+    .req-serv-item-inner{:class => "req_serv_status_#{rs.status}"}
+      .sample-tag
+        .rs-consecutive
+          = rs.number
+          - if rs.sample.quantity > 1
+            %span.badge= "#{rs.sample.quantity}"
+        .sample-requested-service-date
+          = l rs.created_at, :format => :short
+      .sample-identification
+        %span.sample-identificator
+          = rs.sample.identification
+        %span.sample-description
+          = rs.sample.description
+      .requested-service-details
+        .sample-requested-service
+          = rs.laboratory_service.name
+    

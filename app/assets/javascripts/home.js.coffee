@@ -262,8 +262,8 @@ $('#new-request-form')
   formData = form.serialize()
   $.get(url, formData, (html) ->
     $("#lab-req-serv-search-box").removeClass("loading")
-    $("#lab-req-serv-list").empty().html(html)
-    $("#lab-req-serv-list .lab-req-serv-item:first").click()
+    $("#lab-req-serv-panel .items-placeholder").empty().html(html)
+    $("#lab-req-serv-panel .items-placeholder .lab-req-serv-item:first").click()
   )
 
 $('#lrs_status')

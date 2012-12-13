@@ -1,15 +1,17 @@
 - lab_access = @laboratory.laboratory_members.where(:user_id => current_user.id).first.access rescue 0
 - if lab_access.to_i == 0
   - raise "Error: No es miembro de este laboratorio"
-#laboratory-bar.workarea-bar
+
+#header-bar
   %h2= @laboratory.name
   - if lab_access.to_i == LaboratoryMember::ACCESS_ADMIN
     .admin-toolbar
       = link_to "Administrar este laboratorio", {:controller => 'laboratory', :action => 'admin', :id => @laboratory.id}, :method => :get, :remote => true, :class => 'admin-lab', :'data-type' => 'html', :id => "admin-lab-#{@laboratory.id}", :laboratory_id => @laboratory.id
 
+
 #laboratory-workarea
-  #lab-req-serv-panel.side-panel
-    .panel-search
+  #lab-req-serv-panel
+    .search-box
       = form_tag '/samples', :id => 'lab-req-serv-live-search', :laboratory_id => @laboratory.id, :method => 'get', :remote => true do
         = text_field_tag :q, nil, :id => 'req-serv-search-box', :placeholder => 'Busqueda'
 
@@ -39,11 +41,10 @@
           - assigned_to_options = "<option value=\"#{current_user.id}\">#{current_user.full_name}</option>" 
         = select_tag "lrs_assigned_to", assigned_to_options.html_safe
 
-  #lab-req-serv-list.panel-items
+    .items-placeholder
 
-  #lab-main-panel.main-panel
-    #lab-req-serv-workarea
-      #requested-service-workarea
+  #lab-main-panel
+    #requested-service-workarea
 
 :javascript
   $(function() {

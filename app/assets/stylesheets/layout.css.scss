@@ -1,7 +1,6 @@
 #workarea {
-  position: fixed;
-  top: 0;
-  bottom: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .inner-area {
@@ -11,21 +10,24 @@
 #header-bar {
   background: $light-grey;
   border-bottom: 1px solid $line-color;
-  height: 48px;
+  margin: 0;
+  height: 56px;
   position: fixed;
-  top: 48px;
+  top: 40px;
+  left: 0px;
   width: 100%;
   h2 {
     color: $red;
-    font-size: 24px;
+    font-size: 32px;
     font-weight: normal;
     margin: 0;
     padding-left: 20px;
-    padding-top: 0px;
+    padding-top: 10px;
   }
 }
 
-#folder-panel {
+#folder-panel,
+#lab-req-serv-panel {
   width: $side-panel-width;
   position: fixed;
   bottom: 0px;
@@ -89,9 +91,17 @@
   }
 }
 
-#folder-main-panel {
+#lab-req-serv-panel {
+  .items-placeholder {
+    top: 155px;
+    bottom: 0px;
+  }
+}
+
+#folder-main-panel, 
+#lab-main-panel {
   position: fixed;
-  left: $side-panel-width + 1;
+  left: $side-panel-width + 2;
   overflow: auto;
   right: 0px;
   bottom: 0px;

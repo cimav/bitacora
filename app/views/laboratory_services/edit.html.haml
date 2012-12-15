@@ -1,5 +1,5 @@
 = form_for @laboratory_service, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-laboratory-service-form'} do |f|
-  %h1= "Editar Servicio"
+  %h3= "Editar Servicio"
   .field#field_laboratory_service_name
     = f.label :name, 'Nombre:'
     = f.text_field :name, :placeholder => 'Nombre del servicio'
@@ -17,4 +17,4 @@
       - st_options += "<option value=\"#{item.id}\" #{sel}>#{item.name}</option>"
     = f.select :service_type_id, st_options.html_safe
   .submit-button
-    = f.submit "Actualizar servicio"
+    = f.submit "Actualizar servicio", {:class => "btn btn-primary"}

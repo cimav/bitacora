@@ -1,6 +1,6 @@
 #admin-area 
   = render :partial => 'tabs', :locals => {:laboratory => @laboratory, :option_selected => 'details'}
-  %h1= "Editar detalles del laboratorio"
+  %h3= "Editar detalles del laboratorio"
   = form_for @laboratory, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-laboratory-form'} do |f|
     .field#field_laboratory_name
       = f.label :name, 'Nombre:'
@@ -32,6 +32,6 @@
         - resp_options += "<option value=\"#{item.user.id}\" #{sel}>#{item.user.full_name}</option>"
       = f.select :user_id, resp_options.html_safe
     .submit-button
-      = f.submit "Actualizar laboratorio"
+      = f.submit "Actualizar laboratorio", {:class => 'btn btn-primary'}
   
   

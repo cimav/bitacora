@@ -1,5 +1,5 @@
 = form_for @laboratory_member, :remote => true, :html => {:'data-type' => 'html', :id => 'new-laboratory-member-form'} do |f|
-  %h1= "Agregar miembro al laboratorio"
+  %h3= "Agregar miembro al laboratorio"
   = f.hidden_field :laboratory_id, {:value => @laboratory.id}
   .field#field_laboratory_member_name
     = f.label :user_id, 'Nuevo miembro:'
@@ -23,4 +23,4 @@
     - acc_options += "<option #{sel_admin} value=\"#{LaboratoryMember::ACCESS_ADMIN}\">Administrador</option>"
     = f.select :access, acc_options.html_safe
   .submit-button
-    = f.submit "Agregar miembro"
+    = f.submit "Agregar miembro", {:class => "btn btn-primary"}

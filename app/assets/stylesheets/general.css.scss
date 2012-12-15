@@ -230,10 +230,10 @@ input[type=submit] {
 
 #flash-notice {
   z-index: 8888;
-  display: none;
+
   width: 400px;
   font-weight: bold;
-  position: absolute;
+  position: fixed;
   bottom: 0px;
   right: 20px;
   height: 20px;

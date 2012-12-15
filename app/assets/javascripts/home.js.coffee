@@ -687,7 +687,7 @@ $('.admin-lab-service-item')
     $(this).addClass('selected')
     url = '/laboratory_services/' + $(this).attr('laboratory_service_id') + '/edit'
     $.get(url, {}, (html) ->
-      $('#service-details').html(html)
+      $('#admin-service-details').html(html)
     )
   )
 
@@ -711,7 +711,7 @@ $('#add-new-service-button')
   .live('click', () ->
     url = '/laboratory/' + $(this).attr('lab_id') + '/new_service'
     $.get(url, {}, (html) ->
-      $('#service-details').empty().html(html)
+      $('#admin-service-details').empty().html(html)
     )
   )
 
@@ -782,7 +782,7 @@ $('.admin-lab-member-item')
     $(this).addClass('selected')
     url = '/laboratory_members/' + $(this).attr('laboratory_member_id') + '/edit'
     $.get(url, {}, (html) ->
-      $('#member-details').html(html)
+      $('#admin-member-details').html(html)
     )
   )
 
@@ -806,7 +806,7 @@ $('#add-new-member-button')
   .live('click', () ->
     url = '/laboratory/' + $(this).attr('lab_id') + '/new_member'
     $.get(url, {}, (html) ->
-      $('#member-details').empty().html(html)
+      $('#admin-member-details').empty().html(html)
     )
   )
 

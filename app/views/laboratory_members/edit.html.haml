@@ -1,5 +1,5 @@
 = form_for @laboratory_member, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-laboratory-member-form'} do |f|
-  %h1= "Editar Miembro"
+  %h3= "Editar Miembro"
   .field#field_laboratory_member_name
     %label= "Nombre:"
     = @laboratory_member.user.full_name
@@ -25,4 +25,4 @@
     = f.select :status, st_options.html_safe
 
   .submit-button
-    = f.submit "Actualizar miembro"
+    = f.submit "Actualizar miembro", {:class => "btn btn-primary"}

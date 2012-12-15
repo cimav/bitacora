@@ -11,9 +11,9 @@
         = text_field_tag :q, nil, :id => 'admin-lab-members-search-box', :placeholder => 'Busqueda'
     #admin-lab-members-list
     #admin-lab-members-buttons
-      = button_tag "Agregar nuevo miembro", {:id => 'add-new-member-button', :lab_id => @laboratory.id}
+      = button_tag "Agregar nuevo miembro", {:class => 'btn btn-info', :id => 'add-new-member-button', :lab_id => @laboratory.id}
 
-  #member-details
+  #admin-member-details
 :javascript 
   $(function() {
     adminLabMembersLiveSearch()

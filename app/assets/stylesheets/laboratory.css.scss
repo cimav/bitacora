@@ -87,24 +87,19 @@
 }
 
 .admin-toolbar {
-  float: right;
+  position: fixed;
+  right: 10px;
+  top: 52px;
   margin: 8px 10px 0 0;
-  a {
-    font-weight: bold;
-    color: $white;
-  }
 }
 
 #admin-area {
-  border: 1px solid $line-color;
-  border-top: none;
   position: fixed;
-  width: $work-area-width - 2;
-  float: left;
-  top: 110px;
+  top: 100px;
   bottom: 20px;
   padding-top: 20px;
   background: #fff;
+  width: 100%;
   #edit-laboratory-form {  
     margin-top: 20px;
   }
@@ -139,16 +134,20 @@
 
   #services-panel,
   #members-panel {
-    top: 44px !important;
-    bottom: 0px !important;
+    top: 72px !important;
+    border: 1px solid $line-color;
+    @include rounded(4px);
+    padding: 6px;
+    background: $light-grey;
     #services-search-panel,
     #members-search-panel {
-      border-top: 1px solid $line-color !important;
+      
     }
     #admin-lab-services-list { 
-      top: 75px !important;
-      bottom: 35px !important;
+      top: 95px !important;
+      bottom: 45px !important;
       width: $side-panel-width;
+      border: 1px solid $line-color;
       .lab-service-desc {
         color: $grey;
         font-size: 11px;
@@ -160,9 +159,10 @@
       }
     }
     #admin-lab-members-list {
-      top: 75px !important;
-      bottom: 35px !important;
+      top: 95px !important;
+      bottom: 45px !important;
       width: $side-panel-width;
+      border: 1px solid $line-color;
       .lab-member-desc {
         color: $grey;
         font-size: 11px;
@@ -185,12 +185,16 @@
       text-align: center;
       bottom: 0px;
       height: 35px;
-      border-top: 1px solid $line-color;
       button {
         width: $side-panel-width - 10;
-        margin: 5px;
       }
     }
   }
 
+}
+
+
+#admin-service-details, 
+#admin-member-details {
+  margin-left: $side-panel-width + 40;
 }

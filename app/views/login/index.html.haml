@@ -1,8 +1,8 @@
 #login-area
-  .login-message= "Entra a la Bitácora Electrónica usando tu cuenta"
+  .login-title= "Bitacora Electrónica"
+  .login-message= "Accede con tu cuenta @cimav.edu.mx"
   .login-methods
     #login-google-apps.login-method
-      = link_to '/auth/google_oauth2' do
+      %button.btn{'onclick' => "window.location = '/auth/google_oauth2';"}
         = image_tag("/assets/google-apps.png")
   .clearfix
-

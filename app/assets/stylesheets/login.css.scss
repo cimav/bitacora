@@ -2,22 +2,28 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#login-area {
-  background: $white url(/assets/splash.png) no-repeat;
-  @include shadow(4px,1px,1px,#333);
-  width: 400px;
-  margin: 200px auto 0 auto;
-  padding: 48px 0 0 500px;
-  min-height: 300px;
-  .login-message {
-    font-size: 20px;
-    font-weight: bold;
-  }
-  .login-methods {
-    margin-top: 20px;
-    .login-method {
-      margin-bottom: 10px;
+#body-login {
+  background-color: #4ac461;
+  #login-area {
+    background: transparent url(/assets/splash.png) center top no-repeat;
+    padding-top: 320px;
+    margin: 0 auto;
+    margin-top: 40px;
+    width: 640px;
+    .login-title {
+      color:#fff;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, .4), 0 0 30px rgba(0, 0, 0, .075);
+      font-size: 36px;
+      text-align: center;
+    }
+    .login-message {
+      margin-top: 20px;
+      text-align: center;
+      color: #c7e4ff;
+    }
+    .login-methods {
+      margin-top: 20px;
+      text-align: center;
     }
   }
 }
-

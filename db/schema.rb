@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121203195952) do
+ActiveRecord::Schema.define(:version => 20121228235136) do
 
   create_table "activity_logs", :force => true do |t|
     t.integer  "user_id"
@@ -106,7 +106,12 @@ ActiveRecord::Schema.define(:version => 20121203195952) do
     t.text     "notes"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
+    t.integer  "client_id"
+    t.integer  "client_contact_id"
   end
+
+  add_index "external_requests", ["client_contact_id"], :name => "index_external_requests_on_client_contact_id"
+  add_index "external_requests", ["client_id"], :name => "index_external_requests_on_client_id"
 
   create_table "laboratories", :force => true do |t|
     t.string   "name"

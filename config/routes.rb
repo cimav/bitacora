@@ -63,6 +63,9 @@ Bitacora::Application.routes.draw do
     end
   end
 
+  match '/clients/typeahead' => 'clients#typeahead'
+  match '/clients/info' => 'clients#info'
+
   match '/auth/:provider/callback' => 'sessions#create'
   match '/auth/failure' => 'sessions#failure'
   match "/logout" => 'sessions#destroy'

@@ -1,0 +1,10 @@
+.control-group#cg_Client_RFC
+  .control-label= "RFC"
+  .controls= @client.rfc
+
+.control-group#cg_Client_Address
+  .control-label= "Dirección"
+  .controls
+    = @client.address1
+    %br
+    = @client.address2

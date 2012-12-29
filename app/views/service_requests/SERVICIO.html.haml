@@ -1,8 +1,46 @@
-.field#field_service_request_request_date
-  = f.label :request_date, 'Fecha de recepción:'
-  = "student[contact_attributes][address1]"
-  = f.text_field :request_date
+.control-group#cg_ExternalRequest_client_id
+  = label_tag 'service_request[external_request_attributes][client_id]',  'Cliente:', {:class => 'control-label'}
+  .controls
+    .input-append
+      = text_field_tag 'service_request[external_request_attributes][client_id]', nil, :class => "input-xxlarge", :id => 'select-client-typeahead'
+      %span.add-on
+        %i#select-client.icon-briefcase
 
-.field#field_service_request_description
-  = f.label :description, 'Descripción:'
-  = f.text_area :description
+#client-info
+
+.control-group#cg_ExternalRequest_request_date
+  = label_tag 'service_request[external_request_attributes][request_date]',  'Fecha de solicitud:', {:class => 'control-label'}
+  .controls
+    - today_value = Time.now.strftime("%Y-%m-%d")
+    #request_date_dp.input-append.date{"data-date" => "#{today_value}", "data-date-format" => "yyyy-mm-dd"}
+      = text_field_tag 'service_request[external_request_attributes][request_date]', today_value, :class => "span2", :size => "16", :readonly => "readonly"
+      %span.add-on
+        %i.icon-th
+
+.control-group#cg_ExternalRequest_service_number
+  = label_tag 'service_request[external_request_attributes][service_number]', "Número de servicio", {:class => 'control-label'}
+  .controls
+    = text_field_tag 'service_request[external_request_attributes][service_number]', nil, :class => 'input-large'
+
+:javascript
+  $(function() {
+    $('#request_date_dp').datepicker();
+
+
+    $('#select-client-typeahead').typeahead({
+      source: function (query, process) {
+        return $.get('/clients/typeahead', { query: query }, function (data) {
+          var res = $.parseJSON(data);
+          return process(res['options']);
+        });
+      },
+      updater:function (item) {
+        $.get('/clients/info', { query: item }, function (data) {
+          alert(data);
+          $('#client-info').html(data);
+        });
+        return item;
+      }
+    });
+
+  });

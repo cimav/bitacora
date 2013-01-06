@@ -560,3 +560,9 @@
   padding: 0;
 }
 
+#cg_ServiceRequest_link,
+#cg_ServiceRequest_description,
+#cg_ServiceRequest_supervisor,
+#cg_ServiceRequest_submit {
+  display: none;
+}

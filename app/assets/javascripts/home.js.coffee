@@ -873,3 +873,11 @@ checkHash = () ->
 
 hashTimer = setInterval(checkHash, 1000)
 
+$('#folders-link')
+  .live('click' , () ->
+    window.location = '/#!/folders'
+    checkHash()
+  )
+
+
+

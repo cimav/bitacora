@@ -25,6 +25,23 @@
   .controls
     = text_field_tag 'service_request[external_request_attributes][0][service_number]', nil, :class => 'input-large'
 
+.control-group#cg_ExternalRequest_is_acredited
+  = label_tag 'service_request[external_request_attributes][0][is_acredited]', "¿Servicios acreditados?", {:class => 'control-label'}
+  .controls
+    - options = '<option value="0">NO</option>'
+    - options += '<option value="1">SI</option>'
+    = select_tag 'service_request[external_request_attributes][0][is_acredited]',  options.html_safe
+
+.control-group#cg_ServiceRequest_client_agreements
+  = label_tag 'service_request[external_request_attributes][0][client_agreements]', "Acuerdos con el cliente", {:class => 'control-label'}
+  .controls
+    = text_area_tag 'service_request[external_request_attributes][0][client_agreements]', '', {:class => 'input-xxlarge',:rows => 5}
+
+.control-group#cg_ServiceRequest_notes
+  = label_tag 'service_request[external_request_attributes][0][notes]', "Notas", {:class => 'control-label'}
+  .controls
+    = text_area_tag 'service_request[external_request_attributes][0][notes]', '', {:class => 'input-xxlarge',:rows => 5}
+
 :javascript
   $(function() {
     $('#request_date_dp').datepicker();
@@ -51,5 +68,14 @@
       $('#cg_ExternalRequest_client_typeahead').show();
       $('#select-client-typeahead').val('');
     });
+
+
+    $('#service_request_external_request_attributes_0_service_number').live('change', function() {
+      $('#service_request_request_link').val($('#service_request_external_request_attributes_0_service_number').val());
+    });
+
+
+    $('#cg_ServiceRequest_supervisor').show();
+    $('#cg_ServiceRequest_submit').show();
 
   });

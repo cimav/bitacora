@@ -4,6 +4,10 @@
 
 $('#service_request_request_type_id')
   .live('change', () ->
+    $('#cg_ServiceRequest_link').hide();
+    $('#cg_ServiceRequest_description').hide();
+    $('#cg_ServiceRequest_supervisor').hide();
+    $('#cg_ServiceRequest_submit').hide();
     url = "/service_requests/form/#{$(this).val()}"
     $.get(url, {}, (html) ->
       $('#extra-form').empty().html(html)

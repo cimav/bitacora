@@ -1,26 +1,29 @@
-.control-group#cg_ExternalRequest_client_id
-  = label_tag 'service_request[external_request_attributes][client_id]',  'Cliente:', {:class => 'control-label'}
+.control-group#cg_ExternalRequest_client_typeahead
+  = label_tag 'client_typeahead',  'Cliente:', {:class => 'control-label'}
   .controls
     .input-append
-      = text_field_tag 'service_request[external_request_attributes][client_id]', nil, :class => "input-xxlarge", :id => 'select-client-typeahead'
+      = text_field_tag 'client_typeahead', nil, :class => "input-xxlarge", :id => 'select-client-typeahead'
       %span.add-on
         %i#select-client.icon-briefcase
+    %br
+    %a#add-new-client= "Agregar nuevo cliente"
+
 
 #client-info
 
 .control-group#cg_ExternalRequest_request_date
-  = label_tag 'service_request[external_request_attributes][request_date]',  'Fecha de solicitud:', {:class => 'control-label'}
+  = label_tag 'service_request[external_request_attributes][0][request_date]',  'Fecha de solicitud:', {:class => 'control-label'}
   .controls
     - today_value = Time.now.strftime("%Y-%m-%d")
     #request_date_dp.input-append.date{"data-date" => "#{today_value}", "data-date-format" => "yyyy-mm-dd"}
-      = text_field_tag 'service_request[external_request_attributes][request_date]', today_value, :class => "span2", :size => "16", :readonly => "readonly"
+      = text_field_tag 'service_request[external_request_attributes][0][request_date]', today_value, :class => "span2", :size => "16", :readonly => "readonly"
       %span.add-on
         %i.icon-th
 
 .control-group#cg_ExternalRequest_service_number
-  = label_tag 'service_request[external_request_attributes][service_number]', "Número de servicio", {:class => 'control-label'}
+  = label_tag 'service_request[external_request_attributes][0][service_number]', "Número de servicio", {:class => 'control-label'}
   .controls
-    = text_field_tag 'service_request[external_request_attributes][service_number]', nil, :class => 'input-large'
+    = text_field_tag 'service_request[external_request_attributes][0][service_number]', nil, :class => 'input-large'
 
 :javascript
   $(function() {
@@ -36,11 +39,17 @@
       },
       updater:function (item) {
         $.get('/clients/info', { query: item }, function (data) {
-          alert(data);
           $('#client-info').html(data);
+          $('#cg_ExternalRequest_client_typeahead').hide();
         });
         return item;
       }
+    });
+
+    $('#cancel-client').live('click', function () {
+      $('#client-info').html('');
+      $('#cg_ExternalRequest_client_typeahead').show();
+      $('#select-client-typeahead').val('');
     });
 
   });

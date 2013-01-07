@@ -1,0 +1,64 @@
+#add-new-client-modal.modal.hide.fade{:tabindex => "-1", :role => "dialog", "aria-labelledby" => "add-new-client-modal-label", "aria-hidden" => "true"}
+  = form_for Client.new, :remote => true, :html => {:'data-type' => 'html', :id => 'new-client-form', :class => 'form-horizontal'} do |f|
+    .modal-header
+      %button.close{"data-dismiss" => "modal", "aria-hidden" => "true"}= "×"
+      %h3#add-new-client-modal-label= "Nuevo cliente"
+    .modal-body
+      .control-group#cg_Client_name
+        = f.label :identification, 'Nombre:', {:class => 'control-label'}
+        .controls
+          = f.text_field :name, {:class => 'input-xlarge', :placeholder => 'Nombre completo del cliente'}
+      .control-group#cg_Client_type_id
+        = f.label :client_type_id, 'Tipo de cliente:', {:class => 'control-label'}
+        .controls
+          - ClientType.order(:name).each do |ct|
+            %label.radio.inline
+              = f.radio_button :client_type_id, ct.id
+              = ct.name
+
+      .control-group#cg_Client_rfc
+        = f.label :rfc, 'RFC:', {:class => 'control-label'}
+        .controls
+          = f.text_field :rfc, {:class => 'input-medium'}
+
+      .control-group#cg_Client_address1
+        = f.label :address1, 'Dirección:', {:class => 'control-label'}
+        .controls
+          = f.text_field :address1, {:class => 'input-xlarge'}
+          %br
+          = f.text_field :address2, {:class => 'input-xlarge'}
+
+      .control-group#cg_Client_city
+        = f.label :city, 'Ciudad:', {:class => 'control-label'}
+        .controls
+          = f.text_field :city, {:class => 'input-medium'}
+
+      .control-group#cg_Client_state_id
+        = f.label :state_id, 'Estado:', {:class => 'control-label'}
+        .controls
+          = f.collection_select :state_id, State.order(:code), :id, :name, options = {:prompt => "Selecciona un Estado"}
+
+      .control-group#cg_Client_country_id
+        = f.label :country_id, 'País:', {:class => 'control-label'}
+        .controls
+          = f.collection_select :country_id, Country.order(:name), :id, :name, options = {:prompt => "Selecciona un País"}
+
+      .control-group#cg_Client_phone
+        = f.label :phone, 'Tel. Cliente:', {:class => 'control-label'}
+        .controls
+          = f.text_field :phone, {:class => 'input-medium'}
+
+      .control-group#cg_Client_fax
+        = f.label :fax, 'Fax Cliente:', {:class => 'control-label'}
+        .controls
+          = f.text_field :fax, {:class => 'input-medium'}
+
+      .control-group#cg_Client_email
+        = f.label :email, 'Correo Cliente:', {:class => 'control-label'}
+        .controls
+          = f.text_field :email, {:class => 'input-medium'}
+        
+    .modal-footer
+      = f.submit "Agregar cliente", {:class => "btn btn-primary"}
+      %button.btn{"data-dismiss" => "modal", "aria-hidden" => "true"}= "Cerrar"
+

@@ -2,7 +2,7 @@
 class ServiceRequest < ActiveRecord::Base
   attr_accessible :request_type_id, :description, :user_id, :request_link, :sample_attributes, :supervisor_id, :external_request_attributes
 
-  has_one :external_request
+  has_many :external_request
   accepts_nested_attributes_for :external_request
 
   has_many :activity_log

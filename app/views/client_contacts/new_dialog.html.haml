@@ -1,0 +1,30 @@
+#add-new-client-contact-modal.modal.hide.fade{:tabindex => "-1", :role => "dialog", "aria-labelledby" => "add-new-client-contact-modal-label", "aria-hidden" => "true"}
+  = form_for ClientContact.new, :remote => true, :html => {:'data-type' => 'html', :id => 'new-client-contact-form', :class => 'form-horizontal'} do |f|
+    = f.hidden_field :client_id, {:value => @client.id}
+    .modal-header
+      %button.close{"data-dismiss" => "modal", "aria-hidden" => "true"}= "×"
+      %h3#add-new-client-contact-modal-label= "Agregar contacto"
+    .modal-body
+      .control-group
+        .control-label= "Cliente"
+        .controls= @client.name
+
+      .control-group#cg_ClientContact_name
+        = f.label :identification, 'Nombre:', {:class => 'control-label'}
+        .controls
+          = f.text_field :name, {:class => 'input-xlarge', :placeholder => 'Nombre completo del contacto'}
+
+      .control-group#cg_ClientContact_phone
+        = f.label :phone, 'Teléfono:', {:class => 'control-label'}
+        .controls
+          = f.text_field :phone, {:class => 'input-medium'}
+
+      .control-group#cg_ClientContact_email
+        = f.label :email, 'Correo Electrónico:', {:class => 'control-label'}
+        .controls
+          = f.text_field :email, {:class => 'input-medium'}
+        
+    .modal-footer
+      = f.submit "Agregar contacto", {:class => "btn btn-primary"}
+      %button.btn{"data-dismiss" => "modal", "aria-hidden" => "true"}= "Cerrar"
+

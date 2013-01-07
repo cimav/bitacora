@@ -12,8 +12,9 @@
               - options += "<option value=\"#{request_type.id}\">#{request_type.name}</option>"
           - else
             - options += "<option value=\"#{request_type.id}\">#{request_type.name}</option>"
-        = f.collection_select :request_type_id, RequestType.order(:name), :id, :name, options = {:prompt => "Selecciona el tipo"} 
+        = f.select :request_type_id, options.html_safe
 
+    #extra-form
 
     .control-group#cg_ServiceRequest_link
       = f.label :request_link, 'Nombre:', {:class => 'control-label'}
@@ -39,7 +40,6 @@
           - supervisor_options += "<option value=\"#{u.id}\" #{selected}>#{u.full_name}</option>"
     
         = f.select :supervisor_id, supervisor_options.html_safe
-    #extra-form
-    .control-group
+    .control-group#cg_ServiceRequest_submit
       .controls
         = f.submit "Crear nueva carpeta", {:class => "btn btn-primary"}

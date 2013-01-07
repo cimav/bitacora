@@ -1,3 +1,11 @@
+= hidden_field_tag 'service_request[external_request_attributes][0][client_id]', @client.id
+
+.control-group#cg_Client_Name
+  .control-label= "Cliente"
+  .controls
+    = @client.name
+    %button.close{:id => 'cancel-client', "aria-hidden" => "true"}= "×"
+
 .control-group#cg_Client_RFC
   .control-label= "RFC"
   .controls= @client.rfc
@@ -8,3 +16,17 @@
     = @client.address1
     %br
     = @client.address2
+
+.control-group#cg_Client_Contact
+  .control-label= "Contacto"
+  .controls
+    - if @client.client_contacts.count > 0
+      - options = ''
+      - @client.client_contacts.order(:name).each do |contact|
+        - options += "<option value=\"#{contact.id}\">#{contact.name}</option>"
+      = select_tag 'service_request[external_request_attributes][0][client_contact_id]', options.html_safe
+      %br
+    %a#add-new-client-contact= "Agregar nuevo contacto"
+
+
+#contact-info

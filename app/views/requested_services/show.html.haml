@@ -110,6 +110,7 @@
         %i.icon-asterisk
         %strong= "Laboratorio: " 
         = @requested_service.laboratory_service.laboratory.name
+    .info-row
       .suggested-user
         %i.icon-star
         %strong= "Técnico Sugerido: "
@@ -122,18 +123,33 @@
         %i.icon-folder-open
         %strong= "#{(@requested_service.sample.service_request.request_type.name rescue 'Sin Tipo')}: "
         = @requested_service.sample.service_request.request_link
+        .info-extra
+          - template = @requested_service.sample.service_request.request_type.short_name
+          = render :partial => "service_requests/info_#{template}", :locals => {:service_request => @requested_service.sample.service_request}
+        
+
+    .info-row
       .folder-owner
         %i.icon-user
         %strong= "Dueño: "
-        = "El dueño"
+        = @requested_service.sample.service_request.user.full_name
+
+    - if !@requested_service.sample.service_request.supervisor_id.blank?
+      .info-row
+        .folder-supervisor
+          %i.icon-user
+          %strong= "Supervisor: "
+          = @requested_service.sample.service_request.supervisor.full_name
+    
     .info-row
       .service-details
         %i.icon-comment
         %strong= "Anotaciones Particulares: "
-        - if !@requested_service.details.blank?
-          %div= @requested_service.details
-        - else
-          = "Ninguna"
+        .info-extra
+          - if !@requested_service.details.blank?
+            %div= @requested_service.details
+          - else
+            = "Ninguna"
 
   #bitacora.tab-pane.active
     #activity_log

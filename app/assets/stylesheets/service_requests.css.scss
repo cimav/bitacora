@@ -229,36 +229,6 @@
   }
 }
 
-#requested-service-info {
-  display: none;
-  position: absolute;
-  left: ($sample-list-width * 2) + 14;
-  right: 0px;
-  top: 150px;
-  .info-row {
-    height: 24px;
-    div {
-      float: left;
-      padding: 4px 10px 0 10px;
-    }
-    .laboratory-name {
-
-    }
-    .suggested-user {
-      
-    }
-    .folder-type {
-
-    }
-    .folder-owner {
-
-    }
-    .service-details {
-
-    }
-  }
-}
-
 #requested-service-actions {
   position: fixed;
   top: 96px;
@@ -571,4 +541,23 @@
 #add-new-client-contact {
   font-size: 10px;
   cursor: pointer;
+}
+
+.info-row {
+  margin-bottom: 5px;
+  .info-extra {
+    padding-left: 20px;
+    table {
+      th {
+        text-align: left; 
+        padding-right: 10px;
+        vertical-align: top;
+      }
+    }
+  }
+}
+
+#detalles,
+#costeo {
+  padding: 10px 20px;
 }

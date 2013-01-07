@@ -2,3 +2,13 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#flash-notice {
+  z-index: 99999;
+  width: 400px;
+  font-weight: bold;
+  position: fixed;
+  bottom: 0px;
+  right: 20px;
+}
+
+

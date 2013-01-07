@@ -229,15 +229,17 @@ input[type=submit] {
 }
 
 #flash-notice {
-  z-index: 8888;
+  z-index: 99999;
 
   width: 400px;
   font-weight: bold;
-  position: fixed;
+  position: absolute;
   bottom: 0px;
   right: 20px;
   height: 20px;
   padding: 5px 10px;
+  font-size: 40px;
+  border: 10px solid #f90;
 }
 
 .hint {

@@ -832,7 +832,7 @@ $('#new-laboratory-member-form')
 #-------
 # ERRORS
 #-------
-showFormErrors = (xhr, status, error) ->
+@showFormErrors = showFormErrors = (xhr, status, error) ->
   try 
     res = $.parseJSON(xhr.responseText)
   catch err
@@ -845,14 +845,12 @@ showFormErrors = (xhr, status, error) ->
     $('#field_' + model_name + '_' + e.replace('.', '_')).addClass('with-errors').append(errorMsg)
   
 
-showFlash = (msg, type) ->
-  $("#flash-notice").removeClass('success').removeClass('notice').removeClass('info')
-  $("#flash-notice").addClass(type).empty().html(msg)
+@showFlash = showFlash = (msg, type) ->
+  $("#flash-notice").remove()
+  $('body').append('<div id="flash-notice" class="alert"></div>')
+  $("#flash-notice").addClass('alert-' + type).html(msg)
   $("#flash-notice").slideDown()
   $("#flash-notice").delay(1500).slideUp() if (type != 'error') 
-
-
-
 
 #--------------
 # LOCATION HASH

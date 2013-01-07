@@ -5,4 +5,7 @@ class Client < ActiveRecord::Base
   belongs_to :country
   belongs_to :state
   has_many   :client_contacts
+
+  validates :name, :presence => true, :uniqueness => true
+
 end

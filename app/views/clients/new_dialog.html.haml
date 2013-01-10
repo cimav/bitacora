@@ -36,12 +36,14 @@
       .control-group#cg_Client_state_id
         = f.label :state_id, 'Estado:', {:class => 'control-label'}
         .controls
-          = f.collection_select :state_id, State.order(:code), :id, :name, options = {:prompt => "Selecciona un Estado"}
+          - selected_state = 6
+          = f.collection_select :state_id, State.order(:code), :id, :name, options = {:selected => selected_state}
 
       .control-group#cg_Client_country_id
         = f.label :country_id, 'País:', {:class => 'control-label'}
         .controls
-          = f.collection_select :country_id, Country.order(:name), :id, :name, options = {:prompt => "Selecciona un País"}
+          - selected_country = 146
+          = f.collection_select :country_id, Country.order(:name), :id, :name, options = {:selected => selected_country}
 
       .control-group#cg_Client_phone
         = f.label :phone, 'Tel. Cliente:', {:class => 'control-label'}

@@ -190,7 +190,7 @@ class RequestedServicesController < ApplicationController
 
     else
 
-      flash[:error] = "Error al actualizar el servicio."
+      flash[:error] = "Error al agregar al participante."
       respond_with do |format|
         format.html do
           if request.xhr?
@@ -207,8 +207,133 @@ class RequestedServicesController < ApplicationController
 
   end
 
+  def update_participation
+    
+    flash = {}
+    tech = RequestedServiceTechnician.find(params[:tech_id])
+    
+    tech.participation = params[:participation]
+
+    if tech.save
+      flash[:notice] = "Participación actualizada"
+
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+              json[:id] = tech.id
+            render :json => json
+          else
+            redirect_to tech
+          end
+        end
+      end
+
+    else
+
+      flash[:error] = "Error al actualizar participación"
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:errors] = tech.errors
+            render :json => json, :status => :unprocessable_entity
+          else
+            redirect_to tech
+          end
+        end
+      end
+    end
+
+  end
+
+  def update_hours
+    
+    flash = {}
+    tech = RequestedServiceTechnician.find(params[:tech_id])
+    
+    tech.hours = params[:hours]
+
+    if tech.save
+      flash[:notice] = "Horas actualizadas"
+
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+              json[:id] = tech.id
+            render :json => json
+          else
+            redirect_to tech
+          end
+        end
+      end
+
+    else
+
+      flash[:error] = "Error al actualizar horas"
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:errors] = tech.errors
+            render :json => json, :status => :unprocessable_entity
+          else
+            redirect_to tech
+          end
+        end
+      end
+    end
+
+  end
+
   def technicians_table
     @requested_service = RequestedService.find(params[:id])
+    render :layout => false
+  end
+
+  def delete_tech
+
+    flash = {}
+    tech = RequestedServiceTechnician.find(params[:tech_id])
+    # TODO: Validar que el tecnico que esta haciendo el borrado sea el dueño del servicio
+    if tech.destroy
+      flash[:notice] = "Participante eliminado"
+
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:id] = tech.id
+            render :json => json
+          else
+            redirect_to tech
+          end
+        end
+      end
+
+    else
+
+      flash[:error] = "Error al eliminar el participante."
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:errors] = tech.errors
+            render :json => json, :status => :unprocessable_entity
+          else
+            redirect_to tech
+          end
+        end
+      end
+    end
+    
   end
 
 end

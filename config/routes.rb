@@ -21,11 +21,15 @@ Bitacora::Application.routes.draw do
         get 'finish_dialog'
         get 'cancel_dialog'
         post 'new_technician'
-        post 'update_technician'
+        post 'update_participation'
+        post 'update_hours'
         get 'technicians_table'
       end
     end
   end
+  match '/requested_services/delete_tech' => 'requested_services#delete_tech'
+
+
 
 
   match '/laboratory_services/live_search' => 'laboratory_services#live_search'

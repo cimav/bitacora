@@ -746,9 +746,7 @@ $('#add-technician')
              res = $.parseJSON(xhr)
              showFlash(res['flash']['notice'], 'success')
              reloadTechniciansTable()
-             false
      )
-     false
    )
 
 reloadTechniciansTable = () ->
@@ -756,7 +754,52 @@ reloadTechniciansTable = () ->
   $.get(url, {}, (html) ->
     $('#technicians').empty().html(html)
   )
-  false
+
+
+$('#technicians .close')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $(".technician-row").removeClass('error')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    res = $.parseJSON(xhr.responseText)
+    tech_id = res['id']
+    showFlash(res['flash']['notice'], 'alert-success')
+    $("#technician_row_#{tech_id}").remove()
+    reloadTechniciansTable()
+    ##reloadActivityLog(res['id'])
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['error'], 'alert-error')
+  )
+
+$('.tech_participation')
+  .live('change', () ->
+    url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/update_participation'
+    $.post(url, 
+           { tech_id: $(this).attr('data-id'), participation: $(this).val() }, 
+           (xhr) ->
+             res = $.parseJSON(xhr)
+             showFlash(res['flash']['notice'], 'success')
+             reloadTechniciansTable()
+     )
+  )
+
+
+$('.tech_hours')
+  .live('change', () ->
+    url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/update_hours'
+    $.post(url, 
+           { tech_id: $(this).attr('data-id'), hours: $(this).val() }, 
+           (xhr) ->
+             res = $.parseJSON(xhr)
+             showFlash(res['flash']['notice'], 'success')
+             reloadTechniciansTable()
+     )
+  )
+
 
 
 

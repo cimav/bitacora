@@ -1,3 +1,22 @@
 // Place all the styles related to the RequestedServices controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.technician-row {
+  cursor: pointer;
+}
+
+.total-row {
+  td {
+    border-top: 2px solid $grey;
+    border-bottom: 2px solid $grey;
+    font-weight: bold;
+    background-color: $white !important;
+  }
+}
+
+.add-row {
+  td {
+    background-color: $white !important;
+  }
+}

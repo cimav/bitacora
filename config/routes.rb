@@ -20,6 +20,9 @@ Bitacora::Application.routes.draw do
         get 'start_dialog'
         get 'finish_dialog'
         get 'cancel_dialog'
+        post 'new_technician'
+        post 'update_technician'
+        get 'technicians_table'
       end
     end
   end

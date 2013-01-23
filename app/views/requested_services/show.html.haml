@@ -124,8 +124,9 @@
         %strong= "#{(@requested_service.sample.service_request.request_type.name rescue 'Sin Tipo')}: "
         = @requested_service.sample.service_request.request_link
         .info-extra
-          - template = @requested_service.sample.service_request.request_type.short_name
-          = render :partial => "service_requests/info_#{template}", :locals => {:service_request => @requested_service.sample.service_request}
+          - if @requested_service.sample.service_request.request_type
+            - template = @requested_service.sample.service_request.request_type.short_name 
+            = render :partial => "service_requests/info_#{template}", :locals => {:service_request => @requested_service.sample.service_request}
         
 
     .info-row
@@ -161,6 +162,7 @@
     %iframe{"name" => "submit_iframe", "id" => "files_iframe", "width" => "100%", "height" => "1250", "src" => "/service_files/ui/#{@requested_service.sample.service_request_id}/#{@requested_service.sample_id}/#{@requested_service.id}", "scrolling" => "no" }
 
   #costeo.tab-pane
-    = "Por implementar"
+    #costeo_inner
+      = render :partial => 'costs', :locals => {:requested_service => @requested_service }
 
 

@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
   has_many :service_request
   has_many :laboratory_members
   has_many :requested_service
+  has_many :requested_service_technicians
   has_many :laboratories, :through => :laboratory_members
   has_many :laboratory_services, :through => :requested_service
   has_many :activity_log

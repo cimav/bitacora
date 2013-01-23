@@ -1,0 +1,1 @@
+INSERT INTO requested_service_technicians SELECT NULL, requested_services.id, user_id, 1, users.hourly_wage, '', NOW(), NOW(), 100 FROM requested_services LEFT JOIN users ON user_id = users.id WHERE user_id IS NOT NULL AND requested_services.status > 0

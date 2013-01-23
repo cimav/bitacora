@@ -7,6 +7,11 @@ class RequestedService < ActiveRecord::Base
   belongs_to :laboratory_service
   has_many :activity_log
 
+  has_many :requested_service_technicians
+  has_many :requested_service_equipments
+  has_many :requested_service_materials
+  has_many :requested_service_others
+
   after_create :set_consecutive
 
   CANCELED     = -1

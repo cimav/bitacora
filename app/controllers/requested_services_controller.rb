@@ -158,5 +158,57 @@ class RequestedServicesController < ApplicationController
     end
   end
 
+  def new_technician
+    
+    flash = {}
+    
+    @requested_service = RequestedService.find(params[:id])
+
+    tech =  @requested_service.requested_service_technicians.new 
+    user = User.find(params[:user_id])
+    tech.user_id = params[:user_id]
+    tech.hours = params[:hours]
+    tech.participation = params[:participation]
+    tech.hourly_wage = user.hourly_wage
+
+    if tech.save
+      flash[:notice] = "Participante agregado"
+
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:sample_id] = @requested_service.sample_id
+            json[:id] = @requested_service.id
+            render :json => json
+          else
+            redirect_to @requested_service
+          end
+        end
+      end
+
+    else
+
+      flash[:error] = "Error al actualizar el servicio."
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:errors] = @requested_service.errors
+            render :json => json, :status => :unprocessable_entity
+          else
+            redirect_to @requested_service
+          end
+        end
+      end
+    end
+
+  end
+
+  def technicians_table
+    @requested_service = RequestedService.find(params[:id])
+  end
 
 end

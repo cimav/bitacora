@@ -733,6 +733,31 @@ $('#new-laboratory-service-form')
     showFormErrors(xhr, status, error)
   )
 
+#-------
+# COSTS
+#-------
+
+$('#add-technician')
+  .live('click', () ->
+    url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/new_technician'
+    $.post(url, 
+           { user_id: $('#new_tech_user_id').val(), participation: $('#new_tech_participation').val(), hours: $('#new_tech_hours').val() }, 
+           (xhr) ->
+             res = $.parseJSON(xhr)
+             showFlash(res['flash']['notice'], 'success')
+             reloadTechniciansTable()
+             false
+     )
+     false
+   )
+
+reloadTechniciansTable = () ->
+  url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/technicians_table'
+  $.get(url, {}, (html) ->
+    $('#technicians').empty().html(html)
+  )
+  false
+
 
 
 #----------------

@@ -1,0 +1,15 @@
+#new-tech-modal.modal.hide.fade{:tabindex => "-1", :role => "dialog", "aria-labelledby" => "new-tech-modal-label", "aria-hidden" => "true"}
+  = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'new-tech-sample-form'} do |f|
+    .modal-header
+      %button.close{"data-dismiss" => "modal", "aria-hidden" => "true"}= "×"
+      %h3#new-tech-modal-label= "Agregar Participante"
+    .modal-body
+      = f.hidden_field :requested_service_id, {:value => @requested_service.id}
+      #field_service_request_sample_description
+        = label_tag 'activity_log_msg', 'Razones:'
+        = text_area_tag 'activity_log_msg', '', {:style => 'width: 515px;', :rows => 8}
+    .modal-footer
+      = button_tag "Cancelar servicio", {:class => "btn btn-primary", :type => "submit"}
+      %button.btn{"data-dismiss" => "modal", "aria-hidden" => "true"}= "Cerrar"
+
+

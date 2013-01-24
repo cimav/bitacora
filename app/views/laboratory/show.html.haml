@@ -16,6 +16,7 @@
         = text_field_tag :q, nil, :id => 'req-serv-search-box', :placeholder => 'Busqueda'
 
         - status_options = "<option value=\"0\">Todos los estados</option>"
+        - status_options += "<option value=\"abiertos\" selected=\"selected\">Abiertos</option>"
         - sts = [-1,1,2,3,4,5,6,99]
         - sts.each do |st| 
           - status_options += "<option value=\"#{st}\">#{RequestedService::STATUS[st]}</option>"

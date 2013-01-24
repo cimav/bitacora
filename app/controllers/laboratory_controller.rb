@@ -10,7 +10,18 @@ class LaboratoryController < ApplicationController
   def live_search
     @requested_services = RequestedService.joins(:sample).joins(:laboratory_service).joins('LEFT OUTER JOIN service_requests ON service_requests.id = samples.service_request_id').joins('LEFT OUTER JOIN users ON users.id = service_requests.user_id').where('laboratory_id = :lab',  {:lab => params[:id]})
     if params[:lrs_status] != '0'
-      @requested_services = @requested_services.where('requested_services.status' => params[:lrs_status])
+      if params[:lrs_status] == 'abiertos'
+        abiertos = []
+        abiertos << RequestedService::INITIAL
+        abiertos << RequestedService::RECEIVED
+        abiertos << RequestedService::ASSIGNED
+        abiertos << RequestedService::SUSPENDED
+        abiertos << RequestedService::REINIT
+        abiertos << RequestedService::IN_PROGRESS
+        @requested_services = @requested_services.where("requested_services.status IN (#{abiertos.join(',')})")
+      else
+        @requested_services = @requested_services.where('requested_services.status' => params[:lrs_status])
+      end
     end
     if params[:lrs_requestor] != '0'
       @requested_services = @requested_services.where('samples.service_request_id IN (SELECT id FROM service_requests WHERE user_id = :req)', {:req => params[:lrs_requestor]})

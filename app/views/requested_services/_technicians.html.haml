@@ -1,73 +1,93 @@
-%table.table.table-striped.table-bordered
-  %thead
-    %tr
-      %th= "Nombre"
-      %th= "Participación"
-      %th= "Horas"
-      %th= "Costo x Hora"
-      %th= "Subtotal"
-  %tbody
-    - tech_total = 0
-    - part_total = 0
-    - techs = []
-    - @requested_service.requested_service_technicians.each do |tech|
-      - tech_cost = tech.hours * tech.hourly_wage
-      - tech_total = tech_total + tech_cost
-      - part_total = part_total + tech.participation
-      - techs << tech.user_id
-      %tr.technician-row{'data-id' => tech.id, :id => "technician_row_#{tech.id}"}
-        %td
-          = tech.user.full_name
-          - if !tech.details.blank?
-            .tech-details= tech.details
-          - if tech.user_id != @requested_service.user_id
-            = link_to '×', {:controller => 'requested_services', :action => 'delete_tech', :tech_id => tech.id}, :method => :post, :remote => true, :class => 'close', :'data-type' => 'html', 'data-id' => tech.id
-        %td
-          - u_options = ''
-          - for i in 0..100
-            - if tech.participation == i
-              - u_options += "<option value=\"#{i}\" selected=\"selected\">#{i}%</option>"
-            - else
-              - u_options += "<option value=\"#{i}\">#{i}%</option>"
-          = select_tag "tech_participation_#{tech.id}", u_options.html_safe, {:style => "width: 100%;", "data-id" => tech.id, :class => "tech_participation"}
-        %td
-          - u_options = ''
-          - for i in 0.step(100, 0.5)
-            - if tech.hours == i
-              - u_options += "<option value=\"#{i}\" selected=\"selected\">#{i} horas</option>"
-            - else 
-              - u_options += "<option value=\"#{i}\">#{i} horas</option>"
-          = select_tag "tech_hours_#{tech.id}", u_options.html_safe, {:style => "width: 100%;", "data-id" => tech.id, :class => "tech_hours"}
-        %td
-          .align-right= number_to_currency(tech.hourly_wage)
-        %td
-          .align-right= number_to_currency(tech_cost)
-    - if part_total != 100
-      %tr.error
-        %td{:colspan => 5}
-          = "La suma de las participaciones no es 100%."
-    %tr.total-row
-      %td{:colspan => 4}
-        .align-right= "Subtotal Personal Involucrado"
-      %td
-        .align-right= number_to_currency(tech_total)
-    %tr.add-row
-      %td
-        - members = LaboratoryMember.where("laboratory_id = #{@requested_service.laboratory_service.laboratory_id} AND user_id NOT IN (#{(techs.join(','))})")
-        - u_options = ''
-        - members.each do |m|
-          - u_options += "<option value=\"#{m.user_id}\">#{m.user.full_name}</option>"
-        = select_tag :new_tech_user_id, u_options.html_safe, {:style => "width: 100%;"}
+- show_table = false
+- editable = false
+- if @requested_service.status.to_i == RequestedService::CANCELED || @requested_service.status.to_i == RequestedService::FINISHED
+  - editable = false
+  - show_table = true
 
-      %td 
-        - u_options = ''
-        - for i in 0..100
-          - u_options += "<option value=\"#{i}\">#{i}%</option>"
-        = select_tag :new_tech_participation, u_options.html_safe, {:style => "width: 100%;"}
-      %td
-        - u_options = ''
-        - for i in 0.step(100, 0.5)
-          - u_options += "<option value=\"#{i}\">#{i} horas</option>"
-        = select_tag :new_tech_hours, u_options.html_safe, {:style => "width: 100%;"}
-      %td{:colspan => 2}
-        %button.btn.btn-mini.btn-info#add-technician= "Agregar participante"
+- if @requested_service.status.to_i == RequestedService::ASSIGNED || @requested_service.status.to_i == RequestedService::SUSPENDED || @requested_service.status.to_i == RequestedService::REINIT || @requested_service.status.to_i == RequestedService::IN_PROGRESS
+  - editable = true
+  - show_table = true
+
+- if show_table
+  %h4= "Personal Involucrado"
+  %table.table.table-striped.table-bordered
+    %thead
+      %tr
+        %th= "Nombre"
+        %th= "Participación"
+        %th= "Horas"
+        %th= "Costo x Hora"
+        %th= "Subtotal"
+    %tbody
+      - tech_total = 0
+      - part_total = 0
+      - techs = []
+
+      - @requested_service.requested_service_technicians.each do |tech|
+        - tech_cost = tech.hours * tech.hourly_wage
+        - tech_total = tech_total + tech_cost  
+        - part_total = part_total + tech.participation
+        - techs << tech.user_id
+        %tr.technician-row{'data-id' => tech.id, :id => "technician_row_#{tech.id}"}
+          %td
+            = tech.user.full_name
+            - if !tech.details.blank?
+              .tech-details= tech.details
+            - if tech.user_id != @requested_service.user_id && editable
+              = link_to '×', {:controller => 'requested_services', :action => 'delete_tech', :tech_id => tech.id}, :method => :post, :remote => true, :class => 'close', :'data-type' => 'html', 'data-id' => tech.id
+          %td
+            - if editable
+              - u_options = ''
+              - for i in 0..100
+                - if tech.participation == i
+                  - u_options += "<option value=\"#{i}\" selected=\"selected\">#{i}%</option>"
+                - else
+                  - u_options += "<option value=\"#{i}\">#{i}%</option>"
+              = select_tag "tech_participation_#{tech.id}", u_options.html_safe, {:style => "width: 100%;", "data-id" => tech.id, :class => "tech_participation"}
+            - else
+              .align-right= "#{tech.participation}%"
+          %td
+            - if editable
+              - u_options = ''
+              - for i in 0.step(100, 0.5)
+                - if tech.hours == i
+                  - u_options += "<option value=\"#{i}\" selected=\"selected\">#{i} horas</option>"
+                - else 
+                  - u_options += "<option value=\"#{i}\">#{i} horas</option>"
+              = select_tag "tech_hours_#{tech.id}", u_options.html_safe, {:style => "width: 100%;", "data-id" => tech.id, :class => "tech_hours"}
+            - else
+              .align-right= "#{tech.hours} horas" 
+          %td
+            .align-right= number_to_currency(tech.hourly_wage)
+          %td
+            .align-right= number_to_currency(tech_cost)
+      - if part_total != 100
+        %tr.error
+          %td{:colspan => 5}
+            = "La suma de las participaciones no es 100%."
+      %tr.total-row
+        %td{:colspan => 4}
+          .align-right= "Subtotal Personal Involucrado"
+        %td
+          .align-right= number_to_currency(tech_total)
+      - members = LaboratoryMember.where("laboratory_id = #{@requested_service.laboratory_service.laboratory_id} AND user_id NOT IN (#{(techs.join(','))})")
+      - u_options = ''
+      - members.each do |m|
+        - u_options += "<option value=\"#{m.user_id}\">#{m.user.full_name}</option>"
+      - if u_options != '' && editable
+        %tr.add-row
+          %td
+            = select_tag :new_tech_user_id, u_options.html_safe, {:style => "width: 100%;"}
+
+          %td 
+            - u_options = ''
+            - for i in 0..100
+              - u_options += "<option value=\"#{i}\">#{i}%</option>"
+            = select_tag :new_tech_participation, u_options.html_safe, {:style => "width: 100%;"}
+          %td
+            - u_options = ''
+            - for i in 0.step(100, 0.5)
+              - u_options += "<option value=\"#{i}\">#{i} horas</option>"
+            = select_tag :new_tech_hours, u_options.html_safe, {:style => "width: 100%;"}
+          %td{:colspan => 2}
+            %button.btn.btn-mini.btn-info#add-technician= "Agregar participante"

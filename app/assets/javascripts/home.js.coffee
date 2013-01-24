@@ -766,7 +766,6 @@ $('#technicians .close')
     showFlash(res['flash']['notice'], 'alert-success')
     $("#technician_row_#{tech_id}").remove()
     reloadTechniciansTable()
-    ##reloadActivityLog(res['id'])
   )
   .live('ajax:complete', (evt, xhr, status) ->
   )

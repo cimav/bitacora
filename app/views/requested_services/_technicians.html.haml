@@ -1,3 +1,7 @@
+- lab_access = @requested_service.laboratory_service.laboratory.laboratory_members.where(:user_id => current_user.id).first.access rescue 0
+- im_lab_admin = lab_access.to_i == LaboratoryMember::ACCESS_ADMIN
+- im_service_tech = @requested_service.user_id == current_user.id
+- im_requestor = @requested_service.sample.service_request.user_id == current_user.id
 - show_table = false
 - editable = false
 - if @requested_service.status.to_i == RequestedService::CANCELED || @requested_service.status.to_i == RequestedService::FINISHED
@@ -7,6 +11,9 @@
 - if @requested_service.status.to_i == RequestedService::ASSIGNED || @requested_service.status.to_i == RequestedService::SUSPENDED || @requested_service.status.to_i == RequestedService::REINIT || @requested_service.status.to_i == RequestedService::IN_PROGRESS
   - editable = true
   - show_table = true
+
+- if !(im_lab_admin || im_service_tech)
+  - editable = false
 
 - if show_table
   %h4= "Personal Involucrado"
@@ -70,10 +77,11 @@
           .align-right= "Subtotal Personal Involucrado"
         %td
           .align-right= number_to_currency(tech_total)
-      - members = LaboratoryMember.where("laboratory_id = #{@requested_service.laboratory_service.laboratory_id} AND user_id NOT IN (#{(techs.join(','))})")
-      - u_options = ''
-      - members.each do |m|
-        - u_options += "<option value=\"#{m.user_id}\">#{m.user.full_name}</option>"
+      - if editable
+        - members = LaboratoryMember.where("laboratory_id = #{@requested_service.laboratory_service.laboratory_id} AND user_id NOT IN (#{(techs.join(','))})")
+        - u_options = ''
+        - members.each do |m|
+          - u_options += "<option value=\"#{m.user_id}\">#{m.user.full_name}</option>"
       - if u_options != '' && editable
         %tr.add-row
           %td

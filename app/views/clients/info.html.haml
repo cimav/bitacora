@@ -23,8 +23,8 @@
     - if @client.client_contacts.count > 0
       - options = ''
       - @client.client_contacts.order(:name).each do |contact|
-        - options += "<option value=\"#{contact.id}\">#{contact.name}</option>"
-      = select_tag 'service_request[external_request_attributes][0][client_contact_id]', options.html_safe
+        - options += "<option value=\"#{contact.id}\">#{contact.name} (#{contact.email})</option>"
+      = select_tag 'service_request[external_request_attributes][0][client_contact_id]', options.html_safe, {:class => 'input-xxlarge'}
       %br
     %a#add-new-client-contact= "Agregar nuevo contacto"
 

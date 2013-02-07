@@ -7,7 +7,7 @@
       .controls
         - options = '<option value="-">Selecciona el tipo</option>'
         - RequestType.order(:name).each do |request_type|
-          - if request_type.short_name == 'SERVICE'
+          - if request_type.short_name == 'SERVICIO'
             - if current_user.can_create_external_services? 
               - options += "<option value=\"#{request_type.id}\">#{request_type.name}</option>"
           - else

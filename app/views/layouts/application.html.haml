@@ -17,6 +17,8 @@
           .nav-collapse
             %ul.nav
               %li= link_to 'Carpetas', '/#!/folders', :id => 'folders-link'
+              - if current_user.can_create_external_services?
+                %li= link_to 'Vinculación', '/#!/customer_service', :id => 'customer-service-link'
               - if current_user.laboratories.count > 0
                 - if current_user.laboratories.count < 2
                   - current_user.laboratories.each do |laboratory|

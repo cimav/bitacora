@@ -5,7 +5,7 @@
       .service-name= "Ninguno"
   - else
     - sample.requested_service.each do |rs|
-      %li.requested_service{:sample_id => rs.sample_id, :requested_service_id => rs.id, :id => "requested_service_#{rs.id}", :title => rs.status_text}
+      %li.requested_service{:sample_id => rs.sample_id, :requested_service_id => rs.id, :id => "requested_service_#{rs.id}", 'data-title' => rs.status_text}
         .service-bullet{:class => "status_#{rs.status}"}= "%02d" %  rs.consecutive
         .service-name= rs.laboratory_service.name
   %li#add-service
@@ -13,3 +13,8 @@
       %i.icon-white.icon-plus
     .service-name
       %a#open-add-service-modal= "Agregar servicio"
+
+:javascript
+  $(document).ready(function () {
+    $('.requested_service').tooltip({placement: 'bottom'});
+  });

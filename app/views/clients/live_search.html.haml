@@ -1,0 +1,7 @@
+%ul
+  - @clients.each do |client|
+    %li.client-item.item{"data-id" => client.id}
+      .client-item-name= client.name
+.items-counter
+  .items-counter-inner
+    = "#{@clients.count} clientes"

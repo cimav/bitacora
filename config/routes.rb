@@ -73,11 +73,16 @@ Bitacora::Application.routes.draw do
   match '/clients/typeahead' => 'clients#typeahead'
   match '/clients/info' => 'clients#info'
   match '/clients/new_dialog' => 'clients#new_dialog'
+  match '/clients/live_search' => 'clients#live_search'
   resources :clients
 
   match '/client_contacts/combo/:client_id' => 'client_contacts#combo'
   match '/client_contacts/new_dialog/:client_id' => 'client_contacts#new_dialog'
   resources :client_contacts
+
+  match '/customer_service' => 'customer_service#index'
+  match '/customer_service/clients' => 'customer_service#clients'
+  match '/customer_service/client_types' => 'customer_service#client_types'
 
   match '/auth/:provider/callback' => 'sessions#create'
   match '/auth/failure' => 'sessions#failure'

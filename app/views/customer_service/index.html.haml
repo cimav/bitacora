@@ -1,0 +1,11 @@
+#header-bar
+  %h2= "Vinculación"
+
+#customer-service-workarea
+  #customer-service-panel
+    %ul#customer-service-nav.nav.nav-list
+      %li.nav-header= "Catálogos"
+      %li{"data-link" => "/customer_service/clients"}= link_to "Clientes", "#"
+      %li.nav-header= "Reportes"
+      %li{"data-link" => "/customer_service/report_per_lab"}= link_to "Servicios por laboratorio", "#"
+  #customer-service-main-panel

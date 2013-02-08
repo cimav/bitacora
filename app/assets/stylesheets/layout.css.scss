@@ -27,7 +27,9 @@
 }
 
 #folder-panel,
-#lab-req-serv-panel {
+#lab-req-serv-panel,
+#customer-service-panel,
+#clients-panel {
   width: $side-panel-width;
   position: fixed;
   bottom: 0px;
@@ -91,6 +93,38 @@
   }
 }
 
+#customer-service-panel {
+  background: #fff;
+  padding-top: 20px;
+  li {
+    cursor: pointer;
+  }
+}
+
+#clients-panel {
+  position: fixed;
+  top: 96px;
+  bottom: 0px;
+  left: $side-panel-width + 2;
+  width: $side-panel-width;
+  border-right: 1px solid $line-color;
+  border-left: none;
+  li {
+    min-height: 48px;
+    padding: 10px 5px;
+    cursor: pointer;
+    border-bottom: 1px solid $line-color;
+  }
+}
+
+#client-details {
+  left: ($sample-list-width * 2) + 4;
+  right: 0px;
+  position: fixed;
+  top: 96px;
+  bottom: 0px;
+}
+
 #lab-req-serv-panel {
   .items-placeholder {
     top: 155px;
@@ -99,7 +133,8 @@
 }
 
 #folder-main-panel, 
-#lab-main-panel {
+#lab-main-panel,
+#customer-service-main-panel {
   position: fixed;
   left: $side-panel-width + 2;
   overflow: auto;

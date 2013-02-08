@@ -2,6 +2,22 @@ class ClientsController < ApplicationController
 
   respond_to :html, :xml, :json
 
+  def show
+    @client = Client.find(params[:id])
+    render :layout => false 
+  end
+
+  def live_search
+    @clients = Client.where('status = :s', {:s => Client::ACTIVE}).order('name')
+    if !params[:client_type].blank? && params[:client_type] != '0'
+      @clients = @clients.where("client_type_id = :c", {:c => "%#{params[:client_type]}%"}) 
+    end
+    if !params[:q].blank?
+      @clients = @clients.where("(rfc LIKE :q OR name LIKE :q)", {:q => "%#{params[:q]}%"}) 
+    end
+    render :layout => false
+  end
+
   def typeahead
 
     clients = Client.where("name LIKE :q", {:q => "%#{params[:query]}%"})

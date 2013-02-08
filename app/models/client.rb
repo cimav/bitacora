@@ -8,4 +8,7 @@ class Client < ActiveRecord::Base
 
   validates :name, :presence => true, :uniqueness => true
 
+  ACTIVE = 1
+  INACTIVE = 2
+
 end

@@ -1,0 +1,17 @@
+#clients-panel
+  #clients-search-panel.search-box
+    = form_tag clients_path, :id => 'clients-live-search', :method => 'get', :remote => true do
+      - client_type_options = "<option value=\"0\">Todos los tipos</option>"
+      - ClientType.order('id').each do |ct|
+        - client_type_options += "<option value=\"#{ct.id}\">#{ct.name}</option>"
+      = select_tag "client_type", client_type_options.html_safe
+      = text_field_tag :q, nil, :id => 'clients-search-box', :placeholder => 'Busqueda'
+  #clients-list.items-placeholder 
+  #clients-buttons.bottom-box
+    
+
+#client-details
+:javascript 
+  $(function() {
+    ClientsLiveSearch()
+  })

@@ -895,6 +895,45 @@ $('#new-laboratory-member-form')
     showFormErrors(xhr, status, error)
   )
 
+#------------------
+# CUSTOMER SERVICE
+#------------------
+$(document).on("click", "#customer-service-nav li", () ->
+  url = $(this).attr('data-link')
+  $("#customer-service-nav li").removeClass("active")
+  $(this).addClass('active')
+  $.get(url, {}, (html) ->
+    $('#customer-service-main-panel').empty().html(html)
+  )
+)
+
+@ClientsLiveSearch = ClientsLiveSearch = () ->
+  form = $("#clients-live-search")
+  url = "/clients/live_search"
+  formData = form.serialize()
+  $.get(url, formData, (html) ->
+    $("#clients-list").empty().html(html)
+    $("#clients-list .client-item:first").click()
+  )
+
+$(document).on("change", '#client_type', () ->
+  ClientsLiveSearch()
+)
+
+$('#clients-search-box')
+  .live('keyup', () ->
+    ClientsLiveSearch()
+  )
+
+$(document).on("click", ".client-item", () ->
+  id = $(this).attr('data-id')
+  url = '/clients/' + id
+  $(".client-item").removeClass("active")
+  $(this).addClass('active')
+  $.get(url, {}, (html) ->
+    $('#client-details').empty().html(html)
+  )
+)
 
 #-------
 # ERRORS

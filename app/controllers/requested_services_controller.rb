@@ -346,4 +346,140 @@ class RequestedServicesController < ApplicationController
     
   end
 
+  def new_equipment
+    
+    flash = {}
+    
+    @requested_service = RequestedService.find(params[:id])
+
+    eq =  @requested_service.requested_service_equipments.new 
+    the_eq = Equipment.find(params[:eq_id])
+    eq.equipment_id = params[:eq_id]
+    eq.hours = params[:hours]
+    eq.hourly_rate = the_eq.hourly_rate
+
+    if eq.save
+      flash[:notice] = "Equipo agregado"
+
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:sample_id] = @requested_service.sample_id
+            json[:id] = @requested_service.id
+            render :json => json
+          else
+            redirect_to @requested_service
+          end
+        end
+      end
+
+    else
+
+      flash[:error] = "Error al agregar el equipo."
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:errors] = @requested_service.errors
+            render :json => json, :status => :unprocessable_entity
+          else
+            redirect_to @requested_service
+          end
+        end
+      end
+    end
+
+  end
+
+  
+  def update_eq_hours
+    
+    flash = {}
+    eq = RequestedServiceEquipment.find(params[:eq_id])
+    
+    eq.hours = params[:hours]
+
+    if eq.save
+      flash[:notice] = "Horas actualizadas"
+
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+              json[:id] = eq.id
+            render :json => json
+          else
+            redirect_to eq
+          end
+        end
+      end
+
+    else
+
+      flash[:error] = "Error al actualizar horas"
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:errors] = eq.errors
+            render :json => json, :status => :unprocessable_entity
+          else
+            redirect_to eq
+          end
+        end
+      end
+    end
+
+  end
+
+  def equipment_table
+    @requested_service = RequestedService.find(params[:id])
+    render :layout => false
+  end
+
+  def delete_eq
+
+    flash = {}
+    eq = RequestedServiceEquipment.find(params[:eq_id])
+    # TODO: Validar que el tecnico que esta haciendo el borrado sea el dueño del servicio
+    if eq.destroy
+      flash[:notice] = "Equipo eliminado"
+
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:id] = eq.id
+            render :json => json
+          else
+            redirect_to eq
+          end
+        end
+      end
+
+    else
+
+      flash[:error] = "Error al eliminar el equipo."
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:errors] = eq.errors
+            render :json => json, :status => :unprocessable_entity
+          else
+            redirect_to eq
+          end
+        end
+      end
+    end
+    
+  end
+
 end

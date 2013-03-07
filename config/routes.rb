@@ -23,11 +23,15 @@ Bitacora::Application.routes.draw do
         post 'new_technician'
         post 'update_participation'
         post 'update_hours'
+        post 'new_equipment'
+        post 'update_eq_hours'
         get 'technicians_table'
+        get 'equipment_table'
       end
     end
   end
   match '/requested_services/delete_tech' => 'requested_services#delete_tech'
+  match '/requested_services/delete_eq' => 'requested_services#delete_eq'
 
 
 

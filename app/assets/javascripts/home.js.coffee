@@ -799,6 +799,59 @@ $('.tech_hours')
      )
   )
 
+#
+# Equipment
+#
+$('#add-equipment')
+  .live('click', () ->
+    url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/new_equipment'
+    $.post(url, 
+           { eq_id: $('#new_eq_id').val(), hours: $('#new_eq_hours').val() }, 
+           (xhr) ->
+             res = $.parseJSON(xhr)
+             showFlash(res['flash']['notice'], 'success')
+             reloadEquipmentTable()
+     )
+   )
+
+reloadEquipmentTable = () ->
+  url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/equipment_table'
+  $.get(url, {}, (html) ->
+    $('#equipment').empty().html(html)
+  )
+
+
+$('#equipment .close')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $(".equipment-row").removeClass('error')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    res = $.parseJSON(xhr.responseText)
+    tech_id = res['id']
+    showFlash(res['flash']['notice'], 'alert-success')
+    $("#equipment#{tech_id}").remove()
+    reloadEquipmentTable()
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['error'], 'alert-error')
+  )
+
+
+$('.eq_hours')
+  .live('change', () ->
+    url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/update_eq_hours'
+    $.post(url, 
+          { eq_id: $(this).attr('data-id'), hours: $(this).val() }, 
+          (xhr) ->
+            res = $.parseJSON(xhr)
+            showFlash(res['flash']['notice'], 'success')
+            reloadEquipmentTable()
+    )
+  )
+
 
 
 

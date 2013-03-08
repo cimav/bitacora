@@ -16,9 +16,10 @@
   - editable = false
 
 - if show_table
-  %h4= "Equipos"
   %table.table.table-striped.table-bordered
     %thead
+      %tr
+        %th{:colspan => 4, :class => "th-header"}= "Equipos"
       %tr
         %th= "Nombre"
         %th= "Horas"
@@ -78,3 +79,4 @@
             = select_tag :new_eq_hours, u_options.html_safe, {:style => "width: 100%;"}
           %td{:colspan => 2}
             %button.btn.btn-mini.btn-info#add-equipment= "Agregar equipo"
+

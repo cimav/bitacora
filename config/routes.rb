@@ -20,18 +20,30 @@ Bitacora::Application.routes.draw do
         get 'start_dialog'
         get 'finish_dialog'
         get 'cancel_dialog'
+        
         post 'new_technician'
         post 'update_participation'
         post 'update_hours'
+        get 'technicians_table'
+
         post 'new_equipment'
         post 'update_eq_hours'
-        get 'technicians_table'
         get 'equipment_table'
+
+        post 'new_material'
+        post 'update_mat_qty'
+        get 'materials_table'
+        
+        post 'new_other'
+        post 'update_other_price'
+        get 'others_table'
       end
     end
   end
   match '/requested_services/delete_tech' => 'requested_services#delete_tech'
   match '/requested_services/delete_eq' => 'requested_services#delete_eq'
+  match '/requested_services/delete_mat' => 'requested_services#delete_mat'
+  match '/requested_services/delete_other' => 'requested_services#delete_other'
 
 
 

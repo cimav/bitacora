@@ -16,9 +16,10 @@
   - editable = false
 
 - if show_table
-  %h4= "Personal Involucrado"
   %table.table.table-striped.table-bordered
     %thead
+      %tr
+        %th{:colspan => 5, :class => "th-header"}= "Personal Involucrado"
       %tr
         %th= "Nombre"
         %th= "Participación"

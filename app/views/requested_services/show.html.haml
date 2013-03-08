@@ -99,7 +99,12 @@
     %li
       %a{:href => "#archivos", "data-toggle" => "tab"}= "Archivos"
     %li
-      %a{:href => "#costeo", "data-toggle" => "tab"}= "Costeo"
+      - if @grand_total > 0 
+        %a{:href => "#costeo", "data-toggle" => "tab", "id" => "costeo_tab"}
+          %strong= "Costo: #{number_to_currency(@grand_total)}"
+      - else
+        %a{:href => "#costeo", "data-toggle" => "tab", "id" => "costeo_tab"}= "Costeo"
+      
 
 
 .tab-content
@@ -163,6 +168,6 @@
 
   #costeo.tab-pane
     #costeo_inner
-      = render :partial => 'costs', :locals => {:requested_service => @requested_service }
+      = render :partial => 'costs', :locals => {:requested_service => @requested_service, :grand_total => @grand_total }
 
 

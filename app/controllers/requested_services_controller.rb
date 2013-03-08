@@ -53,6 +53,27 @@ class RequestedServicesController < ApplicationController
                                         :sample => @requested_service.sample_id,
                                         :requested_service => @requested_service.id
                                        }).order('created_at DESC')
+    @grand_total = RequestedService.find_by_sql(["SELECT IFNULL(SUM(subtotal),0) AS total FROM (
+                                                     SELECT SUM(quantity * unit_price) AS subtotal 
+                                                     FROM requested_service_materials 
+                                                     WHERE requested_service_id = :requested_service
+                                                     GROUP BY requested_service_id 
+                                                   UNION 
+                                                     SELECT SUM(hours * hourly_rate) AS subtotal 
+                                                     FROM requested_service_equipments 
+                                                     WHERE requested_service_id = :requested_service
+                                                     GROUP BY requested_service_id 
+                                                   UNION 
+                                                     SELECT SUM(hours * hourly_wage) AS subtotal 
+                                                     FROM requested_service_technicians 
+                                                     WHERE requested_service_id = :requested_service
+                                                     GROUP BY requested_service_id
+                                                   UNION
+                                                     SELECT SUM(price) AS subtotal 
+                                                     FROM requested_service_others 
+                                                     WHERE requested_service_id = :requested_service
+                                                     GROUP BY requested_service_id
+                                                 ) subtotals", :requested_service => @requested_service.id]).first.total
     render :layout => false
   end
 
@@ -475,6 +496,279 @@ class RequestedServicesController < ApplicationController
             render :json => json, :status => :unprocessable_entity
           else
             redirect_to eq
+          end
+        end
+      end
+    end
+    
+  end
+
+
+  def new_material
+    
+    flash = {}
+    
+    @requested_service = RequestedService.find(params[:id])
+
+    mat =  @requested_service.requested_service_materials.new 
+    the_mat = Material.find(params[:mat_id])
+    mat.material_id = the_mat.id
+    mat.quantity = params[:quantity]
+    mat.unit_price = the_mat.unit_price
+
+    if mat.save
+      flash[:notice] = "Material agregado"
+
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:sample_id] = @requested_service.sample_id
+            json[:id] = @requested_service.id
+            render :json => json
+          else
+            redirect_to @requested_service
+          end
+        end
+      end
+
+    else
+
+      flash[:error] = "Error al agregar el material."
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:errors] = @requested_service.errors
+            render :json => json, :status => :unprocessable_entity
+          else
+            redirect_to @requested_service
+          end
+        end
+      end
+    end
+
+  end
+
+  
+  def update_mat_qty
+    
+    flash = {}
+    mat = RequestedServiceMaterial.find(params[:mat_id])
+    
+    mat.quantity = params[:quantity]
+
+    if mat.save
+      flash[:notice] = "Cantidad actualizada"
+
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+              json[:id] = mat.id
+            render :json => json
+          else
+            redirect_to mat
+          end
+        end
+      end
+
+    else
+
+      flash[:error] = "Error al actualizar la cantidad"
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:errors] = mat.errors
+            render :json => json, :status => :unprocessable_entity
+          else
+            redirect_to mat
+          end
+        end
+      end
+    end
+
+  end
+
+  def materials_table
+    @requested_service = RequestedService.find(params[:id])
+    render :layout => false
+  end
+
+  def delete_mat
+
+    flash = {}
+    mat = RequestedServiceMaterial.find(params[:mat_id])
+    # TODO: Validar que el tecnico que esta haciendo el borrado sea el dueño del servicio
+    if mat.destroy
+      flash[:notice] = "Material eliminado"
+
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:id] = mat.id
+            render :json => json
+          else
+            redirect_to mat
+          end
+        end
+      end
+
+    else
+
+      flash[:error] = "Error al eliminar el material."
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:errors] = mat.errors
+            render :json => json, :status => :unprocessable_entity
+          else
+            redirect_to mat
+          end
+        end
+      end
+    end
+    
+  end
+
+
+    def new_other
+    
+    flash = {}
+    
+    @requested_service = RequestedService.find(params[:id])
+
+    other =  @requested_service.requested_service_others.new 
+    other.other_type_id = params[:other_type_id]
+    other.concept = params[:concept]
+    other.price = params[:price]
+
+    if other.save
+      flash[:notice] = "Otro concepto agregado"
+
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:sample_id] = @requested_service.sample_id
+            json[:id] = @requested_service.id
+            render :json => json
+          else
+            redirect_to @requested_service
+          end
+        end
+      end
+
+    else
+
+      flash[:error] = "Error al agregar otro."
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:errors] = @requested_service.errors
+            render :json => json, :status => :unprocessable_entity
+          else
+            redirect_to @requested_service
+          end
+        end
+      end
+    end
+
+  end
+
+  
+  def update_other_price
+    
+    flash = {}
+    other = RequestedServiceOther.find(params[:other_id])
+    
+    other.price = params[:price]
+
+    if other.save
+      flash[:notice] = "Concepto actualizado"
+
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+              json[:id] = other.id
+            render :json => json
+          else
+            redirect_to other
+          end
+        end
+      end
+
+    else
+
+      flash[:error] = "Error al actualizar el concepto"
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:errors] = other.errors
+            render :json => json, :status => :unprocessable_entity
+          else
+            redirect_to other
+          end
+        end
+      end
+    end
+
+  end
+
+  def others_table
+    @requested_service = RequestedService.find(params[:id])
+    render :layout => false
+  end
+
+  def delete_other
+
+    flash = {}
+    other = RequestedServiceOther.find(params[:other_id])
+    # TODO: Validar que el tecnico que esta haciendo el borrado sea el dueño del servicio
+    if other.destroy
+      flash[:notice] = "Concepto eliminado"
+
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:id] = other.id
+            render :json => json
+          else
+            redirect_to other
+          end
+        end
+      end
+
+    else
+
+      flash[:error] = "Error al eliminar el concepto."
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:errors] = other.errors
+            render :json => json, :status => :unprocessable_entity
+          else
+            redirect_to other
           end
         end
       end

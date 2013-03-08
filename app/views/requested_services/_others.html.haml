@@ -1,0 +1,63 @@
+- lab_access = @requested_service.laboratory_service.laboratory.laboratory_members.where(:user_id => current_user.id).first.access rescue 0
+- im_lab_admin = lab_access.to_i == LaboratoryMember::ACCESS_ADMIN
+- im_service_tech = @requested_service.user_id == current_user.id
+- im_requestor = @requested_service.sample.service_request.user_id == current_user.id
+- show_table = false
+- editable = false
+- if @requested_service.status.to_i == RequestedService::CANCELED || @requested_service.status.to_i == RequestedService::FINISHED
+  - editable = false
+  - show_table = true
+
+- if @requested_service.status.to_i == RequestedService::ASSIGNED || @requested_service.status.to_i == RequestedService::SUSPENDED || @requested_service.status.to_i == RequestedService::REINIT || @requested_service.status.to_i == RequestedService::IN_PROGRESS
+  - editable = true
+  - show_table = true
+
+- if !(im_lab_admin || im_service_tech)
+  - editable = false
+
+- if show_table
+  %table.table.table-striped.table-bordered
+    %thead
+      %tr
+        %th{:colspan => 4, :class => "th-header"}= "Otros conceptos"
+      %tr
+        %th= "Tipo"
+        %th= "Concepto"
+        %th{:colspan => 2}= "Precio"
+    %tbody
+      - other_total = 0
+
+      - @requested_service.requested_service_others.each do |other|
+        - other_total = other_total + other.price
+        %tr.other-row{'data-id' => other.id, :id => "other_row_#{other.id}"}
+          %td
+            = other.other_type.name
+          %td
+            = other.concept
+            - if !other.details.blank?
+              .other-details= other.details
+            = link_to '×', {:controller => 'requested_services', :action => 'delete_other', :other_id => other.id}, :method => :post, :remote => true, :class => 'close', :'data-type' => 'html', 'data-id' => other.id
+          %td{:colspan => 2}
+            - if editable
+              = text_field_tag "price_#{other.id}", other.price, {:class => "other_price", "data-id" => other.id}
+            - else
+              .align-right= number_to_currency(other.quantity) 
+      %tr.total-row
+        %td{:colspan => 3}
+          .align-right= "Subtotal otros conceptos"
+        %td
+          .align-right= number_to_currency(other_total)
+      - if editable
+        - u_options = ''
+        - OtherType.order('name').each do |o|
+          - u_options += "<option value=\"#{o.id}\">#{o.name}</option>"
+      - if u_options != '' && editable
+        %tr.add-row
+          %td
+            = select_tag :new_other_type, u_options.html_safe, {:style => "width: 200px;"}
+          %td
+            = text_field_tag 'new_other_concept', nil,  { :placeholder => "Concepto…" }
+          %td
+            = text_field_tag 'new_other_price', nil, { :placeholder => "Precio…" }
+          %td{:colspan => 2}
+            %button.btn.btn-mini.btn-info#add-other= "Agregar concepto"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130307023335) do
+ActiveRecord::Schema.define(:version => 20130308020624) do
 
   create_table "activity_logs", :force => true do |t|
     t.integer  "user_id"
@@ -160,6 +160,14 @@ ActiveRecord::Schema.define(:version => 20130307023335) do
     t.datetime "updated_at",                                                 :null => false
   end
 
+  create_table "other_types", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "status",      :default => "1"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+  end
+
   create_table "request_types", :force => true do |t|
     t.string   "short_name", :limit => 20
     t.string   "name"
@@ -183,11 +191,11 @@ ActiveRecord::Schema.define(:version => 20130307023335) do
   create_table "requested_service_materials", :force => true do |t|
     t.integer  "requested_service_id"
     t.integer  "material_id"
-    t.decimal  "quantity",             :precision => 10, :scale => 10
+    t.decimal  "quantity",             :precision => 10, :scale => 4
     t.decimal  "unit_price",           :precision => 6,  :scale => 2
     t.text     "details"
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
+    t.datetime "created_at",                                          :null => false
+    t.datetime "updated_at",                                          :null => false
   end
 
   add_index "requested_service_materials", ["material_id"], :name => "index_requested_service_materials_on_material_id"
@@ -195,12 +203,12 @@ ActiveRecord::Schema.define(:version => 20130307023335) do
 
   create_table "requested_service_others", :force => true do |t|
     t.integer  "requested_service_id"
-    t.integer  "other_type"
     t.string   "concept"
     t.text     "details"
-    t.decimal  "price",                :precision => 6, :scale => 2
-    t.datetime "created_at",                                         :null => false
-    t.datetime "updated_at",                                         :null => false
+    t.decimal  "price",                :precision => 10, :scale => 2
+    t.datetime "created_at",                                          :null => false
+    t.datetime "updated_at",                                          :null => false
+    t.integer  "other_type_id"
   end
 
   add_index "requested_service_others", ["requested_service_id"], :name => "index_requested_service_others_on_requested_service_id"

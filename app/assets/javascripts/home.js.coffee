@@ -737,6 +737,10 @@ $('#new-laboratory-service-form')
 # COSTS
 #-------
 
+#
+# Technicians
+#
+
 $('#add-technician')
   .live('click', () ->
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/new_technician'
@@ -852,6 +856,112 @@ $('.eq_hours')
     )
   )
 
+
+#
+# Materials
+#
+$('#add-material')
+  .live('click', () ->
+    url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/new_material'
+    $.post(url, 
+           { mat_id: $('#new_mat_id').val(), quantity: $('#new_mat_qty').val() }, 
+           (xhr) ->
+             res = $.parseJSON(xhr)
+             showFlash(res['flash']['notice'], 'success')
+             reloadMaterialTable()
+     )
+   )
+
+reloadMaterialTable = () ->
+  url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/materials_table'
+  $.get(url, {}, (html) ->
+    $('#materials').empty().html(html)
+  )
+
+
+$('#materials .close')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $(".material-row").removeClass('error')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    res = $.parseJSON(xhr.responseText)
+    tech_id = res['id']
+    showFlash(res['flash']['notice'], 'alert-success')
+    $("#material#{tech_id}").remove()
+    reloadMaterialTable()
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['error'], 'alert-error')
+  )
+
+
+$('.mat_qty')
+  .live('change', () ->
+    url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/update_mat_qty'
+    $.post(url, 
+          { mat_id: $(this).attr('data-id'), quantity: $(this).val() }, 
+          (xhr) ->
+            res = $.parseJSON(xhr)
+            showFlash(res['flash']['notice'], 'success')
+            reloadMaterialTable()
+    )
+  )
+
+#
+# Others
+#
+$('#add-other')
+  .live('click', () ->
+    url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/new_other'
+    $.post(url, 
+           { other_type_id: $('#new_other_type').val(), concept: $('#new_other_concept').val(), price: $('#new_other_type').val() }, 
+           (xhr) ->
+             res = $.parseJSON(xhr)
+             showFlash(res['flash']['notice'], 'success')
+             reloadOthersTable()
+     )
+   )
+
+reloadOthersTable = () ->
+  url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/others_table'
+  $.get(url, {}, (html) ->
+    $('#others').empty().html(html)
+  )
+
+
+$('#others .close')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $(".other-row").removeClass('error')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    res = $.parseJSON(xhr.responseText)
+    other_id = res['id']
+    showFlash(res['flash']['notice'], 'alert-success')
+    $("#others#{other_id}").remove()
+    reloadOthersTable()
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['error'], 'alert-error')
+  )
+
+
+$('.other_price')
+  .live('change', () ->
+    url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/update_other_price'
+    $.post(url, 
+          { other_id: $(this).attr('data-id'), price: $(this).val() }, 
+          (xhr) ->
+            res = $.parseJSON(xhr)
+            showFlash(res['flash']['notice'], 'success')
+            reloadOthersTable()
+    )
+  )
 
 
 

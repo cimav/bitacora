@@ -99,11 +99,7 @@
     %li
       %a{:href => "#archivos", "data-toggle" => "tab"}= "Archivos"
     %li
-      - if @grand_total > 0 
-        %a{:href => "#costeo", "data-toggle" => "tab", "id" => "costeo_tab"}
-          %strong= "Costo: #{number_to_currency(@grand_total)}"
-      - else
-        %a{:href => "#costeo", "data-toggle" => "tab", "id" => "costeo_tab"}= "Costeo"
+      %a{:href => "#costeo", "data-toggle" => "tab", "id" => "costeo_tab"}= "Costeo"
       
 
 

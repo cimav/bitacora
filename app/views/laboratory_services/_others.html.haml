@@ -1,0 +1,45 @@
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th{:colspan => 4, :class => "th-header"}= "Otros conceptos"
+    - if @requested_service.requested_service_others.count > 0
+      %tr
+        %th= "Tipo"
+        %th{:colspan => 2}= "Concepto"
+        %th= "Precio"
+  %tbody
+    - other_total = 0
+    - if @requested_service.requested_service_others.count == 0
+      %tr.empty-cost
+        %td{:colspan => 4}= "Sin otros conceptos"
+    - @requested_service.requested_service_others.each do |other|
+      - other_total = other_total + other.price
+      %tr.other-row{'data-id' => other.id, :id => "other_row_#{other.id}"}
+        %td
+          = other.other_type.name
+        %td{:colspan => 2}
+          = other.concept
+          - if !other.details.blank?
+            .other-details= other.details
+          = link_to '×', {:controller => 'requested_services', :action => 'delete_other', :other_id => other.id}, :method => :post, :remote => true, :class => 'close', :'data-type' => 'html', 'data-id' => other.id
+        %td
+          = text_field_tag "price_#{other.id}", other.price, {:class => "other_price_template", "data-id" => other.id}
+    - if @requested_service.requested_service_others.count > 0
+      %tr.total-row
+        %td{:colspan => 3}
+          .align-right= "Subtotal otros conceptos"
+        %td
+          .align-right= number_to_currency(other_total)
+    - u_options = ''
+    - OtherType.order('name').each do |o|
+      - u_options += "<option value=\"#{o.id}\">#{o.name}</option>"
+    - if u_options != ''
+      %tr.add-row
+        %td
+          = select_tag :new_other_type, u_options.html_safe, {:style => "width: 200px;"}
+        %td
+          = text_field_tag 'new_other_concept', nil,  { :placeholder => "Concepto…" }
+        %td
+          = text_field_tag 'new_other_price', nil, { :placeholder => "Precio…" }
+        %td{:colspan => 2}
+          %button.btn.btn-mini.btn-info#add-other-template= "Agregar concepto"

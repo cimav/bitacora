@@ -1,5 +1,4 @@
 = form_for @laboratory_service, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-laboratory-service-form'} do |f|
-  %h3= "Editar Servicio"
   .field#field_laboratory_service_name
     = f.label :name, 'Nombre:'
     = f.text_field :name, :placeholder => 'Nombre del servicio'

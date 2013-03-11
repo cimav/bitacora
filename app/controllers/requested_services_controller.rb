@@ -43,17 +43,8 @@ class RequestedServicesController < ApplicationController
     render :layout => false
   end
 
-
-  def show
-    @requested_service = RequestedService.find(params['id'])
-    @activity_log = ActivityLog.where(" (service_request_id = :service_request AND sample_id = 0 AND requested_service_id = 0)
-                                        OR (service_request_id = :service_request AND sample_id = :sample AND requested_service_id = 0)
-                                        OR (service_request_id = :service_request AND sample_id = :sample AND requested_service_id = :requested_service)
-                                    ", {:service_request => @requested_service.sample.service_request.id,
-                                        :sample => @requested_service.sample_id,
-                                        :requested_service => @requested_service.id
-                                       }).order('created_at DESC')
-    @grand_total = RequestedService.find_by_sql(["SELECT IFNULL(SUM(subtotal),0) AS total FROM (
+  def get_grand_total(id)
+    grand_total = RequestedService.find_by_sql(["SELECT IFNULL(SUM(subtotal),0) AS total FROM (
                                                      SELECT SUM(quantity * unit_price) AS subtotal 
                                                      FROM requested_service_materials 
                                                      WHERE requested_service_id = :requested_service
@@ -73,7 +64,24 @@ class RequestedServicesController < ApplicationController
                                                      FROM requested_service_others 
                                                      WHERE requested_service_id = :requested_service
                                                      GROUP BY requested_service_id
-                                                 ) subtotals", :requested_service => @requested_service.id]).first.total
+                                                 ) subtotals", :requested_service => id]).first.total
+  end
+
+  def grand_total
+    @grand_total = get_grand_total(params[:id])
+    render :layout => false
+  end
+
+  def show
+    @requested_service = RequestedService.find(params['id'])
+    @activity_log = ActivityLog.where(" (service_request_id = :service_request AND sample_id = 0 AND requested_service_id = 0)
+                                        OR (service_request_id = :service_request AND sample_id = :sample AND requested_service_id = 0)
+                                        OR (service_request_id = :service_request AND sample_id = :sample AND requested_service_id = :requested_service)
+                                    ", {:service_request => @requested_service.sample.service_request.id,
+                                        :sample => @requested_service.sample_id,
+                                        :requested_service => @requested_service.id
+                                       }).order('created_at DESC')
+    @grand_total = get_grand_total(params['id'])
     render :layout => false
   end
 

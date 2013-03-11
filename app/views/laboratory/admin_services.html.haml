@@ -12,8 +12,16 @@
     #admin-lab-services-list
     #admin-lab-services-buttons
       = button_tag "Agregar nuevo servicio", {:class => 'btn btn-info', :id => 'add-new-service-button', :lab_id => @laboratory.id}
-      
-  #admin-service-details
+  
+  %ul.nav.nav-pills#admin-service-tabs
+    %li.active#tab-service-details
+      %a{:href => "#admin-service-details", "data-toggle" => "tab", "id" => "service_details_tab"}= "Editar"
+    %li#tab-service-costs
+      %a{:href => "#admin-service-costs", "data-toggle" => "tab", "id" => "service_costs_tab"}= "Costeo"
+
+  .tab-content
+    #admin-service-details.tab-pane.active
+    #admin-service-costs.tab-pane
 
 :javascript 
   $(function() {

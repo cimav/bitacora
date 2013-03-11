@@ -689,6 +689,10 @@ $('.admin-lab-service-item')
     $.get(url, {}, (html) ->
       $('#admin-service-details').html(html)
     )
+    url = '/laboratory_services/' + $(this).attr('laboratory_service_id') + '/edit_cost'
+    $.get(url, {}, (html) ->
+      $('#admin-service-costs').html(html)
+    )
   )
 
 $('#edit-laboratory-service-form')
@@ -733,9 +737,269 @@ $('#new-laboratory-service-form')
     showFormErrors(xhr, status, error)
   )
 
+#
+# Technicians template
+#
+$('#add-technician-template')
+  .live('click', () ->
+    laboratory_service = $('#laboratory_service_id').val()
+    url = '/laboratory_services/' + laboratory_service + '/new_technician'
+    $.post(url, 
+           { user_id: $('#new_tech_user_id').val(), participation: $('#new_tech_participation').val(), hours: $('#new_tech_hours').val() }, 
+           (xhr) ->
+             res = $.parseJSON(xhr)
+             showFlash(res['flash']['notice'], 'success')
+             reloadTechniciansTableTemplate()
+     )
+   )
+
+updateGrandTotalTemplate = (laboratory_service) ->
+  url = '/laboratory_services/' + laboratory_service + '/grand_total'
+  $.get(url, {}, (html) ->
+    $('#grand_total').empty().html(html)
+  )
+
+reloadTechniciansTableTemplate = () ->
+  laboratory_service = $('#laboratory_service_id').val()
+  url = '/laboratory_services/' + laboratory_service + '/technicians_table'
+  $.get(url, {}, (html) ->
+    $('#technicians-template').empty().html(html)
+    updateGrandTotalTemplate(laboratory_service)
+  )
+
+
+$('#technicians-template .close')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $(".technician-row").removeClass('error')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    res = $.parseJSON(xhr.responseText)
+    tech_id = res['id']
+    showFlash(res['flash']['notice'], 'alert-success')
+    $("#technician_row_#{tech_id}").remove()
+    reloadTechniciansTableTemplate()
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['error'], 'alert-error')
+  )
+
+$('.tech_participation_template')
+  .live('change', () ->
+    laboratory_service = $('#laboratory_service_id').val()
+    url = '/laboratory_services/' + laboratory_service + '/update_participation'
+    $.post(url, 
+           { tech_id: $(this).attr('data-id'), participation: $(this).val() }, 
+           (xhr) ->
+             res = $.parseJSON(xhr)
+             showFlash(res['flash']['notice'], 'success')
+             reloadTechniciansTableTemplate()
+     )
+  )
+
+
+$('.tech_hours_template')
+  .live('change', () ->
+    laboratory_service = $('#laboratory_service_id').val()
+    url = '/laboratory_services/' + laboratory_service + '/update_hours'
+    $.post(url, 
+           { tech_id: $(this).attr('data-id'), hours: $(this).val() }, 
+           (xhr) ->
+             res = $.parseJSON(xhr)
+             showFlash(res['flash']['notice'], 'success')
+             reloadTechniciansTableTemplate()
+     )
+  )
+
+#
+# Equipment template
+#
+$('#add-equipment-template')
+  .live('click', () ->
+    laboratory_service = $('#laboratory_service_id').val()
+    url = '/laboratory_services/' + laboratory_service + '/new_equipment'
+    $.post(url, 
+           { eq_id: $('#new_eq_id').val(), hours: $('#new_eq_hours').val() }, 
+           (xhr) ->
+             res = $.parseJSON(xhr)
+             showFlash(res['flash']['notice'], 'success')
+             reloadEquipmentTableTemplate()
+     )
+   )
+
+reloadEquipmentTableTemplate = () ->
+  laboratory_service = $('#laboratory_service_id').val()
+  url = '/laboratory_services/' + laboratory_service + '/equipment_table'
+  $.get(url, {}, (html) ->
+    $('#equipment-template').empty().html(html)
+    updateGrandTotalTemplate(laboratory_service)
+  )
+
+
+$('#equipment-template .close')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $(".equipment-row").removeClass('error')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    res = $.parseJSON(xhr.responseText)
+    eq_id = res['id']
+    showFlash(res['flash']['notice'], 'alert-success')
+    $("#equipment#{eq_id}").remove()
+    reloadEquipmentTableTemplate()
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['error'], 'alert-error')
+  )
+
+
+$('.eq_hours_template')
+  .live('change', () ->
+    laboratory_service = $('#laboratory_service_id').val()
+    url = '/laboratory_services/' + laboratory_service + '/update_eq_hours'
+    $.post(url, 
+          { eq_id: $(this).attr('data-id'), hours: $(this).val() }, 
+          (xhr) ->
+            res = $.parseJSON(xhr)
+            showFlash(res['flash']['notice'], 'success')
+            reloadEquipmentTableTemplate()
+    )
+  )
+
+#
+# Materials Template
+#
+$('#add-material-template')
+  .live('click', () ->
+    laboratory_service = $('#laboratory_service_id').val()
+    url = '/laboratory_services/' + laboratory_service + '/new_material'
+    $.post(url, 
+           { mat_id: $('#new_mat_id').val(), quantity: $('#new_mat_qty').val() }, 
+           (xhr) ->
+             res = $.parseJSON(xhr)
+             showFlash(res['flash']['notice'], 'success')
+             reloadMaterialTableTemplate()
+     )
+   )
+
+reloadMaterialTableTemplate = () ->
+  laboratory_service = $('#laboratory_service_id').val()
+  url = '/laboratory_services/' + laboratory_service + '/materials_table'
+  $.get(url, {}, (html) ->
+    $('#materials-template').empty().html(html)
+    updateGrandTotalTemplate(laboratory_service)
+  )
+
+
+$('#materials-template .close')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $(".material-row").removeClass('error')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    res = $.parseJSON(xhr.responseText)
+    mat_id = res['id']
+    showFlash(res['flash']['notice'], 'alert-success')
+    $("#material#{mat_id}").remove()
+    reloadMaterialTableTemplate()
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['error'], 'alert-error')
+  )
+
+
+$('.mat_qty_template')
+  .live('change', () ->
+    laboratory_service = $('#laboratory_service_id').val()
+    url = '/laboratory_services/' + laboratory_service + '/update_mat_qty'
+    $.post(url, 
+          { mat_id: $(this).attr('data-id'), quantity: $(this).val() }, 
+          (xhr) ->
+            res = $.parseJSON(xhr)
+            showFlash(res['flash']['notice'], 'success')
+            reloadMaterialTableTemplate()
+    )
+  )
+
+#
+# Others template
+#
+$('#add-other-template')
+  .live('click', () ->
+    laboratory_service = $('#laboratory_service_id').val()
+    url = '/laboratory_services/' + laboratory_service + '/new_other'
+    $.post(url, 
+           { other_type_id: $('#new_other_type').val(), concept: $('#new_other_concept').val(), price: $('#new_other_price').val() }, 
+           (xhr) ->
+             res = $.parseJSON(xhr)
+             showFlash(res['flash']['notice'], 'success')
+             reloadOthersTableTemplate()
+     )
+   )
+
+reloadOthersTableTemplate = () ->
+  laboratory_service = $('#laboratory_service_id').val()
+  url = '/laboratory_services/' + laboratory_service + '/others_table'
+  $.get(url, {}, (html) ->
+    $('#others-template').empty().html(html)
+    updateGrandTotalTemplate(laboratory_service)
+  )
+
+
+$('#others-template .close')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $(".other-row").removeClass('error')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    res = $.parseJSON(xhr.responseText)
+    other_id = res['id']
+    showFlash(res['flash']['notice'], 'alert-success')
+    $("#others#{other_id}").remove()
+    reloadOthersTableTemplate()
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['error'], 'alert-error')
+  )
+
+
+$('.other_price_template')
+  .live('change', () ->
+    laboratory_service = $('#laboratory_service_id').val()
+    url = '/laboratory_services/' + laboratory_service + '/update_other_price'
+    $.post(url, 
+          { other_id: $(this).attr('data-id'), price: $(this).val() }, 
+          (xhr) ->
+            res = $.parseJSON(xhr)
+            showFlash(res['flash']['notice'], 'success')
+            reloadOthersTableTemplate()
+    )
+  )
+
+
+
+
+
+
+
+
 #-------
 # COSTS
 #-------
+
+updateGrandTotal = () ->
+  url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/grand_total'
+  $.get(url, {}, (html) ->
+    $('#grand_total').empty().html(html)
+  )
 
 #
 # Technicians
@@ -757,6 +1021,7 @@ reloadTechniciansTable = () ->
   url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/technicians_table'
   $.get(url, {}, (html) ->
     $('#technicians').empty().html(html)
+    updateGrandTotal()
   )
 
 
@@ -917,7 +1182,7 @@ $('#add-other')
   .live('click', () ->
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/new_other'
     $.post(url, 
-           { other_type_id: $('#new_other_type').val(), concept: $('#new_other_concept').val(), price: $('#new_other_type').val() }, 
+           { other_type_id: $('#new_other_type').val(), concept: $('#new_other_concept').val(), price: $('#new_other_price').val() }, 
            (xhr) ->
              res = $.parseJSON(xhr)
              showFlash(res['flash']['notice'], 'success')

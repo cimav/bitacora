@@ -79,7 +79,11 @@
         %td
           .align-right= number_to_currency(tech_total)
       - if editable
-        - members = LaboratoryMember.where("laboratory_id = #{@requested_service.laboratory_service.laboratory_id} AND user_id NOT IN (#{(techs.join(','))})")
+        - if (techs.count > 0)
+          - not_in =  "AND user_id NOT IN (#{(techs.join(','))})"
+        - else
+          - not_in = ""
+        - members = LaboratoryMember.where("laboratory_id = #{@requested_service.laboratory_service.laboratory_id} #{not_in}")
         - u_options = ''
         - members.each do |m|
           - u_options += "<option value=\"#{m.user_id}\">#{m.user.full_name}</option>"

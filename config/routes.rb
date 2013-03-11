@@ -20,6 +20,8 @@ Bitacora::Application.routes.draw do
         get 'start_dialog'
         get 'finish_dialog'
         get 'cancel_dialog'
+
+        get 'grand_total'
         
         post 'new_technician'
         post 'update_participation'
@@ -54,6 +56,26 @@ Bitacora::Application.routes.draw do
   resources :laboratory_services do
     member do
       get 'edit'
+      get 'edit_cost'
+
+      get 'grand_total'
+
+      post 'new_technician'
+      post 'update_participation'
+      post 'update_hours'
+      get 'technicians_table'
+
+      post 'new_equipment'
+      post 'update_eq_hours'
+      get 'equipment_table'
+
+      post 'new_material'
+      post 'update_mat_qty'
+      get 'materials_table'
+        
+      post 'new_other'
+      post 'update_other_price'
+      get 'others_table'
     end
   end
   resources :laboratory_members do

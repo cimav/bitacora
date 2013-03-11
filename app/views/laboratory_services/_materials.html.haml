@@ -1,0 +1,56 @@
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th{:colspan => 4, :class => "th-header"}= "Materiales"
+    - if @requested_service.requested_service_materials.count > 0
+      %tr
+        %th= "Nombre"
+        %th= "Cantidad"
+        %th= "Precio Unitario"
+        %th= "Subtotal"
+  %tbody
+    - mat_total = 0
+    - mats = []
+    - if @requested_service.requested_service_materials.count == 0
+      %tr.empty-cost
+        %td{:colspan => 4}= "Sin materiales"
+        
+
+    - @requested_service.requested_service_materials.each do |mat|
+      - mat_cost = mat.quantity * mat.unit_price
+      - mat_total = mat_total + mat_cost  
+      - mats << mat.material_id
+      %tr.material-row{'data-id' => mat.id, :id => "material_row_#{mat.id}"}
+        %td
+          = mat.material.name
+          = "(#{mat.material.unit.short_name})"
+          - if !mat.details.blank?
+            .mat-details= mat.details
+          = link_to '×', {:controller => 'requested_services', :action => 'delete_mat', :mat_id => mat.id}, :method => :post, :remote => true, :class => 'close', :'data-type' => 'html', 'data-id' => mat.id
+        %td
+          = text_field_tag "quantity_#{mat.id}", mat.quantity, {:class => "mat_qty_template", "data-id" => mat.id}
+        %td
+          .align-right= number_to_currency(mat.unit_price)
+        %td
+          .align-right= number_to_currency(mat_cost)
+    - if @requested_service.requested_service_materials.count > 0
+      %tr.total-row
+        %td{:colspan => 3}
+          .align-right= "Subtotal Materiales"
+        %td
+          .align-right= number_to_currency(mat_total)
+    - if mats.count > 0
+      - materials = Material.where("id NOT IN (#{(mats.join(','))})").order('name')
+    - else 
+      - materials = Material.order('name')
+    - u_options = ''
+    - materials.each do |m|
+      - u_options += "<option value=\"#{m.id}\">#{m.name} (#{m.unit.short_name})</option>"
+    - if u_options != ''
+      %tr.add-row
+        %td
+          = select_tag :new_mat_id, u_options.html_safe, {:style => "width: 100%;"}
+        %td
+          = text_field_tag 'new_mat_qty'
+        %td{:colspan => 2}
+          %button.btn.btn-mini.btn-info#add-material-template= "Agregar material"

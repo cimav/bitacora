@@ -1,0 +1,16 @@
+= hidden_field_tag 'laboratory_service_id', @laboratory_service.id
+
+#technicians-template
+  = render :partial => 'technicians', :locals => {:requested_service => @requested_service }
+
+#equipment-template
+  = render :partial => 'equipment', :locals => {:requested_service => @requested_service }
+
+#materials-template
+  = render :partial => 'materials', :locals => {:requested_service => @requested_service }
+
+#others-template
+  = render :partial => 'others', :locals => {:requested_service => @requested_service }
+
+#grand_total
+  = "Total: #{number_to_currency(@grand_total)}"

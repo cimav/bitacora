@@ -195,6 +195,39 @@
 
 
 #admin-service-details, 
+#admin-service-tabs,
+#admin-service-costs,
 #admin-member-details {
   margin-left: $side-panel-width + 40;
+}
+
+
+#technicians-template table,
+#equipment-template table,
+#materials-template table,
+#others-template table {
+  width: 98%;
+  input, select {
+    width: 95%;
+  }
+}
+
+.empty-cost {
+  td {
+    background-color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 20px 0;
+    text-align: center;
+    color: $grey;
+  }
+}
+
+#admin-service-costs {
+  overflow: auto;
+  position: absolute;
+  top: 130px;
+  left: 10px;
+  bottom: 20px;
+  right: 20px;
 }

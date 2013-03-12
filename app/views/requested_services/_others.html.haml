@@ -42,7 +42,7 @@
             - if editable
               = text_field_tag "price_#{other.id}", other.price, {:class => "other_price", "data-id" => other.id}
             - else
-              .align-right= number_to_currency(other.quantity) 
+              .align-right= number_to_currency(other.price) 
       - if @requested_service.requested_service_others.count > 0
         %tr.total-row
           %td{:colspan => 3}

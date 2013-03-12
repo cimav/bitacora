@@ -2,7 +2,7 @@
 - im_lab_admin = lab_access.to_i == LaboratoryMember::ACCESS_ADMIN
 - im_service_tech = @requested_service.user_id == current_user.id
 - im_requestor = @requested_service.sample.service_request.user_id == current_user.id
-- show_table = false
+- show_table = true
 - editable = false
 - if @requested_service.status.to_i == RequestedService::CANCELED || @requested_service.status.to_i == RequestedService::FINISHED
   - editable = false
@@ -18,15 +18,18 @@
     %thead
       %tr
         %th{:colspan => 4, :class => "th-header"}= "Equipos"
-      %tr
-        %th= "Nombre"
-        %th= "Horas"
-        %th= "Costo x Hora"
-        %th= "Subtotal"
+      - if @requested_service.requested_service_equipments.count > 0
+        %tr
+          %th= "Nombre"
+          %th= "Horas"
+          %th= "Costo x Hora"
+          %th= "Subtotal"
     %tbody
       - eq_total = 0
       - eqs = []
-
+      - if @requested_service.requested_service_equipments.count == 0
+        %tr.empty-cost
+          %td{:colspan => 4}= "Sin equipos"
       - @requested_service.requested_service_equipments.each do |eq|
         - eq_cost = eq.hours * eq.hourly_rate
         - eq_total = eq_total + eq_cost  
@@ -52,11 +55,12 @@
             .align-right= number_to_currency(eq.hourly_rate)
           %td
             .align-right= number_to_currency(eq_cost)
-      %tr.total-row
-        %td{:colspan => 3}
-          .align-right= "Subtotal Equipo"
-        %td
-          .align-right= number_to_currency(eq_total)
+      - if @requested_service.requested_service_equipments.count > 0
+        %tr.total-row
+          %td{:colspan => 3}
+            .align-right= "Subtotal Equipo"
+          %td
+            .align-right= number_to_currency(eq_total)
       - if editable
         - if eqs.count > 0
           - with_eq = " AND id NOT IN (#{(eqs.join(','))})"

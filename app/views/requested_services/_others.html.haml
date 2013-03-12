@@ -17,13 +17,17 @@
     %thead
       %tr
         %th{:colspan => 4, :class => "th-header"}= "Otros conceptos"
-      %tr
-        %th= "Tipo"
-        %th= "Concepto"
-        %th{:colspan => 2}= "Precio"
+      - if @requested_service.requested_service_others.count > 0
+        %tr
+          %th= "Tipo"
+          %th= "Concepto"
+          %th{:colspan => 2}= "Precio"
     %tbody
       - other_total = 0
 
+      - if @requested_service.requested_service_others.count == 0
+        %tr.empty-cost
+          %td{:colspan => 4}= "Sin otros conceptos"
       - @requested_service.requested_service_others.each do |other|
         - other_total = other_total + other.price
         %tr.other-row{'data-id' => other.id, :id => "other_row_#{other.id}"}
@@ -39,11 +43,12 @@
               = text_field_tag "price_#{other.id}", other.price, {:class => "other_price", "data-id" => other.id}
             - else
               .align-right= number_to_currency(other.quantity) 
-      %tr.total-row
-        %td{:colspan => 3}
-          .align-right= "Subtotal otros conceptos"
-        %td
-          .align-right= number_to_currency(other_total)
+      - if @requested_service.requested_service_others.count > 0
+        %tr.total-row
+          %td{:colspan => 3}
+            .align-right= "Subtotal otros conceptos"
+          %td
+            .align-right= number_to_currency(other_total)
       - if editable
         - u_options = ''
         - OtherType.order('name').each do |o|

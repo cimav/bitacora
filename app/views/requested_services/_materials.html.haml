@@ -18,15 +18,19 @@
     %thead
       %tr
         %th{:colspan => 4, :class => "th-header"}= "Materiales"
-      %tr
-        %th= "Nombre"
-        %th= "Cantidad"
-        %th= "Precio Unitario"
-        %th= "Subtotal"
+      - if @requested_service.requested_service_materials.count > 0
+        %tr
+          %th= "Nombre"
+          %th= "Cantidad"
+          %th= "Precio Unitario"
+          %th= "Subtotal"
     %tbody
       - mat_total = 0
       - mats = []
 
+      - if @requested_service.requested_service_materials.count == 0
+        %tr.empty-cost
+          %td{:colspan => 4}= "Sin materiales"
       - @requested_service.requested_service_materials.each do |mat|
         - mat_cost = mat.quantity * mat.unit_price
         - mat_total = mat_total + mat_cost  
@@ -47,11 +51,12 @@
             .align-right= number_to_currency(mat.unit_price)
           %td
             .align-right= number_to_currency(mat_cost)
-      %tr.total-row
-        %td{:colspan => 3}
-          .align-right= "Subtotal Materiales"
-        %td
-          .align-right= number_to_currency(mat_total)
+      - if @requested_service.requested_service_materials.count > 0
+        %tr.total-row
+          %td{:colspan => 3}
+            .align-right= "Subtotal Materiales"
+          %td
+            .align-right= number_to_currency(mat_total)
       - if editable
         - if mats.count > 0
           - materials = Material.where("id NOT IN (#{(mats.join(','))})").order('name')

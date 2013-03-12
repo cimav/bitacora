@@ -20,17 +20,20 @@
     %thead
       %tr
         %th{:colspan => 5, :class => "th-header"}= "Personal Involucrado"
-      %tr
-        %th= "Nombre"
-        %th= "Participación"
-        %th= "Horas"
-        %th= "Costo x Hora"
-        %th= "Subtotal"
+      - if @requested_service.requested_service_technicians.count > 0
+        %tr
+          %th= "Nombre"
+          %th= "Participación"
+          %th= "Horas"
+          %th= "Costo x Hora"
+          %th= "Subtotal"
     %tbody
       - tech_total = 0
       - part_total = 0
       - techs = []
-
+      - if @requested_service.requested_service_technicians.count == 0
+        %tr.empty-cost
+          %td{:colspan => 5}= "Sin personal"
       - @requested_service.requested_service_technicians.each do |tech|
         - tech_cost = tech.hours * tech.hourly_wage
         - tech_total = tech_total + tech_cost  
@@ -69,15 +72,16 @@
             .align-right= number_to_currency(tech.hourly_wage)
           %td
             .align-right= number_to_currency(tech_cost)
-      - if part_total != 100
-        %tr.error
-          %td{:colspan => 5}
-            = "La suma de las participaciones no es 100%."
-      %tr.total-row
-        %td{:colspan => 4}
-          .align-right= "Subtotal Personal Involucrado"
-        %td
-          .align-right= number_to_currency(tech_total)
+      - if @requested_service.requested_service_technicians.count > 0
+        - if part_total != 100
+          %tr.error
+            %td{:colspan => 5}
+              = "La suma de las participaciones no es 100%."
+        %tr.total-row
+          %td{:colspan => 4}
+            .align-right= "Subtotal Personal Involucrado"
+          %td
+            .align-right= number_to_currency(tech_total)
       - if editable
         - if (techs.count > 0)
           - not_in =  "AND user_id NOT IN (#{(techs.join(','))})"

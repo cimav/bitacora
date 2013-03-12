@@ -53,9 +53,12 @@ class RequestedService < ActiveRecord::Base
   end
 
   def set_costs
-    
-    # Technicians
     template_service = RequestedService.where("(laboratory_service_id = :id AND sample_id = 0)", {:id => self.laboratory_service_id}).first
+    if template_service.blank?
+      return false
+    end
+
+    # Technicians
     template_service.requested_service_technicians.each do |tech|
       new_tech = self.requested_service_technicians.new
       new_tech.user_id = tech.user_id

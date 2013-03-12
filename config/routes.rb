@@ -88,12 +88,18 @@ Bitacora::Application.routes.draw do
     member do
       get 'live_search'
       get 'admin'
+      
       get 'admin_services'
       get 'admin_lab_services_live_search'
       get 'new_service'
+
       get 'admin_members'
       get 'admin_lab_members_live_search'
       get 'new_member'
+
+      get 'admin_equipment'
+      get 'admin_lab_equipment_live_search'
+      get 'new_equipment'
     end
   end
 

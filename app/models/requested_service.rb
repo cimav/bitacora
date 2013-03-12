@@ -13,6 +13,7 @@ class RequestedService < ActiveRecord::Base
   has_many :requested_service_others
 
   after_create :set_consecutive
+  after_create :set_costs
 
   CANCELED     = -1
   INITIAL      = 1
@@ -49,6 +50,54 @@ class RequestedService < ActiveRecord::Base
     self.consecutive = con
     self.number = "#{self.sample.number}-#{consecutive}"
     self.save(:validate => false)
+  end
+
+  def set_costs
+    
+    # Technicians
+    template_service = RequestedService.where("(laboratory_service_id = :id AND sample_id = 0)", {:id => self.laboratory_service_id}).first
+    template_service.requested_service_technicians.each do |tech|
+      new_tech = self.requested_service_technicians.new
+      new_tech.user_id = tech.user_id
+      user_tech = User.find(tech.user_id)
+      new_tech.hours = tech.hours
+      new_tech.hourly_wage = user_tech.hourly_wage
+      new_tech.details = tech.details
+      new_tech.participation = tech.participation
+      new_tech.save
+    end
+
+    # Equipment
+    template_service.requested_service_equipments.each do |eq|
+      new_eq = self.requested_service_equipments.new
+      new_eq.equipment_id = eq.equipment_id
+      the_eq = Equipment.find(eq.equipment_id)
+      new_eq.hours = eq.hours
+      new_eq.hourly_rate = the_eq.hourly_rate
+      new_eq.details = eq.details
+      new_eq.save
+    end
+    
+    # Material
+    template_service.requested_service_materials.each do |mat|
+      new_mat = self.requested_service_materials.new
+      new_mat.material_id = mat.material_id
+      the_mat = Material.find(mat.material_id)
+      new_mat.quantity = mat.quantity
+      new_mat.unit_price = the_mat.unit_price
+      new_mat.details = mat.details
+      new_mat.save
+    end
+    
+    # Other
+    template_service.requested_service_others.each do |other|
+      new_other = self.requested_service_others.new
+      new_other.concept = other.concept
+      new_other.price = other.price
+      new_other.details = other.details
+      new_other.other_type_id = other.other_type_id
+      new_other.save
+    end
   end
 
   def icon_class

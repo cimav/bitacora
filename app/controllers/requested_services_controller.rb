@@ -148,16 +148,6 @@ class RequestedServicesController < ApplicationController
         msg = "El análisis #{@requested_service.number} ha iniciado" if @requested_service.status.to_i == RequestedService::IN_PROGRESS
         msg = "El análisis #{@requested_service.number} ha finalizado" if @requested_service.status.to_i == RequestedService::FINISHED
         msg = "El análisis #{@requested_service.number} ha sido cancelado" if @requested_service.status.to_i == RequestedService::CANCELED
-       
-        if @requested_service.status.to_i == RequestedService::ASSIGNED
-          tech = @requested_service.requested_service_technicians.new
-          user = User.find(@requested_service.user_id)
-          tech.user_id = user.id
-          tech.hours = 1
-          tech.participation = 100
-          tech.hourly_wage = user.hourly_wage
-          tech.save
-        end
 
         @requested_service.activity_log.create(user_id: current_user.id,
                                                service_request_id: @requested_service.sample.service_request_id,

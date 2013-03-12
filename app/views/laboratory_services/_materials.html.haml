@@ -17,7 +17,7 @@
         
 
     - @requested_service.requested_service_materials.each do |mat|
-      - mat_cost = mat.quantity * mat.unit_price
+      - mat_cost = mat.quantity * mat.material.unit_price
       - mat_total = mat_total + mat_cost  
       - mats << mat.material_id
       %tr.material-row{'data-id' => mat.id, :id => "material_row_#{mat.id}"}
@@ -30,7 +30,7 @@
         %td
           = text_field_tag "quantity_#{mat.id}", mat.quantity, {:class => "mat_qty_template", "data-id" => mat.id}
         %td
-          .align-right= number_to_currency(mat.unit_price)
+          .align-right= number_to_currency(mat.material.unit_price)
         %td
           .align-right= number_to_currency(mat_cost)
     - if @requested_service.requested_service_materials.count > 0

@@ -17,7 +17,7 @@
       %tr.empty-cost
         %td{:colspan => 5}= "Sin personal"
     - @requested_service.requested_service_technicians.each do |tech|
-      - tech_cost = tech.hours * tech.hourly_wage
+      - tech_cost = tech.hours * tech.user.hourly_wage
       - tech_total = tech_total + tech_cost  
       - part_total = part_total + tech.participation
       - techs << tech.user_id
@@ -44,7 +44,7 @@
               - u_options += "<option value=\"#{i}\">#{i} horas</option>"
           = select_tag "tech_hours_#{tech.id}", u_options.html_safe, {:style => "width: 100%;", "data-id" => tech.id, :class => "tech_hours_template"}
         %td
-          .align-right= number_to_currency(tech.hourly_wage)
+          .align-right= number_to_currency(tech.user.hourly_wage)
         %td
           .align-right= number_to_currency(tech_cost)
     - if @requested_service.requested_service_technicians.count > 0

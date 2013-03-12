@@ -1087,6 +1087,7 @@ reloadEquipmentTable = () ->
   url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/equipment_table'
   $.get(url, {}, (html) ->
     $('#equipment').empty().html(html)
+    updateGrandTotal()
   )
 
 
@@ -1141,6 +1142,7 @@ reloadMaterialTable = () ->
   url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/materials_table'
   $.get(url, {}, (html) ->
     $('#materials').empty().html(html)
+    updateGrandTotal()
   )
 
 
@@ -1194,6 +1196,7 @@ reloadOthersTable = () ->
   url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/others_table'
   $.get(url, {}, (html) ->
     $('#others').empty().html(html)
+    updateGrandTotal()
   )
 
 

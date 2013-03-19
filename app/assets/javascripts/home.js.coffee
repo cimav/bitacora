@@ -1326,6 +1326,94 @@ $('#new-laboratory-member-form')
     showFormErrors(xhr, status, error)
   )
 
+#--------------------
+# LAB ADMIN EQUIPMENT 
+#--------------------
+$('.admin-equipment')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    lab_id = $(this).attr('data-laboratory-id')
+    url = '/laboratory/' + lab_id + '/admin_equipment'
+    setHash('#!' + url, false)
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $('#laboratory-workarea').empty().html(data)
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    alert('Error')
+  )
+
+$('#admin-lab-equipment-search-box')
+  .live('keyup', () ->
+    adminLabEquipmentLiveSearch()
+  )
+
+
+@adminLabEquipmentLiveSearch = adminLabEquipmentLiveSearch = () ->
+  $("#admin-lab-equipment-search-box").addClass("loading")
+  form = $("#admin-lab-equipment-live-search")
+  lab_id = form.attr('data-laboratory-id')
+  url = "/laboratory/#{lab_id}/admin_lab_equipment_live_search"
+  formData = form.serialize()
+  $.get(url, formData, (html) ->
+    $("#admin-lab-equipment-search-box").removeClass("loading")
+    $("#admin-lab-equipment-list").empty().html(html)
+    $("#admin-lab-equipment-list .admin-lab-equipment-item:first").click()
+  )
+
+$('.admin-lab-equipment-item')
+  .live('click', () ->
+    $('.admin-lab-equipment-item').removeClass('selected')
+    $(this).addClass('selected')
+    url = '/equipment/' + $(this).attr('data-equipment-id') + '/edit'
+    $.get(url, {}, (html) ->
+      $('#admin-equipment-details').html(html)
+    )
+  )
+
+$('#edit-equipment-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+$('#add-new-equipment-button')
+  .live('click', () ->
+    url = '/laboratory/' + $(this).attr('data-laboratory-id') + '/new_equipment'
+    $.get(url, {}, (html) ->
+      $('#admin-equipment-details').empty().html(html)
+    )
+  )
+
+$('#new-laboratory-equipment-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    $('#admin-lab-equipment-search-box').val(res['name'])
+    adminLabEquipmentLiveSearch()
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
 #------------------
 # CUSTOMER SERVICE
 #------------------

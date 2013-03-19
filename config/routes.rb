@@ -114,6 +114,12 @@ Bitacora::Application.routes.draw do
     end
   end
 
+  resources :equipment do
+    member do
+      get 'edit'
+    end
+  end
+
   match '/clients/typeahead' => 'clients#typeahead'
   match '/clients/info' => 'clients#info'
   match '/clients/new_dialog' => 'clients#new_dialog'

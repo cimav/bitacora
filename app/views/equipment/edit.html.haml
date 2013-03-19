@@ -1,0 +1,12 @@
+= form_for @equipment, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-equipment-form'} do |f|
+  .field#field_equipment_name
+    = f.label :name, 'Nombre:'
+    = f.text_field :name, :placeholder => 'Nombre del equipo'
+  .field#field_equipment_description
+    = f.label :description, 'Descripción:'
+    = f.text_area :description
+  .field#field_equipment_hourly_cost
+    = f.label :hourly_rate, 'Costo por hora:'
+    %strong= number_to_currency(@equipment.hourly_rate)
+  .submit-button
+    = f.submit "Actualizar equipo", {:class => "btn btn-primary"}

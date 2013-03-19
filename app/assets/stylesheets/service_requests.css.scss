@@ -315,7 +315,8 @@
 }
 
 #services-panel,
-#members-panel {
+#members-panel,
+#equipment-panel {
   width: $lab-services-list-width;
   border-right: 1px solid $line-color;
   background: $bg-color;
@@ -323,6 +324,7 @@
   top: 30px;
   bottom: 16px;
   #members-search-panel,
+  #equipment-search-panel
   #services-search-panel {
     padding-top: 10px;
     margin-bottom: 10px;
@@ -330,6 +332,14 @@
       width: $lab-services-list-width - 10;
       margin: 2px 5px;
     }
+    input {
+      margin: 2px 5px;
+      width: $lab-services-list-width - 20;
+    }
+  }
+  #equipment-search-panel {
+    padding-top: 10px;
+    margin-bottom: 10px;
     input {
       margin: 2px 5px;
       width: $lab-services-list-width - 20;
@@ -363,6 +373,31 @@
         background-color: $bg-selected;
         color: $selected-color;
         .lab-service-laboratory {
+          color: #a3cbfd;
+        }
+      }
+    }
+  }
+  #admin-lab-equipment-list {
+    top: 70px !important;
+    border-top: 1px solid $line-color;
+    overflow: auto;
+    position: absolute;
+    bottom: 0px;
+    background: $white;
+    .admin-lab-equipment-item {
+      cursor: pointer;
+      padding: 5px;
+      height: 64px;
+      overflow: hidden;
+      border-bottom: 1px solid $line-color;
+      .equipment-name {
+        font-weight: bold;
+      }
+      &.selected {
+        background-color: $bg-selected;
+        color: $selected-color;
+        .equipment-name {
           color: #a3cbfd;
         }
       }

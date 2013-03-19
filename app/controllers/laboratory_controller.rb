@@ -51,6 +51,11 @@ class LaboratoryController < ApplicationController
     render :layout => false
   end
 
+  def admin_equipment
+    @laboratory = Laboratory.find(params[:id])
+    render :layout => false
+  end
+
   def new
     @laboratory_service = LaboratoryService.new
     render :layout => false
@@ -136,6 +141,24 @@ class LaboratoryController < ApplicationController
   def new_member
     @laboratory = Laboratory.find(params[:id])
     @laboratory_member = @laboratory.laboratory_members.new
+    render :layout => false
+  end
+
+  def admin_lab_equipment_live_search
+    @laboratory = Laboratory.find(params[:id])
+
+    @laboratory_equipment = @laboratory.equipment
+
+    if !params[:q].blank?
+      @laboratory_equipment = @laboratory_equipment.where("(name LIKE :q OR description LIKE :q)", {:q => "%#{params[:q]}%"})
+    end
+
+    render :layout => false
+  end
+
+  def new_equipment
+    @laboratory = Laboratory.find(params[:id])
+    @laboratory_equipment = @laboratory.equipment.new
     render :layout => false
   end
 

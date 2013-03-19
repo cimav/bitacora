@@ -1,0 +1,15 @@
+#admin-area 
+  = render :partial => 'tabs', :locals => {:laboratory => @laboratory, :option_selected => 'equipment'}
+  #equipment-panel
+    #equipment-search-panel
+      = form_tag laboratory_services_path, :id => 'admin-lab-equipment-live-search', :method => 'get', :remote => true, 'data-laboratory-id' => @laboratory.id do
+        = text_field_tag :q, nil, :id => 'admin-lab-equipment-search-box', :placeholder => 'Busqueda'
+    #admin-lab-equipment-list
+    #admin-lab-equipment-buttons
+      = button_tag "Agregar nuevo equipo", {:class => 'btn btn-info', :id => 'add-new-equipment-button', 'data-laboratory-id' => @laboratory.id}
+
+  #admin-equipment-details
+:javascript 
+  $(function() {
+    adminLabEquipmentLiveSearch()
+  })

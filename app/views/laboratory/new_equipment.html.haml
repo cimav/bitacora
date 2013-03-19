@@ -1,0 +1,11 @@
+= form_for @laboratory_equipment, :remote => true, :html => {:'data-type' => 'html', :id => 'new-laboratory-equipment-form'} do |f|
+  %h3= "Nuevo Equipo de Laboratorio"
+  = f.hidden_field :laboratory_id, {:value => @laboratory.id}
+  .field#field_laboratory_equipment_name
+    = f.label :name, 'Nombre:'
+    = f.text_field :name, :placeholder => 'Nombre del equipo'
+  .field#field_laboratory_equipment_description
+    = f.label :description, 'Descripción:'
+    = f.text_area :description
+  .submit-button
+    = f.submit "Agregar equipo", {:class => "btn btn-primary"}

@@ -133,6 +133,7 @@
   }
 
   #services-panel,
+  #equipment-panel,
   #members-panel {
     top: 72px !important;
     border: 1px solid $line-color;
@@ -178,12 +179,20 @@
       }
     }
 
+    #admin-lab-equipment-list {
+      top: 70px !important;
+      bottom: 45px !important;
+      width: $side-panel-width;
+      border: 1px solid $line-color;
+    }
+
     #admin-lab-services-buttons,
-    #admin-lab-members-buttons {
+    #admin-lab-members-buttons,
+    #admin-lab-equipment-buttons {
       width: $side-panel-width;
       position: absolute;
       text-align: center;
-      bottom: 0px;
+      bottom: 3px;
       height: 35px;
       button {
         width: $side-panel-width - 10;
@@ -197,6 +206,7 @@
 #admin-service-details, 
 #admin-service-tabs,
 #admin-service-costs,
+#admin-equipment-details,
 #admin-member-details {
   margin-left: $side-panel-width + 40;
 }

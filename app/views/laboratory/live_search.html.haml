@@ -1,5 +1,6 @@
 - current_user = ''
 - @requested_services.each do |rs|
+  - next if !rs.sample.service_request
   - next if rs.sample.service_request.status == ServiceRequest::DELETED
   - if current_user != rs.sample.service_request.user.full_name
     - current_user = rs.sample.service_request.user.full_name

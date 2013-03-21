@@ -117,6 +117,9 @@ Bitacora::Application.routes.draw do
   match '/equipment/live_search' => 'equipment#live_search'
   resources :equipment
 
+  match '/materials/live_search' => 'materials#live_search'
+  resources :materials
+
   match '/clients/typeahead' => 'clients#typeahead'
   match '/clients/info' => 'clients#info'
   match '/clients/new_dialog' => 'clients#new_dialog'
@@ -131,6 +134,7 @@ Bitacora::Application.routes.draw do
   match '/admin/clients' => 'admin#clients'
   match '/admin/client_types' => 'admin#client_types'
   match '/admin/equipment' => 'admin#equipment'
+  match '/admin/materials' => 'admin#materials'
 
   match '/auth/:provider/callback' => 'sessions#create'
   match '/auth/failure' => 'sessions#failure'

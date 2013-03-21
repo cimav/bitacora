@@ -1514,6 +1514,64 @@ $('#new-equipment-form')
   )
 
 
+#
+# Materials
+#
+@MaterialsLiveSearch = MaterialsLiveSearch = () ->
+  form = $("#materials-live-search")
+  url = "/materials/live_search"
+  formData = form.serialize()
+  $.get(url, formData, (html) ->
+    $("#materials-list").empty().html(html)
+    $("#materials-list .materials-item:first").click()
+  )
+
+$(document).on("change", '#search_laboratory_id', () ->
+  MaterialsLiveSearch()
+)
+
+$('#materials-search-box')
+  .live('keyup', () ->
+    MaterialsLiveSearch()
+  )
+
+$(document).on("click", ".materials-item", () ->
+  id = $(this).attr('data-id')
+  url = '/materials/' + id + '/edit'
+  $(".materials-item").removeClass("active")
+  $(this).addClass('active')
+  $.get(url, {}, (html) ->
+    $('#materials-details').empty().html(html)
+  )
+)
+
+$(document).on("click", "#add-new-admin-materials-button", () ->
+  url = '/materials/new'
+  $.get(url, {}, (html) ->
+    $('#materials-details').empty().html(html)
+  )
+)
+
+$('#new-materials-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    $('#materials-search-box').val(res['name'])
+    MaterialsLiveSearch()
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+
+
 #-------
 # ERRORS
 #-------

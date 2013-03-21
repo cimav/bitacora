@@ -13,4 +13,9 @@ class AdminController < ApplicationController
   def equipment
   	render :layout => false
   end
+
+  def materials
+    render :layout => false
+  end
+
 end

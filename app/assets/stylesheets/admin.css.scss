@@ -4,7 +4,8 @@
 
 
 #clients-panel,
-#equipment-panel {
+#equipment-panel,
+#materials-panel {
   position: fixed;
   top: 96px;
   bottom: 0px;
@@ -23,7 +24,8 @@
   }
   
   #clients-buttons,
-  #equipment-buttons {
+  #equipment-buttons,
+  #materials-buttons {
       width: $side-panel-width;
       position: absolute;
       text-align: center;
@@ -37,7 +39,8 @@
 }
 
 #client-details,
-#equipment-details {
+#equipment-details,
+#materials-details {
   left: ($sample-list-width * 2) + 24;
   right: 0px;
   position: fixed;

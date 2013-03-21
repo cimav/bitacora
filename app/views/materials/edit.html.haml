@@ -1,0 +1,17 @@
+%h1= @material.name
+= form_for @material, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-material-form'} do |f|
+  .field#field_material_name
+    = f.label :name, 'Nombre:'
+    = f.text_field :name, {:class => 'input-xxlarge', :placeholder => 'Nombre del equipo'}
+  .field#field_material_description
+    = f.label :description, 'Descripción:'
+    = f.text_area :description, {:class => 'input-xxlarge', :rows => 10}
+  .field#field_material_hourly_cost
+    = f.label :hourly_rate, 'Costo por hora:'
+    - if current_user.is_admin? 
+      = f.text_field :hourly_rate, {:class => 'input-large'}
+    - else  
+      %strong= number_to_currency(@material.hourly_rate)
+      
+  .submit-button
+    = f.submit "Actualizar equipo", {:class => "btn btn-primary"}

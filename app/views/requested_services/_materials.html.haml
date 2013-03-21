@@ -17,7 +17,7 @@
   %table.table.table-striped.table-bordered
     %thead
       %tr
-        %th{:colspan => 4, :class => "th-header"}= "Materiales"
+        %th{:colspan => 4, :class => "th-header"}= "Consumibles"
       - if @requested_service.requested_service_materials.count > 0
         %tr
           %th= "Nombre"
@@ -30,7 +30,7 @@
 
       - if @requested_service.requested_service_materials.count == 0
         %tr.empty-cost
-          %td{:colspan => 4}= "Sin materiales"
+          %td{:colspan => 4}= "Sin consumibles"
       - @requested_service.requested_service_materials.each do |mat|
         - mat_cost = mat.quantity * mat.unit_price
         - mat_total = mat_total + mat_cost  
@@ -72,4 +72,4 @@
           %td
             = text_field_tag 'new_mat_qty'
           %td{:colspan => 2}
-            %button.btn.btn-mini.btn-info#add-material= "Agregar material"
+            %button.btn.btn-mini.btn-info#add-material= "Agregar consumible"

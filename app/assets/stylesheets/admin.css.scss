@@ -1,0 +1,58 @@
+// Place all the styles related to the admin controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+#clients-panel,
+#equipment-panel {
+  position: fixed;
+  top: 96px;
+  bottom: 0px;
+  left: $side-panel-width + 2;
+  width: $side-panel-width;
+  border-right: 1px solid $line-color;
+  border-left: none;
+  li {
+    min-height: 48px;
+    padding: 10px 5px;
+    cursor: pointer;
+    border-bottom: 1px solid $line-color;
+    &.active {
+      background: $bg-selected !important;
+    }
+  }
+  
+  #clients-buttons,
+  #equipment-buttons {
+      width: $side-panel-width;
+      position: absolute;
+      text-align: center;
+      bottom: 0px;
+      height: 35px;
+      button {
+        margin-top: 3px;
+        width: $side-panel-width - 10;
+      }
+  }
+}
+
+#client-details,
+#equipment-details {
+  left: ($sample-list-width * 2) + 24;
+  right: 0px;
+  position: fixed;
+  top: 96px;
+  bottom: 0px;
+}
+
+#admin-panel {
+  background: #fff;
+  padding-top: 20px;
+  li {
+    cursor: pointer;
+  }
+}
+
+.equipment-item-laboratory {
+  font-size: 80%;
+}

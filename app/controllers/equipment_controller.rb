@@ -2,10 +2,28 @@ class EquipmentController < ApplicationController
   before_filter :auth_required
   respond_to :html, :json
 
+  def show
+    @equipment = Equipment.find(params[:id])
+    render :layout => false 
+  end
+
+  def live_search
+    @equipment = Equipment.where('status = :s', {:s => Equipment::ACTIVE}).order('name')
+    if !params[:search_laboratory_id].blank? && params[:search_laboratory_id] != '0'
+      @equipment = @equipment.where("laboratory_id = :c", {:c => params[:search_laboratory_id]}) 
+    end
+    if !params[:q].blank?
+      @equipment = @equipment.where("(name LIKE :q OR description LIKE :q)", {:q => "%#{params[:q]}%"})
+    end
+    render :layout => false
+  end
+
   def create
     @equipment = Equipment.new(params[:equipment])
     flash = {}
-    @equipment.hourly_rate = 0
+    
+    @equipment.hourly_rate = 0 if !params[:equipment][:hourly_rate].blank?
+
     if (@equipment.save)
       flash[:notice] = "Equipo de laboratorio agregado satisfactoriamente (#{@equipment.id})"
 
@@ -37,6 +55,11 @@ class EquipmentController < ApplicationController
         end
       end
     end
+  end
+
+  def new
+    @equipment = Equipment.new
+    render :layout => false
   end
 
   def edit

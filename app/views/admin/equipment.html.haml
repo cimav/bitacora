@@ -1,0 +1,19 @@
+#equipment-panel
+  #equipment-search-panel.search-box
+    = form_tag 'xxx', :id => 'equipment-live-search', :method => 'get', :remote => true do
+      - lab_options = "<option value=\"0\">Todos los laboratorios</option>"
+      - Laboratory.order('name').each do |lab|
+        - lab_options += "<option value=\"#{lab.id}\">#{lab.name}</option>"
+      = select_tag "search_laboratory_id", lab_options.html_safe
+      = text_field_tag :q, nil, :id => 'equipment-search-box', :placeholder => 'Busqueda'
+  #equipment-list.items-placeholder 
+  #equipment-buttons.bottom-box
+    = button_tag "Agregar nuevo equipo", {:class => 'btn btn-info', :id => 'add-new-admin-equipment-button'}
+    
+
+#equipment-details
+
+:javascript 
+  $(function() {
+    EquipmentLiveSearch()
+  })

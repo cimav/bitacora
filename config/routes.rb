@@ -114,11 +114,8 @@ Bitacora::Application.routes.draw do
     end
   end
 
-  resources :equipment do
-    member do
-      get 'edit'
-    end
-  end
+  match '/equipment/live_search' => 'equipment#live_search'
+  resources :equipment
 
   match '/clients/typeahead' => 'clients#typeahead'
   match '/clients/info' => 'clients#info'
@@ -130,9 +127,10 @@ Bitacora::Application.routes.draw do
   match '/client_contacts/new_dialog/:client_id' => 'client_contacts#new_dialog'
   resources :client_contacts
 
-  match '/customer_service' => 'customer_service#index'
-  match '/customer_service/clients' => 'customer_service#clients'
-  match '/customer_service/client_types' => 'customer_service#client_types'
+  match '/admin' => 'admin#index'
+  match '/admin/clients' => 'admin#clients'
+  match '/admin/client_types' => 'admin#client_types'
+  match '/admin/equipment' => 'admin#equipment'
 
   match '/auth/:provider/callback' => 'sessions#create'
   match '/auth/failure' => 'sessions#failure'

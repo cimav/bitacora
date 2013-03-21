@@ -316,7 +316,7 @@
 
 #services-panel,
 #members-panel,
-#equipment-panel {
+#lab-equipment-panel {
   width: $lab-services-list-width;
   border-right: 1px solid $line-color;
   background: $bg-color;
@@ -324,7 +324,7 @@
   top: 30px;
   bottom: 16px;
   #members-search-panel,
-  #equipment-search-panel
+  #lab-equipment-search-panel,
   #services-search-panel {
     padding-top: 10px;
     margin-bottom: 10px;
@@ -337,7 +337,7 @@
       width: $lab-services-list-width - 20;
     }
   }
-  #equipment-search-panel {
+  #lab-equipment-search-panel {
     padding-top: 10px;
     margin-bottom: 10px;
     input {

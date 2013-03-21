@@ -1415,17 +1415,20 @@ $('#new-laboratory-equipment-form')
   )
 
 #------------------
-# CUSTOMER SERVICE
+# ADMINISTRATION
 #------------------
-$(document).on("click", "#customer-service-nav li", () ->
+$(document).on("click", "#admin-nav li", () ->
   url = $(this).attr('data-link')
-  $("#customer-service-nav li").removeClass("active")
+  $("#admin-nav li").removeClass("active")
   $(this).addClass('active')
   $.get(url, {}, (html) ->
-    $('#customer-service-main-panel').empty().html(html)
+    $('#admin-main-panel').empty().html(html)
   )
 )
 
+#
+# Clients
+#
 @ClientsLiveSearch = ClientsLiveSearch = () ->
   form = $("#clients-live-search")
   url = "/clients/live_search"
@@ -1453,6 +1456,63 @@ $(document).on("click", ".client-item", () ->
     $('#client-details').empty().html(html)
   )
 )
+
+#
+# Equipment
+#
+@EquipmentLiveSearch = EquipmentLiveSearch = () ->
+  form = $("#equipment-live-search")
+  url = "/equipment/live_search"
+  formData = form.serialize()
+  $.get(url, formData, (html) ->
+    $("#equipment-list").empty().html(html)
+    $("#equipment-list .equipment-item:first").click()
+  )
+
+$(document).on("change", '#search_laboratory_id', () ->
+  EquipmentLiveSearch()
+)
+
+$('#equipment-search-box')
+  .live('keyup', () ->
+    EquipmentLiveSearch()
+  )
+
+$(document).on("click", ".equipment-item", () ->
+  id = $(this).attr('data-id')
+  url = '/equipment/' + id + '/edit'
+  $(".equipment-item").removeClass("active")
+  $(this).addClass('active')
+  $.get(url, {}, (html) ->
+    $('#equipment-details').empty().html(html)
+  )
+)
+
+$(document).on("click", "#add-new-admin-equipment-button", () ->
+  url = '/equipment/new'
+  $.get(url, {}, (html) ->
+    $('#equipment-details').empty().html(html)
+  )
+)
+
+$('#new-equipment-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    $('#equipment-search-box').val(res['name'])
+    EquipmentLiveSearch()
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
 
 #-------
 # ERRORS

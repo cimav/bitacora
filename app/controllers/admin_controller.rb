@@ -1,4 +1,7 @@
-class CustomerServiceController < ApplicationController
+class AdminController < ApplicationController
+  before_filter :auth_required
+  respond_to :html, :json
+  
   def index
   	render :layout => false
   end
@@ -7,8 +10,7 @@ class CustomerServiceController < ApplicationController
   	render :layout => false
   end
 
-  def rep_per_lab
+  def equipment
   	render :layout => false
   end
-  
 end

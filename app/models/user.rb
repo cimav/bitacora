@@ -40,4 +40,9 @@ class User < ActiveRecord::Base
     access.to_i == ACCESS_ADMIN || access.to_i == ACCESS_CUSTOMER_SERVICE
   end
 
+
+  def is_admin?
+    access.to_i == ACCESS_ADMIN
+  end
+
 end

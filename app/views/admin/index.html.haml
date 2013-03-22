@@ -3,8 +3,8 @@
 
 #admin-workarea
   #admin-panel
-    %ul#admin-nav.nav.nav-list
-      %li.nav-header= "Catálogos"
+    %ul#admin-nav.nav.nav-pills.nav-stacked
+      %li{"data-link" => "/admin/users"}= link_to "Usuarios", "#"
       %li{"data-link" => "/admin/laboratories"}= link_to "Laboratorios", "#"
       %li{"data-link" => "/admin/clients"}= link_to "Clientes", "#"
       %li{"data-link" => "/admin/equipment"}= link_to "Equipos", "#"

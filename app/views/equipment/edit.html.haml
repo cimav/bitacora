@@ -1,5 +1,15 @@
 %h1= @equipment.name
 = form_for @equipment, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-equipment-form'} do |f|
+  - if current_user.is_admin? 
+    .field#field_equipment_laboratory_id
+      = f.label :laboratory_id, 'Laboratorio:'
+    - lab_options = ''
+    - Laboratory.order('name').each do |lab|
+      - if @equipment.laboratory_id == lab.id
+        - lab_options += "<option value=\"#{lab.id}\" selected=\"selected\">#{lab.name}</option>"
+      - else
+        - lab_options += "<option value=\"#{lab.id}\">#{lab.name}</option>"
+    = f.select :laboratory_id, lab_options.html_safe, {}, {:class => 'input-xxlarge'}
   .field#field_equipment_name
     = f.label :name, 'Nombre:'
     = f.text_field :name, {:class => 'input-xxlarge', :placeholder => 'Nombre del equipo'}

@@ -1380,6 +1380,9 @@ $('#edit-equipment-form')
   .live("ajax:success", (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
+    id = res['id']
+    $('#equipment_name_' + id).html(res['name'])
+    $('#equipment_lab_' + id).html(res['laboratory'])
     showFlash(res['flash']['notice'], 'success')
   )
   .live('ajax:complete', (evt, xhr, status) ->

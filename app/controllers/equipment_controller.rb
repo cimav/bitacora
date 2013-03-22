@@ -78,6 +78,9 @@ class EquipmentController < ApplicationController
           if request.xhr?
             json = {}
             json[:flash] = flash
+            json[:id] = @equipment.id
+            json[:name] = @equipment.name
+            json[:laboratory] = @equipment.laboratory.name
             render :json => json
           else
             redirect_to @equipment

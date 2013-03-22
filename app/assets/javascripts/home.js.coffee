@@ -1460,6 +1460,10 @@ $(document).on("click", ".client-item", () ->
   )
 )
 
+$(document).on("click", "#sync-clients", () ->
+  alert('En fase de planeación')
+)
+
 #
 # Equipment
 #

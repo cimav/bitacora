@@ -1,0 +1,18 @@
+#laboratories-panel
+  #laboratories-search-panel.search-box
+    = form_tag 'xxx', :id => 'laboratories-live-search', :method => 'get', :remote => true do
+      - laboratory_type_options = "<option value=\"0\">Todos los tipos</option>"
+      - BusinessUnit.order('id').each do |ct|
+        - laboratory_type_options += "<option value=\"#{ct.id}\">#{ct.name}</option>"
+      = select_tag "laboratory_type", laboratory_type_options.html_safe
+      = text_field_tag :q, nil, :id => 'laboratories-search-box', :placeholder => 'Busqueda'
+  #laboratories-list.items-placeholder 
+  #laboratories-buttons.bottom-box
+    = button_tag "Agregar nuevo laboratorio", {:class => 'btn btn-info', :id => 'add-new-admin-laboratory-button'}
+    
+
+#laboratory-details
+:javascript 
+  $(function() {
+    AdminLaboratoriesLiveSearch()
+  })

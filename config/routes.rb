@@ -84,8 +84,14 @@ Bitacora::Application.routes.draw do
     end
   end
   resources :requested_services
+
+  match '/laboratories/live_search' => 'laboratories#live_search'
+  resources :laboratories
+
   resources :laboratory do
     member do
+      get 'show' 
+
       get 'live_search'
       get 'admin'
       
@@ -135,6 +141,7 @@ Bitacora::Application.routes.draw do
   match '/admin/client_types' => 'admin#client_types'
   match '/admin/equipment' => 'admin#equipment'
   match '/admin/materials' => 'admin#materials'
+  match '/admin/laboratories' => 'admin#laboratories'
 
   match '/auth/:provider/callback' => 'sessions#create'
   match '/auth/failure' => 'sessions#failure'

@@ -4,6 +4,7 @@
 
 
 #clients-panel,
+#laboratories-panel,
 #equipment-panel,
 #materials-panel {
   position: fixed;
@@ -25,6 +26,7 @@
   
   #clients-buttons,
   #equipment-buttons,
+  #laboratories-buttons,
   #materials-buttons {
       width: $side-panel-width;
       position: absolute;
@@ -40,6 +42,7 @@
 
 #client-details,
 #equipment-details,
+#laboratory-details,
 #materials-details {
   left: ($sample-list-width * 2) + 24;
   right: 0px;
@@ -56,6 +59,12 @@
   }
 }
 
-.equipment-item-laboratory {
+.equipment-item-laboratory,
+.laboratories-item-user,
+.laboratories-item-unit {
   font-size: 80%;
+}
+
+.laboratories-item-name {
+  font-weight: bold;
 }

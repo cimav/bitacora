@@ -1597,6 +1597,85 @@ $('#edit-material-form')
   )
 
 
+#
+# Laboratories
+#
+
+@AdminLaboratoriesLiveSearch = AdminLaboratoriesLiveSearch = () ->
+  form = $("#laboratories-live-search")
+  url = "/laboratories/live_search"
+  formData = form.serialize()
+  $.get(url, formData, (html) ->
+    $("#laboratories-list").empty().html(html)
+    $("#laboratories-list .laboratories-item:first").click()
+  )
+
+$(document).on("change", '#search_laboratory_id', () ->
+  AdminLaboratoriesLiveSearch()
+)
+
+$('#search_unit_id')
+  .live('change', () ->
+    AdminLaboratoriesLiveSearch()
+  )
+
+$('#laboratories-search-box')
+  .live('keyup', () ->
+    AdminLaboratoriesLiveSearch()
+  )
+
+$(document).on("click", ".laboratories-item", () ->
+  id = $(this).attr('data-id')
+  url = '/laboratories/' + id + '/edit'
+  $(".laboratories-item").removeClass("active")
+  $(this).addClass('active')
+  $.get(url, {}, (html) ->
+    $('#laboratory-details').empty().html(html)
+  )
+)
+
+$(document).on("click", "#add-new-admin-laboratory-button", () ->
+  url = '/laboratories/new'
+  $.get(url, {}, (html) ->
+    $('#laboratory-details').empty().html(html)
+  )
+)
+
+$('#new-laboratory-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    $('#laboratories-search-box').val(res['name'])
+    AdminLaboratoriesLiveSearch()
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+$('#edit-laboratory-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    $('#material_display_' + res['id']).html(res['display'])
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
 
 #-------
 # ERRORS

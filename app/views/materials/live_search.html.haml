@@ -1,7 +1,7 @@
 %ul
   - @material.each do |material|
     %li.material-item.item{"data-id" => material.id}
-      .material-item-name= material.name
+      .material-item-name{:id => "material_display_#{material.id}"}= "#{material.name} (#{material.unit.name})"
 .items-counter
   .items-counter-inner
-    = "#{@material.count} equipos"
+    = "#{@material.count} consumibles"

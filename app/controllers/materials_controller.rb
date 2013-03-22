@@ -9,8 +9,8 @@ class MaterialsController < ApplicationController
 
   def live_search
     @material = Material.where('status = :s', {:s => Material::ACTIVE}).order('name')
-    if !params[:search_laboratory_id].blank? && params[:search_laboratory_id] != '0'
-      @material = @material.where("laboratory_id = :c", {:c => params[:search_laboratory_id]}) 
+    if !params[:search_unit_id].blank? && params[:search_unit_id] != '0'
+      @material = @material.where("unit_id = :c", {:c => params[:search_unit_id]}) 
     end
     if !params[:q].blank?
       @material = @material.where("(name LIKE :q OR description LIKE :q)", {:q => "%#{params[:q]}%"})
@@ -22,8 +22,6 @@ class MaterialsController < ApplicationController
     @material = Material.new(params[:material])
     flash = {}
     
-    @material.hourly_rate = 0 if !params[:material][:hourly_rate].blank?
-
     if (@material.save)
       flash[:notice] = "Consumible de laboratorio agregado satisfactoriamente (#{@material.id})"
 
@@ -78,6 +76,8 @@ class MaterialsController < ApplicationController
           if request.xhr?
             json = {}
             json[:flash] = flash
+            json[:id] = @material.id
+            json[:display] = "#{@material.name} (#{@material.unit.name})"
             render :json => json
           else
             redirect_to @material

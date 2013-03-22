@@ -5,6 +5,7 @@
   #admin-panel
     %ul#admin-nav.nav.nav-list
       %li.nav-header= "Catálogos"
+      %li{"data-link" => "/admin/laboratories"}= link_to "Laboratorios", "#"
       %li{"data-link" => "/admin/clients"}= link_to "Clientes", "#"
       %li{"data-link" => "/admin/equipment"}= link_to "Equipos", "#"
       %li{"data-link" => "/admin/materials"}= link_to "Consumibles", "#"

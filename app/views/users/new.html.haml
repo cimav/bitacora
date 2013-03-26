@@ -1,0 +1,25 @@
+%h1= "Nuevo usuario"
+= form_for @user, :remote => true, :html => {:'data-type' => 'html', :id => 'new-user-form'} do |f|
+  .field#field_first_name
+    = f.label :first_name, 'Nombre:'
+    = f.text_field :first_name, {:class => 'input-xxlarge', :placeholder => 'Nombre del usuario'}
+  .field#field_last_name
+    = f.label :last_name, 'Nombre:'
+    = f.text_field :last_name, {:class => 'input-xxlarge', :placeholder => 'Apellido del usuario'}
+  .field#field_last_name
+    = f.label :email, 'Correo electrónico:'
+    = f.text_field :email, {:class => 'input-xxlarge', :placeholder => 'Correo electrónico'}
+  .field#field_access
+    = f.label :unit_id, 'Tipo de acceso:'
+    - access_options = ""
+    - User::ACCESS_TYPES.sort {|a,b| a[1] <=> b[1] }.each do |k,v|
+      - if k.to_i == @user.access.to_i
+        - access_options += "<option value=\"#{k}\" selected=\"selected\">#{v}</option>"
+      - else
+        - access_options += "<option value=\"#{k}\">#{v}</option>"
+    = f.select :access, access_options.html_safe
+  .field#field_employee_number
+    = f.label :employee_number, 'Identificador de empleado:'
+    = f.text_field :employee_number, {:class => 'input-large'}
+  .submit-button
+    = f.submit "Agregar usuario", {:class => "btn btn-primary"}

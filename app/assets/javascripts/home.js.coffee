@@ -1680,6 +1680,85 @@ $('#edit-laboratory-form')
     showFormErrors(xhr, status, error)
   )
 
+#
+# Users
+#
+
+@AdminUsersLiveSearch = AdminUsersLiveSearch = () ->
+  form = $("#users-live-search")
+  url = "/users/live_search"
+  formData = form.serialize()
+  $.get(url, formData, (html) ->
+    $("#users-list").empty().html(html)
+    $("#users-list .user-item:first").click()
+  )
+
+$(document).on("change", '#search_user_id', () ->
+  AdminUsersLiveSearch()
+)
+
+$('#search_user_type')
+  .live('change', () ->
+    AdminUsersLiveSearch()
+  )
+
+$('#users-search-box')
+  .live('keyup', () ->
+    AdminUsersLiveSearch()
+  )
+
+$(document).on("click", ".user-item", () ->
+  id = $(this).attr('data-id')
+  url = '/users/' + id + '/edit'
+  $(".user-item").removeClass("active")
+  $(this).addClass('active')
+  $.get(url, {}, (html) ->
+    $('#user-details').empty().html(html)
+  )
+)
+
+$(document).on("click", "#add-new-admin-user-button", () ->
+  url = '/users/new'
+  $.get(url, {}, (html) ->
+    $('#user-details').empty().html(html)
+  )
+)
+
+$('#new-user-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    $('#users-search-box').val(res['name'])
+    AdminUsersLiveSearch()
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+$('#edit-user-form')
+  .live("ajax:beforeSend", (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.with-errors').removeClass('with-errors')
+  )
+  .live("ajax:success", (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    $('#user_name_' + res['id']).html(res['name'])
+  )
+  .live('ajax:complete', (evt, xhr, status) ->
+  )
+  .live("ajax:error", (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
 
 #-------
 # ERRORS

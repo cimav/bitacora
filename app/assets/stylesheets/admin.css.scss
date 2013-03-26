@@ -6,7 +6,8 @@
 #clients-panel,
 #laboratories-panel,
 #equipment-panel,
-#materials-panel {
+#materials-panel,
+#users-panel {
   position: fixed;
   top: 96px;
   bottom: 0px;
@@ -27,7 +28,8 @@
   #clients-buttons,
   #equipment-buttons,
   #laboratories-buttons,
-  #materials-buttons {
+  #materials-buttons,
+  #users-buttons {
       width: $side-panel-width;
       position: absolute;
       text-align: center;
@@ -43,7 +45,8 @@
 #client-details,
 #equipment-details,
 #laboratory-details,
-#materials-details {
+#materials-details,
+#user-details {
   left: ($sample-list-width * 2) + 24;
   right: 0px;
   position: fixed;
@@ -64,7 +67,8 @@
 
 .equipment-item-laboratory,
 .laboratories-item-user,
-.laboratories-item-unit {
+.laboratories-item-unit,
+.user-item-access {
   font-size: 80%;
 }
 

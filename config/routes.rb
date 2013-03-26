@@ -85,6 +85,9 @@ Bitacora::Application.routes.draw do
   end
   resources :requested_services
 
+  match '/users/live_search' => 'users#live_search'
+  resources :users
+
   match '/laboratories/live_search' => 'laboratories#live_search'
   resources :laboratories
 
@@ -142,6 +145,7 @@ Bitacora::Application.routes.draw do
   match '/admin/equipment' => 'admin#equipment'
   match '/admin/materials' => 'admin#materials'
   match '/admin/laboratories' => 'admin#laboratories'
+  match '/admin/users' => 'admin#users'
 
   match '/auth/:provider/callback' => 'sessions#create'
   match '/auth/failure' => 'sessions#failure'

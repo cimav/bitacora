@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  # attr_accessible :title, :body
+  attr_accessible :first_name, :last_name, :email, :access, :employee_number
   STATUS_ACTIVE    = 1
   STATUS_INACTIVE  = 2
   STATUS_SUSPENDED = 3

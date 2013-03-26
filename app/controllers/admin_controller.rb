@@ -6,6 +6,10 @@ class AdminController < ApplicationController
   	render :layout => false
   end
 
+  def users
+    render :layout => false
+  end
+
   def laboratories
     render :layout => false
   end

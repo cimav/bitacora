@@ -73,7 +73,7 @@
 
         %td 
           - u_options = ''
-          - for i in 100.downto(0)
+          - for i in (100 - part_total).downto(0)
             - u_options += "<option value=\"#{i}\">#{i}%</option>"
           = select_tag :new_tech_participation, u_options.html_safe, {:style => "width: 100%;"}
         %td

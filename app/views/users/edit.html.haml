@@ -25,6 +25,15 @@
     .field#field_hourly_wage
       = f.label :hourly_wage, 'Sueldo por hora:'
       = number_to_currency(@user.hourly_wage)
+  .field#field_status
+    = f.label :unit_id, 'Estado:'
+    - status_options = ""
+    - User::STATUS_TYPES.sort {|a,b| a[1] <=> b[1] }.each do |k,v|
+      - if k.to_i == @user.status.to_i
+        - status_options += "<option value=\"#{k}\" selected=\"selected\">#{v}</option>"
+      - else
+        - status_options += "<option value=\"#{k}\">#{v}</option>"
+    = f.select :status, status_options.html_safe
   %br  
   .submit-button
     = f.submit "Actualizar usuario", {:class => "btn btn-primary"}

@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :first_name, :last_name, :email, :access, :employee_number
+  attr_accessible :first_name, :last_name, :email, :access, :employee_number, :status
   STATUS_ACTIVE    = 1
   STATUS_INACTIVE  = 2
   STATUS_SUSPENDED = 3
@@ -20,6 +20,12 @@ class User < ActiveRecord::Base
     ACCESS_ADMIN            => 'Administrador',
   }
 
+  STATUS_TYPES = {
+    STATUS_ACTIVE => "Activo",
+    STATUS_INACTIVE => "Baja",
+    STATUS_SUSPENDED => "Suspendido"
+  }
+
   has_many :service_request
   has_many :laboratory_members
   has_many :requested_service
@@ -34,6 +40,10 @@ class User < ActiveRecord::Base
 
   def access_text
     ACCESS_TYPES[access.to_i]
+  end
+
+  def status_text
+    STATUS_TYPES[status.to_i]
   end
 
   def can_create_external_services?

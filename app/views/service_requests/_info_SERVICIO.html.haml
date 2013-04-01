@@ -1,28 +1,28 @@
 - external_request = service_request.external_request[0]
-
-%table
-  %tbody
-    %tr
-      %th= "Cliente: "
-      %td= external_request.client.name
-    %tr
-      %th= "Contacto: "
-      %td
-        = external_request.client_contact.name
-        %br
-        = mail_to external_request.client_contact.email
-        %br
-        = external_request.client_contact.phone
-    %tr
-      %th= "Servicio acreditado: "
-      %td
-        - if external_request.is_acredited?
-          = "Si"
-        - else
-          = "No" 
-    %tr
-      %th= "Acuerdos con el cliente: "
-      %td= external_request.client_agreements
-    %tr
-      %th= "Notas: "
-      %td= external_request.notes
+- if !external_request.client.blank?
+  %table
+    %tbody
+      %tr
+        %th= "Cliente: "
+        %td= external_request.client.name
+      %tr
+        %th= "Contacto: "
+        %td
+          = external_request.client_contact.name
+          %br
+          = mail_to external_request.client_contact.email
+          %br
+          = external_request.client_contact.phone
+      %tr
+        %th= "Servicio acreditado: "
+        %td
+          - if external_request.is_acredited?
+            = "Si"
+          - else
+            = "No" 
+      %tr
+        %th= "Acuerdos con el cliente: "
+        %td= external_request.client_agreements
+      %tr
+        %th= "Notas: "
+        %td= external_request.notes

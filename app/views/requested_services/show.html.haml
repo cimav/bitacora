@@ -128,8 +128,6 @@
           - if @requested_service.sample.service_request.request_type
             - template = @requested_service.sample.service_request.request_type.short_name 
             = render :partial => "service_requests/info_#{template}", :locals => {:service_request => @requested_service.sample.service_request}
-        
-
     .info-row
       .folder-owner
         %i.icon-user
@@ -152,6 +150,15 @@
             %div= @requested_service.details
           - else
             = "Ninguna"
+    .info-row
+      .other-services
+        %i.icon-th
+        %strong= "Servicios solicitados a la muestra #{@requested_service.sample.identification}"
+        %ul
+          - @requested_service.sample.requested_service.each do |rs|
+            %li
+              %span.service-bullet{:class => "status_#{rs.status}"}= "%02d" %  rs.consecutive
+              = rs.laboratory_service.name
 
   #bitacora.tab-pane.active
     #activity_log

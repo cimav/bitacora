@@ -63,28 +63,41 @@
       .upload Subir archivos
       .upload-msg Puedes seleccionar varios archivos a la vez para subir.
   #files-area
-    %table{'class' => 'files-table'}
-      - @files.each do |service_file|
-        %tr{'id' => "file-#{service_file.id}"}
-          - if File.extname(service_file.file.to_s) == ''
-            - ext = 'unknown'
-          - else 
-            - ext = File.extname(service_file.file.to_s)[1..-1]
-          %td{"class" => "file-entry type-unknown type-" + ext, "title" => File.basename(service_file.file.to_s)}
-            = form_for(service_file, :remote => true, :html => {:'data-type' => 'html', :class => 'file-desc-form'}) do |ff|
-              - t_options = "<option value=\"#{ServiceFile::FILE}\">Documento</option>"
-              - t_options += "<option value=\"#{ServiceFile::FINAL_REPORT}\">Reporte Final</option>"
-              = ff.select :file_type, t_options.html_safe, {}, {:class => 'file_type_combo', :id => "file_type_id_#{service_file.id}"}
-              = ff.text_field :description, :class => 'description_field', :id => "description_#{service_file.id}"
-            %span.file-desc{:title => service_file.type_text}
-              %i{:class => "file-icon #{service_file.file_type_icon}"}
-              %a{'href' => "/service_files/#{service_file.id}/file"}
-                = service_file.description
-            %br
-            %span.file-details= ext.upcase + ", " + number_to_human_size(File.size(service_file.file.to_s)) + ". Subido por #{current_user.full_name}"
-            - if service_file.user_id = current_user.id
-              %span.file-edit
-                = link_to_function 'Editar', "edit_description(#{service_file.id})"
+    - cur_serv = ''
+    %table.table
+      - @req_services.each do |rs|
+        - if rs.id.to_i == @requested_service_id.to_i
+          - cell_class = 'cur-serv-cell'
+        - else 
+          - cell_class = ''
+        %tr{:class => cell_class}
+          %th
+            %span.service-bullet{:class => "status_#{rs.status}"}= "%02d" %  rs.consecutive
+            = rs.laboratory_service.name
+        - if rs.service_files.count == 0
+          %tr
+            %td.empty-cell= "No hay archivos"
+        - rs.service_files.each do |service_file|
+          %tr{'id' => "file-#{service_file.id}", 'class' => cell_class}
+            - if File.extname(service_file.file.to_s) == ''
+              - ext = 'unknown'
+            - else 
+              - ext = File.extname(service_file.file.to_s)[1..-1]
+            %td{"class" => "file-entry type-unknown type-" + ext, "title" => File.basename(service_file.file.to_s)}
+              = form_for(service_file, :remote => true, :html => {:'data-type' => 'html', :class => 'file-desc-form'}) do |ff|
+                - t_options = "<option value=\"#{ServiceFile::FILE}\">Documento</option>"
+                - t_options += "<option value=\"#{ServiceFile::FINAL_REPORT}\">Reporte Final</option>"
+                = ff.select :file_type, t_options.html_safe, {}, {:class => 'file_type_combo', :id => "file_type_id_#{service_file.id}"}
+                = ff.text_field :description, :class => 'description_field', :id => "description_#{service_file.id}"
+              %span.file-desc{:title => service_file.type_text}
+                %i{:class => "file-icon #{service_file.file_type_icon}"}
+                %a{'href' => "/service_files/#{service_file.id}/file"}
+                  = service_file.description
+              %br
+              %span.file-details= ext.upcase + ", " + number_to_human_size(File.size(service_file.file.to_s)) + ". Subido por #{current_user.full_name}"
+              - if service_file.user_id = current_user.id
+                %span.file-edit= link_to_function 'Editar', "edit_description(#{service_file.id})"
+
 
   .clearfix
 

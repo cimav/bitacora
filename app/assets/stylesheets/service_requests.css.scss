@@ -407,21 +407,21 @@
 
 
 // INITIAL
-.status_1 { background-color: $status_1 !important; }
+.status_1 { background-color: $status_1 !important; color: $white; }
 // RECEIVED
-.status_2 { background-color: $status_2 !important; }
+.status_2 { background-color: $status_2 !important; color: $white; }
 // ASSIGNED
-.status_3 { background-color: $status_3 !important; }
+.status_3 { background-color: $status_3 !important; color: $white; }
 // SUSPENDED
-.status_4 { background-color: $status_4 !important; }
+.status_4 { background-color: $status_4 !important; color: $white; }
 // REINIT
-.status_5 { background-color: $status_5 !important; }
+.status_5 { background-color: $status_5 !important; color: $white; }
 // CANCELED
-.status_-1 { background-color: $status_-1 !important; }
+.status_-1 { background-color: $status_-1 !important; color: $white; }
 // IN_PROGRESS
-.status_6 { background-color: $status_6 !important; }
+.status_6 { background-color: $status_6 !important; color: $white; }
 // FINISHED
-.status_99 { background-color: $status_99 !important; }
+.status_99 { background-color: $status_99 !important; color: $white; }
 
 .req_serv_status_1 { border-left: 5px solid $status_1; }
 .req_serv_status_2 { border-left: 5px solid $status_2; }

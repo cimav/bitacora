@@ -139,3 +139,31 @@ body {
   font-size: 30px;
   margin: 40px 0;
 }
+
+.empty-cell {
+  color: $grey;
+  text-align: center !important;
+  padding: 40px !important;
+}
+
+#files-area {
+  table {
+    tr {
+      &.cur-serv-cell {
+        th {
+          background: #fffbb6 !important;
+        }
+        td {
+          background: #fffdd7 !important;
+        }
+      }
+      th {
+        font-size: 120%;
+        span {
+          padding: 4px;
+          @include rounded(4px);
+        }
+      }
+    }
+  }
+}

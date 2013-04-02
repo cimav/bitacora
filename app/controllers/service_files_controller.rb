@@ -7,7 +7,9 @@ class ServiceFilesController < ApplicationController
     @service_request_id = params[:service_request_id]
     @sample_id = params[:sample_id] 
     @requested_service_id = params[:requested_service_id]
-    @files = ServiceFile.where(:service_request_id => params[:service_request_id], :sample_id => params[:sample_id], :requested_service_id => params[:requested_service_id]).order('file_type', 'description')
+    #@files = ServiceFile.where(:service_request_id => params[:service_request_id], :sample_id => params[:sample_id], :requested_service_id => params[:requested_service_id]).order('file_type', 'description')
+    @files = ServiceFile.where(:service_request_id => params[:service_request_id], :sample_id => params[:sample_id]).order('requested_service_id', 'file_type', 'description')
+    @req_services = RequestedService.where(:sample_id => params[:sample_id])
     render :layout => 'standalone'
   end
 

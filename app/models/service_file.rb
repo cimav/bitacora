@@ -1,6 +1,9 @@
 class ServiceFile < ActiveRecord::Base
   attr_accessible :file, :description, :user_id, :service_request_id, :sample_id, :requested_service_id, :file_type
 
+  belongs_to :sample
+  belongs_to :requested_service 
+
   mount_uploader :file, ServiceFileUploader
   validates :description, :presence => true
 

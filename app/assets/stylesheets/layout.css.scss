@@ -180,3 +180,19 @@ body {
     }
   }
 }
+
+#files_iframe_outer {
+  position: fixed;
+  left: ($sample-list-width * 2) + 14;
+  bottom: 10px;
+  top: 216px;
+  right: 10px;
+}
+
+#files_iframe {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  overflow-x: hidden !important;
+  overflow-y: auto;
+}

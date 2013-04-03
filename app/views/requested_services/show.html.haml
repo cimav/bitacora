@@ -97,7 +97,7 @@
     %li.active
       %a{:href => "#bitacora", "data-toggle" => "tab"}= "Bitácora"
     %li
-      %a{:href => "#archivos", "data-toggle" => "tab"}= "Archivos"
+      %a{:href => "#archivos", "data-toggle" => "tab", :id => "active-archivos-link"}= "Archivos"
     //%li
     //  %a{:href => "#costeo", "data-toggle" => "tab", "id" => "costeo_tab"}= "Costeo"
       
@@ -167,7 +167,8 @@
                                                                   :sample_id => @requested_service.sample_id, 
                                                                   :requested_service_id => @requested_service.id}
   #archivos.tab-pane
-    %iframe{"name" => "submit_iframe", "id" => "files_iframe", "width" => "100%", "height" => "1250", "src" => "/service_files/ui/#{@requested_service.sample.service_request_id}/#{@requested_service.sample_id}/#{@requested_service.id}", "scrolling" => "no" }
+    #files_iframe_outer
+      %iframe{"name" => "submit_iframe", "id" => "files_iframe", "src" => "/service_files/ui/#{@requested_service.sample.service_request_id}/#{@requested_service.sample_id}/#{@requested_service.id}"}
 
   //#costeo.tab-pane
   //  #costeo_inner

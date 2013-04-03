@@ -117,6 +117,7 @@ Bitacora::Application.routes.draw do
   match '/service_files/ui/:service_request_id' => 'service_files#ui'
   match '/service_files/ui/:service_request_id/:sample_id' => 'service_files#ui'
   match '/service_files/ui/:service_request_id/:sample_id/:requested_service_id' => 'service_files#ui'
+  match '/service_files/zip/:sample_id' => 'service_files#download_zip'
   resources :service_files do
     member do
       get 'file'

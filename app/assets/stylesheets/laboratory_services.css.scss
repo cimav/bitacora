@@ -5,8 +5,8 @@
   .modal-body {
     margin: 0;
     padding: 0;
-    max-height: 550px;
-    height: 550px;
+    max-height: 350px;
+    height: 350px;
   }
 }
 
@@ -15,7 +15,7 @@
   top: 49px;
   bottom: 60px;
   border-right: 1px solid $line-color;
-  width: 240px;
+  width: 200px;
   .search-area {
     margin: 0;
     padding: 0;
@@ -25,6 +25,12 @@
       margin: 5px 10px;
       font-size: 12px;
     }
+    select {
+      width: 180px;
+    }
+    input {
+      width: 165px;
+    }
     form {
       padding: 0;
       margin: 0 0 5px 0;
@@ -32,14 +38,14 @@
   }
   #laboratory-services-list {
     position: absolute;
-    top: 126px;
-    width: 240px;
+    top: 86px;
+    width: 200px;
     bottom: 0px;
     overflow: auto;
     background: #fff;
     .lab-service-item {
       padding: 5px;
-      font-size: 12px;
+      font-size: 11px;
       border-bottom: 1px solid $line-color;
       cursor: pointer;
       .lab-service-name {
@@ -61,7 +67,7 @@
 }
 
 #service-details {
-  margin-left: 240px;
+  margin-left: 200px;
   .add-service-laboratory {
     color: $grey;
     font-size: 12px;
@@ -69,7 +75,7 @@
     padding: 5px 10px 0px 10px;
   }
   .add-service-title {
-    font-size: 16px;
+    font-size: 12px;
     font-weight: bold;
     padding: 0px 10px 5px 10px;
   }

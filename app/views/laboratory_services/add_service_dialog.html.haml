@@ -6,11 +6,12 @@
     #add-service-modal-panel
       .search-area
         = form_tag laboratory_services_path, :id => 'laboratory-services-live-search', :method => 'get', :remote => true do
-          - service_type_options = "<option value=\"0\">Todos los tipos</option>"
-          - service_types = ServiceType.order('name')
-          - service_types.each do |st|
-            - service_type_options += "<option value=\"#{st.id}\">#{st.name}</option>" 
-          = select_tag "service_type", service_type_options.html_safe
+          = hidden_field_tag "service_type", 0
+          //- service_type_options = "<option value=\"0\">Todos los tipos</option>"
+          //- service_types = ServiceType.order('name')
+          //- service_types.each do |st|
+          //  - service_type_options += "<option value=\"#{st.id}\">#{st.name}</option>" 
+          //= select_tag "service_type", service_type_options.html_safe
       
           - laboratory_options = "<option value=\"0\">Todos los laboratorios</option>"
           - laboratories = Laboratory.order('name')

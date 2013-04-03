@@ -3,8 +3,7 @@
   = f.hidden_field :laboratory_service_id, {:value => @laboratory_service.id}
   = f.hidden_field :sample_id, {:value => @sample.id}
   .add-service-laboratory= @laboratory_service.laboratory.name
-  .add-service-title= @laboratory_service.name
-  .add-service-description= @laboratory_service.description
+  .add-service-title{"title" => @laboratory_service.description}= @laboratory_service.name
 
   .add-service-field
     = f.label :suggested_user_id, "Técnico Sugerido: ", {:class => 'control-label'}
@@ -19,4 +18,4 @@
   .add-service-field
     = f.label :details, "Detalles: ", {:class => 'control-label'}
     .controls
-      = f.text_area :details, {:class => 'input-xlarge', :rows => 8}
+      = f.text_area :details, {:class => 'input-xlarge', :style => 'height: 100px;'}

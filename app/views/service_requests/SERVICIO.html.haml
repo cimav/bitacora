@@ -1,81 +1,8 @@
-.control-group#cg_ExternalRequest_client_typeahead
-  = label_tag 'client_typeahead',  'Cliente:', {:class => 'control-label'}
-  .controls
-    .input-append
-      = text_field_tag 'client_typeahead', nil, :class => "input-xxlarge", :id => 'select-client-typeahead'
-      %span.add-on
-        %i#select-client.icon-briefcase
-    %br
-    %a#add-new-client= "Agregar nuevo cliente"
-
-
-#client-info
-
-.control-group#cg_ExternalRequest_request_date
-  = label_tag 'service_request[external_request_attributes][0][request_date]',  'Fecha de solicitud:', {:class => 'control-label'}
-  .controls
-    - today_value = Time.now.strftime("%Y-%m-%d")
-    #request_date_dp.input-append.date{"data-date" => "#{today_value}", "data-date-format" => "yyyy-mm-dd"}
-      = text_field_tag 'service_request[external_request_attributes][0][request_date]', today_value, :class => "span2", :size => "16", :readonly => "readonly"
-      %span.add-on
-        %i.icon-th
-
-.control-group#cg_ExternalRequest_service_number
-  = label_tag 'service_request[external_request_attributes][0][service_number]', "Número de servicio", {:class => 'control-label'}
-  .controls
-    = text_field_tag 'service_request[external_request_attributes][0][service_number]', nil, :class => 'input-large'
-
-.control-group#cg_ExternalRequest_is_acredited
-  = label_tag 'service_request[external_request_attributes][0][is_acredited]', "¿Servicios acreditados?", {:class => 'control-label'}
-  .controls
-    - options = '<option value="0">NO</option>'
-    - options += '<option value="1">SI</option>'
-    = select_tag 'service_request[external_request_attributes][0][is_acredited]',  options.html_safe
-
-.control-group#cg_ServiceRequest_client_agreements
-  = label_tag 'service_request[external_request_attributes][0][client_agreements]', "Acuerdos con el cliente", {:class => 'control-label'}
-  .controls
-    = text_area_tag 'service_request[external_request_attributes][0][client_agreements]', '', {:class => 'input-xxlarge',:rows => 5}
-
-.control-group#cg_ServiceRequest_notes
-  = label_tag 'service_request[external_request_attributes][0][notes]', "Notas", {:class => 'control-label'}
-  .controls
-    = text_area_tag 'service_request[external_request_attributes][0][notes]', '', {:class => 'input-xxlarge',:rows => 5}
-
 :javascript
   $(function() {
-    $('#request_date_dp').datepicker();
-
-
-    $('#select-client-typeahead').typeahead({
-      source: function (query, process) {
-        return $.get('/clients/typeahead', { query: query }, function (data) {
-          var res = $.parseJSON(data);
-          return process(res['options']);
-        });
-      },
-      updater:function (item) {
-        $.get('/clients/info', { query: item }, function (data) {
-          $('#client-info').html(data);
-          $('#cg_ExternalRequest_client_typeahead').hide();
-        });
-        return item;
-      }
-    });
-
-    $('#cancel-client').live('click', function () {
-      $('#client-info').html('');
-      $('#cg_ExternalRequest_client_typeahead').show();
-      $('#select-client-typeahead').val('');
-    });
-
-
-    $('#service_request_external_request_attributes_0_service_number').live('change', function() {
-      $('#service_request_request_link').val($('#service_request_external_request_attributes_0_service_number').val());
-    });
-
-
+    $('#cg_ServiceRequest_link').show();
+    $('#cg_ServiceRequest_description').show();
     $('#cg_ServiceRequest_supervisor').show();
     $('#cg_ServiceRequest_submit').show();
-
   });
+

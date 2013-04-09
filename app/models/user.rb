@@ -47,8 +47,12 @@ class User < ActiveRecord::Base
   end
 
   def can_create_external_services?
-    #access.to_i == ACCESS_ADMIN || access.to_i == ACCESS_CUSTOMER_SERVICE
+    access.to_i == ACCESS_ADMIN || access.to_i == ACCESS_CUSTOMER_SERVICE
     true
+  end
+
+  def is_customer_service?
+    access.to_i == ACCESS_ADMIN || access.to_i == ACCESS_CUSTOMER_SERVICE
   end
 
 

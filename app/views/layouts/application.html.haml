@@ -17,7 +17,7 @@
           .nav-collapse
             %ul.nav
               %li= link_to 'Carpetas', '/#!/folders', :id => 'folders-link'
-              - if current_user.is_admin?
+              - if current_user.is_admin? || current_user.is_customer_service?
                 %li= link_to 'Administración', '/#!/admin', :id => 'admin-link'
               - if current_user.laboratories.count > 0
                 - if current_user.laboratories.count < 2

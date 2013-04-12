@@ -10,13 +10,6 @@ hash = false
 #--------
 # HELPERS
 #--------
-$('html').click( (e) ->
-  if e.target.id != 'search-results'
-    $('#search-input').val('')
-    $('#search-results').hide()
-)
-
-
 @calcFrameHeight = calcFrameHeight = (id) ->
   iframe = document.getElementById(id)
   try
@@ -255,6 +248,7 @@ $('#new-request-form')
 #-----------
 # LABORATORY
 #-----------
+current_requestor = 0
 @labReqServicesLiveSearch = labReqServicesLiveSearch = () ->
   $("#lab-req-serv-search-box").addClass("loading")
   form = $("#lab-req-serv-live-search")
@@ -264,6 +258,21 @@ $('#new-request-form')
     $("#lab-req-serv-search-box").removeClass("loading")
     $("#lab-req-serv-panel .items-placeholder").empty().html(html)
     $("#lab-req-serv-panel .items-placeholder .lab-req-serv-item:first").click()
+    current_requestor = 1
+    $('#req-serv-items').bind('scroll', () ->
+      cur_req = $("#requestor_#{current_requestor}")
+      next_req = $("#requestor_#{current_requestor + 1}")
+      if (cur_req.offset().top > $('#req-serv-items').offset().top + 20)
+        current_requestor -= 2
+        if current_requestor <= 1
+          current_requestor = 1 
+          $('#current-requestor').html($("#requestor_1").html())
+      if (next_req.offset().top < $('#req-serv-items').offset().top + 20)
+        current_requestor += 1
+        $('#current-requestor').html(next_req.html())
+
+        
+    )
   )
 
 $('#lrs_status')
@@ -283,6 +292,7 @@ $('#lrs_assigned_to')
 
 $('#req-serv-search-box')
   .live('keyup', () ->
+    $('#req-serv-items').scroll()
     labReqServicesLiveSearch()
   )
 

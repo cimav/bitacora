@@ -59,7 +59,7 @@ body {
   }
   .items-placeholder {
     background-color: $white;
-    overflow: auto;
+    overflow: scroll;
     position: absolute;
     width: $side-panel-width;
     bottom: 40px;

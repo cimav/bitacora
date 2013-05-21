@@ -43,24 +43,21 @@ my_request_search_results = false
     $("#folder-panel .items-placeholder .items .service-request-item:first").click();
   )
 
-$('#search-box')
-  .live('keyup', () ->
-    foldersLiveSearch() 
-  )
-  .live('click', () ->
-    foldersLiveSearch() 
-  )
+$(document).on('keyup', '#search-box', () ->
+  foldersLiveSearch() 
+)
+$(document).on('click', '#search-box', () ->
+  foldersLiveSearch() 
+)
 
-$('.service-request-item')
-  .live('click', () ->
+$(document).on('click', '.service-request-item', () ->
     $('.service-request-item').removeClass('selected')
     $(this).addClass('selected')
     getServiceRequest($(this).attr('service_request_id'))
   )
 
 
-$('#add-new-folder-button')
-  .live('click', () ->
+$(document).on('click', '#add-new-folder-button', () ->
     url = '/service_requests/new'
     $.get(url, {}, (html) ->
       $('#folder-main-panel').empty().html(html)
@@ -74,8 +71,7 @@ $('#add-new-folder-button')
     $('#folder-main-panel').empty().html(html)
   )
 
-$('#select-sample-sample-button')
-  .live('click', () ->
+$(document).on('click', '#select-sample-sample-button', () ->
     $('#sample-list').toggle()
   )
 
@@ -88,13 +84,11 @@ newSampleDialog = () ->
     $('#add-new-sample-modal').modal({ keyboard:true, backdrop:true, show: true });
   )
 
-$("#add-new-sample-button")
-  .live("click", () ->
+$(document).on('click', '#add-new-sample-button', () ->
     newSampleDialog()
   )
 
-$("#open-new-sample-modal-link")
-  .live("click", () ->
+$(document).on('click', '#open-new-sample-modal-link', () ->
     newSampleDialog()
   )
 
@@ -106,8 +100,7 @@ $("#open-new-sample-modal-link")
       $('#request-workarea').empty().html(html)
     )
 
-$('.sample-details')
-  .live('click', () ->
+$(document).on('click', '.sample-details', () ->
     getSample($(this).attr('sample_id'))
   )
 
@@ -121,23 +114,19 @@ addServiceDialog = () ->
     labServicesLiveSearch()
   )
 
-$('#open-add-service-modal')
-  .live('click', () ->
+$(document).on('click', '#open-add-service-modal', () ->
     addServiceDialog()
   )
 
-$('#service_type')
-  .live('change', () ->
+$(document).on('click', '#service_type', () ->
     labServicesLiveSearch()
   )
 
-$('#laboratory')
-  .live('change', () ->
+$(document).on('change', '#laboratory', () ->
     labServicesLiveSearch()
   )
 
-$('#laboratory-services-search-box')
-  .live('keyup', () ->
+$(document).on('keyup', '#laboratory-services-search-box', () ->
     labServicesLiveSearch()
   )
 
@@ -153,8 +142,7 @@ labServicesLiveSearch = () ->
     $("#laboratory-services-list .lab-service-item:first").click()
   )
 
-$('.lab-service-item')
-  .live('click', () ->
+$(document).on('click', '.lab-service-item', () ->
     $('.lab-service-item').removeClass('selected')
     $(this).addClass('selected')
     url = '/laboratory_services/' + $(this).attr('laboratory_service_id') + '/for_sample/' + current_sample
@@ -163,17 +151,16 @@ $('.lab-service-item')
     )
   )
 
-$('#add-service-modal-submit')
-  .live('click', () ->
+$(document).on('click', '#add-service-modal-submit', () ->
     $('#new-requested-service-form').submit();
   )
 
-$('#new-requested-service-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#new-requested-service-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+
+$(document).on('ajax:success', '#new-requested-service-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
@@ -181,9 +168,8 @@ $('#new-requested-service-form')
     getSampleRequestedServices(res['sample_id'])
     getRequestedService(res['sample_id'], res['id'])
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '#new-requested-service-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
@@ -202,35 +188,31 @@ getSampleRequestedServices = (sample_id) ->
     $('#sample-services').empty().html(html)
   )
 
-$('.requested_service')
-  .live('click', () ->
+$(document).on('click', '.requested_service', () ->
     getRequestedService($(this).attr('sample_id'), $(this).attr('requested_service_id'))
   )
 
-$('#new-sample-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#new-sample-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#new-sample-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     $('#add-new-sample-modal').modal('hide').remove()
     getSample(res['id'])
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+$(document).on('ajax:error', '#new-sample-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
-$('#new-request-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+
+$(document).on('ajax:beforeSend', '#new-request-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#new-request-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
@@ -239,9 +221,7 @@ $('#new-request-form')
     foldersLiveSearch()
     #getServiceRequest(res['id'])
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+$(document).on('ajax:error', '#new-request-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
@@ -275,23 +255,19 @@ current_requestor = 0
     )
   )
 
-$('#lrs_status')
-  .live('change', () ->
+$(document).on('change', '#lrs_status', () ->
     labReqServicesLiveSearch()
   )
 
-$('#lrs_requestor')
-  .live('change', () ->
+$(document).on('change', '#lrs_requestor', () ->
     labReqServicesLiveSearch()
   )
 
-$('#lrs_assigned_to')
-  .live('change', () ->
+$(document).on('change', '#lrs_assigned_to', () ->
     labReqServicesLiveSearch()
   )
 
-$('#req-serv-search-box')
-  .live('keyup', () ->
+$(document).on('keyup', '#req-serv-search-box', () ->
     $('#req-serv-items').scroll()
     labReqServicesLiveSearch()
   )
@@ -305,28 +281,26 @@ getActivityLog = (id) ->
     $('#activity_log').empty().html(html)
   )
 
-$('#new-activity-log-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#new-activity-log-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+
+$(document).on('ajax:success', '#new-activity-log-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     getActivityLog(res['id'])
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
 #--------
 # ACTIONS
 #--------
-$('#requested-service-status')
-  .live('click', () ->
+$(document).on('click', '#requested-service-status', () ->
     $('#action-list').toggle()
   )
 
@@ -336,8 +310,7 @@ changeSampleTagColor = (rs, new_status) ->
   $("#requested_service_" + rs + " .service-bullet").addClass("status_" + new_status)
 
 # INITIAL
-$('#change_status_initial')
-  .live('click', () ->
+$(document).on('click', '#change_status_initial', () ->
     $("#initial-dialog").remove()
     $('body').append('<div id="initial-dialog"></div>')
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/initial_dialog'
@@ -347,12 +320,11 @@ $('#change_status_initial')
     )
   )
 
-$('#initial-sample-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#initial-sample-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#initial-sample-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
@@ -360,15 +332,12 @@ $('#initial-sample-form')
     $('#initial-modal').modal('hide').remove()
     changeSampleTagColor(res['id'], 1)
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+$(document).on('ajax:error', '#initial-sample-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
 # RECEIVED
-$('#change_status_received')
-  .live('click', () ->
+$(document).on('click', '#change_status_received', () ->
     $("#receive-dialog").remove()
     $('body').append('<div id="receive-dialog"></div>')
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/receive_dialog'
@@ -378,12 +347,11 @@ $('#change_status_received')
     )
   )
 
-$('#receive-sample-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#receive-sample-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#receive-sample-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
@@ -391,15 +359,12 @@ $('#receive-sample-form')
     $('#receive-modal').modal('hide').remove()
     changeSampleTagColor(res['id'], 2)
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+$(document).on('ajax:error', '#receive-sample-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
 # ASSIGN
-$('#change_status_assigned')
-  .live('click', () ->
+$(document).on('click', '#change_status_assigned', () ->
     $("#assign-dialog").remove()
     $('body').append('<div id="assign-dialog"></div>')
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/assign_dialog'
@@ -409,12 +374,12 @@ $('#change_status_assigned')
     )
   )
 
-$('#assign-sample-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+
+$(document).on('ajax:beforeSend', '#assign-sample-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#assign-sample-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
@@ -422,15 +387,12 @@ $('#assign-sample-form')
     $('#assign-modal').modal('hide').remove()
     changeSampleTagColor(res['id'], 3)
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+$(document).on('ajax:error', '#assign-sample-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
 # SUSPEND
-$('#change_status_suspended')
-  .live('click', () ->
+$(document).on('click', '#change_status_suspended', () ->
     $("#suspend-dialog").remove()
     $('body').append('<div id="suspend-dialog"></div>')
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/suspend_dialog'
@@ -440,12 +402,11 @@ $('#change_status_suspended')
     )
   )
 
-$('#suspend-sample-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#suspend-sample-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#suspend-sample-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
@@ -453,15 +414,12 @@ $('#suspend-sample-form')
     $('#suspend-modal').modal('hide').remove()
     changeSampleTagColor(res['id'], 4)
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+$(document).on('ajax:error', '#suspend-sample-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
 # REINIT
-$('#change_status_reinit')
-  .live('click', () ->
+$(document).on('click', '#change_status_reinit', () ->
     $("#reinit-dialog").remove()
     $('body').append('<div id="reinit-dialog"></div>')
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/reinit_dialog'
@@ -471,12 +429,11 @@ $('#change_status_reinit')
     )
   )
 
-$('#reinit-sample-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#reinit-sample-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#reinit-sample-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
@@ -484,15 +441,12 @@ $('#reinit-sample-form')
     $('#reinit-modal').modal('hide').remove()
     changeSampleTagColor(res['id'], 5)
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+$(document).on('ajax:error', '#reinit-sample-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
 # START
-$('#change_status_in_progress')
-  .live('click', () ->
+$(document).on('click', '#change_status_in_progress', () ->
     $("#start-dialog").remove()
     $('body').append('<div id="start-dialog"></div>')
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/start_dialog'
@@ -502,12 +456,11 @@ $('#change_status_in_progress')
     )
   )
 
-$('#start-sample-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#start-sample-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#start-sample-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
@@ -515,15 +468,12 @@ $('#start-sample-form')
     $('#start-modal').modal('hide').remove()
     changeSampleTagColor(res['id'], 6)
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+$(document).on('ajax:error', '#start-sample-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
 # FINISH
-$('#change_status_finished')
-  .live('click', () ->
+$(document).on('click', '#change_status_finished', () ->
     $("#finish-dialog").remove()
     $('body').append('<div id="finish-dialog"></div>')
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/finish_dialog'
@@ -533,12 +483,11 @@ $('#change_status_finished')
     )
   )
 
-$('#finish-sample-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#finish-sample-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#finish-sample-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
@@ -546,15 +495,12 @@ $('#finish-sample-form')
     $('#finish-modal').modal('hide').remove()
     changeSampleTagColor(res['id'], 99)
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+$(document).on('ajax:error', '#finish-sample-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
 # CANCEL
-$('#change_status_canceled')
-  .live('click', () ->
+$(document).on('click', '#change_status_canceled', () ->
     $("#cancel-dialog").remove()
     $('body').append('<div id="cancel-dialog"></div>')
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/cancel_dialog'
@@ -564,12 +510,11 @@ $('#change_status_canceled')
     )
   )
 
-$('#cancel-sample-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#cancel-sample-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#cancel-sample-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
@@ -577,9 +522,7 @@ $('#cancel-sample-form')
     $('#cancel-modal').modal('hide').remove()
     changeSampleTagColor(res['id'], -1)
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+$(document).on('ajax:error', '#cancel-sample-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
@@ -588,24 +531,21 @@ $('#cancel-sample-form')
 #-----------
 # NAVIGATION
 #-----------
-$('#nav-home')
-  .live('click', () ->
+$(document).on('click', '#nav-home', () ->
     url = '/home'
     setHash('#!/home', true)
     $('.nav-item').removeClass('selected')
     $('#nav-home').addClass('selected')
   )
 
-$('#nav-my-requests')
-  .live('click', () ->
+$(document).on('click', '#nav-my-requests', () ->
     url = '/my-requests'
     setHash('#!' + url, true)
     $('.nav-item').removeClass('selected')
     $('#nav-my-requests').addClass('selected')
   )
 
-$('.nav-lab') 
-  .live('click', () ->
+$(document).on('click', '.nav-lab', () ->
     lab_id = $(this).attr('laboratory_id')
     url = '/laboratory/' + lab_id
     setHash('#!' + url, true)
@@ -617,64 +557,58 @@ $('.nav-lab')
 # LAB ADMIN
 #----------
 
-$('.admin-lab')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '.admin-lab', (evt, xhr, settings) ->
     lab_id = $(this).attr('laboratory_id')
     url = '/laboratory/' + lab_id + '/admin'
     setHash('#!' + url, false)
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '.admin-lab', (evt, data, status, xhr) ->
     $('#laboratory-workarea').empty().html(data)
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '.admin-lab', (evt, xhr, status, error) ->
     alert('Error')
   )
 
-$('#edit-laboratory-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+
+$(document).on('ajax:beforeSend', '#edit-laboratory-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+
+$(document).on('ajax:success', '#edit-laboratory-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     $("#nav-title-#{res['id']}").html(res['name'])
     $("#laboratory-bar h2").html(res['name'])
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '#edit-laboratory-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
 #-------------------
 # LAB ADMIN SERVICES
 #-------------------
-$('.admin-services')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '.admin-services', (evt, xhr, settings) ->
     lab_id = $(this).attr('laboratory_id')
     url = '/laboratory/' + lab_id + '/admin_services'
     setHash('#!' + url, false)
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '.admin-services', (evt, data, status, xhr) ->
     $('#laboratory-workarea').empty().html(data)
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '.admin-services', (evt, xhr, status, error) ->
     alert('Error')
   )
 
-$('#admin_lab_service_type')
-  .live('change', () ->
+$(document).on('change', '#admin_lab_service_type', () ->
     adminLabServicesLiveSearch()
   )
 
-$('#admin-lab-services-search-box')
-  .live('keyup', () ->
+$(document).on('keyup', '#admin-lab-services-search-box', () ->
     adminLabServicesLiveSearch()
   )
 
@@ -691,8 +625,7 @@ $('#admin-lab-services-search-box')
     $("#admin-lab-services-list .admin-lab-service-item:first").click()
   )
 
-$('.admin-lab-service-item')
-  .live('click', () ->
+$(document).on('click', '.admin-lab-service-item', () ->
     $('.admin-lab-service-item').removeClass('selected')
     $(this).addClass('selected')
     url = '/laboratory_services/' + $(this).attr('laboratory_service_id') + '/edit'
@@ -705,53 +638,47 @@ $('.admin-lab-service-item')
     )
   )
 
-$('#edit-laboratory-service-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#edit-laboratory-service-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#edit-laboratory-service-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '#edit-laboratory-service-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
-$('#add-new-service-button')
-  .live('click', () ->
+$(document).on('click', '#add-new-service-button', () ->
     url = '/laboratory/' + $(this).attr('lab_id') + '/new_service'
     $.get(url, {}, (html) ->
       $('#admin-service-details').empty().html(html)
     )
   )
 
-$('#new-laboratory-service-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#new-laboratory-service-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#new-laboratory-service-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     $('#admin-lab-services-search-box').val(res['name'])
     adminLabServicesLiveSearch()
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '#new-laboratory-service-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
 #
 # Technicians template
 #
-$('#add-technician-template')
-  .live('click', () ->
+$(document).on('click', '#add-technician-template', () ->
     laboratory_service = $('#laboratory_service_id').val()
     url = '/laboratory_services/' + laboratory_service + '/new_technician'
     $.post(url, 
@@ -777,27 +704,23 @@ reloadTechniciansTableTemplate = () ->
     updateGrandTotalTemplate(laboratory_service)
   )
 
-
-$('#technicians-template .close')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#technicians-template .close', (evt, xhr, settings) ->
     $(".technician-row").removeClass('error')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#technicians-template .close', (evt, data, status, xhr) ->
     res = $.parseJSON(xhr.responseText)
     tech_id = res['id']
     showFlash(res['flash']['notice'], 'alert-success')
     $("#technician_row_#{tech_id}").remove()
     reloadTechniciansTableTemplate()
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '#technicians-template .close', (evt, xhr, status, error) ->
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['error'], 'alert-error')
   )
 
-$('.tech_participation_template')
-  .live('change', () ->
+$(document).on('change', '.tech_participation_template', () ->
     laboratory_service = $('#laboratory_service_id').val()
     url = '/laboratory_services/' + laboratory_service + '/update_participation'
     $.post(url, 
@@ -810,8 +733,7 @@ $('.tech_participation_template')
   )
 
 
-$('.tech_hours_template')
-  .live('change', () ->
+$(document).on('click', '.tech_hours_template', () ->
     laboratory_service = $('#laboratory_service_id').val()
     url = '/laboratory_services/' + laboratory_service + '/update_hours'
     $.post(url, 
@@ -826,8 +748,7 @@ $('.tech_hours_template')
 #
 # Equipment template
 #
-$('#add-equipment-template')
-  .live('click', () ->
+$(document).on('click', '#add-equipment-template', () ->
     laboratory_service = $('#laboratory_service_id').val()
     url = '/laboratory_services/' + laboratory_service + '/new_equipment'
     $.post(url, 
@@ -848,27 +769,24 @@ reloadEquipmentTableTemplate = () ->
   )
 
 
-$('#equipment-template .close')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#equipment-template .close', (evt, xhr, settings) ->
     $(".equipment-row").removeClass('error')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#equipment-template .close', (evt, data, status, xhr) ->
     res = $.parseJSON(xhr.responseText)
     eq_id = res['id']
     showFlash(res['flash']['notice'], 'alert-success')
     $("#equipment#{eq_id}").remove()
     reloadEquipmentTableTemplate()
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '#equipment-template .close', (evt, xhr, status, error) ->
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['error'], 'alert-error')
   )
 
 
-$('.eq_hours_template')
-  .live('change', () ->
+$(document).on('change', '.eq_hours_template', () ->
     laboratory_service = $('#laboratory_service_id').val()
     url = '/laboratory_services/' + laboratory_service + '/update_eq_hours'
     $.post(url, 
@@ -883,8 +801,7 @@ $('.eq_hours_template')
 #
 # Materials Template
 #
-$('#add-material-template')
-  .live('click', () ->
+$(document).on('click', '#add-material-template', () ->
     laboratory_service = $('#laboratory_service_id').val()
     url = '/laboratory_services/' + laboratory_service + '/new_material'
     $.post(url, 
@@ -905,27 +822,24 @@ reloadMaterialTableTemplate = () ->
   )
 
 
-$('#materials-template .close')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#materials-template .close', (evt, xhr, settings) ->
     $(".material-row").removeClass('error')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#materials-template .close', (evt, data, status, xhr) ->
     res = $.parseJSON(xhr.responseText)
     mat_id = res['id']
     showFlash(res['flash']['notice'], 'alert-success')
     $("#material#{mat_id}").remove()
     reloadMaterialTableTemplate()
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '#materials-template .close', (evt, xhr, status, error) ->
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['error'], 'alert-error')
   )
 
 
-$('.mat_qty_template')
-  .live('change', () ->
+$(document).on('change', '.mat_qty_template', () ->
     laboratory_service = $('#laboratory_service_id').val()
     url = '/laboratory_services/' + laboratory_service + '/update_mat_qty'
     $.post(url, 
@@ -940,8 +854,7 @@ $('.mat_qty_template')
 #
 # Others template
 #
-$('#add-other-template')
-  .live('click', () ->
+$(document).on('click', '#add-other-template', () ->
     laboratory_service = $('#laboratory_service_id').val()
     url = '/laboratory_services/' + laboratory_service + '/new_other'
     $.post(url, 
@@ -962,27 +875,24 @@ reloadOthersTableTemplate = () ->
   )
 
 
-$('#others-template .close')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#others-template .close', (evt, xhr, settings) ->
     $(".other-row").removeClass('error')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#others-template .close', (evt, data, status, xhr) ->
     res = $.parseJSON(xhr.responseText)
     other_id = res['id']
     showFlash(res['flash']['notice'], 'alert-success')
     $("#others#{other_id}").remove()
     reloadOthersTableTemplate()
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '#others-template .close', (evt, xhr, status, error) ->
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['error'], 'alert-error')
   )
 
 
-$('.other_price_template')
-  .live('change', () ->
+$(document).on('change', '.other_price_template', () ->
     laboratory_service = $('#laboratory_service_id').val()
     url = '/laboratory_services/' + laboratory_service + '/update_other_price'
     $.post(url, 
@@ -1015,8 +925,7 @@ updateGrandTotal = () ->
 # Technicians
 #
 
-$('#add-technician')
-  .live('click', () ->
+$(document).on('click', '#add-technician', () ->
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/new_technician'
     $.post(url, 
            { user_id: $('#new_tech_user_id').val(), participation: $('#new_tech_participation').val(), hours: $('#new_tech_hours').val() }, 
@@ -1035,26 +944,23 @@ reloadTechniciansTable = () ->
   )
 
 
-$('#technicians .close')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#technicians .close', (evt, xhr, settings) ->
     $(".technician-row").removeClass('error')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#technicians .close', (evt, data, status, xhr) ->
     res = $.parseJSON(xhr.responseText)
     tech_id = res['id']
     showFlash(res['flash']['notice'], 'alert-success')
     $("#technician_row_#{tech_id}").remove()
     reloadTechniciansTable()
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '#technicians .close', (evt, xhr, status, error) ->
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['error'], 'alert-error')
   )
 
-$('.tech_participation')
-  .live('change', () ->
+$(document).on('change', '.tech_participation', () ->
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/update_participation'
     $.post(url, 
            { tech_id: $(this).attr('data-id'), participation: $(this).val() }, 
@@ -1066,8 +972,7 @@ $('.tech_participation')
   )
 
 
-$('.tech_hours')
-  .live('change', () ->
+$(document).on('change', '.tech_hours', () ->
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/update_hours'
     $.post(url, 
            { tech_id: $(this).attr('data-id'), hours: $(this).val() }, 
@@ -1081,8 +986,7 @@ $('.tech_hours')
 #
 # Equipment
 #
-$('#add-equipment')
-  .live('click', () ->
+$(document).on('click', '#add-equipment', () ->
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/new_equipment'
     $.post(url, 
            { eq_id: $('#new_eq_id').val(), hours: $('#new_eq_hours').val() }, 
@@ -1101,27 +1005,24 @@ reloadEquipmentTable = () ->
   )
 
 
-$('#equipment .close')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#equipment .close', (evt, xhr, settings) ->
     $(".equipment-row").removeClass('error')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#equipment .close', (evt, data, status, xhr) ->
     res = $.parseJSON(xhr.responseText)
     tech_id = res['id']
     showFlash(res['flash']['notice'], 'alert-success')
     $("#equipment#{tech_id}").remove()
     reloadEquipmentTable()
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '#equipment .close', (evt, xhr, status, error) ->
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['error'], 'alert-error')
   )
 
 
-$('.eq_hours')
-  .live('change', () ->
+$(document).on('change', '.eq_hours', () ->
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/update_eq_hours'
     $.post(url, 
           { eq_id: $(this).attr('data-id'), hours: $(this).val() }, 
@@ -1136,8 +1037,7 @@ $('.eq_hours')
 #
 # Materials
 #
-$('#add-material')
-  .live('click', () ->
+$(document).on('click', '#add-material', () ->
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/new_material'
     $.post(url, 
            { mat_id: $('#new_mat_id').val(), quantity: $('#new_mat_qty').val() }, 
@@ -1156,27 +1056,24 @@ reloadMaterialTable = () ->
   )
 
 
-$('#materials .close')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#materials .close', (evt, xhr, settings) ->
     $(".material-row").removeClass('error')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#materials .close', (evt, data, status, xhr) ->
     res = $.parseJSON(xhr.responseText)
     tech_id = res['id']
     showFlash(res['flash']['notice'], 'alert-success')
     $("#material#{tech_id}").remove()
     reloadMaterialTable()
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '#materials .close', (evt, xhr, status, error) ->
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['error'], 'alert-error')
   )
 
 
-$('.mat_qty')
-  .live('change', () ->
+$(document).on('change', '.mat_qty', () ->
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/update_mat_qty'
     $.post(url, 
           { mat_id: $(this).attr('data-id'), quantity: $(this).val() }, 
@@ -1190,8 +1087,7 @@ $('.mat_qty')
 #
 # Others
 #
-$('#add-other')
-  .live('click', () ->
+$(document).on('click', '#add-other', () ->
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/new_other'
     $.post(url, 
            { other_type_id: $('#new_other_type').val(), concept: $('#new_other_concept').val(), price: $('#new_other_price').val() }, 
@@ -1211,26 +1107,24 @@ reloadOthersTable = () ->
 
 
 $('#others .close')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#others .close', (evt, xhr, settings) ->
     $(".other-row").removeClass('error')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#others .close', (evt, data, status, xhr) ->
     res = $.parseJSON(xhr.responseText)
     other_id = res['id']
     showFlash(res['flash']['notice'], 'alert-success')
     $("#others#{other_id}").remove()
     reloadOthersTable()
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '#others .close', (evt, xhr, status, error) ->
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['error'], 'alert-error')
   )
 
 
-$('.other_price')
-  .live('change', () ->
+$(document).on('change', '.other_price', () ->
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/update_other_price'
     $.post(url, 
           { other_id: $(this).attr('data-id'), price: $(this).val() }, 
@@ -1246,28 +1140,24 @@ $('.other_price')
 #----------------
 # LAB ADMIN USERS 
 #----------------
-$('.admin-users')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '.admin-users', (evt, xhr, settings) ->
     lab_id = $(this).attr('laboratory_id')
     url = '/laboratory/' + lab_id + '/admin_members'
     setHash('#!' + url, false)
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '.admin-users', (evt, data, status, xhr) ->
     $('#laboratory-workarea').empty().html(data)
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '.admin-users', (evt, xhr, status, error) ->
     alert('Error')
   )
 
-$('#admin_lab_member_access')
-  .live('change', () ->
+$(document).on('change', '#admin_lab_member_access', () ->
     adminLabMembersLiveSearch()
   )
 
-$('#admin-lab-members-search-box')
-  .live('keyup', () ->
+$(document).on('keyup', '#admin-lab-members-search-box', () ->
     adminLabMembersLiveSearch()
   )
 
@@ -1284,8 +1174,7 @@ $('#admin-lab-members-search-box')
     $("#admin-lab-members-list .admin-lab-member-item:first").click()
   )
 
-$('.admin-lab-member-item')
-  .live('click', () ->
+$(document).on('click', '.admin-lab-member-item', () ->
     $('.admin-lab-member-item').removeClass('selected')
     $(this).addClass('selected')
     url = '/laboratory_members/' + $(this).attr('laboratory_member_id') + '/edit'
@@ -1294,68 +1183,60 @@ $('.admin-lab-member-item')
     )
   )
 
-$('#edit-laboratory-member-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#edit-laboratory-member-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#edit-laboratory-member-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '#edit-laboratory-member-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
-$('#add-new-member-button')
-  .live('click', () ->
+$(document).on('click', '#add-new-member-button', () ->
     url = '/laboratory/' + $(this).attr('lab_id') + '/new_member'
     $.get(url, {}, (html) ->
       $('#admin-member-details').empty().html(html)
     )
   )
 
-$('#new-laboratory-member-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#new-laboratory-member-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#new-laboratory-member-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     $('#admin-lab-members-search-box').val(res['name'])
     adminLabMembersLiveSearch()
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '#new-laboratory-member-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
 #--------------------
 # LAB ADMIN EQUIPMENT 
 #--------------------
-$('.admin-equipment')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '.admin-equipment', (evt, xhr, settings) ->
     lab_id = $(this).attr('data-laboratory-id')
     url = '/laboratory/' + lab_id + '/admin_equipment'
     setHash('#!' + url, false)
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '.admin-equipment', (evt, data, status, xhr) ->
     $('#laboratory-workarea').empty().html(data)
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '.admin-equipment', (evt, xhr, status, error) ->
     alert('Error')
   )
 
-$('#admin-lab-equipment-search-box')
-  .live('keyup', () ->
+$(document).on('keyup', '#admin-lab-equipment-search-box', () ->
     adminLabEquipmentLiveSearch()
   )
 
@@ -1372,8 +1253,7 @@ $('#admin-lab-equipment-search-box')
     $("#admin-lab-equipment-list .admin-lab-equipment-item:first").click()
   )
 
-$('.admin-lab-equipment-item')
-  .live('click', () ->
+$(document).on('click', '.admin-lab-equipment-item', () ->
     $('.admin-lab-equipment-item').removeClass('selected')
     $(this).addClass('selected')
     url = '/equipment/' + $(this).attr('data-equipment-id') + '/edit'
@@ -1382,12 +1262,11 @@ $('.admin-lab-equipment-item')
     )
   )
 
-$('#edit-equipment-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#edit-equipment-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#edit-equipment-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     id = res['id']
@@ -1395,35 +1274,31 @@ $('#edit-equipment-form')
     $('#equipment_lab_' + id).html(res['laboratory'])
     showFlash(res['flash']['notice'], 'success')
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '#edit-equipment-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
-$('#add-new-equipment-button')
-  .live('click', () ->
+$(document).on('click', '#add-new-equipment-button', () ->
     url = '/laboratory/' + $(this).attr('data-laboratory-id') + '/new_equipment'
     $.get(url, {}, (html) ->
       $('#admin-equipment-details').empty().html(html)
     )
   )
 
-$('#new-laboratory-equipment-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#new-laboratory-equipment-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#new-laboratory-equipment-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     $('#admin-lab-equipment-search-box').val(res['name'])
     adminLabEquipmentLiveSearch()
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '#new-laboratory-equipment-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
@@ -1455,8 +1330,7 @@ $(document).on("change", '#client_type', () ->
   ClientsLiveSearch()
 )
 
-$('#clients-search-box')
-  .live('keyup', () ->
+$(document).on("keyup", '#clients-search-box', () ->
     ClientsLiveSearch()
   )
 
@@ -1490,8 +1364,7 @@ $(document).on("change", '#search_laboratory_id', () ->
   EquipmentLiveSearch()
 )
 
-$('#equipment-search-box')
-  .live('keyup', () ->
+$(document).on('keyup', #equipment-search-box', () ->
     EquipmentLiveSearch()
   )
 
@@ -1512,21 +1385,18 @@ $(document).on("click", "#add-new-admin-equipment-button", () ->
   )
 )
 
-$('#new-equipment-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#new-equipment-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#new-equipment-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     $('#equipment-search-box').val(res['name'])
     EquipmentLiveSearch()
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+$(document).on('ajax:error', '#new-equipment-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
@@ -1545,16 +1415,14 @@ $('#new-equipment-form')
   )
 
 $(document).on("change", '#search_laboratory_id', () ->
-  MaterialsLiveSearch()
-)
-
-$('#search_unit_id')
-  .live('change', () ->
     MaterialsLiveSearch()
   )
 
-$('#materials-search-box')
-  .live('keyup', () ->
+$(document).on('change', '#search_unit_id', () ->
+    MaterialsLiveSearch()
+  )
+
+$(document).on('keyup', '#materials-search-box', () ->
     MaterialsLiveSearch()
   )
 
@@ -1575,38 +1443,34 @@ $(document).on("click", "#add-new-admin-materials-button", () ->
   )
 )
 
-$('#new-material-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#new-material-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#new-material-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     $('#materials-search-box').val(res['name'])
     MaterialsLiveSearch()
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '#new-material-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
-$('#edit-material-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#edit-material-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#edit-material-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     $('#material_display_' + res['id']).html(res['display'])
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '#edit-material-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
@@ -1628,13 +1492,11 @@ $(document).on("change", '#search_laboratory_id', () ->
   AdminLaboratoriesLiveSearch()
 )
 
-$('#search_unit_id')
-  .live('change', () ->
+$(document).on('change', '#search_unit_id', () ->
     AdminLaboratoriesLiveSearch()
   )
 
-$('#laboratories-search-box')
-  .live('keyup', () ->
+$(document).on('keyup', '#laboratories-search-box', () ->
     AdminLaboratoriesLiveSearch()
   )
 
@@ -1655,38 +1517,34 @@ $(document).on("click", "#add-new-admin-laboratory-button", () ->
   )
 )
 
-$('#new-laboratory-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#new-laboratory-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#new-laboratory-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     $('#laboratories-search-box').val(res['name'])
     AdminLaboratoriesLiveSearch()
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '#new-laboratory-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
-$('#edit-laboratory-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#edit-laboratory-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#edit-laboratory-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     $('#material_display_' + res['id']).html(res['display'])
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '#edit-laboratory-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
@@ -1707,13 +1565,11 @@ $(document).on("change", '#search_user_id', () ->
   AdminUsersLiveSearch()
 )
 
-$('#search_user_type')
-  .live('change', () ->
+$(document).on('change', '#search_user_type', () ->
     AdminUsersLiveSearch()
   )
 
-$('#users-search-box')
-  .live('keyup', () ->
+$(document).on('keyup', '#users-search-box', () ->
     AdminUsersLiveSearch()
   )
 
@@ -1734,38 +1590,34 @@ $(document).on("click", "#add-new-admin-user-button", () ->
   )
 )
 
-$('#new-user-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#new-user-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#new-user-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     $('#users-search-box').val(res['name'])
     AdminUsersLiveSearch()
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '#new-user-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
-$('#edit-user-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#edit-user-form', (evt, xhr, settings) ->
     $('.error-message').remove()
-    $('.with-errors').removeClass('with-errors')
+    $('.has-errors').removeClass('has-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+$(document).on('ajax:success', '#edit-user-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     $('#user_name_' + res['id']).html(res['name'])
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '#edit-user-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
@@ -1783,7 +1635,7 @@ $('#edit-user-form')
 
   for e in res['errors']  
     errorMsg = $('<div>' + res['errors'][e] + '</div>').addClass('error-message')
-    $('#field_' + model_name + '_' + e.replace('.', '_')).addClass('with-errors').append(errorMsg)
+    $('#field_' + model_name + '_' + e.replace('.', '_')).addClass('has-errors').append(errorMsg)
   
 
 @showFlash = showFlash = (msg, type) ->
@@ -1812,11 +1664,8 @@ checkHash = () ->
 
 hashTimer = setInterval(checkHash, 1000)
 
-$('#folders-link')
-  .live('click' , () ->
-    window.location = '/#!/folders'
-    checkHash()
-  )
-
-
+$(document).on("click", "#folders-link", () ->
+  window.location = '/#!/folders'
+  checkHash()
+)
 

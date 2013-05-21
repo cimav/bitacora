@@ -2,8 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
-$('#service_request_request_type_id')
-  .live('change', () ->
+$(document).on('change', '#service_request_request_type_id', () ->
     $('#cg_ServiceRequest_link').hide();
     $('#cg_ServiceRequest_description').hide();
     $('#cg_ServiceRequest_supervisor').hide();
@@ -23,26 +22,24 @@ newClientDialog = () ->
     $('#add-new-client-modal').modal({ keyboard:true, backdrop:true, show: true });
   )
 
-$("#add-new-client")
-  .live("click", () ->
+$(document).on('click', '#add-new-client', () ->
     newClientDialog()
   )
 
-$('#new-client-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#new-client-form', (evt, xhr, settings) ->
     $('.error-message').remove()
     $('.with-errors').removeClass('with-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+
+$(document).on('ajax:success', '#new-client-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     selectClient(res['id'], res['name'])
     $('#add-new-client-modal').modal('hide').remove()
     showFlash(res['flash']['notice'], 'success')
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '#new-client-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
@@ -62,26 +59,24 @@ newClientContactDialog = () ->
     $('#add-new-client-contact-modal').modal({ keyboard:true, backdrop:true, show: true });
   )
 
-$("#add-new-client-contact")
-  .live("click", () ->
+$(document).on('click', '#add-new-client-contact', () ->
     newClientContactDialog()
   )
-
-$('#new-client-contact-form')
-  .live("ajax:beforeSend", (evt, xhr, settings) ->
+  
+$(document).on('ajax:beforeSend', '#new-client-contact-form', (evt, xhr, settings) ->
     $('.error-message').remove()
     $('.with-errors').removeClass('with-errors')
   )
-  .live("ajax:success", (evt, data, status, xhr) ->
+
+$(document).on('ajax:success', '#new-client-contact-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     selectClientContact(res['client_id'], res['id'])
     $('#add-new-client-contact-modal').modal('hide').remove()
     showFlash(res['flash']['notice'], 'success')
   )
-  .live('ajax:complete', (evt, xhr, status) ->
-  )
-  .live("ajax:error", (evt, xhr, status, error) ->
+
+$(document).on('ajax:error', '#new-client-contact-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 

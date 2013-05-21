@@ -99,6 +99,9 @@ class RequestedServicesController < ApplicationController
                                              requested_service_status: RequestedService::INITIAL,
                                              message: "#{@requested_service.laboratory_service.name} agregado a la muestra #{@requested_service.sample.number}")
 
+      # MAIL
+      BitacoraMailer.new_service(@requested_service).deliver
+
       respond_with do |format|
         format.html do
           if request.xhr?

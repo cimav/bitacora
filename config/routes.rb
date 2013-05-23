@@ -1,5 +1,9 @@
+require 'resque/server'
 Bitacora::Application.routes.draw do
   root :to => 'home#index'
+
+  mount Resque::Server.new, :at => "/resque"  
+
   match '/login' => 'login#index'
 
   match '/folders' => 'service_requests#index'

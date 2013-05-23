@@ -1,8 +1,9 @@
+# coding: utf-8
 class BitacoraMailer < ActionMailer::Base
   default from: "bitacora.electronica@cimav.edu.mx"
 
   def new_service(requested_service)
-    @from = requested_service.sample.service_request.user.email
+  	@from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"
     @to = []
       
     if !requested_service.laboratory_service.laboratory.user.blank?
@@ -19,7 +20,7 @@ class BitacoraMailer < ActionMailer::Base
 
     @requested_service = requested_service
 
-    subject = "Nuevo servicio"
+    subject = "Nueva Solicitud #{requested_service.number}: #{requested_service.laboratory_service.name}"
 
     mail(:to => @to, :from => @from, :subject => subject)
   

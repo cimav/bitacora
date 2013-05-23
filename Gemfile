@@ -7,7 +7,7 @@ gem 'rails', '3.2.3'
 
 gem 'mysql2'
 
-gem 'json'
+gem 'json', '~> 1.7.7'
 
 gem 'haml', '3.1.4'
 
@@ -33,3 +33,5 @@ gem 'rmagick'
 gem 'mini_magick'
 
 gem "rubyzip", :require => 'zip/zip'
+
+gem "resque"

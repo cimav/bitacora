@@ -53,6 +53,9 @@
                   %tr
                     %th{:style => "vertical-align: top; text-align: left;"}= "Detalles:"
                     %td= simple_format(@requested_service.details)
+                  %tr
+                    %td{:colspan => 2}
+                      = link_to "Ir a #{@requested_service.number}: #{@requested_service.laboratory_service.name}", "http://bitacora.cimav.edu.mx/#{@requested_service.number}"
 
       %div{:style => "background-color: #888; padding: 20px; color: #eee;"}
         %strong{:style => "margin-top: 8px; margin-left: 10px; color: #eee; font-size: 11px;"}

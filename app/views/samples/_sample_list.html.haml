@@ -3,7 +3,7 @@
     - klass = 'selected'
   - else
     - klass = ''
-  .sample-details{:service_request_id => s.service_request_id, :sample_id => s.id, :class => klass}
+  .sample-details{:service_request_id => s.service_request_id, :sample_id => s.id, :class => klass, :id => s.number}
     .sample-consecutive
       = s.number
       - if s.quantity > 1

@@ -3,5 +3,10 @@
 
 :javascript
   $(function() {
-    $('#folders-link').click();
+    hash = window.location.hash
+    if (hash.slice(0, 2) == '#!' && hash.length > 3) {
+      checkHash();
+    } else {
+      $('#folders-link').click();
+    }
   });

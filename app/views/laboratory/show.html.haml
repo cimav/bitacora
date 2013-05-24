@@ -12,7 +12,7 @@
 #laboratory-workarea
   #lab-req-serv-panel
     .search-box
-      = form_tag '/samples', :id => 'lab-req-serv-live-search', :laboratory_id => @laboratory.id, :method => 'get', :remote => true do
+      = form_tag "/laboratory/#{@laboratory.id}/live_search", :id => 'lab-req-serv-live-search', :laboratory_id => @laboratory.id, :method => 'get', :remote => true do
         = text_field_tag :q, nil, :id => 'req-serv-search-box', :placeholder => 'Busqueda'
 
         - status_options = "<option value=\"0\">Todos los estados</option>"
@@ -49,5 +49,6 @@
 
 :javascript
   $(function() {
-    labReqServicesLiveSearch()
+    $("#req-serv-search-box").val("#{params[:r]}");
+    labReqServicesLiveSearch();
   })

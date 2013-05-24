@@ -1622,6 +1622,38 @@ $(document).on('ajax:error', '#edit-user-form', (evt, xhr, status, error) ->
   )
 
 
+#---------------------------------------
+# Search folder/sample/requested_service
+#---------------------------------------
+@folderGo = folderGo = (folder_number,sample_number ,requested_service_id) ->
+  form = $('#folder-live-search')
+  $("#search-box").val(folder_number)
+  url = '/service_requests/live_search'
+  formData = form.serialize()
+  $.get(url, formData, (html) ->
+    $('#folder-panel .items-placeholder').empty().html(html)
+    url = '/service_requests/' + folder_number
+    $.get(url, {}, (html) ->
+      $("#" + folder_number).addClass('selected')
+      current_request = folder_number
+      $('#folder-main-panel').empty().html(html)
+      setTimeout -> 
+        sample_id = $("#" + sample_number).attr("sample_id")
+        url = '/samples/' + sample_id
+        current_sample = sample_id
+        $.get(url, {}, (html) ->
+          $('#no-samples').remove()
+          $('#request-workarea').empty().html(html)
+          setTimeout ->
+            $("#requested_service_" + requested_service_id).click()
+          , 500
+        )
+      , 500
+    )
+  )
+
+
+
 #-------
 # ERRORS
 #-------
@@ -1653,11 +1685,15 @@ setHash = (h, get_url) ->
   window.location.hash = hash
   checkHash() if get_url
 
-checkHash = () ->
+@checkHash = checkHash = () ->
   if window.location.hash != hash
     hash = window.location.hash
-    if (hash.slice(0, 2) == '#!' && hash.length > 3) 
-      url = hash.slice(2 - hash.length) + '?__from__=url'
+    if (hash.slice(0, 2) == '#!' && hash.length > 3)
+      if hash.indexOf("?") != -1
+        from_url = "&__from__=url"
+      else 
+        from_url = "?__from__=url"
+      url = hash.slice(2 - hash.length) + from_url
       $.get(url, {}, (html) ->
         $('#workarea').empty().html(html)
       )

@@ -80,7 +80,7 @@ class RequestedServicesController < ApplicationController
                                     ", {:service_request => @requested_service.sample.service_request.id,
                                         :sample => @requested_service.sample_id,
                                         :requested_service => @requested_service.id
-                                       }).order('created_at DESC')
+                                       }).order('id DESC')
     @grand_total = get_grand_total(params['id'])
     render :layout => false
   end
@@ -138,11 +138,33 @@ class RequestedServicesController < ApplicationController
 
     flash = {}
     prev_status = @requested_service.status
-
+    params[:requested_service].delete(:user_id) if params[:requested_service][:user_id] == '-'
     if @requested_service.update_attributes(params[:requested_service])
       flash[:notice] = "Servicio actualizado"
       msg = @requested_service.status
       if prev_status != @requested_service.status.to_i
+
+        prv_msg = []
+        if prev_status.to_i == RequestedService::INITIAL
+          if @requested_service.status.to_i == RequestedService::ASSIGNED
+            prv_msg << {:status => RequestedService::RECEIVED, :msg => "Muestra para el análisis #{@requested_service.number} recibida"}
+          end
+          
+          if @requested_service.status.to_i == RequestedService::IN_PROGRESS
+            prv_msg << {:status => RequestedService::RECEIVED, :msg => "Muestra para el análisis #{@requested_service.number} recibida"}
+            prv_msg << {:status => RequestedService::ASSIGNED, :msg => "El análisis #{@requested_service.number} ha sido asignada a #{@requested_service.user.full_name}"}
+          end
+        end
+
+        prv_msg.each do |item|
+          @requested_service.activity_log.create(user_id: current_user.id,
+                                               service_request_id: @requested_service.sample.service_request_id,
+                                               sample_id: @requested_service.sample_id,
+                                               message_type: 'STATUS',
+                                               requested_service_status: item[:status],
+                                               message: "#{item[:msg]}.")
+        end
+
         # LOG
         msg = "Muestra para el análisis #{@requested_service.number} regresada a estado inicial" if @requested_service.status.to_i == RequestedService::INITIAL
         msg = "Muestra para el análisis #{@requested_service.number} recibida" if @requested_service.status.to_i == RequestedService::RECEIVED
@@ -152,6 +174,8 @@ class RequestedServicesController < ApplicationController
         msg = "El análisis #{@requested_service.number} ha iniciado" if @requested_service.status.to_i == RequestedService::IN_PROGRESS
         msg = "El análisis #{@requested_service.number} ha finalizado" if @requested_service.status.to_i == RequestedService::FINISHED
         msg = "El análisis #{@requested_service.number} ha sido cancelado" if @requested_service.status.to_i == RequestedService::CANCELED
+
+
 
         @requested_service.activity_log.create(user_id: current_user.id,
                                                service_request_id: @requested_service.sample.service_request_id,

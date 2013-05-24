@@ -12,6 +12,27 @@
       #field_service_request_sample_description
         = label_tag 'activity_log_msg', 'Notas:'
         = text_area_tag 'activity_log_msg', '', {:style => 'width: 515px;', :rows => 8}
+      %table
+        %tr
+          %td
+            #field_service_request_user_id
+              = label_tag :user_id, 'Técnico:'
+              - members = LaboratoryMember.where(:laboratory_id => @requested_service.laboratory_service.laboratory_id)
+              - u_options = '<option value="-">Sin asignar</option>'
+              - sug = ''
+              - sel = ''
+              - members.each do |m|
+                - if m.user_id == @requested_service.suggested_user_id
+                  - sug = '* '
+                  - sel = 'selected="selected"'
+                  
+                - u_options += "<option value=\"#{m.user_id}\" #{sel}>#{sug}#{m.user.full_name}</option>"
+              = f.select :user_id, u_options.html_safe
+          %td
+            - display = sug == ''? "display: none;" : ""
+            #field_service_start{:style => "margin-top: 8px; padding-left: 1em; #{display}"}
+              = check_box_tag 'start_service', 'yes', false, {:style => 'float: left;'}
+              = label_tag 'start_service', ' Iniciar servicio', {:style => 'white-space: pre;'}
     .modal-footer
       = button_tag "Recibir", {:class => "btn btn-primary", :type => "submit"}
       %button.btn{"data-dismiss" => "modal", "aria-hidden" => "true"}= "Cerrar"

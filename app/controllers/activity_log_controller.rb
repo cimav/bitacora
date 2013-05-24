@@ -12,7 +12,7 @@ class ActivityLogController < ApplicationController
                               ", {:service_request => @from_log.service_request_id,
                                   :sample => @from_log.sample_id,
                                   :requested_service => @from_log.requested_service_id
-                                 }).order('created_at DESC')
+                                 }).order('id DESC')
     render :layout => false
 
   end

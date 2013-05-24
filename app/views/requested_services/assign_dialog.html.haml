@@ -21,6 +21,9 @@
       #field_service_request_sample_description
         = label_tag 'activity_log_msg', 'Notas:'
         = text_area_tag 'activity_log_msg', '', {:style => 'width: 515px;', :rows => 7}
+      #field_service_start{:style => "margin-top: 8px; padding-left: 1em; #{display}"}
+        = check_box_tag 'start_service', 'yes', false, {:style => 'float: left;'}
+        = label_tag 'start_service', ' Iniciar servicio', {:style => 'white-space: pre;'}
     .modal-footer
       = button_tag "Asignar servicio", {:class => "btn btn-primary", :type => "submit"}
       %button.btn{"data-dismiss" => "modal", "aria-hidden" => "true"}= "Cerrar"

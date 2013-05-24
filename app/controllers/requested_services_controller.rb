@@ -156,6 +156,12 @@ class RequestedServicesController < ApplicationController
           end
         end
 
+        if prev_status.to_i == RequestedService::RECEIVED
+          if @requested_service.status.to_i == RequestedService::IN_PROGRESS
+            prv_msg << {:status => RequestedService::ASSIGNED, :msg => "El análisis #{@requested_service.number} ha sido asignada a #{@requested_service.user.full_name}"}
+          end
+        end
+
         prv_msg.each do |item|
           @requested_service.activity_log.create(user_id: current_user.id,
                                                service_request_id: @requested_service.sample.service_request_id,

@@ -1561,6 +1561,10 @@ $(document).on('ajax:error', '#edit-laboratory-form', (evt, xhr, status, error) 
     $("#users-list .user-item:first").click()
   )
 
+$(document).on("change", '#search_business_unit_id', () ->
+  AdminUsersLiveSearch()
+)
+
 $(document).on("change", '#search_user_id', () ->
   AdminUsersLiveSearch()
 )

@@ -17,6 +17,9 @@ class UsersController < ApplicationController
     if !params[:search_user_type].blank? && params[:search_user_type] != '0'
       @users = @users.where("access = :c", {:c => params[:search_user_type]}) 
     end
+    if !params[:search_business_unit_id].blank? && params[:search_business_unit_id] != '0'
+      @users = @users.where("business_unit_id = :c", {:c => params[:search_business_unit_id]}) 
+    end
     if !params[:q].blank?
       @users = @users.where("(CONCAT(first_name,' ',last_name) LIKE :q)", {:q => "%#{params[:q]}%"})
     end

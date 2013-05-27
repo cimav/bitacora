@@ -1,11 +1,18 @@
 #users-panel
   #users-search-panel.search-box
     = form_tag users_path, :id => 'users-live-search', :method => 'get', :remote => true do
+
+      - bu_options = "<option value=\"0\">Todas las unidades</option>"
+      - BusinessUnit.order("name").each do |b|
+        - bu_options += "<option value=\"#{b.id}\">#{b.name}</option>"
+      = select_tag "search_business_unit_id", bu_options.html_safe
+
       - user_type_options = "<option value=\"0\">Todos los tipos</option>"
       - User::ACCESS_TYPES.sort {|a,b| a[1] <=> b[1] }.each do |k,v|
         - user_type_options += "<option value=\"#{k}\">#{v}</option>"
       = select_tag "search_user_type", user_type_options.html_safe
       = text_field_tag :q, nil, :id => 'users-search-box', :placeholder => 'Busqueda'
+  
   #users-list.items-placeholder 
   #users-buttons.bottom-box
     = button_tag "Agregar usuario", {:class => 'btn btn-info', :id => 'add-new-admin-user-button'}

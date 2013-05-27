@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130308020624) do
+ActiveRecord::Schema.define(:version => 20130527190446) do
 
   create_table "activity_logs", :force => true do |t|
     t.integer  "user_id"
@@ -318,13 +318,15 @@ ActiveRecord::Schema.define(:version => 20130308020624) do
     t.string   "employee_number"
     t.string   "first_name"
     t.string   "last_name"
-    t.decimal  "hourly_wage",     :precision => 6, :scale => 2
-    t.string   "access",                                        :default => "1"
-    t.string   "status",                                        :default => "1"
-    t.datetime "created_at",                                                     :null => false
-    t.datetime "updated_at",                                                     :null => false
+    t.decimal  "hourly_wage",      :precision => 6, :scale => 2
+    t.string   "access",                                         :default => "1"
+    t.string   "status",                                         :default => "1"
+    t.datetime "created_at",                                                        :null => false
+    t.datetime "updated_at",                                                        :null => false
     t.integer  "supervisor1_id"
     t.integer  "supervisor2_id"
+    t.boolean  "require_auth",                                   :default => false
+    t.integer  "business_unit_id",                               :default => 1
   end
 
   add_index "users", ["supervisor1_id"], :name => "index_users_on_supervisor1_id"

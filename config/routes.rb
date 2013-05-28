@@ -24,6 +24,8 @@ Bitacora::Application.routes.draw do
         get 'start_dialog'
         get 'finish_dialog'
         get 'cancel_dialog'
+        get 'sup_auth_dialog'
+        get 'owner_auth_dialog'
 
         get 'grand_total'
         

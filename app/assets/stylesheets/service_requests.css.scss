@@ -427,6 +427,12 @@
 .status_6 { background-color: $status_6 !important; color: $white; }
 // FINISHED
 .status_99 { background-color: $status_99 !important; color: $white; }
+// REQ_SUP_AUTH
+.status_7 { background-color: $status_7 !important; color: $white; }
+// REQ_OWNER_AUTH
+.status_8 { background-color: $status_8 !important; color: $white; }
+// UNLOCK
+.status_unlock { background-color: $status_6 !important; color: $white; }
 
 .req_serv_status_1 { border-left: 5px solid $status_1; }
 .req_serv_status_2 { border-left: 5px solid $status_2; }
@@ -436,6 +442,8 @@
 .req_serv_status_6 { border-left: 5px solid $status_6; }
 .req_serv_status_-1 { border-left: 5px solid $status_-1; }
 .req_serv_status_99 { border-left: 5px solid $status_99; }
+.req_serv_status_7 { border-left: 5px solid $status_7; }
+.req_serv_status_8 { border-left: 5px solid $status_8; }
 
 #no-actions {
   padding: 10px;

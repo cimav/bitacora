@@ -2,8 +2,10 @@
 - im_lab_admin = lab_access.to_i == LaboratoryMember::ACCESS_ADMIN
 - im_service_tech = @requested_service.user_id == current_user.id
 - im_requestor = @requested_service.sample.service_request.user_id == current_user.id
+- im_req_supervisor = @requested_service.sample.service_request.user.supervisor1_id == current_user.id || @requested_service.sample.service_request.user.supervisor2_id == current_user.id || @requested_service.sample.service_request.supervisor_id == current_user.id
 
-- initial_action =  @requested_service.status.to_i > RequestedService::INITIAL && @requested_service.status.to_i < RequestedService::FINISHED && im_lab_admin
+
+- initial_action =  @requested_service.status.to_i > RequestedService::INITIAL && @requested_service.status.to_i < RequestedService::FINISHED && im_lab_admin && @requested_service.status.to_i != RequestedService::REQ_SUP_AUTH && @requested_service.status.to_i != RequestedService::REQ_OWNER_AUTH
 - received_action = @requested_service.status.to_i == RequestedService::INITIAL && im_lab_admin
 - assigned_action = @requested_service.status.to_i == RequestedService::RECEIVED && im_lab_admin
 - suspended_action = (@requested_service.status.to_i == RequestedService::IN_PROGRESS || @requested_service.status.to_i == RequestedService::REINIT) && (im_lab_admin || im_service_tech)
@@ -11,6 +13,9 @@
 - in_progress_action = @requested_service.status.to_i == RequestedService::ASSIGNED && (im_lab_admin || im_service_tech)
 - finished_action = (@requested_service.status.to_i == RequestedService::IN_PROGRESS || @requested_service.status.to_i == RequestedService::REINIT) && (im_lab_admin || im_service_tech)
 - canceled_action = (@requested_service.status.to_i > RequestedService::INITIAL && @requested_service.status.to_i < RequestedService::FINISHED && im_lab_admin) || ((@requested_service.status.to_i == RequestedService::INITIAL || @requested_service.status.to_i == RequestedService::SUSPENDED) && im_requestor ) 
+- sup_auth_action = @requested_service.status.to_i == RequestedService::REQ_SUP_AUTH && im_req_supervisor
+
+
 
 
 #requested-service-header 
@@ -80,6 +85,13 @@
               %span{:class => klass}
                 %i.icon-ok.icon-white
               = "Finalizar servicio"
+        - if sup_auth_action
+          - klass = "badge status_unlock"
+          %li
+            %a{:status_action => RequestedService::INITIAL, :id => 'change_status_sup_auth'}
+              %span{:class => klass}
+                %i.icon-ok.icon-white
+              = "Autorizar el servicio"
 
         - if canceled_action
           - klass = "badge status_#{RequestedService::CANCELED}"

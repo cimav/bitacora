@@ -7,6 +7,16 @@ class RequestedServicesController < ApplicationController
     @requested_service = RequestedService.find(params['id'])
     render :layout => false
   end
+
+  def sup_auth_dialog
+    @requested_service = RequestedService.find(params['id'])
+    render :layout => false
+  end
+
+  def owner_auth_dialog
+    @requested_service = RequestedService.find(params['id'])
+    render :layout => false
+  end
  
   def receive_dialog
     @requested_service = RequestedService.find(params['id'])
@@ -147,18 +157,18 @@ class RequestedServicesController < ApplicationController
         prv_msg = []
         if prev_status.to_i == RequestedService::INITIAL
           if @requested_service.status.to_i == RequestedService::ASSIGNED
-            prv_msg << {:status => RequestedService::RECEIVED, :msg => "Muestra para el análisis #{@requested_service.number} recibida"}
+            prv_msg << {:status => RequestedService::RECEIVED, :msg => "Muestra para el servicio #{@requested_service.number} recibida"}
           end
           
           if @requested_service.status.to_i == RequestedService::IN_PROGRESS
-            prv_msg << {:status => RequestedService::RECEIVED, :msg => "Muestra para el análisis #{@requested_service.number} recibida"}
-            prv_msg << {:status => RequestedService::ASSIGNED, :msg => "El análisis #{@requested_service.number} ha sido asignada a #{@requested_service.user.full_name}"}
+            prv_msg << {:status => RequestedService::RECEIVED, :msg => "Muestra para el servicio #{@requested_service.number} recibida"}
+            prv_msg << {:status => RequestedService::ASSIGNED, :msg => "El servicio #{@requested_service.number} ha sido asignada a #{@requested_service.user.full_name}"}
           end
         end
 
         if prev_status.to_i == RequestedService::RECEIVED
           if @requested_service.status.to_i == RequestedService::IN_PROGRESS
-            prv_msg << {:status => RequestedService::ASSIGNED, :msg => "El análisis #{@requested_service.number} ha sido asignada a #{@requested_service.user.full_name}"}
+            prv_msg << {:status => RequestedService::ASSIGNED, :msg => "El servicio #{@requested_service.number} ha sido asignada a #{@requested_service.user.full_name}"}
           end
         end
 
@@ -172,14 +182,16 @@ class RequestedServicesController < ApplicationController
         end
 
         # LOG
-        msg = "Muestra para el análisis #{@requested_service.number} regresada a estado inicial" if @requested_service.status.to_i == RequestedService::INITIAL
-        msg = "Muestra para el análisis #{@requested_service.number} recibida" if @requested_service.status.to_i == RequestedService::RECEIVED
-        msg = "El análisis #{@requested_service.number} ha sido asignada a #{@requested_service.user.full_name}" if @requested_service.status.to_i == RequestedService::ASSIGNED
-        msg = "El análisis #{@requested_service.number} ha sido suspendida" if @requested_service.status.to_i == RequestedService::SUSPENDED
-        msg = "El análisis #{@requested_service.number} ha reiniciado" if @requested_service.status.to_i == RequestedService::REINIT
-        msg = "El análisis #{@requested_service.number} ha iniciado" if @requested_service.status.to_i == RequestedService::IN_PROGRESS
-        msg = "El análisis #{@requested_service.number} ha finalizado" if @requested_service.status.to_i == RequestedService::FINISHED
-        msg = "El análisis #{@requested_service.number} ha sido cancelado" if @requested_service.status.to_i == RequestedService::CANCELED
+        msg = "Muestra para el servicio #{@requested_service.number} regresada a estado inicial" if @requested_service.status.to_i == RequestedService::INITIAL && (prev_status.to_i != RequestedService::REQ_SUP_AUTH || prev_status.to_i != RequestedService::REQ_OWNER_AUTH)
+        msg = "El servicio #{@requested_service.number} ha sido autorizado por el supervisor #{current_user.full_name}" if @requested_service.status.to_i == RequestedService::INITIAL && prev_status.to_i == RequestedService::REQ_SUP_AUTH
+        msg = "El servicio #{@requested_service.number} ha sido autorizado por #{current_user.full_name}" if @requested_service.status.to_i == RequestedService::INITIAL && prev_status.to_i == RequestedService::REQ_OWNER_AUTH
+        msg = "Muestra para el servicio #{@requested_service.number} recibida" if @requested_service.status.to_i == RequestedService::RECEIVED
+        msg = "El servicio #{@requested_service.number} ha sido asignada a #{@requested_service.user.full_name}" if @requested_service.status.to_i == RequestedService::ASSIGNED
+        msg = "El servicio #{@requested_service.number} ha sido suspendida" if @requested_service.status.to_i == RequestedService::SUSPENDED
+        msg = "El servicio #{@requested_service.number} ha reiniciado" if @requested_service.status.to_i == RequestedService::REINIT
+        msg = "El servicio #{@requested_service.number} ha iniciado" if @requested_service.status.to_i == RequestedService::IN_PROGRESS
+        msg = "El servicio #{@requested_service.number} ha finalizado" if @requested_service.status.to_i == RequestedService::FINISHED
+        msg = "El servicio #{@requested_service.number} ha sido cancelado" if @requested_service.status.to_i == RequestedService::CANCELED
 
 
 
@@ -188,8 +200,17 @@ class RequestedServicesController < ApplicationController
                                                sample_id: @requested_service.sample_id,
                                                message_type: 'STATUS',
                                                requested_service_status: @requested_service.status,
-                                               message: "#{msg}. #{params[:activity_log_msg]}")
- 
+                                               message: "#{msg}.")
+
+        if !params[:activity_log_msg].blank?
+          @requested_service.activity_log.create(user_id: current_user.id,
+                                                 service_request_id: @requested_service.sample.service_request_id,
+                                                 sample_id: @requested_service.sample_id,
+                                                 message_type: 'USER',
+                                                 requested_service_status: @requested_service.status,
+                                                 message: "#{params[:activity_log_msg]}")
+        end
+
       end
       respond_with do |format|
         format.html do

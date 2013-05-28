@@ -14,25 +14,30 @@ class RequestedService < ActiveRecord::Base
   has_many :requested_service_others
 
   after_create :set_consecutive
+  after_create :set_auth_if_needed
   after_create :set_costs
 
-  CANCELED     = -1
-  INITIAL      = 1
-  RECEIVED     = 2
-  ASSIGNED     = 3
-  SUSPENDED    = 4
-  REINIT       = 5
-  IN_PROGRESS  = 6
-  FINISHED     = 99 
+  CANCELED       = -1
+  INITIAL        = 1
+  RECEIVED       = 2
+  ASSIGNED       = 3
+  SUSPENDED      = 4
+  REINIT         = 5
+  IN_PROGRESS    = 6
+  REQ_SUP_AUTH   = 7
+  REQ_OWNER_AUTH = 8
+  FINISHED       = 99 
 
   STATUS = {
-    INITIAL      => 'Inicio',
-    RECEIVED     => 'Muestra Recibida',
-    ASSIGNED     => 'Técnico Asignado',
-    SUSPENDED    => 'Servicio Suspendido',
-    REINIT       => 'Servicio Reiniciado',
-    CANCELED     => 'Servicio Cancelado',
-    IN_PROGRESS  => 'En Progreso',
+    INITIAL        => 'Inicio',
+    RECEIVED       => 'Muestra Recibida',
+    ASSIGNED       => 'Técnico Asignado',
+    SUSPENDED      => 'Servicio Suspendido',
+    REINIT         => 'Servicio Reiniciado',
+    CANCELED       => 'Servicio Cancelado',
+    IN_PROGRESS    => 'En Progreso',
+    REQ_SUP_AUTH   => 'Aut. de supervisor',
+    REQ_OWNER_AUTH => 'Aut. de solicitante',
     FINISHED     => 'Finalizado'
   }
 
@@ -51,6 +56,14 @@ class RequestedService < ActiveRecord::Base
     self.consecutive = con
     self.number = "#{self.sample.number}-#{consecutive}"
     self.save(:validate => false)
+  end
+
+  def set_auth_if_needed
+    u = User.find(self.sample.service_request.user_id)
+    if u.require_auth?
+      self.status = REQ_SUP_AUTH
+      self.save(:validate => false)
+    end
   end
 
   def set_costs
@@ -113,7 +126,8 @@ class RequestedService < ActiveRecord::Base
     icon = 'icon-play'     if status.to_i == IN_PROGRESS
     icon = 'icon-ok'       if status.to_i == FINISHED
     icon = 'icon-remove'   if status.to_i == CANCELED
-    icon
+    icon = 'icon-lock'     if status.to_i == REQ_SUP_AUTH
+    icon = 'icon-lock'     if status.to_i == REQ_OWNER_AUTH
   end
 
 end

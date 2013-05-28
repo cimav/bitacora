@@ -309,6 +309,33 @@ changeSampleTagColor = (rs, new_status) ->
   $("#requested_service_" + rs + " .service-bullet").removeClass("status_-1").removeClass("status_1").removeClass("status_2").removeClass("status_3").removeClass("status_4").removeClass("status_5").removeClass("status_6").removeClass("status_99")
   $("#requested_service_" + rs + " .service-bullet").addClass("status_" + new_status)
 
+# SUP AUTH
+$(document).on('click', '#change_status_sup_auth', () ->
+    $("#sup-auth-dialog").remove()
+    $('body').append('<div id="sup-auth-dialog"></div>')
+    url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/sup_auth_dialog'
+    $.get(url, {}, (html) ->
+      $('#sup-auth-dialog').empty().html(html)
+      $('#sup-auth-modal').modal({ keyboard:true, backdrop:true, show: true });
+    )
+  )
+
+$(document).on('ajax:beforeSend', '#sup-auth-sample-form', (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.has-errors').removeClass('has-errors')
+  )
+$(document).on('ajax:success', '#sup-auth-sample-form', (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    getRequestedService(res['sample_id'], res['id'])
+    $('#sup-auth-modal').modal('hide').remove()
+    changeSampleTagColor(res['id'], 1)
+  )
+$(document).on('ajax:error', '#sup-auth-sample-form', (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
 # INITIAL
 $(document).on('click', '#change_status_initial', () ->
     $("#initial-dialog").remove()

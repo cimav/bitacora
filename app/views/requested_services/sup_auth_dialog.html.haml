@@ -1,0 +1,13 @@
+#sup-auth-modal.modal.hide.fade{:tabindex => "-1", :role => "dialog", "aria-labelledby" => "sup-auth-modal-label", "aria-hidden" => "true"}
+  = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'sup-auth-sample-form'} do |f|
+    .modal-header
+      %button.close{"data-dismiss" => "modal", "aria-hidden" => "true"}= "×"
+      %h3#sup-auth-modal-label= "Autorizar servicio para #{@requested_service.sample.number}"
+    .modal-body
+      = f.hidden_field :status, {:value => RequestedService::INITIAL}
+      #field_service_request_sample_description
+        = label_tag 'activity_log_msg', 'Notas:'
+        = text_area_tag 'activity_log_msg', '', {:style => 'width: 515px;', :rows => 8}
+    .modal-footer
+      = button_tag "Autorizar el servicio", {:class => "btn btn-primary", :type => "submit"}
+      %button.btn{"data-dismiss" => "modal", "aria-hidden" => "true"}= "Cerrar"

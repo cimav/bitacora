@@ -96,22 +96,49 @@ class RequestedServicesController < ApplicationController
   end
 
   def create
+    if params[:requested_service][:from_id] == 'false'
+      params[:requested_service][:from_id] = nil
+    else
+      from_rq = RequestedService.find(params[:requested_service][:from_id])
+      if from_rq
+        if (from_rq.sample.service_request.user_id == current_user.id)
+          params[:requested_service][:status] = RequestedService::INITIAL
+          params[:requested_service][:from_id] = nil
+        else
+          params[:requested_service][:status] = RequestedService::REQ_OWNER_AUTH
+        end
+      else
+        params[:requested_service][:from_id] = nil
+      end
+    end
+    
     @requested_service = RequestedService.new(params[:requested_service])
     flash = {}
     if @requested_service.save
       flash[:notice] = "Servicio agregado."
 
       # LOG
-      @requested_service.activity_log.create(user_id: current_user.id,
-                                             service_request_id: @requested_service.sample.service_request_id,
-                                             sample_id: @requested_service.sample_id,
-                                             message_type: 'CREATE',
-                                             requested_service_status: RequestedService::INITIAL,
-                                             message: "#{@requested_service.laboratory_service.name} agregado a la muestra #{@requested_service.sample.number}")
+      if (@requested_service.from_id.to_i > 0)
+        @requested_service.activity_log.create(user_id: current_user.id,
+                                               service_request_id: @requested_service.sample.service_request_id,
+                                               sample_id: @requested_service.sample_id,
+                                               message_type: 'CREATE',
+                                               requested_service_status: RequestedService::REQ_OWNER_AUTH,
+                                               message: "#{@requested_service.laboratory_service.name} agregado a la muestra #{@requested_service.sample.number}, se requiere autorización por parte del dueño.")
+        # Sent mail to owner
+        #Resque.enqueue(NewServiceMailer, @requested_service.id)
+      else
+        @requested_service.activity_log.create(user_id: current_user.id,
+                                               service_request_id: @requested_service.sample.service_request_id,
+                                               sample_id: @requested_service.sample_id,
+                                               message_type: 'CREATE',
+                                               requested_service_status: RequestedService::INITIAL,
+                                               message: "#{@requested_service.laboratory_service.name} agregado a la muestra #{@requested_service.sample.number}")
+        # Sent mail to involved
+        Resque.enqueue(NewServiceMailer, @requested_service.id)
+      end
 
-      # MAIL
-      # BitacoraMailer.new_service(@requested_service).deliver
-      Resque.enqueue(NewServiceMailer, @requested_service.id)
+      
 
       respond_with do |format|
         format.html do
@@ -120,6 +147,14 @@ class RequestedServicesController < ApplicationController
             json[:flash] = flash
             json[:sample_id] = @requested_service.sample_id
             json[:id] = @requested_service.id
+            
+            if (@requested_service.from_id.to_i > 0) 
+              json[:from_lab] = true
+              json[:from_id] = @requested_service.from_id
+            else
+              json[:from_lab] = false
+            end
+
             render :json => json
           else
             redirect_to @requested_service

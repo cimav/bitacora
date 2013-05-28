@@ -104,10 +104,10 @@ $(document).on('click', '.sample-details', () ->
     getSample($(this).attr('sample_id'))
   )
 
-addServiceDialog = () ->
+addServiceDialog = (from_id = false) ->
   $("#add-service-dialog").remove()
   $('body').append('<div id="add-service-dialog"></div>')
-  url = '/laboratory_services/add_service_dialog/'
+  url = "/laboratory_services/add_service_dialog/?from_id=#{from_id}"
   $.get(url, {}, (html) ->
     $('#add-service-dialog').empty().html(html)
     $('#add-service-modal').modal({ keyboard:true, backdrop:true, show: true })
@@ -116,6 +116,11 @@ addServiceDialog = () ->
 
 $(document).on('click', '#open-add-service-modal', () ->
     addServiceDialog()
+  )
+
+$(document).on('click', '#open-add-service-by-lab-modal', () ->
+    current_sample = $('#open-add-service-by-lab-modal').attr('data-for-sample')
+    addServiceDialog($('#open-add-service-by-lab-modal').attr('data-from-id'))
   )
 
 $(document).on('click', '#service_type', () ->
@@ -145,7 +150,8 @@ labServicesLiveSearch = () ->
 $(document).on('click', '.lab-service-item', () ->
     $('.lab-service-item').removeClass('selected')
     $(this).addClass('selected')
-    url = '/laboratory_services/' + $(this).attr('laboratory_service_id') + '/for_sample/' + current_sample
+    from_id = $(this).attr('data-from-id')
+    url = '/laboratory_services/' + $(this).attr('laboratory_service_id') + '/for_sample/' + current_sample + '?from_id=' + from_id
     $.get(url, {}, (html) ->
       $('#service-details').html(html)
     )
@@ -165,8 +171,11 @@ $(document).on('ajax:success', '#new-requested-service-form', (evt, data, status
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     $('#add-service-modal').modal('hide').remove()
-    getSampleRequestedServices(res['sample_id'])
-    getRequestedService(res['sample_id'], res['id'])
+    if (res['from_lab'])
+      getRequestedService(res['sample_id'], res['from_id'])
+    else
+      getSampleRequestedServices(res['sample_id'])
+      getRequestedService(res['sample_id'], res['id'])
   )
 
 $(document).on('ajax:error', '#new-requested-service-form', (evt, xhr, status, error) ->
@@ -308,6 +317,34 @@ $(document).on('click', '#requested-service-status', () ->
 changeSampleTagColor = (rs, new_status) ->
   $("#requested_service_" + rs + " .service-bullet").removeClass("status_-1").removeClass("status_1").removeClass("status_2").removeClass("status_3").removeClass("status_4").removeClass("status_5").removeClass("status_6").removeClass("status_99")
   $("#requested_service_" + rs + " .service-bullet").addClass("status_" + new_status)
+
+# OWNER AUTH
+$(document).on('click', '#change_status_owner_auth', () ->
+    $("#owner-auth-dialog").remove()
+    $('body').append('<div id="owner-auth-dialog"></div>')
+    url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/owner_auth_dialog'
+    $.get(url, {}, (html) ->
+      $('#owner-auth-dialog').empty().html(html)
+      $('#owner-auth-modal').modal({ keyboard:true, backdrop:true, show: true });
+    )
+  )
+
+$(document).on('ajax:beforeSend', '#owner-auth-sample-form', (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.has-errors').removeClass('has-errors')
+  )
+$(document).on('ajax:success', '#owner-auth-sample-form', (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    getRequestedService(res['sample_id'], res['id'])
+    $('#owner-auth-modal').modal('hide').remove()
+    changeSampleTagColor(res['id'], 1)
+  )
+$(document).on('ajax:error', '#owner-auth-sample-form', (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
 
 # SUP AUTH
 $(document).on('click', '#change_status_sup_auth', () ->

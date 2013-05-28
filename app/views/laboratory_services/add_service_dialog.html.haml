@@ -16,9 +16,9 @@
           - laboratory_options = "<option value=\"0\">Todos los laboratorios</option>"
           - laboratories = Laboratory.order('name')
           - laboratories.each do |lab|
-            - laboratory_options += "<option value=\"#{lab.id}\">#{lab.name}</option>"    
+            - laboratory_options += "<option value=\"#{lab.id}\">#{lab.name}</option>"
           = select_tag "laboratory", laboratory_options.html_safe
-
+          = hidden_field_tag :from_id, params[:from_id]
           = text_field_tag :q, nil, :id => 'laboratory-services-search-box', :placeholder => 'Busqueda'
       #laboratory-services-list
     #service-details

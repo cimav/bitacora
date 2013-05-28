@@ -14,6 +14,7 @@
 - finished_action = (@requested_service.status.to_i == RequestedService::IN_PROGRESS || @requested_service.status.to_i == RequestedService::REINIT) && (im_lab_admin || im_service_tech)
 - canceled_action = (@requested_service.status.to_i > RequestedService::INITIAL && @requested_service.status.to_i < RequestedService::FINISHED && im_lab_admin) || ((@requested_service.status.to_i == RequestedService::INITIAL || @requested_service.status.to_i == RequestedService::SUSPENDED) && im_requestor ) 
 - sup_auth_action = @requested_service.status.to_i == RequestedService::REQ_SUP_AUTH && im_req_supervisor
+- owner_auth_action = @requested_service.status.to_i == RequestedService::REQ_OWNER_AUTH && im_requestor
 
 
 
@@ -89,6 +90,14 @@
           - klass = "badge status_unlock"
           %li
             %a{:status_action => RequestedService::INITIAL, :id => 'change_status_sup_auth'}
+              %span{:class => klass}
+                %i.icon-ok.icon-white
+              = "Autorizar el servicio"
+
+        - if owner_auth_action
+          - klass = "badge status_unlock"
+          %li
+            %a{:status_action => RequestedService::INITIAL, :id => 'change_status_owner_auth'}
               %span{:class => klass}
                 %i.icon-ok.icon-white
               = "Autorizar el servicio"
@@ -172,6 +181,10 @@
             %li
               %span.service-bullet{:class => "status_#{rs.status}"}= "%02d" %  rs.consecutive
               = rs.laboratory_service.name
+          %li#add-service
+            .service-bullet.add
+              %i.icon-plus
+              %a#open-add-service-by-lab-modal{"data-for-sample" => @requested_service.sample.id, "data-from-id" => @requested_service.id}= "Agregar servicio"
 
   #bitacora.tab-pane.active
     #activity_log

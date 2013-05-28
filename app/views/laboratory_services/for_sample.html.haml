@@ -2,6 +2,7 @@
 = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'new-requested-service-form'} do |f|
   = f.hidden_field :laboratory_service_id, {:value => @laboratory_service.id}
   = f.hidden_field :sample_id, {:value => @sample.id}
+  = f.hidden_field :from_id, {:value => params[:from_id]}
   .add-service-laboratory= @laboratory_service.laboratory.name
   .add-service-title{"title" => @laboratory_service.description}= @laboratory_service.name
 

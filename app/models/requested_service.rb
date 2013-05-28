@@ -1,6 +1,6 @@
 # coding: utf-8
 class RequestedService < ActiveRecord::Base
-  attr_accessible :laboratory_service_id, :sample_id, :details, :status, :suggested_user_id, :user_id
+  attr_accessible :laboratory_service_id, :sample_id, :details, :status, :suggested_user_id, :user_id, :from_id
   belongs_to :user
   belongs_to :suggested_user, :class_name => 'User', :foreign_key => 'suggested_user_id' 
   belongs_to :sample

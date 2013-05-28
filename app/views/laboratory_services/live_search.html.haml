@@ -1,4 +1,4 @@
 - @laboratory_services.each do |service|
-  .lab-service-item{:laboratory_service_id => service.id}
+  .lab-service-item{:laboratory_service_id => service.id, "data-from-id" => params[:from_id]}
     .lab-service-laboratory= service.laboratory.name
     .lab-service-name= service.name

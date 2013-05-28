@@ -9,7 +9,13 @@ class ServiceRequestsController < ApplicationController
   end
 
   def live_search
-    @requests = ServiceRequest.where('status = :s AND (user_id = :u OR supervisor_id = :u)', {:s => ServiceRequest::ACTIVE, :u => current_user.id}).order('created_at DESC')
+    @requests = ServiceRequest.includes(:user).where('service_requests.status = :s AND 
+                                                     (service_requests.user_id = :u 
+                                                      OR service_requests.supervisor_id = :u 
+                                                      OR (users.require_auth = 1 AND 
+                                                            (users.supervisor1_id = :u OR users.supervisor2_id)
+                                                          )
+                                                      )', {:s => ServiceRequest::ACTIVE, :u => current_user.id}).order('service_requests.created_at DESC')
     if !params[:q].blank?
       @requests = @requests.where("(description LIKE :q OR number LIKE :q OR request_link LIKE :q)", {:q => "%#{params[:q]}%"}) 
     end

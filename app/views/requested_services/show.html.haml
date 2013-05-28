@@ -12,7 +12,7 @@
 - reinit_action = (@requested_service.status.to_i == RequestedService::SUSPENDED) && (im_lab_admin || im_service_tech)
 - in_progress_action = @requested_service.status.to_i == RequestedService::ASSIGNED && (im_lab_admin || im_service_tech)
 - finished_action = (@requested_service.status.to_i == RequestedService::IN_PROGRESS || @requested_service.status.to_i == RequestedService::REINIT) && (im_lab_admin || im_service_tech)
-- canceled_action = (@requested_service.status.to_i > RequestedService::INITIAL && @requested_service.status.to_i < RequestedService::FINISHED && im_lab_admin) || ((@requested_service.status.to_i == RequestedService::INITIAL || @requested_service.status.to_i == RequestedService::SUSPENDED) && im_requestor ) 
+- canceled_action = (@requested_service.status.to_i > RequestedService::INITIAL && @requested_service.status.to_i < RequestedService::FINISHED && im_lab_admin) || ((@requested_service.status.to_i == RequestedService::INITIAL || @requested_service.status.to_i == RequestedService::SUSPENDED) && im_requestor ) || ((@requested_service.status.to_i == RequestedService::REQ_OWNER_AUTH) && im_requestor)
 - sup_auth_action = @requested_service.status.to_i == RequestedService::REQ_SUP_AUTH && im_req_supervisor
 - owner_auth_action = @requested_service.status.to_i == RequestedService::REQ_OWNER_AUTH && im_requestor
 

@@ -229,7 +229,6 @@ class RequestedServicesController < ApplicationController
         msg = "El servicio #{@requested_service.number} ha sido cancelado" if @requested_service.status.to_i == RequestedService::CANCELED
 
 
-
         @requested_service.activity_log.create(user_id: current_user.id,
                                                service_request_id: @requested_service.sample.service_request_id,
                                                sample_id: @requested_service.sample_id,
@@ -244,6 +243,16 @@ class RequestedServicesController < ApplicationController
                                                  message_type: 'USER',
                                                  requested_service_status: @requested_service.status,
                                                  message: "#{params[:activity_log_msg]}")
+        end
+
+        if params[:send_mail] == 'yes'
+          prv_msg << {:status => @requested_service.status, :msg => msg}
+          if !params[:activity_log_msg].blank?
+            prv_msg << {:status => "USER", :msg => "#{params[:activity_log_msg]}"}
+          end
+          # Sent mail to involved
+          Resque.enqueue(StatusChangeMailer, @requested_service.id, current_user.id, prv_msg)
+
         end
 
       end

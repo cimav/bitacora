@@ -1,0 +1,42 @@
+!!!
+%html
+  %head
+    %meta{"content" => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
+  %body
+    %div{:style => "background-color: #ccc; padding: 20px;"}
+      %div{:style => "background-color: #eee; padding: 20px; border-bottom: 1px solid #ddd;"}
+        %table 
+          %tbody 
+            %tr
+              %td{:style => "width: 120px; text-align: center;"}
+                = image_tag ("http://cimav.edu.mx/foto/#{@user.email.split('@')[0]}/100"), :style => "border-radius: 50em; -webkit-border-radius: 50em; -moz-border-radius: 50em;"
+              %td
+                %h2{:style => "margin-bottom: 2px;"}= @user.full_name
+                = mail_to @user.email, @user.email, :subject =>  "[R] #{@requested_service.number}: #{@requested_service.laboratory_service.name}"
+
+      %div{:style => "background-color: #ffffff; padding: 20px; padding-bottom: 60px;"}
+        %table
+          %tr
+            %td{:style => "min-width: 400px;"}
+              %h2{:style => "font-size: 18px;"}= "#{@requested_service.number}: #{@requested_service.laboratory_service.name}"
+              %table
+                %tbody
+                  - @msgs.each do |item|
+                    %tr
+                      %td{:style => 'vertical-align: top; width: 100px; wnite-space: pre;'}
+                        - if item["status"] != 'USER'
+                          = RequestedService::STATUS[item["status"].to_i]
+                        - else
+                          = "Mensaje"
+                      %td{:style => 'vertical-align: top; padding-left: 20px;'}
+                        = item["msg"]
+                  
+              %br
+              %br
+              = link_to "Ir a #{@requested_service.number}: #{@requested_service.laboratory_service.name}", "http://bitacora.cimav.edu.mx/#{@requested_service.number}"
+      %div{:style => "background-color: #888; padding: 20px; color: #eee;"}
+        %strong{:style => "margin-top: 8px; margin-left: 10px; color: #eee; font-size: 11px;"}
+        = "Mensaje enviado automáticamente desde "
+        %strong= "Bitácora Electrónica"
+           
+        

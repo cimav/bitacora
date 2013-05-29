@@ -34,5 +34,8 @@
               = check_box_tag 'start_service', 'yes', false, {:style => 'float: left;'}
               = label_tag 'start_service', ' Iniciar servicio', {:style => 'white-space: pre;'}
     .modal-footer
+      .send-mail-footer
+        = check_box_tag 'send_mail', 'yes', false, {:style => 'float: left;'}
+        = label_tag 'send_mail', 'Enviar por correo.', {:style => 'margin-left: 4px; float: left;'}
       = button_tag "Recibir", {:class => "btn btn-primary", :type => "submit"}
       %button.btn{"data-dismiss" => "modal", "aria-hidden" => "true"}= "Cerrar"

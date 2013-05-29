@@ -9,5 +9,8 @@
         = label_tag 'activity_log_msg', 'Notas:'
         = text_area_tag 'activity_log_msg', '', {:style => 'width: 515px;', :rows => 8}
     .modal-footer
+      .send-mail-footer
+        = check_box_tag 'send_mail', 'yes', true, {:style => 'float: left;'}
+        = label_tag 'send_mail', 'Enviar por correo.', {:style => 'margin-left: 4px; float: left;'}
       = button_tag "Finalizar el servicio", {:class => "btn btn-primary", :type => "submit"}
       %button.btn{"data-dismiss" => "modal", "aria-hidden" => "true"}= "Cerrar"

@@ -6,17 +6,20 @@ class BitacoraMailer < ActionMailer::Base
   	@from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"
     @to = []
       
+    # Lab admin
     if !requested_service.laboratory_service.laboratory.user.blank?
       @to << requested_service.laboratory_service.laboratory.user.email
     end
   
+    # Suggested 
     if !requested_service.suggested_user.blank?
       @to << requested_service.suggested_user.email
     end
 
-    if !requested_service.sample.service_request.supervisor.blank?
-      @to << requested_service.sample.service_request.supervisor.email
-    end
+    # Folder supervisor
+    # if !requested_service.sample.service_request.supervisor.blank?
+    #  @to << requested_service.sample.service_request.supervisor.email
+    # end
 
     @requested_service = requested_service
 
@@ -29,21 +32,32 @@ class BitacoraMailer < ActionMailer::Base
   def status_change(requested_service, user, msgs)
     @from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"
     @to = []
-      
+
+    # Requestor  
     @to << requested_service.sample.service_request.user.email
+
+    # Sender
     @to << user.email
 
-    if !requested_service.laboratory_service.laboratory.user.blank?
-      @to << requested_service.laboratory_service.laboratory.user.email
-    end
-  
-    if !requested_service.suggested_user.blank?
-      @to << requested_service.suggested_user.email
+    # Assigned
+    if !requested_service.user.blank?
+      @to << requested_service.user.email
     end
 
-    if !requested_service.sample.service_request.supervisor.blank?
-      @to << requested_service.sample.service_request.supervisor.email
+    # User Supervisors  
+    if requested_service.status.to_i == RequestedService::REQ_SUP_AUTH   
+      if !requested_service.sample.service_request.user.supervisor1.email.blank?
+        @to << requested_service.sample.service_request.supervisor1.email
+      end
+      if !requested_service.sample.service_request.user.supervisor2.email.blank?
+        @to << requested_service.sample.service_request.supervisor2.email
+      end
     end
+
+    # Folder supervisor
+    # if !requested_service.sample.service_request.supervisor.blank?
+    #  @to << requested_service.sample.service_request.supervisor.email
+    # end
 
     @requested_service = requested_service
     @user = user

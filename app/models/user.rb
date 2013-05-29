@@ -33,6 +33,8 @@ class User < ActiveRecord::Base
   has_many :laboratories, :through => :laboratory_members
   has_many :laboratory_services, :through => :requested_service
   has_many :activity_log
+  belongs_to :supervisor1, :class_name => 'User', :foreign_key => 'supervisor1_id'
+  belongs_to :supervisor2, :class_name => 'User', :foreign_key => 'supervisor2_id'
 
   def full_name
     "#{first_name} #{last_name}"

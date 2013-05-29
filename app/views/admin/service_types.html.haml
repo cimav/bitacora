@@ -1,0 +1,15 @@
+#service-types-panel
+  #service-types-search-panel.search-box
+    = form_tag 'xxx', :id => 'service-types-live-search', :method => 'get', :remote => true do
+      = text_field_tag :q, nil, :id => 'service-types-search-box', :placeholder => 'Busqueda'
+  #service-types-list.items-placeholder 
+  #service-types-buttons.bottom-box
+    = button_tag "Agregar nuevo tipo", {:class => 'btn btn-info', :id => 'add-new-admin-service-types-button'}
+    
+
+#service-types-details
+
+:javascript 
+  $(function() {
+    ServiceTypesLiveSearch()
+  })

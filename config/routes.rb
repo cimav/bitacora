@@ -146,6 +146,12 @@ Bitacora::Application.routes.draw do
   match '/client_contacts/new_dialog/:client_id' => 'client_contacts#new_dialog'
   resources :client_contacts
 
+  match '/request_types/live_search' => 'request_types#live_search'
+  resources :request_types
+
+  match '/service_types/live_search' => 'service_types#live_search'
+  resources :service_types
+
   match '/admin' => 'admin#index'
   match '/admin/clients' => 'admin#clients'
   match '/admin/client_types' => 'admin#client_types'
@@ -153,6 +159,8 @@ Bitacora::Application.routes.draw do
   match '/admin/materials' => 'admin#materials'
   match '/admin/laboratories' => 'admin#laboratories'
   match '/admin/users' => 'admin#users'
+  match '/admin/request_types' => 'admin#request_types'
+  match '/admin/service_types' => 'admin#service_types'
 
   match '/auth/:provider/callback' => 'sessions#create'
   match '/auth/failure' => 'sessions#failure'

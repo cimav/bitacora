@@ -37,7 +37,9 @@ body {
 #clients-panel,
 #materials-panel,
 #equipment-panel,
-#users-panel {
+#users-panel,
+#request-types-panel,
+#service-types-panel {
   width: $side-panel-width;
   position: fixed;
   bottom: 0px;

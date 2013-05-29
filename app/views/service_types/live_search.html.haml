@@ -1,0 +1,7 @@
+%ul
+  - @service_type.each do |service_type|
+    %li.service-type-item.item{"data-id" => service_type.id}
+      .service-type-item-name{:id => "service_type_display_#{service_type.id}"}= "#{service_type.name}"
+.items-counter
+  .items-counter-inner
+    = "#{@service_type.count} tipos"

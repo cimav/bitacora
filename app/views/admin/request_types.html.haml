@@ -1,0 +1,15 @@
+#request-types-panel
+  #request-types-search-panel.search-box
+    = form_tag 'xxx', :id => 'request-types-live-search', :method => 'get', :remote => true do
+      = text_field_tag :q, nil, :id => 'request-types-search-box', :placeholder => 'Busqueda'
+  #request-types-list.items-placeholder 
+  #request-types-buttons.bottom-box
+    = button_tag "Agregar nuevo tipo", {:class => 'btn btn-info', :id => 'add-new-admin-request-types-button'}
+    
+
+#request-types-details
+
+:javascript 
+  $(function() {
+    RequestTypesLiveSearch()
+  })

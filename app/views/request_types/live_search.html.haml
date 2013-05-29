@@ -1,0 +1,7 @@
+%ul
+  - @request_type.each do |request_type|
+    %li.request-type-item.item{"data-id" => request_type.id}
+      .request-type-item-name{:id => "request_type_display_#{request_type.id}"}= "#{request_type.name}"
+.items-counter
+  .items-counter-inner
+    = "#{@request_type.count} tipos"

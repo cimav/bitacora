@@ -7,6 +7,8 @@
       - if current_user.is_admin? 
         %li{"data-link" => "/admin/users"}= link_to "Usuarios", "#"
         %li{"data-link" => "/admin/laboratories"}= link_to "Laboratorios", "#"
+        %li{"data-link" => "/admin/service_types"}= link_to "Tipos de servicios", "#"
+        %li{"data-link" => "/admin/request_types"}= link_to "Tipos de peticiones", "#"
       %li{"data-link" => "/admin/clients"}= link_to "Clientes", "#"
       %li{"data-link" => "/admin/equipment"}= link_to "Equipos", "#"
       %li{"data-link" => "/admin/materials"}= link_to "Consumibles", "#"

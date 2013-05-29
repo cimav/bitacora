@@ -26,4 +26,12 @@ class AdminController < ApplicationController
     render :layout => false
   end
 
+  def request_types
+    render :layout => false
+  end
+
+  def service_types
+    render :layout => false
+  end
+
 end

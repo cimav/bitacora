@@ -7,7 +7,9 @@
 #laboratories-panel,
 #equipment-panel,
 #materials-panel,
-#users-panel {
+#users-panel,
+#service-types-panel,
+#request-types-panel {
   position: fixed;
   top: 96px;
   bottom: 0px;
@@ -29,7 +31,9 @@
   #equipment-buttons,
   #laboratories-buttons,
   #materials-buttons,
-  #users-buttons {
+  #users-buttons,
+  #request-types-buttons,
+  #service-types-buttons {
       width: $side-panel-width;
       position: absolute;
       text-align: center;
@@ -50,7 +54,9 @@
 #equipment-details,
 #laboratory-details,
 #materials-details,
-#user-details {
+#user-details,
+#service-types-details,
+#request-types-details {
   left: ($sample-list-width * 2) + 24;
   right: 0px;
   position: fixed;

@@ -1,0 +1,65 @@
+!!!
+%html
+  %head
+    %meta{"content" => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
+  %body
+    %div{:style => "background-color: #ccc; padding: 20px;"}
+      %div{:style => "background-color: #eee; padding: 20px; border-bottom: 1px solid #ddd;"}
+        %table 
+          %tbody 
+            %tr
+              %td{:style => "width: 120px; text-align: center;"}
+                = image_tag ("http://cimav.edu.mx/foto/#{@requested_service.sample.service_request.user.email.split('@')[0]}/100"), :style => "border-radius: 50em; -webkit-border-radius: 50em; -moz-border-radius: 50em;"
+              %td
+                %h2{:style => "margin-bottom: 2px;"}= @requested_service.sample.service_request.user.full_name
+                = mail_to @requested_service.sample.service_request.user.email, @requested_service.sample.service_request.user.email, :subject =>  "[R] #{@requested_service.number}: #{@requested_service.laboratory_service.name}"
+
+      %div{:style => "background-color: #ffffff; padding: 20px; padding-bottom: 60px;"}
+        %table
+          %tr
+            %td{:style => "min-width: 400px;"}
+              %h2{:style => "font-size: 18px;"}= "#{@requested_service.number}: #{@requested_service.laboratory_service.name} (requiere autorización)"
+              %table
+                %tbody
+                  %tr
+                    %th{:style => "vertical-align: top; text-align: left;"}= "Fecha de solicitud:"
+                    %td= l @requested_service.created_at, :format => :long
+                  %tr
+                    %th{:style => "vertical-align: top; text-align: left;"}= "Laboratorio: " 
+                    %td= @requested_service.laboratory_service.laboratory.name
+                  %tr
+                    %th{:style => "vertical-align: top; text-align: left;"}= "Servicio solicitado: " 
+                    %td= @requested_service.laboratory_service.name
+                  %tr
+                    %th{:style => "vertical-align: top; text-align: left;"}= "Muestra:"
+                    %td= "#{@requested_service.sample.number}: #{@requested_service.sample.identification}"
+                  %tr
+                    %th{:style => "vertical-align: top; text-align: left;"}= "Cantidad:"
+                    %td= @requested_service.sample.quantity
+                  %tr
+                    %th{:style => "vertical-align: top; text-align: left;"}= "Descripción:"
+                    %td= simple_format(@requested_service.sample.description)
+                  %tr
+                    %th{:style => "vertical-align: top; text-align: left;"}= "Técnico Sugerido:"
+                    %td= "#{(@requested_service.suggested_user.full_name rescue 'Cualquier Técnico')}"
+                  %tr
+                    %th{:style => "vertical-align: top; text-align: left;"}= "#{(@requested_service.sample.service_request.request_type.name rescue 'Sin Tipo')}: "
+                    %td= @requested_service.sample.service_request.request_link
+        
+                  - if !@requested_service.sample.service_request.supervisor_id.blank?
+                    %tr
+                      %th{:style => "vertical-align: top; text-align: left;"}= "Supervisor: "
+                      %td= @requested_service.sample.service_request.supervisor.full_name
+                  %tr
+                    %th{:style => "vertical-align: top; text-align: left;"}= "Detalles:"
+                    %td= simple_format(@requested_service.details)
+                  %tr
+                    %td{:colspan => 2}
+                      = link_to "Autorizar #{@requested_service.number}: #{@requested_service.laboratory_service.name}", "http://bitacora.cimav.edu.mx/#{@requested_service.number}"
+
+      %div{:style => "background-color: #888; padding: 20px; color: #eee;"}
+        %strong{:style => "margin-top: 8px; margin-left: 10px; color: #eee; font-size: 11px;"}
+        = "Mensaje enviado automáticamente desde "
+        %strong= "Bitácora Electrónica"
+           
+        

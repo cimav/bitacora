@@ -96,8 +96,14 @@ class RequestedServicesController < ApplicationController
   end
 
   def create
+    
     if params[:requested_service][:from_id] == 'false'
       params[:requested_service][:from_id] = nil
+      if current_user.require_auth?
+        params[:requested_service][:status] = RequestedService::REQ_SUP_AUTH
+      else
+        params[:requested_service][:status] = RequestedService::INITIAL
+      end
     else
       from_rq = RequestedService.find(params[:requested_service][:from_id])
       if from_rq
@@ -111,6 +117,8 @@ class RequestedServicesController < ApplicationController
         params[:requested_service][:from_id] = nil
       end
     end
+
+
     
     @requested_service = RequestedService.new(params[:requested_service])
     flash = {}
@@ -127,6 +135,15 @@ class RequestedServicesController < ApplicationController
                                                message: "#{@requested_service.laboratory_service.name} agregado a la muestra #{@requested_service.sample.number}, se requiere autorización por parte del dueño.")
         # Sent mail to owner
         Resque.enqueue(NewServiceOwnerAuthMailer, @requested_service.id)
+      elsif current_user.require_auth?
+        @requested_service.activity_log.create(user_id: current_user.id,
+                                               service_request_id: @requested_service.sample.service_request_id,
+                                               sample_id: @requested_service.sample_id,
+                                               message_type: 'CREATE',
+                                               requested_service_status: RequestedService::REQ_SUP_AUTH,
+                                               message: "#{@requested_service.laboratory_service.name} agregado a la muestra #{@requested_service.sample.number}, se requiere autorización por parte del supervisor")
+        # Sent mail to involved
+        Resque.enqueue(NewServiceSupAuthMailer, @requested_service.id)
       else
         @requested_service.activity_log.create(user_id: current_user.id,
                                                service_request_id: @requested_service.sample.service_request_id,

@@ -126,7 +126,7 @@ class RequestedServicesController < ApplicationController
                                                requested_service_status: RequestedService::REQ_OWNER_AUTH,
                                                message: "#{@requested_service.laboratory_service.name} agregado a la muestra #{@requested_service.sample.number}, se requiere autorización por parte del dueño.")
         # Sent mail to owner
-        #Resque.enqueue(NewServiceMailer, @requested_service.id)
+        Resque.enqueue(NewServiceOwnerAuthMailer, @requested_service.id)
       else
         @requested_service.activity_log.create(user_id: current_user.id,
                                                service_request_id: @requested_service.sample.service_request_id,

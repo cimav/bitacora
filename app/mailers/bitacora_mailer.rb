@@ -5,6 +5,9 @@ class BitacoraMailer < ActionMailer::Base
   def new_service(requested_service)
   	@from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"
     @to = []
+
+     # Requestor  
+    @to << requested_service.sample.service_request.user.email
       
     # Lab admin
     if !requested_service.laboratory_service.laboratory.user.blank?
@@ -29,6 +32,40 @@ class BitacoraMailer < ActionMailer::Base
   
   end
 
+
+  def new_service_owner_auth(requested_service)
+    @from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"
+    @to = []
+
+    # Requestor  
+    @to << requested_service.sample.service_request.user.email
+
+    if requested_service.sample.service_request.user.require_auth?
+      # Requestor supervisor 1 
+      if !requested_service.sample.service_request.user.supervisor1.blank?
+        @to << requested_service.sample.service_request.user.supervisor1.email
+      end
+
+      # Requestor supervisor 2 
+      if !requested_service.sample.service_request.user.supervisor2.blank?
+        @to << requested_service.sample.service_request.user.supervisor2.email
+      end
+
+      # Folder supervisor
+      if !requested_service.sample.service_request.supervisor.blank?
+        @to << requested_service.sample.service_request.supervisor.email
+      end
+    end
+
+    @requested_service = requested_service
+
+    subject = "Autorizar Nueva Solicitud #{requested_service.number}: #{requested_service.laboratory_service.name}"
+
+    mail(:to => @to, :from => @from, :subject => subject)
+  
+  end
+
+
   def status_change(requested_service, user, msgs)
     @from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"
     @to = []
@@ -44,6 +81,13 @@ class BitacoraMailer < ActionMailer::Base
       @to << requested_service.user.email
     end
 
+    if requested_service.status.to_i == RequestedService::INITIAL
+      # Lab admin
+      if !requested_service.laboratory_service.laboratory.user.blank?
+        @to << requested_service.laboratory_service.laboratory.user.email
+      end
+    end
+    
     # User Supervisors  
     if requested_service.status.to_i == RequestedService::REQ_SUP_AUTH   
       if !requested_service.sample.service_request.user.supervisor1.email.blank?

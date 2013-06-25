@@ -1,6 +1,8 @@
 :javascript
-  function edit_description(id)
-  {
+
+  var zipTimer;
+
+  function edit_description(id) {
     $("#file-" + id + " .file-desc").hide();
     $("#file-" + id + " .file-details").hide();
     $("#file-" + id + " .file-desc-form").show();
@@ -41,6 +43,38 @@
   $(document).on('ajax:beforeSend', '.delete-file', function(ev, xhr, settings) {
      $(this).closest('tr').addClass("loading");
   });
+
+  $(document).on('click', '#zip-link', function() {
+    sample_id = $(this).attr('data-sample-id');
+    url = '/service_files/zip_ready/' + sample_id;
+    $.get(url, {}, function(data) {
+      if (data.ready) {
+        window.location = data.url;
+      } else {
+        url = '/service_files/generate_zip/' + sample_id;
+        $.get(url, {}, function(data) {
+          if (data['generate']) {
+            $('#zip-link').html('Generando...');
+            zipTimer = setInterval(checkZip, 1000);
+          } else {
+            alert('Fallo al intentar generar ZIP');
+          }
+        }, 'json');
+      }
+    }, 'json');
+  });
+
+  function checkZip() {
+    sample_id = $("#service_file_sample_id").val();
+    url = '/service_files/zip_ready/' + sample_id;
+    $.get(url, {}, function(data) {
+      if (data.ready) {
+        $('#zip-link').html('Descargar ZIP');
+        clearInterval(zipTimer);
+        window.location = data.url;
+      }
+    }, 'json');
+  }
 
   
 
@@ -90,7 +124,7 @@
               - if service_file.user_id = current_user.id
                 %span.file-edit= link_to_function 'Editar', "edit_description(#{service_file.id})"
     #download-zip
-      %a{'href' => "/service_files/zip/#{@sample_id}"}= "Descargar ZIP"
+      %a#zip-link{"data-sample-id" => @sample_id}= "Descargar ZIP"
 
 
   .clearfix

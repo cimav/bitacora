@@ -30,6 +30,8 @@ class ServiceFilesController < ApplicationController
         flash[:error] = "Error al subir archivo."
       end
     end
+    # Generate zip version
+    Resque.enqueue(GenerateSampleZip, params[:service_file]['sample_id'])
 
     redirect_to :back
   end
@@ -114,22 +116,38 @@ class ServiceFilesController < ApplicationController
     send_file s.file.to_s, :x_sendfile=>true
   end 
 
-  def download_zip
-    @sample = Sample.find(params[:sample_id])
-    @req_services = RequestedService.where(:sample_id => params[:sample_id])
-    temp = Tempfile.new("zip-file-#{Time.now}")
-    Zip::ZipOutputStream.open(temp.path) do |z|
-      @req_services.each do |rs|
-        rs.service_files.each do |service_file|
-          z.put_next_entry(File.basename(service_file.file.to_s))
-          #z.print IO.read(service_file.file.to_s)
-          #z.write service_file.file.read
-          z.print File.open(service_file.file.to_s, "rb"){ |f| f.read }
-        end
-      end
+  def download_zip 
+    sample = Sample.find(params[:sample_id])
+    path = "#{Rails.root}/private/zip/#{sample.number}.zip"
+    if File.exist?(path)
+      send_file path, :type => 'application/zip', :disposition => 'attachment', :filename => "#{sample.number}.zip"
+    else
+      # Generate zip version
+      Resque.enqueue(GenerateSampleZip, params[:sample_id])
     end
-    send_file temp.path, :type => 'application/zip', :disposition => 'attachment', :filename => "#{@sample.number}.zip"
-    temp.delete()
+  end
+
+  def zip_ready 
+    sample = Sample.find(params[:sample_id])
+    path = "#{Rails.root}/private/zip/#{sample.number}.zip"
+    json = {}
+    if File.exist?(path)
+      json[:ready] = true
+      json[:url] = "/service_files/zip/#{sample.id}"
+    else
+      json[:url] = "/service_files/generate_zip/#{sample.id}"
+      json[:ready] = false
+    end
+    render :json => json
+  end
+
+  def generate_zip
+    sample = Sample.find(params[:sample_id])
+    path = "#{Rails.root}/private/zip/#{sample.number}.zip"
+    Resque.enqueue(GenerateSampleZip, params[:sample_id])
+    json = {}
+    json[:generate] = true
+    render :json => json
   end
 
 end

@@ -755,7 +755,7 @@ class RequestedServicesController < ApplicationController
   end
 
 
-    def new_other
+  def new_other
     
     flash = {}
     

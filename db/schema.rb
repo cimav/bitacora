@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130528003915) do
+ActiveRecord::Schema.define(:version => 20130625185640) do
 
   create_table "activity_logs", :force => true do |t|
     t.integer  "user_id"
@@ -150,14 +150,25 @@ ActiveRecord::Schema.define(:version => 20130528003915) do
   add_index "laboratory_services", ["laboratory_id"], :name => "index_laboratory_services_on_laboratory_id"
   add_index "laboratory_services", ["service_type_id"], :name => "index_laboratory_services_on_service_type_id"
 
+  create_table "material_types", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "status",      :default => "1"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+  end
+
   create_table "materials", :force => true do |t|
     t.string   "name"
     t.text     "description"
     t.integer  "unit_id"
-    t.decimal  "unit_price",  :precision => 6, :scale => 2
-    t.string   "status",                                    :default => "1"
-    t.datetime "created_at",                                                 :null => false
-    t.datetime "updated_at",                                                 :null => false
+    t.decimal  "unit_price",       :precision => 6, :scale => 2
+    t.string   "status",                                         :default => "1"
+    t.datetime "created_at",                                                      :null => false
+    t.datetime "updated_at",                                                      :null => false
+    t.string   "cas"
+    t.string   "formula"
+    t.integer  "material_type_id"
   end
 
   create_table "other_types", :force => true do |t|

@@ -6,13 +6,25 @@
     = f.text_field :name, {:class => 'input-xxlarge', :placeholder => 'Nombre del consumible'}
   .field#field_material_description
     = f.label :description, 'Descripción:'
-    = f.text_area :description, {:class => 'input-xxlarge', :rows => 10}
+    = f.text_area :description, {:class => 'input-xxlarge', :rows => 4}
   .field#field_material_unit_id
     = f.label :unit_id, 'Unidad:'
     - unit_options = ""
     - Unit.order('name').each do |unit|
       - unit_options += "<option value=\"#{unit.id}\">#{unit.name}</option>"
     = f.select :unit_id, unit_options.html_safe
+  .field#field_material_material_type_id
+    = f.label :material_type_id, 'Tipo:'
+    - mat_options = ""
+    - MaterialType.order('name').each do |mat|
+      - mat_options += "<option value=\"#{mat.id}\">#{mat.name}</option>"
+    = f.select :material_type_id, mat_options.html_safe
+  .field#field_cas
+    = f.label :cas, 'CAS:'
+    = f.text_field :cas, {:class => 'input-large', :placeholder => 'CAS'}
+  .field#field_formula
+    = f.label :formula, 'Formula:'
+    = f.text_field :formula, {:class => 'input-large', :placeholder => 'Formula'}
   .field#field_material_unit_price
     = f.label :unit_price, 'Costo por unidad:'
     = f.text_field :unit_price, {:class => 'input-large'}

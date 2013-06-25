@@ -1,0 +1,1 @@
+INSERT INTO requested_services SELECT NULL, laboratory_services.id, 0, 0, 'TEMPLATE', '', laboratories.user_id, NULL, 0, NOW(), NOW(),0 FROM laboratory_services INNER JOIN laboratories ON laboratory_id = laboratories.id;

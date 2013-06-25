@@ -1,0 +1,575 @@
+    0002   ADALBERTO ENRIQUE DUARTE MACDONALD
+              ADALBERTO ENRIQUE DUARTE                  luisdmc@prodigy.net.mx
+    0004   ADHESIVOS Y BOQUILLAS INTERCERAMIC S. DE R.L. DE C.V.
+              INTERCERAMIC CXP                          sjurado@interceramic.com
+              INTERCERAMIC CXP                          kviveros@interceramic.com
+              INTERCERAMIC CXP                          omendoza@interceramic.com
+    0009   AGRI-ESTRELLA S.DE R.L.. DE C.V.
+              AGRI-ESTRELLA CXP                         jmarquez@agristar.com.mx
+              ALFONSO GUTIERREZ                         agutierrez@agristar.com.mx
+    0013   AGROPECUARIA DEL CONSUELO S.A. DE C.V.
+              AGROPECUARIA DEL CONSUELO                 mgagropec@hotmail.com
+    0018   ALTEC ELECTRONICA CHIHUAHUA, S.A. DE C.V.
+              ALTEC CXP                                 iramirez@visteon.com
+              DAVID SILVA CXC                           dsilva1@visteon.com
+              G VIDAL                                   gvidal@visteon.com
+              MARCELA MUÑOZ                             mmunoz3@visteon.com
+    0020   AMERICAN BEEF S.A. DE C.V.
+              AMERICAN BEEF                             oarellanes@amebeef.com
+              AMERICAN BEEF                             jruiz@amebeef.com
+    0030   ARROW INTERNACIONAL DE CHIHUAHUA, S.A. DE C.V.
+              ARROW INTERNACIONAL                       cinthia.canales@teleflex.com
+              CXC                                       Cinthia.canales@teleflex.com
+    0039   BIMBO S.A.  DE C.V.
+              BIMBO                                     francisco.porras@grupobimbo.com
+    0042   ROBERT BOSCH SISTEMAS AUTOMOTRICES, S.A. DE C.V.
+              CXC                                       cuentasporpagar@us.bosch.com
+              ROBERT BOSCH SISTEMAS AUTOMOTRICES        iveth.holguin@us.bosch.com
+              ROBERT BOSCH SISTEMAS AUTOMOTRICES CXP    cuentasporpagarjuarez@us.bosch.com
+    0046   BYCOSIN LATINOAMÉRICA S.A. DE C.V.
+              BYCOSIN                                   gruiz@bycosin.com.mx
+    0054   CENTRO DE CALIDAD AMBIENTALS.C.
+              CENTRO DE CALIDAD AMBIENTAL               lgarcia@ccambiental.com
+    0055   CENTRO DE INVESTIGACION EN ALIMENTACION Y DESARROLLO A.C.
+              CENTRO DE INVESTIGACION EN ALIMENTOS      ecardona@ciad.mx
+    0057   CENTRO DE INGENIERIA Y DESARROLLO INDUSTRIAL
+              CENTRO DE INGENIERIA                      facturacion.electronica@cidesi.mx
+              CENTRO DE INGENIERIA                      thernandez@cidesi.mx
+    0084   CREST, S.A. DE C.V.
+              CIMAV (HONORIO)                           honorio.lara@cimav.edu.mx
+              CREST                                     iamaya@crest.com.mx
+    0085   CRONI, S.A. DE C.V.
+              CRONI CXP                                 mlopez@ccroni.com
+    0090   DANIEL MEASUREMENT AND CONTROL S DE RL DE C.V.
+              CXP                                       fe@informap.mx
+              CXP                                       nayeli.aguirre@emerson.com
+              CXP                                       Sylvia.Almaraz@emerson.com
+              DANIEL CXP                                daniel.accountspayable-chi@emersonprocess.com
+              EDUARDO GONZALEZ                          eduardo.gonzalez@emerson.com
+    0092   DELMEX DE JUAREZ, S. DE R.L. DE C.V.
+              DELMEX                                    jorge.garciayala@valeo.com
+    0093   DELPHI AUTOMOTIVE SYSTEMS, S.A. DE C.V.
+              DELPHI AUTOMOTIVE SYSTEMS                 delphia.cuentasporpagar.facturacionelectronica
+    0106   ELECTROLUX HOME PRODUCTS DE MEXICO, S.A. DE C.V.
+              ELECTROLUX CXP                            erika.fernandez@electrolux.com
+              ELECTROLUX CXP                            jose.hernandez-ortiz@electrolux.com
+    0122   FORD MOTOR COMPANY., S.A. DE C.V.
+              FORD MOTOR                                dgarci76@ford.com
+              JUAN AGUIRRE                              jaguirre@ford.com
+    0124   FOXCONN MEXICO PRECISION INDUSTRY CO. S.A. DE C.V.
+              FOXCONN                                   ulises.lopez@foxconn.com
+              FOXCONN                                   marco.mondragon@foxconn.com
+              FOXCONN MEXICO PRECISION INDUSTRY         jessica.villalobos@foxconn.com
+    0125   FR TECNOLOGIAS DE FLUJO, S.A. DE C.V.
+              FR TECNOLOGIAS DE FLUJO                   miguel.ortega@emerson.com
+              FR TECNOLOGIAS DE FLUJO CXP               Facturacion.tf@emerson.com
+    0130   FWF DE MEXICO, S. DE .R.L. DE C.V.
+              FWF                                       f.mora@fwf-de-mexico.com
+              FWF                                       r.perez@fwf-de-mexico.com
+              FWF                                       fwm_facturas@fwf-de-mexico.com
+    0132   GAMMON LAKE DE MEXICO, S.A. DE C.V
+              GAMMON LAKE CXP                           gparedes@gammonlake.com
+              GAMMON LAKE CXP                           kperez@gammonlake.com
+    0134   GCC CEMENTO, S.A. DE C.V.
+              GCC CEMENTO                               ivalenzu@gcc.com
+              GCC CXC                                   strejome@gcc.com
+    0135   GCC CONCRETO S.A. DE C.V.
+              GCC                                       oalvarado@gcc.com
+              GCC CONCRETO                              mromero@gcc.com
+              GCC CONCRETO                              chernandezg@gcc.com
+    0144   GRUPO AMERICAN INDUSTRIES, S.A.DE C.V.
+              GRUPO AMERICAN  (SOUTHCO)                 bnava@southco.com
+              GRUPO AMERICAN  ITT                       cacosta@aiig.com
+              GRUPO AMERICAN (AMFUEL)                   aviramontes@aiig.com
+              GRUPO AMERICAN (ARNPRIOR AEROSPACE)       jorge.arias@arnprioraerospace.com
+              GRUPO AMERICAN (DTR)                      ltarango@aiig.com
+              GRUPO AMERICAN (ICORE)                    mfranco@aiig.com
+              GRUPO AMERICAN (ICORE)                    aviramontes@aiig.com
+              GRUPO AMERICAN (ICORE)                    igmar.reyes@zodiacaerospace.com
+              GRUPO AMERICAN (SOUTHCO)                  egrajeda@aiig.com
+              GRUPO AMERICAN (ZODIAC AEROSPACE) CXC     kgardea@aiig.com.
+              GRUPOA AMERICAN CAV AEROSPACE             sreyes@aiig.com
+              KAREN GARDEA CXP (WEBER)                  kgardea@aiig.com
+              MAYRA RUIZ CXP(WEBER)                     mruiz@aiig.com
+              MIGUEL GALAZ                              mgalaz@dtrmx.com
+              PAULINA QUEZADA (NORDAM)                  pquezada@nordam.com
+    0148   GRUPO TECNICO EN CONSTRUCCION CAYSA S.A. DE C.V.
+              GRUPO TECNICO EN COSTRUCCION CAYSA        caysa92@prodigy.net.mx
+    0151   HARINAS DE CHIHUAHUA S.A. DE C.V.
+              HARINAS DE CHIHUAHUA                      rvidal@grupoharinas.com.mx
+    0152   MAXION WHEELS DE MÉXICO S. DE R.L. DE C.V
+              HAYES LEMMERZ ALUMINIO                    esalazar@hayes_lemmerz.com
+    0154   HONEYWELL MANUFACTURAS DE CHIHUAHUA. S. DE R.L. DE C.V.
+              HONEYWELL MANUFACTURAS CXP                heber.saavedra@honeywell.com
+    0170   INSTALACIONES Y MAQUINARIA  INMAQ SA. DE C.V.
+              INSTALACIONES Y MAQUINARIA INMAQ          gcolmenero@bafar.com.mx
+    0175   INTERMEX MANUFACTURA DE CHIHUAHUA, S.A DE C.V
+              INTERMEX MANUFACTURA DE CHIHUAHUA         recepcion_cfd_shelter@intermex.com
+    0176   INTERNACIONAL DE CERAMICA, S.A.B. DE C.V.
+              INTERCERAMIC CXP                          SJURADO@INTERCERAMIC.COM
+              INTERCERAMIC CXP                          kviveros@interceramic.com
+              INTERCERAMIC CXP                          omendoza@interceramic.com
+    0183   JABIL CIRCUIT DE CHIHUAHUA, S. DE R.L. DE C.V..
+              CRISTINA ZUNIGA CXC                       cristina_zuniga2@jabil.com
+              JABIL                                     hugo_venzoresespinoza@jabil.com
+              JABIL CXC                                 jabilcuuinvoices@jabil.com
+              MAYRA IBARRA CXC                          mayra_ibarra@jabil.com
+    0193   JOSE ENRIQUE CASTAÑEDA RODRIGUEZ.
+              JOSE ENRIQUES CASTAÑEDA                   vero@basculasdechihuahua.com
+              JOSE ENRIQUES CASTAÑEDA                   jose@basculasdechihuahua
+    0196   JUGOMEX S.A. DE C.V.
+              ITZEL CORRAL                              icorral@jumex.com.mx
+    0203   LABINAL DE MEXICO, S.A. DE C.V.
+              COMPRAS                                   compras.planta1@mx.labinal.com
+              LABINAL                                   practicante.compras@mx.labinal.com
+              LABINAL CXP                               LCI9710149W6@buzonfiscal.com
+              LABINAL CXP                               diana.quezada@mx.labinal.com
+    0205   LABORATORIO Y CONSULTORIA S.A. DE C.V
+              LABORATORIO Y CONSULTORIA                 mcorral@lacosachih.net
+              LABORATORIO Y CONSULTORIA                 lacosachih@prodigy.net.mx
+              LABORATORIO Y CONSULTORIA FACTURAS        comprobantesfiscales@lacosachih.net
+    0206   LABORATORIO DE ESTUDIOS INTEGRALES DE CD JUAREZ, S. C.
+              LABORATORIO                               jchacon@leisajuarez.net
+              LABORATORIO Y ESTUDIOS INTEGRALES         lramirez@leisajuarez.net
+    0210   LEONI CABLE S.A. DE C.V.
+              LEONI CABLE                               johana.rascon@leoni.com
+              LEONI CABLE                               adrian.delgado@leoni.com
+    0221   MANUFACTURAS ESTAMPADAS, S.A. DE C.V.
+              MANUFACTURAS ESTAMPADAS                   cvidana@manesa.com
+    0222   MANUFACTURAS VITROMEX, S..A DE C.V.
+              MANUFACTURAS VITROMEX                     linda.martinezl@gis.com.mx
+              MANUFACTURAS VITROMEX                     jose.montoyab@gis.com.mx
+              MANUFACTURAS VITROMEX                     perla.robledo@gis.com
+    0233   MELENDEZ  PIZARRO SALVADOR
+              CXC                                       cysasa10@gmail.com
+    0237   MINERALES METALICOS DEL NORTE, S.A.
+              MINERALES METALICOS CXP                   recepcion.facturacionelectronica@gmexico.com
+    0239   MOLINOS ANAHUAC, SA. DE C.V.
+              ING. CARLOS CALVILLO                      0446141844717
+              MOLINOS ANAHUAC                           betimacsa@hotmail.com
+    0258   PACE INDUSTRIES DE CHIHUAHUA II, S.A DE C.V.
+              SALVADOR LARIOS                           salvador.larios@paceind.com
+    0259   PAPELERA DE CHIHUAHUA, S.A. DE C.V.
+              JUAN CARRILLO                             Juana.carrillo@copamex.com
+              JUAN SOTELO                               juan.m.sotelo@copamex.com
+              PAPELERA                                  aurora.terrazas@copamex.com
+    0269   PONDERCEL S.A. DE C.V.
+              PONDERCEL                                 pablo.lara@copamex.com
+              PONDERCEL                                 juan.cruz@copamex.com
+              PONDERCEL                                 marco.soto@copamex.com
+              PONDERCEL                                 luis.carmona@copamex.com
+    0282   PRODUCTOS QUIMICOS DE CHIHUAHUA, S.A. DE C.V.
+              CINDY AGUIRRE CXP                         cindyaguirre@innovakglobal.com
+              PRODUCTOS QUIMICOS                        jsalcido@innovakglobal.com
+              PRODUCTOS QUIMICOS DE CHIHUAUA            ffranco@innovakglobal.com
+    0290   RECUBRIMIENTOS INTERCERAMIC, S.A. DE C.V.
+              INTERCERAMIC CXP                          sjurado@interceramic.com
+              INTERCERAMIC CXP                          kviveros@interceramic.com
+              INTERCERAMIC CXP                          omendoza@interceramic.com
+    0301   SERVICIO GEOLOGICO MEXICANO
+              LUCERO                                    ldlucero@sgm.gob.mx
+    0311   SIGMA ALIMENTOS NORESTE, S.A. DE C.V.
+              MARCELA MALDONADO                         marmaldona@sigma-alimentos.com
+    0315   SMTC DE CHIHUAHUA, S.A. DE C.V.
+              SMTC DE CHIHUAHUA                         gisela.melendez@smtc.com
+    0316   SOFI DE CHIHUAHUA, S.A. DE C.V.
+              CXP                                       sacosta@essilorusa.com
+    0322   SUPERIOR INDUSTRIES DE MÉXICO, S. DE R.L DE C.V
+              CXC                                       iterraza@supind.com
+              KEVIN ANCHONDO CXP                        kanchond@supind.com
+              PABLO PASILLAS CXP                        Ppasilla@supind.com
+              SILVIA OCHOA                              sochoa@supind.com
+    0324   TECNOLOGIA AMBIENTAL E INGENIERÍA, S.A DE C.V.
+              TECNOLOGIA AMBIENTAL                      laboratorio@tecnologiaamb.com
+    0326   TERMOTEC DE CHIHUAHUA, S.A. DE C.V.
+              TERMOTEC                                  enrique.soto@emerson.com
+              VIVIANA BENCOMO                           viviana.bencomo@emerson.com
+    0329   TRW STEERING WHEEL SYSTEMS DE CHIHUAHUA, S.A DE C.V.
+              TRW STEERING WHEEL CXP                    ivonne.saenz@trw.com
+    0338   VISTEON DE MEXICO S DE RL
+              GAUDENCIO VIDAL                           gvidal@visteon.com
+              MARCELA MUÑOZ                             mmunoz3@visteon.com
+              VISTEON                                   cvillas2@visteon.com
+    0340   VTC WEST S.A. DE C.V.
+              VTC WEST                                  buzon_facturas@vatransformer.com
+    0357   LEVITON DE MEXICO, S. DE R.L. DE C.V.
+              LEVITON                                   khernandez@leviton.com
+              LEVITON                                   mmedina@leviton.com
+              LEVITON                                   nfernandez@leviton.com
+    0375   SECRETARIA DE EDUCACION PUBLICA
+              SEP                                       compras@crodechihuahua.edu.mx
+    0377   GCC CONCRETO S.A. DE C.V.
+              JESUS GARCIA                              jgarciahdez@gcc.com
+    0386   TIENDAS SORIANA S.A DE C.V.
+              TIENDAS SORIANA                           cinternos586@soriana.com
+    0395   QUIMICA AGRONOMICA DE MEXICO, S. DE R.L. M.I.
+              NATALIA ORTIZ                             nortiz@qam.com.mx
+    0403   SERVICIOS DE SALUD DE CHIHUAHUA
+              DENISSE CHAPARRO                          d.chaparro@chihuahua.gob.mx
+    0405   LEVITON DE MEXICO, S. DE R.L. DE C.V.
+              LEVITON DE MEXICO                         mmedina@leviton.com
+              LEVITON DE MEXICO                         nfernandez@leviton.com
+              LEVITON DE MEXICO                         khernandez@leviton.com
+    0409   MACDERMID MÉXICO, S.A. DE C.V.
+              MACDERMIND                                gsantiago@macdermid.com.mx
+    0416   UNIVERSIDAD AUTONOMA DE SINALOA
+              JESUS ADRIAN BALDENEBRA UNI AUT DE SINALOAjabaldenebro@hotmail.com
+    0421   COMPAÑIA MINERA DOLORES, S.A DE C.V
+              COMPAÑIA MINERA DE DOLORES                alopez@cmdolores.com
+    0428   GRUPO COMERCIAL DE MÉXICO S.A. DE C.V.
+              COMBUSTIBLES MTY                          bdomingu@nieto.com.mx
+    0432   HONEYWELL OPTOELECTRÓNICA S DE R.L DE C.V.
+              BLANCA URIBE CXP                          Blanca.uribe@Honeywell.com
+              CXP                                       cuentasxpagarmx03@honeywell.com
+    0434   QUESERIA DOS LAGUNAS, S.PR DE R.L DE C.V
+              QUESEERIA DOS LAGUNAS                     erios@qdl.com.mx
+    0439   INDUSTRIAS SELKIRK DE MÉXICO S. DE R.L. DE C.V.
+              INDUSTRIAS SELKIRK                        jpando@selkirkcorp.com
+              INDUSTRIAS SELKIRK                        acervantes@selkirkcorp.com
+              INDUSTRIAS SELKIRK                        eproano@selkirkcorp.com
+    0490   COMITÉ ESTATAL DE FOMENTO Y PROTECCIÓN PECUARIA DE CHIHUAHUA A.C.
+              CUENTAS POR PAGAR                         cedisach_recepcion@prodigy.net.mx
+    0500   LUTRON CNC S. DE R.L DE C.V.
+              LUTRON                                    jlmunoz@lutron.com
+              LUTRON CNC                                sreaza@lutron.com
+    0508   PRODUCTOS QUÍMICOS AR. S.A. DE C.V.
+              PRODUCTOS QUIMICOS AR                     proquimar@yahoo.com.mx
+              PRODUCTOS QUMICOS AR                      ffranco@innovakglobal.com
+    0512   INTERMETRO DE MÉXICO, S. DE R.L. DE C.V
+              CUENTAS POR PAGAR (COMPRAS)               vera.alarcon@emerson.com
+              INTERMETRO CXP                            minca.varela.grijalva@emerson.com
+              INTERMETRO CXP                            jesus.grijalva@emerson.com
+              PASCUAL SINALOA                           pascual.sinaloa@emerson.com
+    0537   ESJ S.A. DE C.V.
+              ESJ                                       sbaca@esjoist.com
+    0553   UNIVERSIDAD AUTONOMA DE CD. JUAREZ CHIHUAHUA
+              UACJ                                      abarel14@yahoo.com.mx
+    0563   DURAPLAY DE PARRAL S.A DE C.V.
+              SERGIO MORALES                            sergiomorales@duraplay.com.mx
+    0568   BRP MÉXICO S.A. DE C.V.
+              BRP CXP                                   dena.ruiz@brp.com
+    0579   PLACOSA, S.A. DE C.V
+              PLACOSA                                   dolores_arias@placosanet.com
+              PLACOSA                                   marco_antonio@placosanet.com
+    0591   INJECTION ALLOYS MÉXICO, S.A DE C.V
+              INJECTIONALLOYS                           Jazmin.jacobo@injectionalloys.com
+    0593   AGROPECUARIA LA NORTEÑITA S. DE R.L. DE C.V
+              AGROPECUARIA LA NORTEÑITA                 irisgonzalez@gpoln.com
+              AGRPECUARIA LA NORTEÑITA                  cecilialechuga@gpoln.com
+    0595   AIR TEMP DE MÉXICO, S.A DE C.V.
+              AIR TEMP                                  leticia@airtemp.com.mx
+    0599   INDUSTRIAS PROMI DE OCCIDENTE, S.A DE C.V
+              INDUSTRIAS PROMI                          calidadsilica@promi.com.mx
+              INDUSTRIAS PROMI                          contabilidad@promi.com.mx
+              INDUSTRIAS PROMI                          auxiliarcontable@promi.com.mx
+              INDUSTRIAS PROMI                          desarrollosilica@promi.com.mx
+    0602   HONEYWELL AEROSPACE DE MEXICO, S.A. DE C.V.
+              CXP                                       CXP_AERO_HCMO@honeywell.com
+    0612   MINAS SANTA MARÍA DE MORIS, S.A DE C.V
+              MINAS SANTA MARIA DE MORIS                daniel.juarez@hocplc.com
+    0644   TED DE MÉXICO, S.A DE C.V.
+              TED DE MEXICO                             violeta.alvarado@stoneridge.com
+    0657   GLOBAL PRODUCTS S.A DE C.V
+              GLOBAL PRODUCTS                           cynthia.valdez@batesville.com
+    0662   DIA BRAS MEXICANA, S.A. DE C.V.
+              DIA BRAS MEXICANA                         rterrazas@diabras.com
+    0664   IDEA, S.A DE C.V.
+              IDEA SA DE CV                             alejandro@idea.com.mx
+    0672   FRUTÍCOLA PICO LARGO, S. DE R.L M.I
+              GUADALUPE RUACHO                          calidad@picolargo.com
+    0675   AGNICO EAGLE MÉXICO, S.A DE C.V
+              LUIS MUÑOZ                                lmunoz@agnico-eagle.com
+    0676   ADRIANA FRESCAS GARCÍA
+              ADRIANA FRESCAS                           adren16@hotmail.com
+    0677   CID CENTRO DE INVESTIGACIÓN Y DESARROLLO TECNOLÓGICO, S.A. DE C.V.
+              ALBERTO ROSAS                             alberto.rosas@desc.com.mx
+    0678   CONTINENTAL AUTOMOTIVE GUADALAJARA MÉXICO, S.A DE C.V.
+              EDUARDO BARRIGA                           eduardo.barriga@continental-corporation.com
+              ROCIO GONZÁLEZ                            rocio.gonzalez@siemens.com
+    0679   BOURNS DE MÉXICO, S. DE R.L DE C.V
+              BOURNS DE MEXICO                          ignacio.pacheco@bourns.com
+              BOURNS DE MEXICO                          acounts.payablechih@bourns.com
+              BOURNS DE MEXICO                          edgar.dominguez@bourns.com
+    0685   EPIC TECHNOLOGIES DE JUÁREZ S DE R.L DE C.V
+              RIGOBERTO TERRY                           rigoberto.terry@epictech.com
+    0695   FRANCISCO JAVIER TERRAZAS SALCIDO
+              FRANCISCO TERRAZAS                        uvseie_188_a@hotmail.com
+    0698   GR SPRING & STAMPING DE MEXICO, S. DE R.L. DE C.V.
+              GR SPRING CXP                             cuquisduran@grss-mx.com
+    0700   MAGNESIUM ALUMINUM DE MÉXICO S. DE R.L DE C.V
+              JORGE ARIAS                               jarias@magalumcorp.com.mx
+    0704   PERMONT CONSTRUCTORA, S.A. DE C.V.
+              PERMONT                                   permont96@yahoo.com.mx
+    0724   GASTÓN ELADIO OLVERA SANABRIA
+              GASTÓN OLVERA                             gaston_olvera@usa.net
+    0725   HOUGHTON METAL FINISHING MÉXICO, S.A DE C.V
+              HOUGHTON METAL                            mdurstewitz@houghtonintl.com
+              JOHN OLSON                                jolson@houghtonintl.com
+    0733   SERVICIO Y ASESORÍA ELÉCTRICA DELTA, S.A DE C.V
+              FRANCISCO JAVIER TERRAZAS SALCIDO         UVSEIE_188_A@HOTMAIL.COM
+    0744   MABE S.A. DE C.V.
+              CXC                                       facturacion.electronica@mabe.com.mx
+              MARIA DE LOS ANGELES CALIXTO              Maria_Angeles.Calixto@mabe.com.mx
+    0771   MET-MEX, PEÑOLES SA DE CV
+              GRISELDA RANGEL                           griselda_rangel@penoles.com.mx
+              MET- MEX PEÑOLES                          ap_tr@penoles.com.mx
+    0781   CENTRO DE INVESTIGACION EN QUIMICA APLICADA
+              CENTRO DE INVESTIGACION EN QUIMICA APLICADjcisnero@ciqa.mx
+    0799   IDEA SERVICIOS ADMINISTRATIVOS SA DE CV
+              ISA DTR                                   ltarango@aiig.com
+              ISA DTR                                   mgalaz@dtrmx.com
+    0800   CONSULTORES ESPECIALISTAS EN MICROBIOLOGÍA ALIMENTARIA, S. DE RL MI
+              CONSULTORES ESPECIALISTAS                 espmicrobiol@hotmail.com
+    0802   ECOGAS MÉXICO S. DE R.L DE C.V
+              ESTHER BOLIVAR                            ebolivar@sempraglobal.com
+    0817   SOLDADURA DE MÉXICO, S.A DE C.V
+              CXP                                       ymendoza@soldadura.com
+    0829   AGNICO EAGLE MÉXICO, S.A. DE C.V.
+              MERLING GRIJALVA                          merlyng.grijalva@agnico-eagle.com
+    0831   ZF ELECTRONIC SYSTEMS JUÁREZ S.A. DE C.V.
+              MARTIN MORALES                            martin.morales@zf.com
+    0834   TIGHITCO LATINOAMÉRICA, S.A DE C.V
+              CESAR MEDINA                              cesar.medina@tighitco.com.mx
+    0852   CENTRO DE LIDERAZGO Y DESARROLLO HUMANO, A.C.
+              ING. DIANA GONZÁLEZ LÓPEZ                 diana.gonzalez@chihuahua.semarnat.gob.mx
+    0854   DIVERSEY MÉXICO S.A DE C.V
+              COMPRAS                                   cynthia.yos@diversey.com
+              COMPRAS                                   marco.delamora@diversey.com
+              CXP                                       julia.martinez@diversey.com
+    0860   HEINRICHS LOERA GUILLERMO EDUARDO
+              HEINRICHS LOERA                           heinrichshigieneindustrial@gmail.com
+    0862   CORDOVA Y ASOCIADOS CAF, S.A DE C.V
+              CORDOVA Y ASOCIADOS CAF                   cordovayas@prodigy.net.mx
+    0865   LEONEL HERNANDEZ HERNANDEZ
+              LEONEL HERNANDEZ                          leonelhz@prodigy.net.mx
+    0870   HONEYWELL AEROSPACE DE MEXICO S. DE R.L. DE C.V.
+              HONEYWELL AEROSPACE CXP                   nohemi.leal@honeywell.com
+              HONEYWELL AEROSPACE CXP                   cxp_aero_hcmo@honeywell.com
+    0871   COMISIÓN MÉXICO-ESTADOS UNIDOS PARA LA PREVENCIÓN DE LA FIEBRE AFTOSA
+              COMISION MEXICO-ESTADOS UNIDOS            cpachih@yahoo.es
+    0909   JUAN FRANCISCO PONCE LERMA
+              JUAN FRANCISCO PONCE                      ideacj@prodigy.net.mx
+    0920   ZIRA CONSULTORES, S.C
+              ARIEL LOYA                                ariel.loya@zira.com.mx
+    0926   PYMSA, S.A. DE C.V.
+              PYMSA                                     laurapymsa@hotmail.com
+    0931   COCLISA, S.A. DE C.V.
+              GAUDENCIO VIDAL                           gvidal@visteon.com
+              MARCELA MUÑOZ                             mmunoz3@visteon.com
+    0933   VITRO VIDRIO Y CRISTAL SA DE CV
+              DRA. ZOULFIA NAGAMEDIANOVA                znagamedianova@vitro.com
+              VITRO VIDRIO                              asolis@vitro.com
+    0941   SERVICIOS AMBIOTRAT S.A. DE C.V.
+              SERVICIOS AMBIOTRAT                       finanzas@serviciosambiotrat.com.mx
+    0954   UNIVERSIDAD JUÁREZ DEL ESTADO DE DURANGO
+              DR. EDGAR LOPEZ                           chipresche@gmail.com
+    0963   FONDO INSTITUCIONAL DEL CONACYT (FOINS)
+              RIVERA                                    jrivera@conacyt.mx
+              ROMERO                                    cromero@conacyt.mx
+    0968   CUMMINS GRUPO INDUSTRIAL S. DE R. L DE C.V.
+              CUMMINS JUAREZ                            veronica.gonzalez@cummins.com
+              CUMMINS JUAREZ                            flor.valverde@cummins.com
+    0978   SUJETADORES DE ACERO S.A DE C.V
+              SUJETADORES DE ACERO                      franciscogranados@sujetadoresdeacero.com
+    0979   ELECTRO COMPONENTES DE MEXICO S.A. DE C.V.
+              ELECTRO COMPONENTES                       perla.bravo@ecintl.com
+              ELECTRO COMPONENTES                       rita.chavez@ecintl.com
+              ELECTRO COMPONENTES                       francisca.ramirez@ecintl.com
+    0990   EMYCSA S.A DE C.V
+              EMYCSA                                    avalenzuela@emycsa.com
+    0992   COLUMBUS INDUSTRIES MÉXICO S. DE R.L DE C.V
+              COLUMBUS CXP                              fsalazar@colind.net
+              LILIANA RAMOS                             lramos@colind.net
+    0993   SMITHS HEALTHCARE MANUFACTURING S.A. DE C.V.
+              ALEJANDRO SALAS                           alejandro.salas@smiths-medical.com
+    1016   BUEHLER MOTOR DE MÉXICO, S. DE R.L. DE C.V
+              BUEHLER MOTOR DE MEXICO CXP               oleyda.mata@buehlermotor.com
+    1018   YACIMIENTOS Y DERIVADOS, S.A. DE C.V.
+              GUILLERMO MARQUEZ                         yacimientosyderivados1@hotmail.com
+    1025   COMPAÑIA DE OPERACIONES DE NITRÓGENO, S.A DE C.V
+              CXC                                       Lindeus-invoice@banctec.com
+              CXC                                       facturacion.consa.lg.mx@linde.com
+    1033   WERNER LADDER DE MÉXICO S. DE R.L. DE C.V.
+              SOLIS                                     solisjm@wernerco.com
+    1034   MINERA SAN FRANCISCO DEL ORO S.A DE C.V
+              PORTAL                                    cfd_frisco@condumex.com.mx
+    1037   COFLEX,S.A. DE C.V.
+              ING PATRICIA JIMENEZ                      pjimenez@coflex.com.mx
+    1038   MARTIN ENGINEERING MÉXICO, S. DE R.L DE C.V
+              MARTIN ENGINEERING                        gerardog@martin-eng.com
+    1046   GRUPO STONCOR S.A DE C.V
+              GABRIELA TOVAR                            gtovar@stoncor.com
+    1049   VALUACIÓN Y SERVICIOS INTEGRADOS S.A. DE C.V.
+              JOSE GILBERTO                             avalu0@hotmail.com
+              JOSE GILBERTO                             ca15122000@yahoo.com.mx
+    1050   MANSOUR MINING TECHNOLOGIES DE MEXICO SA DE CV
+              FLOR GONZALEZ                             f.gonzalez@mansourmining.com
+              J HERRERA                                 jherrera@grupommm.com.mx
+    1051   HUNTING ENERGY DE MEXICO S DE RL DE CV
+              ARTURO PIMENTEL                           arturo.pimentel@hunting-intl.com
+    1055   DIA BRAS MEXICANA S.A. DE C.V.
+              LUIS CHAVEZ                               lcurtaza@diabras.com
+    1060   QUIMIPRODUCTOS, S.A DE C.V
+              CUENTAS POR PAGAR                         imelda.sanchez@efemsa.com
+    1062   QUESERÍA DOS LAGUNAS, S. PR. DE R.L. DE C.V.
+              QUESERÍA DOS LAGUNAS                      erios@qdl.com.mx
+    1065   MEAD JOHNSON NUTRICIONALES DE MÉXICO, S. DE R.L. DE C.V.
+              ALMA AGUIRRE                              alma.aguirre@mjn.com
+              ALMA AGUIRRE                              alma.aguirre@mjn.com
+              CXP                                       mjn1_MX_invoice_email@rapid.ihost.com
+    1068   ALMACENADORA ACCEL S.A
+              ALMACENADORA                              hharmon@accel.com.mx
+              ALMACENADORA                              lsiller@accel.com.mx
+    1094   KALISCHATARRA, S. DE R.L DE C.V
+              KALISCHATARRA                             ruben.acosta@kchatarra.com
+    1104   PEDRO FLORES CASTILLO
+              PEDRO FLORES CASTILLO                     pflores@helixts.com
+    1114   DANACHEMICALS S. DE R.L DE C.V
+              DANACHEMICALS                             danachemicals@yahoo.com.mx
+    1117   AGROSISTEMAS Y PROYECTOS S.A DE C.V.
+              CXC                                       agrosistemasyproyectos@gmail.com
+    1132   TUBOS DE ACERO DE MÉXICO, S.A
+              TUBOS DE ACERO DE MÉXICO                  araceli.maldonado@tamsa.com.mx
+    1135   ROBOTICA EDUCATIVA DE MEXICO SA DE CV
+              ROBOTICA EDUCATIVA DE MEXICO              aflores@roboticaeducativa.com.mx
+    1140   AUTOPARTES Y ARNESES DE MÉXICO, S.A DE C.V
+              AUTOPARTES Y ARNESES                      laura.sosa@mx.yazaki.com.mx
+              GABRIELA VALADEZ                          gabriela.valadez@mx.yazaki.com
+    1141   UNIVERSIDAD TECNOLÓGICA METROPOLITANA
+              THELMA NOVELO                             tenovelo@hotmail.com
+    1147   ANALÍTICA DEL NOROESTE S.A DE C.V
+              ANALÍTICA DEL NOROESTE  CXP               servicios@analiticadelnoroeste.com
+    1162   BLASS FLORES TRANSPORTISTAS SA. DE C.V
+              BLASS FLORES TRANSPORTISTAS               anitaflowers@hotmail.com
+              BLASS FLORES TRASPORTISTAS                aach001@hotmail.com
+    1168   ROBERT BOSCH, S. DE R.L DE C.V
+              CXC                                       cuentasporpagar@us.bosch.com
+              ROBERT BOSCH                              external.cesar.frias@mx.bosch.com
+              ROBERT BOSCH                              alma.alarcon@mx.bosch.com
+              ROBERT BOSCH                              fabiola.rojas@mx.bosch.com
+              ROBERT BOSCH                              tip.ctg3payables@us.bosch.com
+    1170   JORGE CONTRERAS MUÑOZ
+              JORGE CONTRERAS MUÑOZ                     perlita_et@hotmail.com
+    1184   ILAS MÉXICO, S.A DE C.V
+              ILAS DE MEXICO                            pmaldonado@renypicot.com.mx
+    1189   GRUPO ALTEX, S.A DE C.V
+              CUENTAS POR PAGAR                         dkawano@grupoaltex.com.mx
+    1191   ELECTRÓNICA DALE DE MÉXICO, S.A DE C.V
+              ANGELA CERVERA                            angela.cervera@vishay,com
+              ELECTRONICA DALE CXP                      sandra.palomino@vishay.com
+    1192   TECSTAR DE MÉXICO, S.A DE C.V.
+              TECSTAR DE MEXICO CXP                     adriana.aguirre@mgstech.com
+              TECSTAR DE MEXICO CXP                     ana.pena@mgstech.com
+    1195   COMERCIALIZADORA Y DISTRIBUIDORA DE PRODUCTOS, BIENES Y SERVICIOS DE L
+              COMERCIALIZADORA Y DISTRIBUCION DE PRODUCTlogisticaguzman@hotmail.com
+    1198   JUAN HÉCTOR SALGADO RAMÍREZ
+              HÉCTOR SALGADO                            jhectorsr1970@hotmail.com
+    1200   TRANSPORTADORA DE JUÁREZ, S.A DE C.V
+              ELIZABETH CENICEROS                       eceniceros@fuentes7.com.mx
+              TRANSPORTADORA DE JUÁREZ                  msanchez@fuentes7.com.mx
+    1201   AKSYS DE MÉXICO, S.A DE C.V
+              AKSYS CXP                                 iliana.garcilazo@apsolutions.com.mx
+    1202   DEMEK, S.A DE C.V
+              DEMEK                                     facturas@demek.com
+    1204   WATER SERVICE TECHNOLOGIES
+              WATER SERVICE TECHNOLOGIES                erodriguez@waterservicetech.com
+    1206   POCHTECA MATERIAS PRIMAS S.A DE C.V
+              POCHTECA MATERIAS                         hfloresa@pochteca.com.mx
+    1208   MUNICIPIO DE JIMENEZ
+              MUNICIPIO DE JIMENEZ                      tesoreriajimenez2010_2013@hotmail.com
+              MUNICIPIO DE JIMENEZ                      oficialia_jimenez@hotmail.com
+              MUNICIPIO DE JIMENEZ                      mariodelfines@hotmail.com
+    1210   MINERA CASCABEL S.A DE C.V
+              MINERA CASCABEL                           mineracascabel@hotmail.com
+              MINERA CASCABEL                           ernestomacho.2008@hotmail.com
+    1211   BN PRODUCTOS MAQUINADOS Y SINTERIZADOS DE MEXICO S DE RL DE CV
+              ING. DEYANIRA CARDONA                     deyanira.cardona@burgessnorton.com
+    1212   DANIEL MEASUREMENT AND CONTROL INC
+              EDUARDO GONZALEZ                          eduardo.gonzalez@emerson.com
+              FACTURAS DLLS                             daniel.invoice@emerson.com
+    1213   ASFALTOS DE LA FRONTERA S.A DE C.V
+              ASFALTOS DE LA FRONTERA                   nohemi@asfaltosdelafrontera.com.mx
+    1216   PRODUCTORA DE QUESOS SIERRA VERDE S.C.L.
+              PRODUCTORA DE QUESOS SIERRA VERDE         facturacion@gruposierraverde.com
+              PRODUCTORA DE QUESOS SIERRA VERDE         bernardo@gruposierraverde.com
+    1219   JORGE ALBERTO MIRELES VÁZQUEZ
+              JORGE ALBERTO MIRELES                     jorge.mireles@gmail.com
+    1220   ABRAM OLFERT KRAHN
+              ABRAM OLFERT KRAHN                        olfert@prodigy.net.mx
+    1221   FRISA FORJADOS S.A DE C.V
+              FRISA                                     acobarrubias@frisa.com
+              FRISA                                     arivera@frisa.com
+              FRISA                                     jlsaucedo@frisa.com
+    1222   SERVICIOS DE TECNOLOGÍA DE ALIMENTOS Y NUTRICIÓN S. DE R.L M.I
+              SERVICIO DE TECNOLOGIA DE ALIMENTOS       clientes@alimentosynutricion.com
+    1223   BIO TECH INDUSTRIES S.A DE C.V
+              BIO TECH                                  biotech.cxpagar@gmail.com
+    1224   COMPAÑÍA AGRÍCOLA INDUSTRIAL SANTA ANA, S.A
+              COMPAÑIA AGRICOLA INDUSTRIAL SANTA ANA    evalenzuela@santaana.com.gt
+    1226   HPP SYSTEMS DE MÉXICO, S.A DE C.V
+              CXP                                       cvadillo@hppelzer.com.mx
+              HPP                                       yhernandez@hppelzer.com.mx
+    1227   IMPULSORA PROMOTORA DEL NORTE S.A DE C.V
+              IMPOLSORA PROMOTORA DEL NORTE             cuentasporpagar@qualityinnchihuahua.com
+    1229   JOSE EDUARDO MILAN MONTENEGRO
+              JOSE EDUARDO MILAN MONTENEGRO             recepcion@milec.com.mx
+    1231   DS SERVICIOS PETROLEROS S.A DE C.V.
+              DS SERVICIOS PETROLEROS                   jorgecastro@dssp.com.mx
+    1232   JTC TORNILLOS Y RESORTES SA DE CV
+              GENARO SANCHEZ                            jtccompras@tornillosyresortes.com
+    1233   SOPORTES Y SERVICIOS QUIMICOS SR SA DE CV
+              SAM CRUZ                                  sam.cruz@ssqsr.com
+    1235   QUÍMICA BGEM S.A DE C.V
+              HECTOR ROGELIO                            hector.rogelio@biograssextra.com
+    1236   MAGNELEC, S.A DE C.V.
+              LILIANA SANCHEZ                           ap_qr@penoles.com.mx
+    1238   RENYSON DE MÉXICO S.A DE C.V.
+              RENYSON                                   mchavira@renyson.com
+    1239   ELECTRO COMPONENTES DE MÉXICO, S.A DE C.V
+              GUILLERMO GUERRERO                        guillermo.guerrero@ecintl.com
+    1243   MISSOURI STATE UNIVERSITY
+              DR MELIDA GUTIERREZ                       MGutierrez@missouristate.edu
+    1245   CLARIMEX S.A. DE C.V.
+              CLARIMEX                                  mquiroz@clarimex.com
+    1246   FUNDICION AGUILAS S.A. DE C.V.
+              E CANO                                    ecano@fundicionaguilas.com
+              J GUERRERO                                jguerrero@fundicionaguilas.com
+    1247   SINQUIMICA, S.A DE C.V.
+              SINQUIMICA                                calidad_sinquimica@quimia.com.mx
+    1250   HOME INTERIORS DE MÉXICO S. DE R.L. DE C.V.
+              HOME INTERIORS                            ccavazos@homeinteriors.com.mx
+    1251   JARA INGENIEROS Y ARQUITECTOS S.A DE C.V
+              MANUEL JARA                               mjarad10@gmail.com
+    1256   CHOVATEK SA DE CV
+              JUAN CARLOS HERNÁNDEZ VARELA              jhernandez@thermotek.com.mx
+    1257   INDUSTRIAL BLOQUERA MEXICANA, S.A DE C.V
+              INDUSTRIAL BLOQUERA MEXICANA              sistemaiso9001@industrialbloquera.com.mx
+    1258   MINAS STA MARÍA DE MORIS S.A. DE C.V.
+              MINAS                                     julio.palma@hocplc.com
+    1261   SERVICIOS DE MANUFACTURA Y DESARROLLO S.A DE C.V
+              CXC                                       Recepcion_CFD_shelter@intermex.com
+    1262   ARMENDARIZ MORAN CONSULTORES, S.C
+              CARMEN MENDEZ                             carmenml@armendariz-asociados.com.mx
+    1273   NELLCOR PURITAN BENNET MÉXICO, S.A DE C.V
+              CXP                                       Yolanda.Mata@Covidien.com
+    1281   CENTRO DE INVESTIGACIÓN Y DOCENCIA ECONÓMICAS, A.C.
+              JUAN MANUEL RAMIREZ                       juanmanuel.ramirez@cide.edu
+              JUAN MANUEL RAMIREZ                       jmramriv@gmail.com
+    1304   INSTITUTO DE PEDAGOGÍA CRÍTICA, S.C.
+              ROMELIA HINOJOSA                          romehinojosa@hotmail.com
+    1305   DDR MEXICO, S.A. DE C.V.
+              CARLOS FLORES                             carlos.flores@ddrmexico.com
+    1306   TELÉFONOS DEL NOROESTE, S.A. DE C.V.
+              GERARDO MORA                              gemo@telnor.com
+    1392   DESARROLLO ECONOMICO DEL ESTADO DE CHIHUAHUA, A.C.
+              CENIA SILVIA CHAPARRO                     cenia.chaparro@desec.org.mx
+    1398   MARIA DEL ROSARIO BARAY GUERRERO
+              MARIA DEL ROSARIO BARAY GUERRERO          rosariobaray@yahoo.com.mx
+    1409   INSTALACIONES Y DISEÑOS ELÉCTRICOS DE CHIHUAHUA, S. A DE C.V
+              SANDRA HINOJOS                            sandrahinojos@idechisa.com
+    1443   IIPROME S.A DE C.V.
+              IIPROME                                   iiprome@prodigy.net.mx
+    1444   BRENDA MARIEL CERVANTES ESPINOZA
+              JESUS RUBIO                               alexrubio15@hotmail.com
+    1492   CONSTRUCTORA Y ACABADOS LERMA S.A DE C.V.
+              CXC                                       pasgos@constructoralerma.com

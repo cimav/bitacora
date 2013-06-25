@@ -28,7 +28,9 @@ class BitacoraMailer < ActionMailer::Base
 
     subject = "Nueva Solicitud #{requested_service.number}: #{requested_service.laboratory_service.name}"
 
-    mail(:to => @to, :from => @from, :subject => subject)
+    reply_to = requested_service.sample.service_request.user.email
+
+    mail(:to => @to, :from => @from, :reply_to => reply_to, :subject => subject)
   
   end
 
@@ -93,7 +95,9 @@ class BitacoraMailer < ActionMailer::Base
 
     subject = "Autorizar Nueva Solicitud #{requested_service.number}: #{requested_service.laboratory_service.name}"
 
-    mail(:to => @to, :from => @from, :subject => subject)
+    reply_to = requested_service.sample.service_request.user.email
+
+    mail(:to => @to, :from => @from, :reply_to => reply_to, :subject => subject)
   
   end
 
@@ -141,7 +145,9 @@ class BitacoraMailer < ActionMailer::Base
 
     subject = "#{requested_service.status_text} / Servicio #{requested_service.number}: #{requested_service.laboratory_service.name}"
 
-    mail(:to => @to, :from => @from, :subject => subject)
+    reply_to = user.email
+    
+    mail(:to => @to, :from => @from, :reply_to => reply_to, :subject => subject)
   end
 
 end

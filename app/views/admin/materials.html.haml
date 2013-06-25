@@ -1,9 +1,10 @@
 #materials-panel
   #materials-search-panel.search-box
     = form_tag 'xxx', :id => 'materials-live-search', :method => 'get', :remote => true do
-      - unit_options = "<option value=\"0\">Todas las unidades</option>"
+      - unit_options = "<option value=\"ALL\">Todas las unidades</option>"
       - Unit.order('name').each do |unit|
         - unit_options += "<option value=\"#{unit.id}\">#{unit.name}</option>"
+      - unit_options += "<option value=\"0\">Sin unidad</option>"
       = select_tag "search_unit_id", unit_options.html_safe
       = text_field_tag :q, nil, :id => 'materials-search-box', :placeholder => 'Busqueda'
   #materials-list.items-placeholder 

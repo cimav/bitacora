@@ -1,7 +1,8 @@
 %ul
   - @material.each do |material|
     %li.material-item.item{"data-id" => material.id}
-      .material-item-name{:id => "material_display_#{material.id}"}= "#{material.name} (#{material.unit.name})"
+      - unit = material.unit.name rescue 'Sin Unidad'
+      .material-item-name{:id => "material_display_#{material.id}"}= "#{material.name} (#{unit})"
 .items-counter
   .items-counter-inner
     = "#{@material.count} consumibles"

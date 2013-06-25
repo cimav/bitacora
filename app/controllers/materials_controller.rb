@@ -9,9 +9,10 @@ class MaterialsController < ApplicationController
 
   def live_search
     @material = Material.where('status = :s', {:s => Material::ACTIVE}).order('name')
-    if !params[:search_unit_id].blank? && params[:search_unit_id] != '0'
+    if !params[:search_unit_id].blank? && params[:search_unit_id] != 'ALL'
       @material = @material.where("unit_id = :c", {:c => params[:search_unit_id]}) 
     end
+
     if !params[:q].blank?
       @material = @material.where("(name LIKE :q OR description LIKE :q)", {:q => "%#{params[:q]}%"})
     end

@@ -613,3 +613,14 @@
 #costeo {
   padding: 10px 20px;
 }
+
+#requested-service-workarea {
+  .tab-pane {
+    overflow: auto;
+    position: absolute;
+    top: 130px;
+    left: 10px;
+    bottom: 20px;
+    right: 20px;
+  }
+}

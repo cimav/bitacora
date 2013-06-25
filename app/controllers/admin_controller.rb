@@ -34,4 +34,8 @@ class AdminController < ApplicationController
     render :layout => false
   end
 
+  def other_types
+    render :layout => false
+  end
+
 end

@@ -1,0 +1,7 @@
+%ul
+  - @other_type.each do |other_type|
+    %li.other-type-item.item{"data-id" => other_type.id}
+      .other-type-item-name{:id => "other_type_display_#{other_type.id}"}= "#{other_type.name}"
+.items-counter
+  .items-counter-inner
+    = "#{@other_type.count} tipos"

@@ -9,7 +9,8 @@
 #materials-panel,
 #users-panel,
 #service-types-panel,
-#request-types-panel {
+#request-types-panel,
+#other-types-panel {
   position: fixed;
   top: 96px;
   bottom: 0px;
@@ -33,7 +34,8 @@
   #materials-buttons,
   #users-buttons,
   #request-types-buttons,
-  #service-types-buttons {
+  #service-types-buttons,
+  #other-types-buttons {
       width: $side-panel-width;
       position: absolute;
       text-align: center;
@@ -56,7 +58,8 @@
 #materials-details,
 #user-details,
 #service-types-details,
-#request-types-details {
+#request-types-details,
+#other-types-details {
   left: ($sample-list-width * 2) + 24;
   right: 0px;
   position: fixed;

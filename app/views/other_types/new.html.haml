@@ -1,0 +1,10 @@
+= form_for @other_type, :remote => true, :html => {:'data-type' => 'html', :id => 'new-other-type-form'} do |f|
+  %h3= "Nuevo Tipo de Otros Conceptos"
+  .field#field_other_short_name
+    = f.label :name, 'Nombre:'
+    = f.text_field :name, {:class => 'input-large', :placeholder => 'Nombre'}
+  .field#field_other_type_name
+    = f.label :description, 'Descripción:'
+    = f.text_field :name, {:class => 'input-xxlarge', :placeholder => 'Descripción'}
+  .submit-button
+    = f.submit "Agregar tipo", {:class => "btn btn-primary"}

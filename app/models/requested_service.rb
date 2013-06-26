@@ -53,22 +53,29 @@ class RequestedService < ActiveRecord::Base
       con += 1
     end
     consecutive = "%02d" % con
-    self.consecutive = con
-    self.number = "#{self.sample.number}-#{consecutive}"
+    if self.sample_id == 0
+      self.consecutive = 0
+      self.number = "TEMPLATE"
+    else
+      self.consecutive = con
+      self.number = "#{self.sample.number}-#{consecutive}"
+    end
     self.save(:validate => false)
   end
 
   def set_auth_if_needed
-    u = User.find(self.sample.service_request.user_id)
-    if u.require_auth?
-      self.status = REQ_SUP_AUTH
-      self.save(:validate => false)
+    if self.sample_id != 0
+      u = User.find(self.sample.service_request.user_id)
+      if u.require_auth?
+        self.status = REQ_SUP_AUTH
+        self.save(:validate => false)
+      end
     end
   end
 
   def set_costs
     template_service = RequestedService.where("(laboratory_service_id = :id AND sample_id = 0)", {:id => self.laboratory_service_id}).first
-    if template_service.blank?
+    if template_service.blank? || self.sample_id == 0
       return false
     end
 

@@ -7,4 +7,17 @@ class LaboratoryService < ActiveRecord::Base
   validates :name, :presence => true, :uniqueness => true
   validates :service_type_id, :presence => true
   validates :laboratory_id, :presence => true
+
+  after_create :create_template
+
+  def create_template
+    template = self.requested_service.new
+    template.sample_id = 0
+    template.consecutive = 0
+    template.number = 'TEMPLATE'
+    template.details = ''
+    template.user_id = self.laboratory.user_id
+    template.save(:validate => false)
+  end
+  
 end

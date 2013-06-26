@@ -22,6 +22,7 @@
         %tr
           %th= "Nombre"
           %th= "Cantidad"
+          %th= "Unidad"
           %th= "Precio Unitario"
           %th= "Subtotal"
     %tbody
@@ -38,7 +39,6 @@
         %tr.material-row{'data-id' => mat.id, :id => "material_row_#{mat.id}"}
           %td
             = mat.material.name
-            = "(#{mat.material.unit.short_name})"
             - if !mat.details.blank?
               .mat-details= mat.details
             = link_to '×', {:controller => 'requested_services', :action => 'delete_mat', :mat_id => mat.id}, :method => :post, :remote => true, :class => 'close', :'data-type' => 'html', 'data-id' => mat.id
@@ -46,7 +46,10 @@
             - if editable
               = text_field_tag "quantity_#{mat.id}", mat.quantity, {:class => "mat_qty", "data-id" => mat.id}
             - else
-              .align-right= "#{mat.quantity} #{mat.material.unit.short_name}" 
+              .align-right= "#{mat.quantity}"
+          %td
+            - unit = mat.material.unit.name rescue 'Sin Unidad'
+            = "(#{unit})" 
           %td
             .align-right= number_to_currency(mat.unit_price)
           %td
@@ -64,7 +67,8 @@
           - materials = Material.order('name')
         - u_options = ''
         - materials.each do |m|
-          - u_options += "<option value=\"#{m.id}\">#{m.name} (#{m.unit.short_name})</option>"
+          - unit = m.unit.short_name rescue 'Sin unidad'
+          - u_options += "<option value=\"#{m.id}\">#{m.name} (#{unit})</option>"
       - if u_options != '' && editable
         %tr.add-row
           %td

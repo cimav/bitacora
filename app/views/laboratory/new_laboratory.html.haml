@@ -28,3 +28,8 @@
       
   .submit-button
     = f.submit "Agregar laboratorio", {:class => "btn btn-primary"}
+
+:javascript
+  $(function() {  
+    $("#laboratory_user_id").select2();
+  }); 

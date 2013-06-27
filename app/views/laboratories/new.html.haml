@@ -26,5 +26,10 @@
       - resp_options += "<option value=\"#{item.id}\">#{item.full_name}</option>"
     = f.select :user_id, resp_options.html_safe, {}, {:class => 'input-xxlarge'}
       
-  .submit-button
+  .submit-button{:style => 'margin-top: 20px;'}
     = f.submit "Agregar laboratorio", {:class => "btn btn-primary"}
+
+:javascript
+  $(function() {  
+    $("#laboratory_user_id").select2();
+  }); 

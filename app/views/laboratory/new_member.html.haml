@@ -5,7 +5,7 @@
     = f.label :user_id, 'Nuevo miembro:'
     - u_options = ''
     - u_access = 0
-    - User.where("status = :s AND id NOT IN (SELECT user_id FROM laboratory_members WHERE laboratory_id = :lab)", {:s => User::STATUS_ACTIVE, :lab => @laboratory.id}).order('access,first_name, last_name').each do |u|
+    - User.where("status = :s AND id NOT IN (SELECT user_id FROM laboratory_members WHERE laboratory_id = :lab)", {:s => User::STATUS_ACTIVE, :lab => @laboratory.id}).order('access DESC,first_name, last_name').each do |u|
       - if u_access != u.access 
         - u_access = u.access
         - u_options += "<optgroup label=\"#{u.access_text}\">"
@@ -24,3 +24,8 @@
     = f.select :access, acc_options.html_safe
   .submit-button
     = f.submit "Agregar miembro", {:class => "btn btn-primary"}
+
+:javascript
+  $(function() {  
+    $("#laboratory_member_user_id").select2();
+  }); 

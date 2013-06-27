@@ -255,3 +255,7 @@ body {
   &:hover{ background:$grey; } 
   &:hover:before{border-color:transparent $grey transparent transparent;}
 }
+
+.small {
+  font-size: 80%;
+}

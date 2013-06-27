@@ -43,3 +43,9 @@
     .control-group#cg_ServiceRequest_submit
       .controls
         = f.submit "Crear nueva carpeta", {:class => "btn btn-primary"}
+
+
+:javascript 
+  $(function() {  
+    $("#service_request_supervisor_id").select2();
+  });

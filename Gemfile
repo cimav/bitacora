@@ -36,3 +36,5 @@ gem 'mini_magick'
 gem "rubyzip", :require => 'zip/zip'
 
 gem "resque"
+
+gem "select2-rails"

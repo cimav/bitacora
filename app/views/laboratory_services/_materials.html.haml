@@ -58,3 +58,9 @@
           = text_field_tag 'new_mat_qty'
         %td{:colspan => 2}
           %button.btn.btn-mini.btn-info#add-material-template= "Agregar consumible"
+
+:javascript
+$(function() {  
+  $("#new_mat_id").select2();
+}  
+

@@ -54,13 +54,16 @@
       %tr.add-row
         %td
           = select_tag :new_mat_id, u_options.html_safe, {:style => "width: 100%;"}
+          %br
+          .small
+            %a{:href => "mailto:bitacora.electronica@cimav.edu.mx?subject=Sugerencia de Nuevo Consumible&body=Especificar los siguientes datos%0D%0DNombre del consumible/material:%0DCAS (Si aplica):", :target => '_blank'}="Sugerir nuevo material"
         %td
           = text_field_tag 'new_mat_qty'
         %td{:colspan => 2}
           %button.btn.btn-mini.btn-info#add-material-template= "Agregar consumible"
 
 :javascript
-$(function() {  
-  $("#new_mat_id").select2();
-}  
+  $(function() {  
+    $("#new_mat_id").select2();
+  }); 
 

@@ -115,6 +115,25 @@ class LaboratoryController < ApplicationController
     render :layout => false
   end
 
+  def services_catalog
+    respond_with do |format|
+     format.xls do
+        rows = Array.new
+        @laboratory = Laboratory.find(params[:id])
+        @laboratory_services = @laboratory.laboratory_services.order('name')
+        @laboratory_services.collect do |item|
+          rows << {'ID' => item.id,
+                   'Nombre' => item.name,
+                   'Descripcion' => item.description
+                   }
+        end
+        column_order = ["ID", "Nombre", "Descripcion"]
+        to_excel(rows, column_order, "Servicios", "Servicios")
+      end
+    end
+
+  end
+
   def new_service
     @laboratory = Laboratory.find(params[:id])
     @laboratory_service = @laboratory.laboratory_services.new

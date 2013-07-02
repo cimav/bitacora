@@ -38,3 +38,5 @@ gem "rubyzip", :require => 'zip/zip'
 gem "resque"
 
 gem "select2-rails"
+
+gem 'spreadsheet'

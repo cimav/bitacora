@@ -106,6 +106,7 @@ Bitacora::Application.routes.draw do
       
       get 'admin_services'
       get 'admin_lab_services_live_search'
+      get 'services_catalog'
       get 'new_service'
 
       get 'admin_members'

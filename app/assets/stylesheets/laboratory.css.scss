@@ -158,7 +158,7 @@
     }
     #admin-lab-services-list { 
       top: 95px !important;
-      bottom: 45px !important;
+      bottom: 65px !important;
       width: $side-panel-width;
       border: 1px solid $line-color;
       .lab-service-desc {
@@ -208,6 +208,13 @@
       height: 35px;
       button {
         width: $side-panel-width - 10;
+      }
+    }
+    #admin-lab-services-buttons {
+      height: 55px;
+      a {
+        text-align: center;
+        font-size: 90%;
       }
     }
   }

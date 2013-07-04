@@ -120,7 +120,7 @@ class ServiceFilesController < ApplicationController
     sample = Sample.find(params[:sample_id])
     path = "#{Rails.root}/private/zip/#{sample.number}.zip"
     if File.exist?(path)
-      send_file path, :type => 'application/zip', :disposition => 'attachment', :filename => "#{sample.number}.zip"
+      send_file path, :type => 'application/zip', :disposition => 'attachment', :x_sendfile => true, :filename => "#{sample.number}.zip"
     else
       # Generate zip version
       Resque.enqueue(GenerateSampleZip, params[:sample_id])

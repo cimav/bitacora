@@ -752,6 +752,10 @@ $(document).on('click', '#add-technician-template', () ->
              showFlash(res['flash']['notice'], 'success')
              reloadTechniciansTableTemplate()
      )
+     .fail( (data) -> 
+       res = $.parseJSON(data.responseText)
+       showFlash(res['flash']['error'], 'alert-error')
+     )
    )
 
 updateGrandTotalTemplate = (laboratory_service) ->
@@ -822,6 +826,10 @@ $(document).on('click', '#add-equipment-template', () ->
              showFlash(res['flash']['notice'], 'success')
              reloadEquipmentTableTemplate()
      )
+     .fail( (data) -> 
+       res = $.parseJSON(data.responseText)
+       showFlash(res['flash']['error'], 'alert-error')
+     )
    )
 
 reloadEquipmentTableTemplate = () ->
@@ -875,6 +883,10 @@ $(document).on('click', '#add-material-template', () ->
              showFlash(res['flash']['notice'], 'success')
              reloadMaterialTableTemplate()
      )
+     .fail( (data) -> 
+       res = $.parseJSON(data.responseText)
+       showFlash(res['flash']['error'], 'alert-error')
+     )
    )
 
 reloadMaterialTableTemplate = () ->
@@ -927,6 +939,10 @@ $(document).on('click', '#add-other-template', () ->
              res = $.parseJSON(xhr)
              showFlash(res['flash']['notice'], 'success')
              reloadOthersTableTemplate()
+     )
+     .fail( (data) -> 
+       res = $.parseJSON(data.responseText)
+       showFlash(res['flash']['error'], 'alert-error')
      )
    )
 
@@ -998,6 +1014,10 @@ $(document).on('click', '#add-technician', () ->
              showFlash(res['flash']['notice'], 'success')
              reloadTechniciansTable()
      )
+     .fail( (data) -> 
+       res = $.parseJSON(data.responseText)
+       showFlash(res['flash']['error'], 'alert-error')
+     )
    )
 
 reloadTechniciansTable = () ->
@@ -1059,6 +1079,10 @@ $(document).on('click', '#add-equipment', () ->
              showFlash(res['flash']['notice'], 'success')
              reloadEquipmentTable()
      )
+     .fail( (data) -> 
+       res = $.parseJSON(data.responseText)
+       showFlash(res['flash']['error'], 'alert-error')
+     )
    )
 
 reloadEquipmentTable = () ->
@@ -1110,6 +1134,10 @@ $(document).on('click', '#add-material', () ->
              showFlash(res['flash']['notice'], 'success')
              reloadMaterialTable()
      )
+     .fail( (data) -> 
+       res = $.parseJSON(data.responseText)
+       showFlash(res['flash']['error'], 'alert-error')
+     )
    )
 
 reloadMaterialTable = () ->
@@ -1159,6 +1187,10 @@ $(document).on('click', '#add-other', () ->
              res = $.parseJSON(xhr)
              showFlash(res['flash']['notice'], 'success')
              reloadOthersTable()
+     )
+     .fail( (data) -> 
+       res = $.parseJSON(data.responseText)
+       showFlash(res['flash']['error'], 'alert-error')
      )
    )
 

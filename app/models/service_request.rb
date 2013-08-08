@@ -18,6 +18,8 @@ class ServiceRequest < ActiveRecord::Base
 
   ACTIVE = 1
   DELETED = 2
+  
+  IMPORTED = 98
 
   def add_extra
     self.number = "%04d" % [self.id]

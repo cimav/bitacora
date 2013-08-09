@@ -26,7 +26,7 @@ task :importa, [:filename] => :environment do |t, args|
         puts "Creando service_request..."
         folder = u_requestor.service_request.new 
         folder.request_type_id = importado_id
-        folder.request_link = "Servicios importados"
+        folder.request_link = "Agosto 2013"
         folder.description = "Servicios importados"
         folder.save
       end

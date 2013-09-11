@@ -6,6 +6,9 @@
   .field#field_request_type_name
     = f.label :name, 'Nombre:'
     = f.text_field :name, {:class => 'input-xxlarge', :placeholder => 'Nombre'}
+  .field#field_request_type_prefix
+    = f.label :prefix, 'Prefijo:'
+    = f.text_field :prefix, {:class => 'input-small', :placeholder => 'Prefijo'}
  
       
   .submit-button

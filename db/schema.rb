@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130625185640) do
+ActiveRecord::Schema.define(:version => 20130909230926) do
 
   create_table "activity_logs", :force => true do |t|
     t.integer  "user_id"
@@ -184,6 +184,7 @@ ActiveRecord::Schema.define(:version => 20130625185640) do
     t.string   "name"
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
+    t.string   "prefix"
   end
 
   create_table "requested_service_equipments", :force => true do |t|
@@ -298,6 +299,7 @@ ActiveRecord::Schema.define(:version => 20130625185640) do
     t.datetime "created_at",                                   :null => false
     t.datetime "updated_at",                                   :null => false
     t.integer  "supervisor_id"
+    t.integer  "consecutive"
   end
 
   add_index "service_requests", ["request_type_id"], :name => "index_service_requests_on_request_type_id"

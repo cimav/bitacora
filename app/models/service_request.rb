@@ -22,8 +22,17 @@ class ServiceRequest < ActiveRecord::Base
   IMPORTED = 98
 
   def add_extra
-    self.number = "%04d" % [self.id]
-    self.save() 
+    con = ServiceRequest.where("number LIKE :prefix AND YEAR(created_at) = :year", {:prefix => "#{self.request_type.prefix}%", :year => Date.today.year}).maximum('consecutive')
+    if con.nil?
+      con = 1
+    else
+      con += 1
+    end
+    consecutive = "%04d" % con
+    self.consecutive = con
+    year = Date.today.year.to_s.last(2)
+    self.number = "#{self.request_type.prefix}#{year}#{consecutive}"
+    self.save(:validate => false)
   end
 
 end

@@ -67,7 +67,7 @@ task :importa, [:filename] => :environment do |t, args|
                                    sample_id: serv.sample_id,
                                    message_type: 'MESSAGE',
                                    requested_service_status: RequestedService::FINISHED,
-                                   message: "Servicio Importado. #{log}")
+                                   message: "Servicio Importado. Fecha de solicitud #{serv.created_at}. #{log}")
 
           puts "Servicio #{lab_service.name} importado para tecnico #{u_tech.full_name}"
         end

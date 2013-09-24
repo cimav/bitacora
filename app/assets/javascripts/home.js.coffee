@@ -51,8 +51,11 @@ $(document).on('click', '#search-box', () ->
 )
 
 $(document).on('click', '.service-request-item', () ->
+    $('.service-request-number i').removeClass('icon-folder-open-alt')
+    $('.service-request-item.selected i').addClass($('.service-request-item.selected').data('original-icon'))
     $('.service-request-item').removeClass('selected')
     $(this).addClass('selected')
+    $(this).find('i').addClass('icon-folder-open-alt')
     getServiceRequest($(this).attr('service_request_id'))
   )
 

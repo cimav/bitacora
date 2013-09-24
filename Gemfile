@@ -40,3 +40,6 @@ gem "resque"
 gem "select2-rails"
 
 gem 'spreadsheet'
+
+gem 'twitter-bootstrap-rails'
+

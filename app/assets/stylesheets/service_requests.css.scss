@@ -10,29 +10,28 @@
 
 .service-request-item {
   cursor: pointer;
-  padding: 5px;
+  height: 64px;
   min-height: 64px;
-  background: $white;
+  background: transparent;
   border-bottom: 1px solid $line-color;
   &.service-mine .service-request-number {
-    background: transparent url('/assets/icons/folder.png') no-repeat;
-    color: #cce4fc;
+    color: $grey;
   }
   &.service-supervised .service-request-number {
-    background: transparent url('/assets/icons/supervised-folder.png') no-repeat;
-    color: #a28500;
+    color: #08c;
   }
   .service-request-number {
+    text-align: center;
     font-weight: bold;
+    padding-left: 4px;
     width: 48px;
-    height: 48px;
+    height: 64px;
     float: left;
-    padding-top: 20px;
-    padding-left: 12px;
     font-size: 11px;
+    line-height: 1em;
   }
   .service-request-link {
-    margin-top: 10px;
+    padding-top: 10px;
     font-size: 12px;
     font-weight: bold;
     margin-left: 58px;
@@ -47,8 +46,16 @@
   &.selected {
     background-color: $bg-selected;
     color: $selected-color !important;
+    .service-request-number, 
+    .service-request-link,
+    .service-request-description {
+      color: $selected-color !important;
+    }
+    .service-request-add-info  {
+      color: $selected-color-light !important;
+    }
     .lab-service-laboratory {
-      color: $selected-color;
+      color: $selected-color !important;
     }
   }
 }

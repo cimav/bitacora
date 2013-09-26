@@ -42,7 +42,9 @@ my_request_search_results = false
     $('#folder-panel .items-placeholder').empty().html(html)
     $("#folder-panel .items-placeholder .items .service-request-item:first").click();
   )
-
+$(document).on('change', '#folder_filter', () ->
+  foldersLiveSearch() 
+)
 $(document).on('keyup', '#search-box', () ->
   foldersLiveSearch() 
 )

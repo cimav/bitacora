@@ -19,6 +19,9 @@ class ServiceRequestsController < ApplicationController
     if !params[:q].blank?
       @requests = @requests.where("(description LIKE :q OR number LIKE :q OR request_link LIKE :q)", {:q => "%#{params[:q]}%"}) 
     end
+    if !params[:folder_filter].blank? && params[:folder_filter] != '*'
+      @requests = @requests.where("(request_type_id = :t)", {:t => params[:folder_filter]}) 
+    end
     render :layout => false
   end
 

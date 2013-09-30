@@ -1757,6 +1757,37 @@ $(document).on('ajax:error', '#edit-user-form', (evt, xhr, status, error) ->
     )
   )
 
+#---------------------
+# New material dialog
+#---------------------
+$(document).on('click', '#new-material-link', () ->
+    $("#new-material-dialog").remove()
+    $('body').append('<div id="new-material-dialog"></div>')
+    url = '/materials/new_dialog'
+    $.get(url, {}, (html) ->
+      $('#new-material-dialog').empty().html(html)
+      $('#new-material-modal').modal({ keyboard:true, backdrop:true, show: true });
+    )
+  )
+
+$(document).on('ajax:beforeSend', '#new-material-dialog-form', (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.has-errors').removeClass('has-errors')
+  )
+$(document).on('ajax:success', '#new-material-dialog-form', (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    $('#new-material-modal').modal('hide').remove()
+    $("#new_mat_id").append("<option value=#{res['id']}>#{res['name']}</option>")
+    # TODO: Locate new material and focus on qty
+  )
+
+$(document).on('ajax:error', '#new-material-dialog-form', (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+  
 
 
 #-------

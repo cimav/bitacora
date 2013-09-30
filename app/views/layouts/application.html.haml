@@ -31,6 +31,7 @@
                       %ul{:class => 'dropdown-menu'}
                         - current_user.laboratories.each do |laboratory|
                           %li= link_to laboratory.name, "#!/laboratory/#{laboratory.id}"
+                //%li= link_to 'Reportes', '/#!/reports', :id => 'reports-link'
 
             %ul.nav.pull-right
               %li.dropdown

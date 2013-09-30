@@ -1,0 +1,30 @@
+#new-material-modal.modal.hide.fade{:tabindex => "-1", :role => "dialog", "aria-labelledby" => "new-material-label", "aria-hidden" => "true"}
+  - @material = Material.new
+  = form_for @material, :remote => true, :html => {:'data-type' => 'html', :id => 'new-material-dialog-form'} do |f|
+    .modal-header
+      %button.close{"data-dismiss" => "modal", "aria-hidden" => "true"}= "×"
+      %h3#new-material-label= "Nuevo material"
+    .modal-body
+      .field#field_material_name
+        = f.label :name, 'Nombre:'
+        = f.text_field :name, {:class => 'input-xlarge', :placeholder => 'Nombre del consumible'}
+        
+      .field#field_material_material_type_id
+        = f.label :material_type_id, 'Tipo:'
+        - mat_options = ""
+        - MaterialType.order('name').each do |mat|
+          - mat_options += "<option value=\"#{mat.id}\">#{mat.name}</option>"
+        = f.select :material_type_id, mat_options.html_safe
+      .field#field_cas
+        = f.label :cas, 'CAS:'
+        = f.text_field :cas, {:class => 'input-large', :placeholder => 'CAS'}
+      .field#field_material_unit_price
+        - unit_options = ""
+        - Unit.order('name').each do |unit|
+          - unit_options += "<option value=\"#{unit.id}\">#{unit.name}</option>"
+        = f.label :unit_price, 'Costo por '
+        = f.select :unit_id, unit_options.html_safe
+        = f.text_field :unit_price, {:class => 'input-large'}
+    .modal-footer
+      = button_tag "Agregar nuevo consumible", {:class => "btn btn-primary", :type => "submit"}
+      %button.btn{"data-dismiss" => "modal", "aria-hidden" => "true"}= "Cerrar"

@@ -7,6 +7,7 @@ Bitacora::Application.routes.draw do
   match '/login' => 'login#index'
 
   match '/folders' => 'service_requests#index'
+
   match '/service_requests/:id/sample_list' => 'service_requests#sample_list'
   match '/service_requests/live_search' => 'service_requests#live_search'
   match '/service_requests/form/:request_type_id' => 'service_requests#form'
@@ -137,6 +138,7 @@ Bitacora::Application.routes.draw do
   resources :equipment
 
   match '/materials/live_search' => 'materials#live_search'
+  match '/materials/new_dialog' => 'materials#new_dialog'
   resources :materials
 
   match '/clients/typeahead' => 'clients#typeahead'
@@ -168,6 +170,10 @@ Bitacora::Application.routes.draw do
   match '/admin/request_types' => 'admin#request_types'
   match '/admin/service_types' => 'admin#service_types'
   match '/admin/other_types' => 'admin#other_types'
+
+
+  match '/reports' => 'reports#index'
+  match '/reports/eficiencia' => 'reports#eficiencia'
 
   match '/auth/:provider/callback' => 'sessions#create'
   match '/auth/failure' => 'sessions#failure'

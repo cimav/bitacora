@@ -61,6 +61,10 @@ class MaterialsController < ApplicationController
     render :layout => false
   end
 
+  def new_dialog
+    render :layout => false
+  end
+
   def edit
     @material = Material.find(params[:id])
     render :layout => false

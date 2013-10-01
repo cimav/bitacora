@@ -1,0 +1,14 @@
+#header-bar
+  %h2= "Reportes"
+
+#reports-workarea
+  #reports-panel
+    %ul#reports-nav.nav.nav-pills.nav-stacked
+      %li{"data-link" => "/reports/eficiencia"}= link_to "Eficiencia de servicios", "#"
+
+  #reports-main-panel
+
+:javascript 
+  $(function() {
+    $('#reports-nav a:first').click()
+  })

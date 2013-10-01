@@ -1,0 +1,12 @@
+%h2 Eficiencia de servicios
+= form_tag '/search', :id => 'select-lab-form', :method => 'get', :remote => true do
+  - lab_options = '';
+  - Laboratory.order('name').each do |lab| 
+    - lab_options += "<option value=\"#{lab.id}\">#{lab.name}</option>"
+  = select_tag "laboratory_id", lab_options.html_safe
+
+- laboratory_id = 1
+- start_date = '2013-01-01'
+- end_date = '2013-12-31' 
+
+

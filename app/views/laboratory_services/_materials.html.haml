@@ -55,7 +55,7 @@
         %td
           = select_tag :new_mat_id, u_options.html_safe, {:style => "width: 100%;"}
           %br
-          .small
+            = "¿No existe en la lista? "
             %a#new-material-link="Agregar nuevo material"
         %td
           = text_field_tag 'new_mat_qty'

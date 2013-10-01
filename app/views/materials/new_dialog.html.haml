@@ -22,9 +22,12 @@
         - unit_options = ""
         - Unit.order('name').each do |unit|
           - unit_options += "<option value=\"#{unit.id}\">#{unit.name}</option>"
-        = f.label :unit_price, 'Costo por '
+        = f.label :unit_price, 'Costo:'
+        %span.input-prepend
+          %span.add-on= "$"
+          = f.text_field :unit_price, {:class => 'span2 input-large'}
         = f.select :unit_id, unit_options.html_safe
-        = f.text_field :unit_price, {:class => 'input-large'}
+
     .modal-footer
       = button_tag "Agregar nuevo consumible", {:class => "btn btn-primary", :type => "submit"}
       %button.btn{"data-dismiss" => "modal", "aria-hidden" => "true"}= "Cerrar"

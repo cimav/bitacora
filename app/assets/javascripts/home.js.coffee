@@ -1787,6 +1787,36 @@ $(document).on('ajax:error', '#new-material-dialog-form', (evt, xhr, status, err
     showFormErrors(xhr, status, error)
   )
 
+#--------------------
+# Edit folder dialog
+#--------------------
+$(document).on('click', '#edit-service-request-link', () ->
+    $("#edit-service-request-dialog").remove()
+    $('body').append('<div id="edit-service-request-dialog"></div>')
+    id = $(this).data('id')
+    url = "/service_requests/edit_dialog/#{id}"
+    $.get(url, {}, (html) ->
+      $('#edit-service-request-dialog').empty().html(html)
+      $('#edit-service-request-modal').modal({ keyboard:true, backdrop:true, show: true });
+    )
+  )
+
+$(document).on('ajax:beforeSend', '#edit-service-request-dialog-form', (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.has-errors').removeClass('has-errors')
+  )
+$(document).on('ajax:success', '#edit-service-request-dialog-form', (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    $('#edit-service-request-modal').modal('hide').remove()
+    $("#new_mat_id").append("<option value=#{res['id']}>#{res['name']}</option>")
+    # TODO: Locate new material and focus on qty
+  )
+
+$(document).on('ajax:error', '#edit-service-request-dialog-form', (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
   
 
 

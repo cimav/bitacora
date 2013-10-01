@@ -2,6 +2,14 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#edit-service-request-link {
+  position: absolute;
+  bottom: 5px;
+  right: 20px;
+  cursor: pointer;
+  z-index: 99999;
+}
+
 #new-request-area {
   h1 {
     margin-bottom: 20px;

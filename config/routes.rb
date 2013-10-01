@@ -10,6 +10,7 @@ Bitacora::Application.routes.draw do
 
   match '/service_requests/:id/sample_list' => 'service_requests#sample_list'
   match '/service_requests/live_search' => 'service_requests#live_search'
+  match '/service_requests/edit_dialog/:id' => 'service_requests#edit_dialog'
   match '/service_requests/form/:request_type_id' => 'service_requests#form'
   resources :service_requests 
   match '/samples/:id/requested_services_list' => 'samples#requested_services_list'

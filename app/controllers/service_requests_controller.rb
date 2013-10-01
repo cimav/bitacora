@@ -87,6 +87,11 @@ class ServiceRequestsController < ApplicationController
     end
   end
 
+  def edit_dialog
+    @service_request = ServiceRequest.find(params[:id])
+    render :layout => false
+  end
+
   def update 
     @request = ServiceRequest.find(params[:id])
 

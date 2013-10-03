@@ -22,6 +22,7 @@
   min-height: 64px;
   background: transparent;
   border-bottom: 1px solid $line-color;
+  overflow: hidden;
   &.service-mine .service-request-number {
     color: $grey;
   }

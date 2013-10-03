@@ -6,17 +6,20 @@
     - else
       - klass = 'service-mine' 
       - add_info = ''
-    - if r.request_type.prefix == 'S'
+    - if !r.request_type.blank? && r.request_type.prefix == 'S'
       - original_icon = 'icon-folder-close'
     - else
       - original_icon = 'icon-folder-close-alt'
-    .service-request-item{:service_request_id => r.id, :class => klass, :id => r.number, "data-original-icon" => original_icon}
-      .service-request-number
+    .service-request-item{:service_request_id => r.id, :class => klass, :id => r.number}
+      .service-request-number{"data-original-icon" => original_icon, "data-toggle" => "tooltip", "data-placement" => "right", :title => r.description}
         %i.icon-4x{:class => original_icon}
         = r.number
       .service-request-link= "#{r.request_type.name} #{r.request_link}" rescue "Sin tipo"
-      .service-request-description= r.description
       .service-request-add-info= add_info
 .items-counter
   .items-counter-inner
     = "#{@requests.count} carpetas"
+
+
+:javascript
+  $('.service-request-number').tooltip()

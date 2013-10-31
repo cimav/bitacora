@@ -231,7 +231,7 @@ $(document).on('ajax:success', '#new-request-form', (evt, data, status, xhr) ->
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     $('#search-filter').val('*')
-    $('#search-box').val(res['id'])
+    $('#search-box').val(res['number'])
     foldersLiveSearch()
     #getServiceRequest(res['id'])
   )

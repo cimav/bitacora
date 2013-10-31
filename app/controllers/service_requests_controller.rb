@@ -16,9 +16,6 @@ class ServiceRequestsController < ApplicationController
     else
       extra_sql = ""
     end
-    puts "----------------------------"
-    puts current_user.access.to_s + "==" + User::ACCESS_CUSTOMER_SERVICE.to_s
-    puts extra_sql
     
     @requests = ServiceRequest.includes(:user).where("service_requests.status = :s AND 
                                                      (service_requests.user_id = :u 
@@ -77,6 +74,7 @@ class ServiceRequestsController < ApplicationController
           if request.xhr?
             json = {}
             json[:id] = @service_request.id
+            json[:number] = @service_request.number
             json[:flash] = flash
             render :json => json
           else

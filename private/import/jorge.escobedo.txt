@@ -1,0 +1,28 @@
+552|20|2|11|ignacio.martin|jorge.escobedo|Elaboración de termopares
+552|20|2|12|ignacio.martin|jorge.escobedo|Elaboración de termopares
+552|20|2|13|ignacio.martin|jorge.escobedo|Elaboración de termopares
+552|20|2|14|ignacio.martin|jorge.escobedo|Elaboración de termopares
+551|1|2|18|ignacio.martin|jorge.escobedo|Creación de base de datos climáticos de la ciudad de Queretaro para el software TRNSYS
+535|1|2|20|ignacio.martin|jorge.escobedo|Construcción del simulador (programa de computadora e interfaces) (Est. de Doc. Mónica Moreno)
+535|1|2|21|ignacio.martin|jorge.escobedo|Construcción del simulador (programa de computadora e interfaces) (Est. de M. Mario Májera)
+535|1|2|25|ignacio.martin|jorge.escobedo|Construcción del simulador (programa de computadora e interfaces) (Est. de M. Karely Romero)
+537|1|2|26|ignacio.martin|jorge.escobedo|Se crean, en EES, modelos de equipos, aparatos, accesorios, componentes, etc. basados en balances de matería y energía (Est. de M. Karely Romero)
+535|1|2|27|ignacio.martin|jorge.escobedo|Construcción del simulador (programa de computadora e interfaces) (Est. de M. Mario Májera)
+553|1|3|11|ignacio.martin|jorge.escobedo|Medición de temperaturas en Cuauhtémoc (Johan Harms Fehr Serviestructuras Harms, S.A. de C.V.)
+553|4|3|11|ignacio.martin|jorge.escobedo|Medición de temperaturas con Cámara termográfica en Cuauhtémoc (Johan Harms Fehr Serviestructuras Harms, S.A. de C.V.)
+553|1|3|12|ignacio.martin|jorge.escobedo|Medición de temperaturas en Cuauhtémoc (Johan Harms Fehr Serviestructuras Harms, S.A. de C.V.)
+553|4|3|12|ignacio.martin|jorge.escobedo|Medición de temperaturas con Cámara termográfica en Cuauhtémoc (Johan Harms Fehr Serviestructuras Harms, S.A. de C.V.)
+553|1|3|13|ignacio.martin|jorge.escobedo|Medición de temperaturas en Cuauhtémoc (Johan Harms Fehr Serviestructuras Harms, S.A. de C.V.)
+553|4|3|13|ignacio.martin|jorge.escobedo|Medición de temperaturas con Cámara termográfica en Cuauhtémoc (Johan Harms Fehr Serviestructuras Harms, S.A. de C.V.)
+553|4|4|12|teresa.alarcon|jorge.escobedo|Medición de temperaturas en Cuauhtémoc (Estudiante de Maestría Laura Córdova)
+537|1|4|15|ignacio.martin|jorge.escobedo|Se crean, en EES, modelos de equipos, aparatos, accesorios, componentes, etc. basados en balances de matería y energía (Est. de doc. Mónica Moreno)
+535|1|4|16|ignacio.martin|jorge.escobedo|Construcción del simulador (programa de computadora e interfaces) (Est. de Doc. Jorge Lucero)
+535|1|4|17|ignacio.martin|jorge.escobedo|Construcción del simulador (programa de computadora e interfaces) (Est. de M. Mario Májera)
+535|1|4|18|ignacio.martin|jorge.escobedo|Construcción del simulador (programa de computadora e interfaces) (Est. de M. Karely Romero)
+534|1|4|22|ignacio.martin|jorge.escobedo|Diseño conceptual sistemas térmicos solares (Est. de M. Rafael Chavez)
+535|1|4|23|ignacio.martin|jorge.escobedo|Construcción del simulador (programa de computadora e interfaces) (Est. de M. Rafael Chavez)
+548|1|5|7|ignacio.martin|jorge.escobedo|Simulación de sistemas solares para secado (Est. de M. Karely Romero)
+535|1|5|8|ignacio.martin|jorge.escobedo|Construcción del simulador (programa de computadora e interfaces) (Est. de Doc. Mónica Moreno)
+535|1|5|9|ignacio.martin|jorge.escobedo|Construcción del simulador (programa de computadora e interfaces) (Est. de Doc. Mónica Moreno)
+535|1|5|13|ignacio.martin|jorge.escobedo|Construcción del simulador (programa de computadora e interfaces) (Est. de Doc. Jorge Lucero)
+535|1|4|14|ignacio.martin|jorge.escobedo|Construcción del simulador (programa de computadora e interfaces) (Est. de M. Rafael Chavez)

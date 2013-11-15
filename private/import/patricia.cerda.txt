@@ -1,0 +1,21 @@
+397|11|1|9|jose.bonilla|patricia.cerda|
+398|3|2|11|patricia.cerda|patricia.cerda|
+393|1|2|13|margarita.sanchez|patricia.cerda|
+395|3|2|14|margarita.sanchez|patricia.cerda|
+395|1|2|15|margarita.sanchez|patricia.cerda|
+395|8|3|2|margarita.sanchez|patricia.cerda|
+395|3|3|4|margarita.sanchez|patricia.cerda|
+395|5|3|8|margarita.sanchez|patricia.cerda|
+393|3|3|9|margarita.sanchez|patricia.cerda|
+393|1|3|15|margarita.sanchez|patricia.cerda|
+393|2|3|22|margarita.sanchez|patricia.cerda|
+397|5|5|21|servando.aguirre|patricia.cerda|
+392|4|6|14|margarita.sanchez|patricia.cerda|
+392|4|6|17|margarita.sanchez|patricia.cerda|
+395|2|6|18|margarita.sanchez|patricia.cerda|
+395|2|6|19|margarita.sanchez|patricia.cerda|
+395|4|6|20|margarita.sanchez|patricia.cerda|
+652|2|7|4|alfonso.perez|patricia.cerda|Remanente proyecto Vitro
+652|3|7|9|ana.arizmendi|patricia.cerda|
+652|4|7|15|alfonso.perez|patricia.cerda|Remanente proyecto Vitro
+652|2|7|19|jaime.alvarez|patricia.cerda|

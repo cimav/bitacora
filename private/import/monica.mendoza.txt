@@ -1,0 +1,12 @@
+128|5|3|20|sergio.flores|monica.mendoza|Se realizaron a lo largo del mes
+128|12|4|1|sergio.flores|monica.mendoza|Se realizaron a lo largo del mes
+128|12|5|1|sergio.flores|monica.mendoza|Se realizaron a lo largo del mes
+131|5|3|20|sergio.flores|monica.mendoza|Se realizaron a lo largo del mes
+131|12|4|1|sergio.flores|monica.mendoza|Se realizaron a lo largo del mes
+131|12|5|1|sergio.flores|monica.mendoza|Se realizaron a lo largo del mes
+129|75|3|21|sergio.flores|monica.mendoza|Se realizaron a lo largo del mes
+129|180|4|1|sergio.flores|monica.mendoza|Se realizaron a lo largo del mes
+129|180|5|1|sergio.flores|monica.mendoza|Se realizaron a lo largo del mes
+130|75|3|25|sergio.flores|monica.mendoza|Se realizaron a lo largo del mes
+130|180|4|15|sergio.flores|monica.mendoza|Se realizaron a lo largo del mes
+130|180|5|10|sergio.flores|monica.mendoza|Se realizaron a lo largo del mes

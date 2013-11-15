@@ -1,0 +1,54 @@
+159|1|2|25|jose.matutes|carlos.santillan|300 a 385kelvin, H=0 subida
+159|1|2|25|jose.matutes|carlos.santillan|300 a 385kelvin, H=0 bajada
+158|1|3|5|jose.matutes|carlos.santillan|300 a 2k,H=0 bajada
+158|1|3|5|jose.matutes|carlos.santillan|300 a 2k,H=0 subida
+158|1|3|5|jose.matutes|carlos.santillan|300 a 2k,H=.02T 
+158|1|3|5|jose.matutes|carlos.santillan|300 a 2k,H=.04T 
+158|1|3|5|jose.matutes|carlos.santillan|300 a 2k,H=.06T 
+158|1|3|5|jose.matutes|carlos.santillan|300 a 2k,H=.08T 
+158|1|3|5|jose.matutes|carlos.santillan|300 a 2k,H=.1T 
+158|1|3|5|jose.matutes|carlos.santillan|300 a 2k,H=.5T 
+158|1|3|5|jose.matutes|carlos.santillan|300 a 2k,H=1T 
+158|1|3|5|jose.matutes|carlos.santillan|300 a 2k,H=2T 
+158|1|3|5|jose.matutes|carlos.santillan|300 a 2k,H=3T 
+158|1|3|5|jose.matutes|carlos.santillan|300 a 2k,H=4T 
+158|1|3|5|jose.matutes|carlos.santillan|300 a 2k,H=5T 
+158|1|3|5|jose.matutes|carlos.santillan|300 a 2k,H=6T 
+158|1|3|5|jose.matutes|carlos.santillan|300 a 2k,H=7T 
+158|1|3|5|jose.matutes|carlos.santillan|300 a 2k,H=8T 
+158|1|3|5|jose.matutes|carlos.santillan|300 a 2k,H=9T 
+516|1|5|29|jose.matutes|carlos.santillan|FST01_cinta_4.13mg_5Oe_100Hz R 
+516|1|5|29|jose.matutes|carlos.santillan|FST01_cinta_4.13mg_5Oe_100Hz  Ima
+516|1|5|29|jose.matutes|carlos.santillan|FST01_cinta_4.13mg_15Oe_100Hz R 
+516|1|5|29|jose.matutes|carlos.santillan|FST01_cinta_4.13mg_15Oe_100Hz  Ima
+516|1|5|29|jose.matutes|carlos.santillan|FST01b_cinta_24.4mg_15Oe_100Hz R 
+516|1|5|29|jose.matutes|carlos.santillan|FST01b_cinta_24.4mg_15Oe_100Hz  Ima
+166|1|6|3|jose.matutes|carlos.santillan|Cinta_FST01b_24.4mg H=100 Oe ZFC
+166|1|6|3|jose.matutes|carlos.santillan|Cinta_FST01b_24.4mg H=100 Oe FC
+157|1|6|3|jose.matutes|carlos.santillan|FST01b cinta 24mg LHM 20K
+157|1|6|3|jose.matutes|carlos.santillan|FST01b cinta 24mg LHM 7K
+166|1|6|3|jose.matutes|carlos.santillan|FST02 cinta 22P5mg ZFCyFC 1T 
+166|1|6|3|jose.matutes|carlos.santillan|FST02 cinta 22P5mg FC 1T 
+166|1|6|3|jose.matutes|carlos.santillan|FST02 cinta 22P5mg ZFCyFC 100OE 
+166|1|6|3|jose.matutes|carlos.santillan|FST02 cinta 22P5mg FC 100OE 
+166|1|6|3|jose.matutes|carlos.santillan|FST02 cinta 22P5mg ZFCyFC 10OE
+166|1|6|3|jose.matutes|carlos.santillan|FST02 cinta 22P5mg FC  10OE
+157|1|6|11|jose.matutes|carlos.santillan|FST02 cinta 22P5mg LHM 2K 500Oe
+157|1|6|11|jose.matutes|carlos.santillan|FST02 cinta 22P5mg LHM 2K 1000Oe
+157|1|6|11|jose.matutes|carlos.santillan|FST02 cinta 22P5mg LHM 2K 10000Oe
+158|1|6|14|jose.matutes|carlos.santillan|FST02 cinta 22p5mg RvsT  0 Oe
+161|1|6|14|jose.matutes|carlos.santillan|FST02 cinta 22p5mg RvsT  500 Oe
+161|1|6|14|jose.matutes|carlos.santillan|FST02 cinta 22p5mg RvsT  1000 Oe
+157|1|6|28|jose.matutes|carlos.santillan|Margarita coates Fe3O4
+157|1|6|28|jose.matutes|carlos.santillan|Margarita coates Fe3O5
+157|1|6|28|jose.matutes|carlos.santillan|Margarita coates Fe3O6 
+157|1|6|28|jose.matutes|carlos.santillan|Margarita coates Fe3O7 PEZA
+157|1|6|28|jose.matutes|carlos.santillan|Margarita coates Fe3O8 PEZB
+157|1|6|28|jose.matutes|carlos.santillan|Margarita coates Fe3O9 PEZC
+157|1|6|28|jose.matutes|carlos.santillan|Margarita coates Fe3O10 PEZD
+157|1|6|28|jose.matutes|carlos.santillan|Margarita coates Fe3O11 PEZE
+157|1|6|28|jose.matutes|carlos.santillan|Margarita coates Fe3O12 PEZF
+157|1|7|1|sion.olive|carlos.santillan|VSM_LHM_F25_2Z_9P6MG_00001
+157|1|7|1|sion.olive|carlos.santillan|VSM_LHM_F25_1H_26P3MG_00001
+157|1|7|1|sion.olive|carlos.santillan|VSM_LHM_F12H_24P7MG_00001
+157|1|7|1|sion.olive|carlos.santillan|VSM_LHM_film_nano_00002

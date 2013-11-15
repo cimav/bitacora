@@ -1,0 +1,12 @@
+292|6|1|17|eduardo.herrera|damaris.acosta|
+283|2|1|22|lorena.alvarez|luis.lozoya|
+284|2|1|22|lorena.alvarez|luis.lozoya|
+283|1|2|6|dolores.lujan|damaris.acosta|
+284|1|2|6|dolores.lujan|damaris.acosta|
+283|1|2|11|ana.valles|damaris.acosta|
+284|1|2|11|ana.valles|damaris.acosta|
+291|2|3|13|guillermo.gonzalez|luis.lozoya|
+670|2|3|13|guillermo.gonzalez|damaris.acosta|
+291|1|6|10|guillermo.gonzalez|luis.lozoya|
+670|1|6|10|guillermo.gonzalez|damaris.acosta|
+509|16|5|14|guillermo.gonzalez|luis.lozoya|

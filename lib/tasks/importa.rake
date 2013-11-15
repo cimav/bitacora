@@ -7,7 +7,8 @@ end
 
 task :importa, [:filename] => :environment do |t, args|
   pwd = Dir.pwd
-  filename = "#{pwd}/#{args[:filename]}"
+  filename = "#{pwd}/private/import/#{args[:filename]}"
+  puts filename
   importado_id = RequestType.where(:short_name => 'IMPORTADO').first.id
   puts "Importando #{filename}"
   File.open(filename, "r").each_line do |line|
@@ -69,7 +70,7 @@ task :importa, [:filename] => :environment do |t, args|
                                    requested_service_status: RequestedService::FINISHED,
                                    message: "Servicio Importado. Fecha de solicitud #{serv.created_at}. #{log}")
 
-          puts "Servicio #{lab_service.name} importado para tecnico #{u_tech.full_name}"
+          puts "Servicio #{lab_service.name} importado para tecnico #{u_tech.full_name}, solicitante #{u_requestor.full_name}"
         end
       end
 

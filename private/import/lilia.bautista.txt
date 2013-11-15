@@ -1,0 +1,31 @@
+570|2|1|10|ana.arizmendi|lilia.bautista|Tesis
+570|2|1|10|tania.lara|lilia.bautista|Tesis
+570|13|1|15|eduardo.martinez|lilia.bautista|Ciencia Básica
+568|11|1|21|ana.arizmendi|lilia.bautista|Tesis
+570|2|1|22|jose.bonilla|lilia.bautista|Tesis
+570|1|1|24|jose.bonilla|lilia.bautista|Tesis
+570|2|1|28|tania.lara|lilia.bautista|Tesis
+570|3|2|8|guillermo.acosta|lilia.bautista|Tesis
+570|5|2|12|ana.arizmendi|lilia.bautista|Artículo
+568|17|2|12|ana.arizmendi|lilia.bautista|Tesis
+573|2|2|12|tania.lara|lilia.bautista|Ciencia Básica
+567|4|2|12|tania.lara|lilia.bautista|Ciencia Básica
+570|1|2|21|miguel.esneider|lilia.bautista|Prueba para servicio
+573|2|2|23|servando.aguirre|lilia.bautista|Tesis
+567|5|2|26|margarita.sanchez|lilia.bautista|Artículo
+568|5|2|26|margarita.sanchez|lilia.bautista|Artículo
+568|3|3|8|eduardo.martinez|lilia.bautista|Proyecto-Panel Rey 2144-45
+570|6|3|13|margarita.sanchez|lilia.bautista|Tesis
+570|6|3|20|margarita.sanchez|lilia.bautista|Artículo
+566|3|3|21|jaime.alvarez|lilia.bautista|Tesis
+566|1|3|21|cesar.leyva|lilia.bautista|Tesis
+573|6|3|21|servando.aguirre|lilia.bautista|Ciencia Básica
+570|10|3|22|ana.arizmendi|lilia.bautista|Tesis
+568|10|4|3|david.torres|lilia.bautista|Tesis
+570|3|4|5|margarita.sanchez|lilia.bautista|Tesis
+570|1|4|16|jose.bonilla|lilia.bautista|Tesis
+566|7|4|22|eduardo.martinez|lilia.bautista|Proyecto-Panel Rey 2144-45
+573|21|4|25|eduardo.martinez|lilia.bautista|Tesis
+573|5|4|29|margarita.sanchez|lilia.bautista|Ciencia Básica
+573|3|5|2|alfonso.perez|lilia.bautista|Muestras Construcción
+567|2|6|20|liliana.licea|lilia.bautista|

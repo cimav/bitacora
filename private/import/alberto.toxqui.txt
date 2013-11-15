@@ -1,0 +1,50 @@
+474|1|1|7|liliana.licea|alberto.toxqui|Artículo
+475|21|1|7|eduardo.martínez|alberto.toxqui|Estancia doctoral
+475|7|1|14|eduardo.martínez|alberto.toxqui|Estancia doctoral
+477|19|1|14|alfonso.perez|alberto.toxqui|Tesis de maestría
+477|1|1|17|jaime.alvarez|alberto.toxqui|Tesis de maestría
+477|23|1|18|alfonso.perez|alberto.toxqui|Tesis de maestría
+477|18|1|24|alberto.toxqui|alberto.toxqui|Artículo
+477|29|2|5|alfonso.perez|alberto.toxqui|Tesis de maestría
+474|2|2|18|jaime.alvarez|alberto.toxqui|Tesis de maestría
+473|1|2|18|josue.aguilar|alberto.toxqui|Artículo
+477|3|2|19|jaime.alvarez|alberto.toxqui|Tesis de maestría
+476|2|2|21|servando.aguirre|alberto.toxqui|Artículo
+474|2|2|21|rodrigo.mayen|alberto.toxqui|Tesis de maestría
+477|2|2|21|jose.bonilla|alberto.toxqui|Artículo
+477|5|2|21|servando.aguirre|alberto.toxqui|Tesis de maestría
+635|2|2|22|miguel.esneider|alberto.toxqui|Proyecto 20150, 3G
+470|6|2|22|servando.aguirre|alberto.toxqui|Tesis de licenciatura
+474|3|2|26|nayely.pineda|alberto.toxqui|Tesis de maestría
+470|6|3|1|eduardo.martínez|alberto.toxqui|Tesis de maestría
+477|1|3|1|jaime.alvarez|alberto.toxqui|Tesis de maestría
+477|2|3|1|servando.aguirre|alberto.toxqui|Artículo
+477|6|3|4|jaime.alvarez|alberto.toxqui|Tesis de maestría
+474|10|3|5|josue.aguilar|alberto.toxqui|Artículo
+474|7|3|8|margarita.sanchez|alberto.toxqui|Tesis de maestría
+475|1|3|8|eduardo.martínez|alberto.toxqui|Estancia doctoral
+470|8|3|11|alfonso.perez|alberto.toxqui|Tesis de maestría
+470|4|3|11|eduardo.martínez|alberto.toxqui|Proyecto 20227 - Panel Rey
+477|26|3|11|alfonso.perez|alberto.toxqui|Tesis de maestría
+470|20|3|12|alfonso.perez|alberto.toxqui|Tesis de maestría
+477|2|3|14|jaime.alvarez|alberto.toxqui|Tesis de maestría
+477|2|3|15|alfonso.perez|alberto.toxqui|Tesis de maestría
+477|2|3|15|jaime.alvarez|alberto.toxqui|Tesis de maestría
+475|1|3|15|eduardo.martínez|alberto.toxqui|Tesis de maestría
+475|29|3|20|eduardo.martínez|alberto.toxqui|Estancia doctoral
+470|12|3|19|eduardo.martínez|alberto.toxqui|Estancia doctoral
+476|3|3|22|cesar.leyva|alberto.toxqui|Artículo
+476|2|4|3|ana.arizmendi|alberto.toxqui|Tesis de maestría
+470|1|4|4|eduardo.martínez|alberto.toxqui|Estancia doctoral
+470|6|4|5|eduardo.martínez|alberto.toxqui|Tesis de maestría
+476|2|4|9|ana.arizmendi|alberto.toxqui|Ciencia básica
+475|4|4|10|jose.bonilla|alberto.toxqui|Tesis de maestría
+476|1|4|17|jose.bonilla|alberto.toxqui|Tesis de maestría
+470|1|4|22|mario.sanchez|alberto.toxqui|Artículo
+470|3|4|24|eduardo.martínez|alberto.toxqui|Proyecto 20227, Panel Rey
+477|1|4|24|jaime.alvarez|alberto.toxqui|Tesis de maestría
+470|3|4|25|alberto.toxqui|alberto.toxqui|Artículo
+474|2|4|25|rodrigo.mayen|alberto.toxqui|Ciencia básica
+470|4|4|25|eduardo.martínez|alberto.toxqui|Proyecto 20227, Panel Rey
+476|4|4|29|cesar.leyva|alberto.toxqui|Artículo
+470|1|4|29|jose.bonilla|alberto.toxqui|Artículo

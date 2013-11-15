@@ -1,0 +1,14 @@
+95|2|2|6|carlos.dominguez|roal.torres|Azul y roja
+108|2|3|14|carlos.dominguez|roal.torres|Mtas de Al 1% y 2% de CNTs
+638|8|4|10|carlos.dominguez|roal.torres|Sinterizado
+111|1|4|18|carlos.dominguez|roal.torres|Aluminio para practicas ITCH
+514|2|5|29|carlos.dominguez|roal.torres|Al fotos a 200X y 500X
+514|2|5|30|carlos.dominguez|roal.torres|Alloy 7075 y "Tony" (Microdureza también)
+111|5|6|3 al 4|carlos.dominguez|roal.torres|Fundiciones y metalografía para ITESM
+108|1|6|5|carlos.dominguez|roal.torres|Tony Ac. Fosfórico al 5%
+638|6|6|6|carlos.dominguez|roal.torres|3 al 1% WC y 3 sin WC
+110|5|6|10|carlos.dominguez|roal.torres|Mtas para anodizar
+514|5|6|10|carlos.dominguez|roal.torres|Mtas para anodizar - Prep. Superficial
+107|5|6|11 al 14|carlos.dominguez|roal.torres|Anodizado (similar a recubrimiento)
+514|5|6|12|carlos.dominguez|roal.torres|Fundiciones y metalografía para ITESM
+514|3|6|13|carlos.dominguez|roal.torres|Metalografías para ITCH

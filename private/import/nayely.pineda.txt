@@ -1,0 +1,236 @@
+383|3|14|1|margarita.sanchez|nayely.pineda|
+387|3|14|1|margarita.sanchez|nayely.pineda|
+380|3|14|1|margarita.sanchez|nayely.pineda|
+383|2|15|1|jaime.alvarez|nayely.pineda|
+387|2|15|1|jaime.alvarez|nayely.pineda|
+383|6|16|1|jaime.alvarez|nayely.pineda|
+387|6|16|1|jaime.alvarez|nayely.pineda|
+380|6|16|1|jaime.alvarez|nayely.pineda|
+383|4|16|1|josue.aguilar|nayely.pineda|
+387|4|16|1|josue.aguilar|nayely.pineda|
+380|4|16|1|josue.aguilar|nayely.pineda|
+383|2|17|1|ana.arizmendi|nayely.pineda|
+387|2|17|1|ana.arizmendi|nayely.pineda|
+380|2|17|1|ana.arizmendi|nayely.pineda|
+383|6|18|1|eduardo.martinez|nayely.pineda|
+387|6|18|1|eduardo.martinez|nayely.pineda|
+380|6|18|1|eduardo.martinez|nayely.pineda|
+383|2|18|1|margarita.sanchez|nayely.pineda|
+387|2|18|1|margarita.sanchez|nayely.pineda|
+380|2|18|1|margarita.sanchez|nayely.pineda|
+383|10|21|1|jaime.alvarez|nayely.pineda|
+387|10|21|1|jaime.alvarez|nayely.pineda|
+380|10|21|1|jaime.alvarez|nayely.pineda|
+383|3|21|1|rodrigo.mayen|nayely.pineda|
+387|3|21|1|rodrigo.mayen|nayely.pineda|
+380|3|21|1|rodrigo.mayen|nayely.pineda|
+383|4|22|1|josue.aguilar|nayely.pineda|
+387|4|22|1|josue.aguilar|nayely.pineda|
+380|4|22|1|josue.aguilar|nayely.pineda|
+383|6|23|1|eduardo.martinez|nayely.pineda|
+380|6|23|1|eduardo.martinez|nayely.pineda|
+383|3|24|1|alejandra.garcia|nayely.pineda|
+387|3|24|1|alejandra.garcia|nayely.pineda|
+389|3|24|1|alejandra.garcia|nayely.pineda|
+380|3|24|1|alejandra.garcia|nayely.pineda|
+383|3|30|1|alejandra.garcia|nayely.pineda|
+387|3|30|1|alejandra.garcia|nayely.pineda|
+389|3|30|1|alejandra.garcia|nayely.pineda|
+380|3|30|1|alejandra.garcia|nayely.pineda|
+383|8|30|1|jaime.alvarez|nayely.pineda|
+387|8|30|1|jaime.alvarez|nayely.pineda|
+380|8|30|1|jaime.alvarez|nayely.pineda|
+383|4|31|1|eduardo.martinez|nayely.pineda|
+380|4|31|1|eduardo.martinez|nayely.pineda|
+383|2|25|1|rodrigo.mayen|nayely.pineda|
+387|2|25|1|rodrigo.mayen|nayely.pineda|
+380|2|25|1|rodrigo.mayen|nayely.pineda|
+383|3|31|1|rodrigo.mayen|nayely.pineda|
+387|3|31|1|rodrigo.mayen|nayely.pineda|
+380|3|31|1|rodrigo.mayen|nayely.pineda|
+383|2|1|2|jose.bonilla|nayely.pineda|
+380|2|1|2|jose.bonilla|nayely.pineda|
+383|2|4|3|liliana.licea|nayely.pineda|
+380|2|4|3|liliana.licea|nayely.pineda|
+383|7|6|3|alejandra.garcia|nayely.pineda|
+380|7|6|3|alejandra.garcia|nayely.pineda|
+383|9|7|3|eduardo.martinez|nayely.pineda|
+380|9|7|3|eduardo.martinez|nayely.pineda|
+383|1|8|3|david.torres|nayely.pineda|
+387|1|8|3|david.torres|nayely.pineda|
+380|1|8|3|david.torres|nayely.pineda|
+383|1|8|3|margarita.sanchez|nayely.pineda|
+387|1|8|3|margarita.sanchez|nayely.pineda|
+380|1|8|3|margarita.sanchez|nayely.pineda|
+383|6|9|3|tania.lara|nayely.pineda|
+387|6|9|3|tania.lara|nayely.pineda|
+380|6|9|3|tania.lara|nayely.pineda|
+383|9|9|3|alejandra.garcia|nayely.pineda|
+387|9|9|3|alejandra.garcia|nayely.pineda|
+380|9|9|3|alejandra.garcia|nayely.pineda|
+383|4|11|3|servando.aguirre|nayely.pineda|
+387|4|11|3|servando.aguirre|nayely.pineda|
+380|4|11|3|servando.aguirre|nayely.pineda|
+383|2|12|3|servando.aguirre|nayely.pineda|
+387|2|12|3|servando.aguirre|nayely.pineda|
+380|2|12|3|servando.aguirre|nayely.pineda|
+383|4|13|3|liliana.licea|nayely.pineda|
+380|4|13|3|liliana.licea|nayely.pineda|
+387|6|15|3|alfredo.morales|nayely.pineda|
+383|6|15|3|alfredo.morales|nayely.pineda|
+380|6|15|3|alfredo.morales|nayely.pineda|
+383|3|15|3|eduardo.martinez|nayely.pineda|
+380|3|15|3|eduardo.martinez|nayely.pineda|
+383|6|19|3|jaime.alvarez|nayely.pineda|
+387|6|19|3|jaime.alvarez|nayely.pineda|
+380|6|19|3|jaime.alvarez|nayely.pineda|
+383|5|20|3|tania.lara|nayely.pineda|
+387|5|20|3|tania.lara|nayely.pineda|
+380|5|20|3|tania.lara|nayely.pineda|
+383|1|21|3|jaime.alvarez|nayely.pineda|
+387|1|21|3|jaime.alvarez|nayely.pineda|
+380|1|21|3|jaime.alvarez|nayely.pineda|
+383|2|2|4|eduardo.martinez|nayely.pineda|
+380|2|2|4|eduardo.martinez|nayely.pineda|
+383|2|2|4|margarita.sanchez|nayely.pineda|
+387|2|2|4|margarita.sanchez|nayely.pineda|
+380|2|2|4|margarita.sanchez|nayely.pineda|
+383|4|3|4|ana.arizmendi|nayely.pineda|
+387|4|3|4|ana.arizmendi|nayely.pineda|
+380|4|3|4|ana.arizmendi|nayely.pineda|
+383|7|4|4|alfonso.perez|nayely.pineda|
+387|7|4|4|alfonso.perez|nayely.pineda|
+380|7|4|4|alfonso.perez|nayely.pineda|
+383|5|4|4|margarita.sanchez|nayely.pineda|
+380|5|4|4|margarita.sanchez|nayely.pineda|
+383|2|8|4|alejandra.garcia|nayely.pineda|
+387|2|8|4|alejandra.garcia|nayely.pineda|
+380|2|8|4|alejandra.garcia|nayely.pineda|
+383|4|10|4|servando.aguirre|nayely.pineda|
+387|4|10|4|servando.aguirre|nayely.pineda|
+380|4|10|4|servando.aguirre|nayely.pineda|
+383|1|12|4|rodrigo.mayen|nayely.pineda|
+380|1|12|4|rodrigo.mayen|nayely.pineda|
+383|2|18|4|nayely.pineda|nayely.pineda|
+387|2|18|4|nayely.pineda|nayely.pineda|
+383|2|19|4|liliana.licea|nayely.pineda|
+387|2|19|4|liliana.licea|nayely.pineda|
+380|2|19|4|liliana.licea|nayely.pineda|
+383|2|19|4|rodrigo.mayen|nayely.pineda|
+380|2|19|4|rodrigo.mayen|nayely.pineda|
+383|2|22|4|margarita.sanchez|nayely.pineda|
+387|2|22|4|margarita.sanchez|nayely.pineda|
+380|2|22|4|margarita.sanchez|nayely.pineda|
+383|8|26|4|eduardo.martinez|nayely.pineda|
+387|8|26|4|eduardo.martinez|nayely.pineda|
+380|8|26|4|eduardo.martinez|nayely.pineda|
+383|5|26|4|jaime.alvarez|nayely.pineda|
+387|5|26|4|jaime.alvarez|nayely.pineda|
+380|5|26|4|jaime.alvarez|nayely.pineda|
+383|13|3|5|josue.aguilar|nayely.pineda|
+387|13|3|5|josue.aguilar|nayely.pineda|
+380|13|3|5|josue.aguilar|nayely.pineda|
+383|4|6|5|eduardo.martinez|nayely.pineda|
+380|4|6|5|eduardo.martinez|nayely.pineda|
+383|3|8|5|margarita.sanchez|nayely.pineda|
+387|3|8|5|margarita.sanchez|nayely.pineda|
+380|3|8|5|margarita.sanchez|nayely.pineda|
+383|2|9|5|alejandra.garcia|nayely.pineda|
+387|2|9|5|alejandra.garcia|nayely.pineda|
+380|2|9|5|alejandra.garcia|nayely.pineda|
+383|2|13|5|jose.bonilla|nayely.pineda|
+380|2|13|5|jose.bonilla|nayely.pineda|
+383|4|14|5|andres.garay|nayely.pineda|
+380|4|14|5|andres.garay|nayely.pineda|
+383|5|17|5|josue.aguilar|nayely.pineda|
+387|5|17|5|josue.aguilar|nayely.pineda|
+380|5|17|5|josue.aguilar|nayely.pineda|
+383|4|17|5|margarita.sanchez|nayely.pineda|
+387|4|17|5|margarita.sanchez|nayely.pineda|
+380|4|17|5|margarita.sanchez|nayely.pineda|
+383|6|21|5|servando.aguirre|nayely.pineda|
+380|6|21|5|servando.aguirre|nayely.pineda|
+387|2|23|5|alejandra.garcia|nayely.pineda|
+383|2|23|5|alejandra.garcia|nayely.pineda|
+380|2|23|5|alejandra.garcia|nayely.pineda|
+383|7|23|5|eduardo.martinez|nayely.pineda|
+383|6|7|6|eduardo.martinez|nayely.pineda|
+380|6|7|6|eduardo.martinez|nayely.pineda|
+383|7|20|6|alejandra.garcia|nayely.pineda|
+387|7|20|6|alejandra.garcia|nayely.pineda|
+380|7|20|6|alejandra.garcia|nayely.pineda|
+383|2|21|6|alejandra.garcia|nayely.pineda|
+387|2|21|6|alejandra.garcia|nayely.pineda|
+380|2|21|6|alejandra.garcia|nayely.pineda|
+383|1|5|3|liliana.licea|nayely.pineda|Proyecto Copamex 20229
+387|1|5|3|liliana.licea|nayely.pineda|Proyecto Copamex 20229
+380|1|5|3|liliana.licea|nayely.pineda|Proyecto Copamex 20229
+383|3|21|6|liliana.licea|nayely.pineda|Proyecto Copamex 20229
+387|3|21|6|liliana.licea|nayely.pineda|Proyecto Copamex 20229
+380|3|21|6|liliana.licea|nayely.pineda|Proyecto Copamex 20229
+383|3|23|1|liliana.licea|nayely.pineda|Proyecto Copamex 20229
+387|3|23|1|liliana.licea|nayely.pineda|Proyecto Copamex 20229
+380|3|23|1|liliana.licea|nayely.pineda|Proyecto Copamex 20229
+383|3|15|2|liliana.licea|nayely.pineda|Proyecto Copamex 20229
+387|3|15|2|liliana.licea|nayely.pineda|Proyecto Copamex 20229
+380|3|15|2|liliana.licea|nayely.pineda|Proyecto Copamex 20229
+383|5|29|1|liliana.licea|nayely.pineda|Proyecto Copamex 20229
+387|5|29|1|liliana.licea|nayely.pineda|Proyecto Copamex 20229
+380|5|29|1|liliana.licea|nayely.pineda|Proyecto Copamex 20229
+383|1|11|4|servando.aguirre|nayely.pineda|Incubadora
+387|1|11|4|servando.aguirre|nayely.pineda|Incubadora
+380|1|11|4|servando.aguirre|nayely.pineda|Incubadora
+383|2|25|4|servando.aguirre|nayely.pineda|Incubadora
+387|2|25|4|servando.aguirre|nayely.pineda|Incubadora
+380|2|25|4|servando.aguirre|nayely.pineda|Incubadora
+383|3|7|3|servando.aguirre|nayely.pineda|Incubadora
+387|3|7|3|servando.aguirre|nayely.pineda|Incubadora
+380|3|7|3|servando.aguirre|nayely.pineda|Incubadora
+383|4|14|3|servando.aguirre|nayely.pineda|Incubadora
+387|4|14|3|servando.aguirre|nayely.pineda|Incubadora
+380|4|14|3|servando.aguirre|nayely.pineda|Incubadora
+383|5|6|5|ana.arizmendi|nayely.pineda|Proyecto JCI 20214
+387|5|6|5|ana.arizmendi|nayely.pineda|Proyecto JCI 20214
+380|5|6|5|ana.arizmendi|nayely.pineda|Proyecto JCI 20214
+383|2|25|1|tania.lara|nayely.pineda|Proyecto Nemak 20211
+387|2|25|1|tania.lara|nayely.pineda|Proyecto Nemak 20211
+380|2|25|1|tania.lara|nayely.pineda|Proyecto Nemak 20211
+383|4|28|1|tania.lara|nayely.pineda|Proyecto Nemak 20211
+387|4|28|1|tania.lara|nayely.pineda|Proyecto Nemak 20211
+380|4|28|1|tania.lara|nayely.pineda|Proyecto Nemak 20211
+383|2|5|6|eduardo.martinez|nayely.pineda|Proyecto Panel Rey 20227
+387|2|5|6|eduardo.martinez|nayely.pineda|Proyecto Panel Rey 20227
+380|2|5|6|eduardo.martinez|nayely.pineda|Proyecto Panel Rey 20227
+383|3|30|5|eduardo.martinez|nayely.pineda|Proyecto Panel Rey 20227
+387|3|30|5|eduardo.martinez|nayely.pineda|Proyecto Panel Rey 20227
+380|3|30|5|eduardo.martinez|nayely.pineda|Proyecto Panel Rey 20227
+383|4|10|4|eduardo.martinez|nayely.pineda|Proyecto Panel Rey 20227
+380|4|10|4|eduardo.martinez|nayely.pineda|Proyecto Panel Rey 20227
+383|4|18|4|eduardo.martinez|nayely.pineda|Proyecto Panel Rey 20227
+380|4|18|4|eduardo.martinez|nayely.pineda|Proyecto Panel Rey 20227
+383|6|15|1|eduardo.martinez|nayely.pineda|Proyecto Panel Rey 20227
+387|6|15|1|eduardo.martinez|nayely.pineda|Proyecto Panel Rey 20227
+380|6|15|1|eduardo.martinez|nayely.pineda|Proyecto Panel Rey 20227
+383|6|20|3|eduardo.martinez|nayely.pineda|Proyecto Panel Rey 20227
+380|6|20|3|eduardo.martinez|nayely.pineda|Proyecto Panel Rey 20227
+383|1|17|1|rodrigo.mayen|nayely.pineda|Proyecto Vitro Lamosa 20213
+387|1|17|1|rodrigo.mayen|nayely.pineda|Proyecto Vitro Lamosa 20213
+380|1|17|1|rodrigo.mayen|nayely.pineda|Proyecto Vitro Lamosa 20213
+383|3|14|1|rodrigo.mayen|nayely.pineda|Proyecto Vitro Lamosa 20213
+387|3|14|1|rodrigo.mayen|nayely.pineda|Proyecto Vitro Lamosa 20213
+380|3|14|1|rodrigo.mayen|nayely.pineda|Proyecto Vitro Lamosa 20213
+383|4|15|2|rodrigo.mayen|nayely.pineda|Proyecto Vitro Lamosa 20213
+380|4|15|2|rodrigo.mayen|nayely.pineda|Proyecto Vitro Lamosa 20213
+383|2|3|4|rodrigo.mayen|nayely.pineda|Proyecto Vitro Lamosa 20213
+380|2|3|4|rodrigo.mayen|nayely.pineda|Proyecto Vitro Lamosa 20213
+383|3|21|5|rodrigo.mayen|nayely.pineda|Proyecto Vitro Lamosa 20213
+380|3|21|5|rodrigo.mayen|nayely.pineda|Proyecto Vitro Lamosa 20213
+383|3|3|6|rodrigo.mayen|nayely.pineda|Proyecto Vitro Lamosa 20213
+387|3|3|6|rodrigo.mayen|nayely.pineda|Proyecto Vitro Lamosa 20213
+380|3|3|6|rodrigo.mayen|nayely.pineda|Proyecto Vitro Lamosa 20213
+383|1|19|6|rodrigo.mayen|nayely.pineda|Proyecto Vitro Lamosa 20213
+387|1|19|6|rodrigo.mayen|nayely.pineda|Proyecto Vitro Lamosa 20213
+380|1|19|6|rodrigo.mayen|nayely.pineda|Proyecto Vitro Lamosa 20213
+383|1|7|6|rodrigo.mayen|nayely.pineda|Proyecto Vitro Lamosa 20213
+387|1|7|6|rodrigo.mayen|nayely.pineda|Proyecto Vitro Lamosa 20213
+380|1|7|6|rodrigo.mayen|nayely.pineda|Proyecto Vitro Lamosa 20213

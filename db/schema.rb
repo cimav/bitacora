@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130930191653) do
+ActiveRecord::Schema.define(:version => 20131210020135) do
 
   create_table "activity_logs", :force => true do |t|
     t.integer  "user_id"
@@ -143,8 +143,9 @@ ActiveRecord::Schema.define(:version => 20130930191653) do
     t.integer  "service_type_id"
     t.string   "name"
     t.text     "description"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
+    t.decimal  "internal_cost",   :precision => 10, :scale => 2
   end
 
   add_index "laboratory_services", ["laboratory_id"], :name => "index_laboratory_services_on_laboratory_id"
@@ -327,6 +328,24 @@ ActiveRecord::Schema.define(:version => 20130930191653) do
     t.string "p", :limit => 50, :null => false
     t.string "s"
     t.string "c"
+  end
+
+  create_table "temp2", :id => false, :force => true do |t|
+    t.integer  "laboratory_id"
+    t.integer  "requested_service_id"
+    t.string   "number",                :limit => 20
+    t.string   "name"
+    t.integer  "laboratory_service_id"
+    t.integer  "user_id"
+    t.datetime "ST1"
+    t.datetime "ST2"
+    t.datetime "ST3"
+    t.datetime "ST4"
+    t.datetime "ST5"
+    t.datetime "ST6"
+    t.datetime "ST7"
+    t.datetime "ST8"
+    t.datetime "ST99"
   end
 
   create_table "units", :force => true do |t|

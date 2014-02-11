@@ -34,8 +34,8 @@ gem 'carrierwave'
 gem 'rmagick'
 gem 'mini_magick'
 
-gem "rubyzip"
-#, :require => 'zip/zip'
+gem "rubyzip", '>= 1.0.0'
+gem 'zip-zip'
 
 gem "resque"
 

@@ -121,7 +121,7 @@
                   = service_file.description
               %br
               %span.file-details= ext.upcase + ", " + number_to_human_size(File.size(service_file.file.to_s)) + ". Subido por #{service_file.user.full_name}"
-              - if service_file.user_id = current_user.id
+              - if service_file.user_id == current_user.id
                 %span.file-edit= link_to_function 'Editar', "edit_description(#{service_file.id})"
     #download-zip
       %a#zip-link{"data-sample-id" => @sample_id}= "Descargar ZIP"

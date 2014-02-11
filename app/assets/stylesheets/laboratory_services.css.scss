@@ -12,8 +12,8 @@
 
 #add-service-modal-panel {
   position: absolute;
-  top: 49px;
-  bottom: 60px;
+  top: 0px;
+  bottom: 0px;
   border-right: 1px solid $line-color;
   width: 200px;
   .search-area {
@@ -60,6 +60,7 @@
         background: $bg-selected;
         .lab-service-laboratory {
           font-weight: bold;
+          color: $white;
         }
       }
     }

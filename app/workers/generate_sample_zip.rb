@@ -7,7 +7,7 @@ class GenerateSampleZip
     temp = Tempfile.new("zip-file-#{Time.now}")
     Zip::ZipOutputStream.open(temp.path) do |z|
       req_services.each do |rs|
-        rs.service_files.each do |service_file|
+        rs.service_files.where(:status => ServiceFile::ACTIVE).each do |service_file|
           z.put_next_entry(File.basename(service_file.file.to_s))
           z.print File.open(service_file.file.to_s, "rb"){ |f| f.read }
         end

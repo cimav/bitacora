@@ -1,3 +1,145 @@
 // Place all the styles related to the ServiceFiles controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#files_iframe {
+  border: 0;
+}
+
+#upload-area {
+  background: $white;
+}
+
+#upload-box {
+  float: right;
+  position: relative;
+  margin-right: 10px;
+  width: 140px;
+}
+
+#upload-box input[type=file] {
+  position: absolute;
+  text-align: right;
+  font-size: 60px;
+  height: 150px;
+  border: 1px solid #f90;
+  @include opacity(0);
+  top: 0px;
+  left: 0px;
+  z-index: 2;
+  cursor: pointer; cursor: hand;
+}
+
+.upload {
+  z-index: 1;
+  width: 150px;
+  text-align: center;
+  border: 0;
+  margin: 0;
+  padding: 6px 8px;
+  outline: none;
+  color: #333;
+  font-weight: bold;
+  text-shadow: #fff 0px 1px 0px;
+  border: 1px solid #ccc;
+  @include gradient(#eee, #ccc);
+  @include rounded(5px);
+  @include shadow_inset(0,1px,1px,#fff);
+  font-size: 14px;
+  cursor: pointer; 
+  height: 20px;
+}
+
+#upload-box .upload {
+  width: 120px;
+  padding: 50px 8px 6px 8px;
+  background: #eee url(/assets/up.png) center 5px no-repeat;
+}
+
+.upload-msg {
+  text-align: left;
+  font-size: 11px;
+  margin-top: 20px;
+  color: $grey;
+}
+
+#files-area {
+  margin-right: 180px;
+  margin-left: 10px;
+  table {
+    width: 100%;
+    tr {
+      &.cur-serv-cell {
+        th {
+          background: #fffbb6 !important;
+        }
+        td {
+          background: #fffdd7 !important;
+        }
+      }
+      th {
+        font-size: 120%;
+        span {
+          padding: 4px;
+          @include rounded(4px);
+        }
+      }
+      td {
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+    }
+  }
+}
+
+
+.file-entry {
+  height: 60px;
+
+  .file-desc-form {
+    display: none;
+    select {
+      width: 100px;
+    }
+    input {
+      width: 300px;
+      margin-top: 10px;
+    }
+  }
+
+  .file-desc {
+    padding-left: 18px;
+    font-size: 15px;
+  }
+
+  .file-details {
+    padding-left: 18px;
+    color: $grey;
+    font-size: 11px;
+    padding-top: 5px;
+  }
+}
+
+#files_iframe_outer {
+  position: fixed;
+  left: ($sample-list-width * 2) + 14;
+  bottom: 10px;
+  top: 216px;
+  right: 10px;
+}
+
+#files_iframe {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  overflow-x: hidden !important;
+  overflow-y: auto;
+}
+
+#download-zip {
+  font-size: 18px;
+  margin: 40px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+}

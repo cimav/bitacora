@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131210020135) do
+ActiveRecord::Schema.define(:version => 20140213002818) do
 
   create_table "activity_logs", :force => true do |t|
     t.integer  "user_id"
@@ -281,8 +281,9 @@ ActiveRecord::Schema.define(:version => 20131210020135) do
     t.integer  "file_type"
     t.string   "description"
     t.string   "file"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.integer  "status",               :default => 1
   end
 
   add_index "service_files", ["requested_service_id"], :name => "index_service_files_on_requested_service_id"

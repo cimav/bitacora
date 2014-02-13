@@ -132,6 +132,7 @@ Bitacora::Application.routes.draw do
   resources :service_files do
     member do
       get 'file'
+      get 'remove_file'
     end
   end
 

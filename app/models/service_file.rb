@@ -10,6 +10,9 @@ class ServiceFile < ActiveRecord::Base
 
   before_destroy :delete_linked_file
 
+  ACTIVE = 1
+  DELETED = 2
+
   FILE         = 99
   FINAL_REPORT = 1
 
@@ -22,6 +25,7 @@ class ServiceFile < ActiveRecord::Base
     FILE         => 'icon-file', 
     FINAL_REPORT => 'icon-ok'
   }
+
 
   def type_text
     TYPES[file_type]

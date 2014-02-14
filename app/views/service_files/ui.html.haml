@@ -76,8 +76,6 @@
     }, 'json');
   }
 
-  
-
 #upload-area
   - @service_file = ServiceFile.new
   = form_for(@service_file, :html => {:id => 'item-upload-file-form', :multipart => true}) do |f|
@@ -90,21 +88,22 @@
       .upload-msg Puedes seleccionar varios archivos a la vez para subir.
   #files-area
     - cur_serv = ''
-    %table.table
-      - @req_services.each do |rs|
-        - if rs.id.to_i == @requested_service_id.to_i
-          - cell_class = 'cur-serv-cell'
-        - else 
-          - cell_class = ''
-        %tr{:class => cell_class}
-          %th
+    - others_header = false;
+    - @req_services.each do |rs|
+      - if rs.id.to_i != @requested_service_id.to_i && !others_header
+        - others_header = true
+        %h4= "Archivos en otros servicios"
+      %table.table.table-striped.table-bordered
+        %tr
+          %th{:colspan => 3}
             %span.service-bullet{:class => "status_#{rs.status}"}= "%02d" %  rs.consecutive
             = rs.laboratory_service.name
-        - if rs.service_files.count == 0
+        - the_files = rs.service_files.where(:status => ServiceFile::ACTIVE)
+        - if the_files.count == 0
           %tr
             %td.empty-cell= "No hay archivos"
-        - rs.service_files.each do |service_file|
-          %tr{'id' => "file-#{service_file.id}", 'class' => cell_class}
+        - the_files.each do |service_file|
+          %tr{'id' => "file-#{service_file.id}"}
             - if File.extname(service_file.file.to_s) == ''
               - ext = 'unknown'
             - else 
@@ -121,10 +120,10 @@
                   = service_file.description
               %br
               %span.file-details= ext.upcase + ", " + number_to_human_size(File.size(service_file.file.to_s)) + ". Subido por #{service_file.user.full_name}"
-              - if service_file.user_id = current_user.id
-                %span.file-edit= link_to_function 'Editar', "edit_description(#{service_file.id})"
+              - if service_file.user_id == current_user.id
+                = link_to "×", {:controller => "service_files", :action => "remove_file", :id => service_file.id, :remote => true}, :class => 'close delete-file', data: { confirm: "¿Estas seguro?" }
     #download-zip
-      %a#zip-link{"data-sample-id" => @sample_id}= "Descargar ZIP"
+      %a#zip-link{"data-sample-id" => @sample_id}= "Descargar ZIP de todos los servicios"
 
 
   .clearfix

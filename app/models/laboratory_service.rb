@@ -4,7 +4,7 @@ class LaboratoryService < ActiveRecord::Base
   has_many :requested_service
   has_many :users, :through => :requested_service
 
-  validates :name, :presence => true, :uniqueness => true
+  validates :name, :presence => true
   validates :service_type_id, :presence => true
   validates :laboratory_id, :presence => true
 

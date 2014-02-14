@@ -6,6 +6,7 @@ class Sample < ActiveRecord::Base
   has_many :activity_log
 
   after_create :set_consecutive
+  after_create :set_code
 
   def set_consecutive
     con = Sample.where(:service_request_id => self.service_request_id).maximum('consecutive')
@@ -19,4 +20,10 @@ class Sample < ActiveRecord::Base
     self.number = "#{self.service_request.number}-#{consecutive}" 
     self.save(:validate => false)
   end
+
+  def set_code
+    self.code = SecureRandom.hex(8)
+    self.save(:validate => false)
+  end
+
 end

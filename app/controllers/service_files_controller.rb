@@ -7,9 +7,50 @@ class ServiceFilesController < ApplicationController
     @service_request_id = params[:service_request_id]
     @sample_id = params[:sample_id] 
     @requested_service_id = params[:requested_service_id]
-    #@files = ServiceFile.where(:service_request_id => params[:service_request_id], :sample_id => params[:sample_id], :requested_service_id => params[:requested_service_id]).order('file_type', 'description')
-    @files = ServiceFile.where(:service_request_id => params[:service_request_id], :sample_id => params[:sample_id]).order('requested_service_id', 'file_type', 'description')
-    @req_services = RequestedService.where(:sample_id => params[:sample_id])
+    
+    # Hack to load files directly uploaded via shared folder
+    req_service = RequestedService.find(@requested_service_id)
+    files = ServiceFile.where(:service_request_id => params[:service_request_id], :sample_id => params[:sample_id], :requested_service_id => params[:requested_service_id])
+    files_array = files.pluck(:file)
+    path = "#{Rails.root}/private/laboratories/#{req_service.laboratory_service.laboratory_id}/servicios/#{req_service.number}"
+    recreate_zip = false
+    # Remove files...
+    files.each do |f|
+      if !File.file?(f.file.to_s)
+        f.delete
+        recreate_zip = true
+      end 
+    end
+    # Add files...
+    Dir.entries(path).each do |f|
+      unless files_array.include?(sanitize(f)) 
+        if File.file?("#{path}/#{f}")
+          if sanitize(f) != f
+            FileUtils.mv("#{path}/#{f}", "#{path}/#{sanitize(f)}")
+            f = sanitize(f)
+          end
+          service_file = ServiceFile.new
+          service_file.user_id = req_service.laboratory_service.laboratory.user_id
+          service_file.service_request_id = @service_request_id
+          service_file.sample_id = @sample_id
+          service_file.requested_service_id = @requested_service_id
+          #service_file.file = File.open("#{path}/#{f}")
+          service_file.raw_write_attribute(:file, f) 
+          service_file.description = f
+          service_file.file_type = ServiceFile::FILE
+          service_file.save!
+          recreate_zip = true
+        end
+      end
+    end
+    # Regenerate zip
+    if recreate_zip 
+      Resque.enqueue(GenerateSampleZip, @sample_id)
+    end
+
+    
+
+    @req_services = RequestedService.where(:sample_id => params[:sample_id]).order("FIELD(id,#{@requested_service_id}) DESC, id")
     render :layout => 'standalone'
   end
 
@@ -34,6 +75,10 @@ class ServiceFilesController < ApplicationController
     Resque.enqueue(GenerateSampleZip, params[:service_file]['sample_id'])
 
     redirect_to :back
+  end
+
+  def remove_file
+    destroy
   end
 
   def destroy
@@ -119,8 +164,10 @@ class ServiceFilesController < ApplicationController
   def download_zip 
     sample = Sample.find(params[:sample_id])
     path = "#{Rails.root}/private/zip/#{sample.number}.zip"
+    path = "#{Rails.root}/public/zip/#{sample.code}/#{sample.number}.zip"
     if File.exist?(path)
-      send_file path, :type => 'application/zip', :disposition => 'attachment', :x_sendfile => true, :filename => "#{sample.number}.zip"
+      # send_file path, :type => 'application/zip', :disposition => 'attachment', :x_sendfile => true, :filename => "#{sample.number}.zip"
+      redirect_to "/zip/#{sample.code}/#{sample.number}.zip"
     else
       # Generate zip version
       Resque.enqueue(GenerateSampleZip, params[:sample_id])
@@ -130,6 +177,7 @@ class ServiceFilesController < ApplicationController
   def zip_ready 
     sample = Sample.find(params[:sample_id])
     path = "#{Rails.root}/private/zip/#{sample.number}.zip"
+    path = "#{Rails.root}/public/zip/#{sample.code}/#{sample.number}.zip"
     json = {}
     if File.exist?(path)
       json[:ready] = true
@@ -142,12 +190,22 @@ class ServiceFilesController < ApplicationController
   end
 
   def generate_zip
-    sample = Sample.find(params[:sample_id])
-    path = "#{Rails.root}/private/zip/#{sample.number}.zip"
+    # sample = Sample.find(params[:sample_id])
+    # path = "#{Rails.root}/private/zip/#{sample.number}.zip"
     Resque.enqueue(GenerateSampleZip, params[:sample_id])
     json = {}
     json[:generate] = true
     render :json => json
   end
 
+
+  private
+    def sanitize(name)
+      name = name.gsub("\\", "/") # work-around for IE
+      name = File.basename(name)
+      name = name.gsub(CarrierWave::SanitizedFile.sanitize_regexp,"_")
+      name = "_#{name}" if name =~ /\A\.+\z/
+      name = "unnamed" if name.size == 0
+      return name.mb_chars.to_s
+    end
 end

@@ -13,7 +13,8 @@ class GenerateSampleZip
         end
       end
     end
-    FileUtils.cp(temp.path, "#{Rails.root}/private/zip/#{sample.number}.zip")
+    FileUtils.mkdir_p "#{Rails.root}/public/zip/#{sample.code}"
+    FileUtils.cp(temp.path, "#{Rails.root}/public/zip/#{sample.code}/#{sample.number}.zip")
     temp.delete()
   end
 

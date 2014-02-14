@@ -16,6 +16,7 @@ class RequestedService < ActiveRecord::Base
   after_create :set_consecutive
   after_create :set_auth_if_needed
   after_create :set_costs
+  after_create :create_files_dir
 
   CANCELED       = -1
   INITIAL        = 1
@@ -122,6 +123,10 @@ class RequestedService < ActiveRecord::Base
       new_other.other_type_id = other.other_type_id
       new_other.save
     end
+  end
+
+  def create_files_dir
+    FileUtils.mkdir_p "#{Rails.root}/private/laboratories/#{self.laboratory_service.laboratory_id}/servicios/#{self.number}"
   end
 
   def icon_class

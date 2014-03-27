@@ -38,6 +38,7 @@ gem "rubyzip", '>= 1.0.0'
 gem 'zip-zip'
 
 gem "resque"
+gem "resque-bus", :git => "https://github.com/taskrabbit/resque-bus.git"
 
 gem "select2-rails"
 

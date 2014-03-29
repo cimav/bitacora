@@ -14,6 +14,7 @@ class VinculacionSubscriptions
       folder.number          = attributes['codigo']
       folder.description     = attributes['descripcion']
       folder.system_id       = attributes['costeo_id']
+      folder.system_status   = ServiceRequest::SYSTEM_TO_QUOTE
       if u_supervisor = User.where(:email => attributes['agente_email']).first
         folder.supervisor_id = u_supervisor.id
       else

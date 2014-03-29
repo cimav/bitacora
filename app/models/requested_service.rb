@@ -17,6 +17,7 @@ class RequestedService < ActiveRecord::Base
   after_create :set_auth_if_needed
   after_create :set_costs
   after_create :create_files_dir
+  after_create :set_system_based_status
 
   CANCELED       = -1
   INITIAL        = 1
@@ -27,6 +28,10 @@ class RequestedService < ActiveRecord::Base
   IN_PROGRESS    = 6
   REQ_SUP_AUTH   = 7
   REQ_OWNER_AUTH = 8
+
+  TO_QUOTE       = 21
+  WAITING_START  = 22
+
   FINISHED       = 99 
 
   STATUS = {
@@ -39,7 +44,11 @@ class RequestedService < ActiveRecord::Base
     IN_PROGRESS    => 'En Progreso',
     REQ_SUP_AUTH   => 'Aut. de supervisor',
     REQ_OWNER_AUTH => 'Aut. de solicitante',
-    FINISHED     => 'Finalizado'
+
+    TO_QUOTE       => 'Cotizando',
+    WAITING_START  => 'Se envio cotización',
+
+    FINISHED       => 'Finalizado'
   }
 
   def status_text
@@ -129,6 +138,13 @@ class RequestedService < ActiveRecord::Base
     FileUtils.mkdir_p "#{Rails.root}/private/laboratories/#{self.laboratory_service.laboratory_id}/servicios/#{self.number}"
   end
 
+  def set_system_based_status
+    if self.sample.service_request.system_status == ServiceRequest::SYSTEM_TO_QUOTE
+      self.status = TO_QUOTE
+      self.save(:validate => false)
+    end
+  end
+
   def icon_class
     icon = 'icon-asterisk' if status.to_i == INITIAL
     icon = 'icon-check'    if status.to_i == RECEIVED
@@ -140,6 +156,8 @@ class RequestedService < ActiveRecord::Base
     icon = 'icon-remove'   if status.to_i == CANCELED
     icon = 'icon-lock'     if status.to_i == REQ_SUP_AUTH
     icon = 'icon-lock'     if status.to_i == REQ_OWNER_AUTH
+    icon = 'icon-tasks'    if status.to_i == TO_QUOTE
+    icon = 'icon-time'     if status.to_i == WAITING_START
   end
 
 end

@@ -143,7 +143,7 @@ class BitacoraMailer < ActionMailer::Base
     @user = user
     @msgs = msgs
 
-    subject = "#{requested_service.status_text} / Servicio #{requested_service.number}: #{requested_service.laboratory_service.name}"
+    subject = "[#{requested_service.number}] #{requested_service.status_text}"
 
     reply_to = user.email
     

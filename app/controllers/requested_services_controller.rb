@@ -1,4 +1,5 @@
 # coding: utf-8
+require 'resque-bus'
 class RequestedServicesController < ApplicationController
   before_filter :auth_required
   respond_to :html, :json
@@ -49,6 +50,11 @@ class RequestedServicesController < ApplicationController
   end
 
   def cancel_dialog
+    @requested_service = RequestedService.find(params['id'])
+    render :layout => false
+  end
+
+  def send_quote_dialog
     @requested_service = RequestedService.find(params['id'])
     render :layout => false
   end
@@ -237,6 +243,7 @@ class RequestedServicesController < ApplicationController
         msg = "Muestra para el servicio #{@requested_service.number} regresada a estado inicial" if @requested_service.status.to_i == RequestedService::INITIAL && (prev_status.to_i != RequestedService::REQ_SUP_AUTH || prev_status.to_i != RequestedService::REQ_OWNER_AUTH)
         msg = "El servicio #{@requested_service.number} ha sido autorizado por el supervisor #{current_user.full_name}" if @requested_service.status.to_i == RequestedService::INITIAL && prev_status.to_i == RequestedService::REQ_SUP_AUTH
         msg = "El servicio #{@requested_service.number} ha sido autorizado por #{current_user.full_name}" if @requested_service.status.to_i == RequestedService::INITIAL && prev_status.to_i == RequestedService::REQ_OWNER_AUTH
+        msg = "La cotización del servicio #{@requested_service.number} ha sido enviada" if @requested_service.status.to_i == RequestedService::WAITING_START
         msg = "Muestra para el servicio #{@requested_service.number} recibida" if @requested_service.status.to_i == RequestedService::RECEIVED
         msg = "El servicio #{@requested_service.number} ha sido asignada a #{@requested_service.user.full_name}" if @requested_service.status.to_i == RequestedService::ASSIGNED
         msg = "El servicio #{@requested_service.number} ha sido suspendida" if @requested_service.status.to_i == RequestedService::SUSPENDED
@@ -269,7 +276,12 @@ class RequestedServicesController < ApplicationController
           end
           # Sent mail to involved
           Resque.enqueue(StatusChangeMailer, @requested_service.id, current_user.id, prv_msg)
+        end
 
+        if @requested_service.status.to_i == RequestedService::WAITING_START
+          ResqueBus.redis = '127.0.0.1:6379' # TODO: Mover a config
+          # TODO: Enviar todos los datos del costeo
+          ResqueBus.publish('recibir_costeo', 'codigo' => @requested_service.number) 
         end
 
       end

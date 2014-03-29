@@ -5,16 +5,44 @@
 - im_req_supervisor = @requested_service.sample.service_request.user.supervisor1_id == current_user.id || @requested_service.sample.service_request.user.supervisor2_id == current_user.id || @requested_service.sample.service_request.supervisor_id == current_user.id
 
 
-- initial_action =  @requested_service.status.to_i > RequestedService::INITIAL && @requested_service.status.to_i < RequestedService::FINISHED && im_lab_admin && @requested_service.status.to_i != RequestedService::REQ_SUP_AUTH && @requested_service.status.to_i != RequestedService::REQ_OWNER_AUTH
+- initial_action =  @requested_service.status.to_i > RequestedService::INITIAL &&  
+-                   @requested_service.status.to_i < RequestedService::FINISHED &&  
+-                   im_lab_admin && @requested_service.status.to_i != RequestedService::REQ_SUP_AUTH &&  
+-                   @requested_service.status.to_i != RequestedService::REQ_OWNER_AUTH &&  
+-                   @requested_service.status.to_i != RequestedService::TO_QUOTE &&  
+-                   @requested_service.status.to_i != RequestedService::WAITING_START
+
 - received_action = @requested_service.status.to_i == RequestedService::INITIAL && im_lab_admin
+
 - assigned_action = @requested_service.status.to_i == RequestedService::RECEIVED && im_lab_admin
-- suspended_action = (@requested_service.status.to_i == RequestedService::IN_PROGRESS || @requested_service.status.to_i == RequestedService::REINIT) && (im_lab_admin || im_service_tech)
+
+- suspended_action = (@requested_service.status.to_i == RequestedService::IN_PROGRESS || 
+-                         @requested_service.status.to_i == RequestedService::REINIT) && 
+-                    (im_lab_admin || im_service_tech)
+
 - reinit_action = (@requested_service.status.to_i == RequestedService::SUSPENDED) && (im_lab_admin || im_service_tech)
+
 - in_progress_action = @requested_service.status.to_i == RequestedService::ASSIGNED && (im_lab_admin || im_service_tech)
+
 - finished_action = (@requested_service.status.to_i == RequestedService::IN_PROGRESS || @requested_service.status.to_i == RequestedService::REINIT) && (im_lab_admin || im_service_tech)
-- canceled_action = (@requested_service.status.to_i > RequestedService::INITIAL && @requested_service.status.to_i < RequestedService::FINISHED && im_lab_admin) || ((@requested_service.status.to_i == RequestedService::INITIAL || @requested_service.status.to_i == RequestedService::SUSPENDED) && im_requestor ) || ((@requested_service.status.to_i == RequestedService::REQ_OWNER_AUTH) && im_requestor)
+
+- canceled_action = @requested_service.status.to_i != RequestedService::TO_QUOTE &&
+-                   @requested_service.status.to_i != RequestedService::WAITING_START &&
+-                   (  @requested_service.status.to_i > RequestedService::INITIAL && 
+-                      @requested_service.status.to_i < RequestedService::FINISHED && 
+-                      im_lab_admin) ||
+-                   (  (  @requested_service.status.to_i == RequestedService::INITIAL || 
+-                         @requested_service.status.to_i == RequestedService::SUSPENDED) &&
+-                      im_requestor ) ||
+-                   ((@requested_service.status.to_i == RequestedService::REQ_OWNER_AUTH) && im_requestor) ||
+
 - sup_auth_action = @requested_service.status.to_i == RequestedService::REQ_SUP_AUTH && im_req_supervisor
+
 - owner_auth_action = @requested_service.status.to_i == RequestedService::REQ_OWNER_AUTH && im_requestor
+
+- send_quote_action = @requested_service.status.to_i == RequestedService::TO_QUOTE && im_requestor
+
+- waiting_action = @requested_service.status.to_i == RequestedService::WAITING_START && im_requestor
 
 
 
@@ -101,6 +129,14 @@
               %span{:class => klass}
                 %i.icon-ok.icon-white
               = "Autorizar el servicio"
+
+        - if send_quote_action
+          - klass = "badge status_#{RequestedService::TO_QUOTE}"
+          %li
+            %a{:status_action => RequestedService::TO_QUOTE, :id => 'change_status_send_quote'}
+              %span{:class => klass}
+                %i.icon-ok.icon-white
+              = "Enviar cotización"
 
         - if canceled_action
           - klass = "badge status_#{RequestedService::CANCELED}"

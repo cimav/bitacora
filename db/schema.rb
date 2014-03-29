@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140213234921) do
+ActiveRecord::Schema.define(:version => 20140329010727) do
 
   create_table "activity_logs", :force => true do |t|
     t.integer  "user_id"
@@ -304,6 +304,7 @@ ActiveRecord::Schema.define(:version => 20140213234921) do
     t.integer  "supervisor_id"
     t.integer  "consecutive"
     t.string   "system_id"
+    t.integer  "system_status",                 :default => 1
   end
 
   add_index "service_requests", ["request_type_id"], :name => "index_service_requests_on_request_type_id"

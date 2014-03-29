@@ -4,11 +4,16 @@
 - im_requestor = @requested_service.sample.service_request.user_id == current_user.id
 - show_table = true
 - editable = false
+
 - if @requested_service.status.to_i == RequestedService::CANCELED || @requested_service.status.to_i == RequestedService::FINISHED
   - editable = false
   - show_table = true
 
-- if @requested_service.status.to_i == RequestedService::ASSIGNED || @requested_service.status.to_i == RequestedService::SUSPENDED || @requested_service.status.to_i == RequestedService::REINIT || @requested_service.status.to_i == RequestedService::IN_PROGRESS
+- if @requested_service.status.to_i == RequestedService::ASSIGNED || 
+-    @requested_service.status.to_i == RequestedService::SUSPENDED ||
+-    @requested_service.status.to_i == RequestedService::REINIT || 
+-    @requested_service.status.to_i == RequestedService::IN_PROGRESS || 
+-    @requested_service.status.to_i == RequestedService::TO_QUOTE
   - editable = true
   - show_table = true
 

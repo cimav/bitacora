@@ -320,7 +320,7 @@ $(document).on('click', '#requested-service-status', () ->
 
 # Change color
 changeSampleTagColor = (rs, new_status) ->
-  $("#requested_service_" + rs + " .service-bullet").removeClass("status_-1").removeClass("status_1").removeClass("status_2").removeClass("status_3").removeClass("status_4").removeClass("status_5").removeClass("status_6").removeClass("status_99")
+  $("#requested_service_" + rs + " .service-bullet").removeClass("status_-1").removeClass("status_1").removeClass("status_2").removeClass("status_3").removeClass("status_4").removeClass("status_5").removeClass("status_6").removeClass("status_21").removeClass("status_22").removeClass("status_23").removeClass("status_99")
   $("#requested_service_" + rs + " .service-bullet").addClass("status_" + new_status)
 
 # OWNER AUTH
@@ -375,6 +375,34 @@ $(document).on('ajax:success', '#sup-auth-sample-form', (evt, data, status, xhr)
     changeSampleTagColor(res['id'], 1)
   )
 $(document).on('ajax:error', '#sup-auth-sample-form', (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+# SEND QUOTE
+$(document).on('click', '#change_status_send_quote', () ->
+    $("#initial-dialog").remove()
+    $('body').append('<div id="send-quote-dialog"></div>')
+    url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/send_quote_dialog'
+    $.get(url, {}, (html) ->
+      $('#send-quote-dialog').empty().html(html)
+      $('#send-quote-modal').modal({ keyboard:true, backdrop:true, show: true });
+    )
+  )
+
+$(document).on('ajax:beforeSend', '#send-quote-sample-form', (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.has-errors').removeClass('has-errors')
+  )
+$(document).on('ajax:success', '#send-quote-sample-form', (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    getRequestedService(res['sample_id'], res['id'])
+    $('#send-quote-modal').modal('hide').remove()
+    # Change color to 22 (Waiting Status)
+    changeSampleTagColor(res['id'], 22)  
+  )
+$(document).on('ajax:error', '#send-quote-sample-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 

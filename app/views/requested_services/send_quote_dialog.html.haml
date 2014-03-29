@@ -1,0 +1,16 @@
+#send-quote-modal.modal.hide.fade{:tabindex => "-1", :role => "dialog", "aria-labelledby" => "send-quote-modal-label", "aria-hidden" => "true"}
+  = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'send-quote-sample-form'} do |f|
+    .modal-header
+      %button.close{"data-dismiss" => "modal", "aria-hidden" => "true"}= "×"
+      %h3#send-quote-modal-label= "Enviar cotización de #{@requested_service.sample.number}"
+    .modal-body
+      = f.hidden_field :status, {:value => RequestedService::WAITING_START}
+      #field_service_request_sample_description
+        = label_tag 'activity_log_msg', 'Notas:'
+        = text_area_tag 'activity_log_msg', '', {:style => 'width: 515px;', :rows => 8}
+    .modal-footer
+      .send-mail-footer
+        = check_box_tag 'send_mail', 'yes', true, {:style => 'float: left;'}
+        = label_tag 'send_mail', 'Enviar por correo.', {:style => 'margin-left: 4px; float: left;'}
+      = button_tag "Enviar cotización", {:class => "btn btn-primary", :type => "submit"}
+      %button.btn{"data-dismiss" => "modal", "aria-hidden" => "true"}= "Cerrar"

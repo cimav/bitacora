@@ -21,6 +21,9 @@ class ServiceRequest < ActiveRecord::Base
   
   IMPORTED = 98
 
+  SYSTEM_FREE = 1
+  SYSTEM_TO_QUOTE = 2
+
   def add_extra
     # If is not Servicio Vinculacion then create number
     if self.request_type_id != 1 || self.number.nil?

@@ -131,9 +131,15 @@ body {
 .align-left { text-align: left; }
 .align-center { text-align: center; }
 
+#costeo {
+  table {
+    margin-bottom: 40px;
+  }
+}
+
 .th-header {
-  background: #000;
-  color: #fff;
+  font-weight: bold;
+  font-size: 150%;
 }
 
 #grand_total {

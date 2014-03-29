@@ -14,10 +14,10 @@
 
 
 - if show_table
-  %table.table.table-striped.table-bordered
+  %table.table.table-striped
     %thead
       %tr
-        %th{:colspan => 4, :class => "th-header"}= "Consumibles"
+        %th{:colspan => 5, :class => "th-header"}= "Consumibles"
       - if @requested_service.requested_service_materials.count > 0
         %tr
           %th= "Nombre"
@@ -56,7 +56,7 @@
             .align-right= number_to_currency(mat_cost)
       - if @requested_service.requested_service_materials.count > 0
         %tr.total-row
-          %td{:colspan => 3}
+          %td{:colspan => 4}
             .align-right= "Subtotal Materiales"
           %td
             .align-right= number_to_currency(mat_total)

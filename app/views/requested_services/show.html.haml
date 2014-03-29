@@ -119,11 +119,10 @@
     %li.active
       %a{:href => "#bitacora", "data-toggle" => "tab"}= "Bitácora"
     %li
+      %a{:href => "#costeo", "data-toggle" => "tab", "id" => "costeo_tab"}= "Costeo"
+    %li
       %a{:href => "#archivos", "data-toggle" => "tab", :id => "active-archivos-link"}= "Archivos"
-    //%li
-    //  %a{:href => "#costeo", "data-toggle" => "tab", "id" => "costeo_tab"}= "Costeo"
-      
-
+    
 
 .tab-content
 
@@ -196,8 +195,8 @@
     #files_iframe_outer
       %iframe{"name" => "submit_iframe", "id" => "files_iframe", "src" => "/service_files/ui/#{@requested_service.sample.service_request_id}/#{@requested_service.sample_id}/#{@requested_service.id}"}
 
-  //#costeo.tab-pane
-  //  #costeo_inner
-  //    = render :partial => 'costs', :locals => {:requested_service => @requested_service, :grand_total => @grand_total }
+  #costeo.tab-pane
+    #costeo_inner
+      = render :partial => 'costs', :locals => {:requested_service => @requested_service, :grand_total => @grand_total }
 
 

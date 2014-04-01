@@ -9,11 +9,11 @@ class VinculacionSubscriptions
     puts "Solicitar Costeo #{attributes['costeo_id']}: #{attributes['codigo']}"
     if u_requestor = User.where(:email => attributes['empleado_email']).first
       folder = u_requestor.service_request.new 
+      folder.system_id       = attributes['id']
       folder.request_type_id = 1  # ID servicio vinculacion     
       folder.request_link    = attributes['codigo']
       folder.number          = attributes['codigo']
       folder.description     = attributes['descripcion']
-      folder.system_id       = attributes['costeo_id']
       folder.system_status   = ServiceRequest::SYSTEM_TO_QUOTE
       if u_supervisor = User.where(:email => attributes['agente_email']).first
         folder.supervisor_id = u_supervisor.id
@@ -26,6 +26,7 @@ class VinculacionSubscriptions
       attributes['muestras'].each do |m|
         puts "Agregar muestra #{m['identificacion']} (costeo #{attributes['costeo_id']})"
         muestra = folder.sample.new
+        muestra.system_id      = m['id']
         muestra.identification = m['identificacion']
         muestra.description    = m['descripcion']
         muestra.quantity       = m['cantidad']

@@ -144,7 +144,6 @@ GEM
       redis (>= 3.0.0)
       resque (>= 1.20.0, < 1.25)
       rufus-scheduler (~> 2.0)
-    rmagick (2.13.2)
     ruby-ole (1.2.11.4)
     rubyzip (1.1.0)
     rufus-scheduler (2.0.24)
@@ -211,7 +210,6 @@ DEPENDENCIES
   rails
   resque
   resque-bus!
-  rmagick
   rubyzip (>= 1.0.0)
   sass-rails (~> 3.2.3)
   select2-rails

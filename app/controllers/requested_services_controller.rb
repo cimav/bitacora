@@ -278,10 +278,11 @@ class RequestedServicesController < ApplicationController
           Resque.enqueue(StatusChangeMailer, @requested_service.id, current_user.id, prv_msg)
         end
 
+        # Publish recibir_costeo to Vinculacion system.
         if @requested_service.status.to_i == RequestedService::WAITING_START
           ResqueBus.redis = '127.0.0.1:6379' # TODO: Mover a config
           # TODO: Enviar todos los datos del costeo
-          ResqueBus.publish('recibir_costeo', 'codigo' => @requested_service.number) 
+          ResqueBus.publish('recibir_costeo', costs_details(@requested_service))
         end
 
       end
@@ -900,6 +901,65 @@ class RequestedServicesController < ApplicationController
       end
     end
     
+  end
+
+  private
+  def costs_details(requested_service)
+
+    # Technicians
+    technicians = Array.new
+    requested_service.requested_service_technicians.each do |tech|
+      technicians << {
+        "detalle" => tech.user.full_name,
+        "cantidad" => tech.hours,
+        "precio_unitario" => tech.hourly_wage 
+      }
+    end
+
+    # Equipment
+    equipment = Array.new
+    requested_service.requested_service_equipments.each do |eq|
+      equipment << {
+        "detalle" => eq.equipment.name,
+        "cantidad" => eq.hours,
+        "precio_unitario" => eq.hourly_rate
+      }
+    end
+
+    # Materials
+    materials = Array.new
+    requested_service.requested_service_materials.each do |mat|
+      materials << {
+        "detalle" => mat.material.name,
+        "cantidad" => mat.quantity,
+        "precio_unitario" => mat.unit_price
+      }
+    end
+
+    # Others
+    others = Array.new
+    requested_service.requested_service_others.each do |ot|
+      others << {
+        "detalle" => "#{ot.other_type.name}: #{ot.concept}",
+        "cantidad" => 1,
+        "precio_unitario" => ot.price
+      }
+    end
+
+    # Details
+    details = {
+      "bitacora_id"       => requested_service.id,
+      "system_id"         => requested_service.sample.service_request.system_id,
+      "muestra_system_id" => requested_service.sample.system_id,
+      "nombre_servicio"   => requested_service.laboratory_service.name,
+      "personal"          => technicians,
+      "consumibles"       => materials,
+      "equipos"           => equipment,
+      "otros"             => others
+    }
+
+    puts details
+    return details
   end
 
 end

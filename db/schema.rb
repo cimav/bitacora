@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140329010727) do
+ActiveRecord::Schema.define(:version => 20140329195449) do
 
   create_table "activity_logs", :force => true do |t|
     t.integer  "user_id"
@@ -270,6 +270,7 @@ ActiveRecord::Schema.define(:version => 20140329010727) do
     t.datetime "updated_at",                                        :null => false
     t.integer  "quantity"
     t.string   "code"
+    t.integer  "system_id"
   end
 
   add_index "samples", ["service_request_id"], :name => "index_samples_on_service_request_id"

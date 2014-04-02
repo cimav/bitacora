@@ -21,8 +21,18 @@ class ServiceRequest < ActiveRecord::Base
   
   IMPORTED = 98
 
-  SYSTEM_FREE = 1
-  SYSTEM_TO_QUOTE = 2
+  SYSTEM_FREE              = 1
+  SYSTEM_TO_QUOTE          = 2
+  SYSTEM_PARTIAL_QUOTED    = 3
+  SYSTEM_QUOTED            = 4
+  SYSTEM_QUOTE_SENT        = 5
+  SYSTEM_ACCEPTED          = 6
+  SYSTEM_SAMPLES_DELIVERED = 7
+  SYSTEM_PARTIAL_FINISHED  = 8
+  SYSTEM_ALL_FINISHED      = 9
+  SYSTEM_REPORT_SENT       = 10
+  SYSTEM_NOT_ACCEPTED      = 98
+  SYSTEM_CANCELED          = 99
 
   def add_extra
     # If is not Servicio Vinculacion then create number

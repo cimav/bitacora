@@ -1,5 +1,9 @@
 #header-bar
   %h2 Carpetas
+  .pull-right
+    %button#add-new-folder-button.btn.btn-success
+      %span.glyphicon.glyphicon-plus
+      = "Crear nueva carpeta"
 #folder-panel
   .search-box
     = form_tag '/search', :id => 'folder-live-search', :method => 'get', :remote => true do
@@ -10,9 +14,6 @@
       = text_field_tag :q, nil, :id => 'search-box', :placeholder => 'Busqueda'
   .items-placeholder
 
-  .bottom-box
-    .bottom-box-inner
-      = button_tag "Crear nueva carpeta", {:id => 'add-new-folder-button', :class => 'btn btn-info btn-block', :title => 'Crear nueva carpeta'}
 #folder-main-panel
 
 - if !params[:r].blank?

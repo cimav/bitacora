@@ -4,17 +4,17 @@ Bitacora::Application.routes.draw do
 
   mount Resque::Server.new, :at => "/resque"  
 
-  match '/login' => 'login#index'
+  get '/login' => 'login#index'
 
-  match '/folders' => 'service_requests#index'
+  get '/folders' => 'service_requests#index'
 
-  match '/service_requests/:id/sample_list' => 'service_requests#sample_list'
-  match '/service_requests/live_search' => 'service_requests#live_search'
-  match '/service_requests/edit_dialog/:id' => 'service_requests#edit_dialog'
-  match '/service_requests/form/:request_type_id' => 'service_requests#form'
+  get '/service_requests/:id/sample_list' => 'service_requests#sample_list'
+  match '/service_requests/live_search' => 'service_requests#live_search', via: [:get, :post]
+  get '/service_requests/edit_dialog/:id' => 'service_requests#edit_dialog'
+  get '/service_requests/form/:request_type_id' => 'service_requests#form'
   resources :service_requests 
-  match '/samples/:id/requested_services_list' => 'samples#requested_services_list'
-  match '/samples/new_dialog/:service_request_id' => 'samples#new_dialog'
+  get '/samples/:id/requested_services_list' => 'samples#requested_services_list'
+  get '/samples/new_dialog/:service_request_id' => 'samples#new_dialog'
   resources :samples do
     resources :requested_services do
       member do
@@ -51,17 +51,17 @@ Bitacora::Application.routes.draw do
       end
     end
   end
-  match '/requested_services/delete_tech' => 'requested_services#delete_tech'
-  match '/requested_services/delete_eq' => 'requested_services#delete_eq'
-  match '/requested_services/delete_mat' => 'requested_services#delete_mat'
-  match '/requested_services/delete_other' => 'requested_services#delete_other'
+  get '/requested_services/delete_tech' => 'requested_services#delete_tech'
+  get '/requested_services/delete_eq' => 'requested_services#delete_eq'
+  get '/requested_services/delete_mat' => 'requested_services#delete_mat'
+  get '/requested_services/delete_other' => 'requested_services#delete_other'
 
 
 
 
-  match '/laboratory_services/live_search' => 'laboratory_services#live_search'
-  match '/laboratory_services/add_service_dialog' => 'laboratory_services#add_service_dialog'
-  match '/laboratory_services/:id/for_sample/:sample_id' => 'laboratory_services#for_sample'
+  get '/laboratory_services/live_search' => 'laboratory_services#live_search'
+  get '/laboratory_services/add_service_dialog' => 'laboratory_services#add_service_dialog'
+  get '/laboratory_services/:id/for_sample/:sample_id' => 'laboratory_services#for_sample'
   resources :laboratory_services do
     member do
       get 'edit'
@@ -94,10 +94,10 @@ Bitacora::Application.routes.draw do
   end
   resources :requested_services
 
-  match '/users/live_search' => 'users#live_search'
+  get '/users/live_search' => 'users#live_search'
   resources :users
 
-  match '/laboratories/live_search' => 'laboratories#live_search'
+  get '/laboratories/live_search' => 'laboratories#live_search'
   resources :laboratories
 
   resources :laboratory do
@@ -124,12 +124,12 @@ Bitacora::Application.routes.draw do
 
   resources :activity_log, :as => :activity_logs
 
-  match '/service_files/ui/:service_request_id' => 'service_files#ui'
-  match '/service_files/ui/:service_request_id/:sample_id' => 'service_files#ui'
-  match '/service_files/ui/:service_request_id/:sample_id/:requested_service_id' => 'service_files#ui'
-  match '/service_files/zip/:sample_id' => 'service_files#download_zip'
-  match '/service_files/generate_zip/:sample_id' => 'service_files#generate_zip'
-  match '/service_files/zip_ready/:sample_id' => 'service_files#zip_ready'
+  get '/service_files/ui/:service_request_id' => 'service_files#ui'
+  get '/service_files/ui/:service_request_id/:sample_id' => 'service_files#ui'
+  get '/service_files/ui/:service_request_id/:sample_id/:requested_service_id' => 'service_files#ui'
+  get '/service_files/zip/:sample_id' => 'service_files#download_zip'
+  get '/service_files/generate_zip/:sample_id' => 'service_files#generate_zip'
+  get '/service_files/zip_ready/:sample_id' => 'service_files#zip_ready'
   resources :service_files do
     member do
       get 'file'
@@ -137,51 +137,51 @@ Bitacora::Application.routes.draw do
     end
   end
 
-  match '/equipment/live_search' => 'equipment#live_search'
+  get '/equipment/live_search' => 'equipment#live_search'
   resources :equipment
 
-  match '/materials/live_search' => 'materials#live_search'
-  match '/materials/new_dialog' => 'materials#new_dialog'
+  get '/materials/live_search' => 'materials#live_search'
+  get '/materials/new_dialog' => 'materials#new_dialog'
   resources :materials
 
-  match '/clients/typeahead' => 'clients#typeahead'
-  match '/clients/info' => 'clients#info'
-  match '/clients/new_dialog' => 'clients#new_dialog'
-  match '/clients/live_search' => 'clients#live_search'
+  get '/clients/typeahead' => 'clients#typeahead'
+  get '/clients/info' => 'clients#info'
+  get '/clients/new_dialog' => 'clients#new_dialog'
+  get '/clients/live_search' => 'clients#live_search'
   resources :clients
 
-  match '/client_contacts/combo/:client_id' => 'client_contacts#combo'
-  match '/client_contacts/new_dialog/:client_id' => 'client_contacts#new_dialog'
+  get '/client_contacts/combo/:client_id' => 'client_contacts#combo'
+  get '/client_contacts/new_dialog/:client_id' => 'client_contacts#new_dialog'
   resources :client_contacts
 
-  match '/request_types/live_search' => 'request_types#live_search'
+  get '/request_types/live_search' => 'request_types#live_search'
   resources :request_types
 
-  match '/service_types/live_search' => 'service_types#live_search'
+  get '/service_types/live_search' => 'service_types#live_search'
   resources :service_types
 
-  match '/other_types/live_search' => 'other_types#live_search'
+  get '/other_types/live_search' => 'other_types#live_search'
   resources :other_types
 
-  match '/admin' => 'admin#index'
-  match '/admin/clients' => 'admin#clients'
-  match '/admin/client_types' => 'admin#client_types'
-  match '/admin/equipment' => 'admin#equipment'
-  match '/admin/materials' => 'admin#materials'
-  match '/admin/laboratories' => 'admin#laboratories'
-  match '/admin/users' => 'admin#users'
-  match '/admin/request_types' => 'admin#request_types'
-  match '/admin/service_types' => 'admin#service_types'
-  match '/admin/other_types' => 'admin#other_types'
+  get '/admin' => 'admin#index'
+  get '/admin/clients' => 'admin#clients'
+  get '/admin/client_types' => 'admin#client_types'
+  get '/admin/equipment' => 'admin#equipment'
+  get '/admin/materials' => 'admin#materials'
+  get '/admin/laboratories' => 'admin#laboratories'
+  get '/admin/users' => 'admin#users'
+  get '/admin/request_types' => 'admin#request_types'
+  get '/admin/service_types' => 'admin#service_types'
+  get '/admin/other_types' => 'admin#other_types'
 
 
-  match '/reports' => 'reports#index'
-  match '/reports/eficiencia' => 'reports#eficiencia'
+  get '/reports' => 'reports#index'
+  get '/reports/eficiencia' => 'reports#eficiencia'
 
-  match '/auth/:provider/callback' => 'sessions#create'
-  match '/auth/failure' => 'sessions#failure'
-  match "/logout" => 'sessions#destroy'
+  get '/auth/:provider/callback' => 'sessions#create'
+  get '/auth/failure' => 'sessions#failure'
+  get "/logout" => 'sessions#destroy'
 
-  match ':number' => 'home#redirect_requested_service', :constraints => { :number => /[^\/]*/ }
+  get ':number' => 'home#redirect_requested_service', :constraints => { :number => /[^\/]*/ }
 
 end

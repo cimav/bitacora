@@ -1765,7 +1765,8 @@ $(document).on('ajax:error', '#edit-user-form', (evt, xhr, status, error) ->
   formData = form.serialize()
   $.get(url, formData, (html) ->
     $('#folder-panel .items-placeholder').empty().html(html)
-    url = '/service_requests/' + folder_number
+    folder_id = $("#" + folder_number).attr('service_request_id')
+    url = '/service_requests/' + folder_id
     $.get(url, {}, (html) ->
       $("#" + folder_number).addClass('selected')
       current_request = folder_number

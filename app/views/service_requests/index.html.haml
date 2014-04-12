@@ -1,18 +1,14 @@
 #header-bar
   %h2 Carpetas
-  .pull-right
+  .actions
     %button#add-new-folder-button.btn.btn-success
       %span.glyphicon.glyphicon-plus
-      = "Crear nueva carpeta"
-#folder-panel
-  .search-box
-    = form_tag '/search', :id => 'folder-live-search', :method => 'get', :remote => true do
-      - status_options = "<option value=\"*\">Todos los estados</option>"
-      - RequestType.order('name').each do |st| 
-        - status_options += "<option value=\"#{st.id}\">#{st.name}</option>"
-      = select_tag "folder_filter", status_options.html_safe
-      = text_field_tag :q, nil, :id => 'search-box', :placeholder => 'Busqueda'
-  .items-placeholder
+      = "Nueva Carpeta"
+#folder-search-panel  
+  = form_tag '/search', :id => 'folder-live-search', :method => 'get', :remote => true do
+    = text_field_tag :q, nil, :id => 'search-box', :class => 'form-control', :placeholder => 'Busqueda'
+      
+#folders
 
 #folder-main-panel
 
@@ -28,3 +24,5 @@
     $(document).ready(function() {    
       foldersLiveSearch(); 
     });
+:javascript 
+  activeSideNav('#folders-link');

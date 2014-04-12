@@ -39,8 +39,8 @@ my_request_search_results = false
   url = '/service_requests/live_search'
   formData = form.serialize()
   $.get(url, formData, (html) ->
-    $('#folder-panel .items-placeholder').empty().html(html)
-    $("#folder-panel .items-placeholder .items .service-request-item:first").click();
+    $('#folders').empty().html(html)
+    # $("#folders .items .service-request-item:first").click();
   )
 $(document).on('change', '#folder_filter', () ->
   foldersLiveSearch() 
@@ -1870,6 +1870,14 @@ $(document).on('ajax:error', '#edit-service-request-dialog-form', (evt, xhr, sta
   $("#flash-notice").addClass('alert-' + type).html(msg)
   $("#flash-notice").slideDown()
   $("#flash-notice").delay(1500).slideUp() if (type != 'error') 
+
+
+#--------------------
+# Active sidenav link
+#--------------------
+@activeSideNav = activeSideNav = (option) ->
+  $('#sidenav .active').removeClass('active');
+  $(option).parent().addClass('active');
 
 #--------------
 # LOCATION HASH

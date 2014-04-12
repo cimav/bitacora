@@ -5,6 +5,26 @@ class ServiceRequestsController < ApplicationController
   def index
     # Mis solicitudes
     @latest_request = ServiceRequest.where(:user_id => current_user.id, :status => ServiceRequest::ACTIVE).order('created_at DESC').first
+    
+    @request_types = ServiceRequest.find_by_sql (["SELECT request_type_id AS id, request_types.name, COUNT(*) AS how_many
+                                                   FROM 
+                                                     service_requests
+                                                     LEFT JOIN users 
+                                                       ON service_requests.user_id = users.id
+                                                     LEFT JOIN request_types 
+                                                       ON service_requests.request_type_id = request_types.id
+                                                   WHERE 
+                                                     (service_requests.user_id = :u 
+                                                      OR service_requests.supervisor_id = :u 
+                                                      OR (users.require_auth = 1 AND 
+                                                            (users.supervisor1_id = :u OR users.supervisor2_id = :u)
+                                                          )) 
+                                                     AND service_requests.status = :s
+                                                   GROUP BY service_requests.request_type_id 
+                                                   ORDER BY request_types.name", 
+                                                   :u => current_user.id, 
+                                                   :s => ServiceRequest::ACTIVE])
+
     render :layout => false
   end
 

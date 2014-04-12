@@ -2,40 +2,99 @@ body {
   font-size: 12px;
 }
 
-#workarea {
-  margin: 0;
-  padding: 0;
-}
-
 .inner-area {
   padding: 20px;
 }
 
-#header-bar {
-  background: $light-grey;
-  border-bottom: 1px solid $line-color;
-  margin: 0;
-  height: 56px;
+#sidenav {
+  width: $sidenav-width;
+  background-color: $sidenav-bg;
   position: fixed;
-  top: 50px;
-  left: 0px;
-  width: 100%;
-  h2 {
-    float: left;
-    color: $red;
-    font-size: 32px;
-    font-weight: normal;
-    margin: 0;
-    padding-left: 20px;
-    padding-top: 10px;
+  margin: 0;
+  padding: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  #brand {
+    text-align: center;
+    font-size: 130%;
+    background-color: $bitacora-brand;
+    color:#fff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, .4), 0 0 30px rgba(0, 0, 0, .075);
+    padding: 10px 0;
+    img {
+      width: 64px;
+    }
   }
-  button {
-    margin-top: 12px;
-    margin-right: 20px;
+  #user-area {
+    position: absolute;
+    width: $sidenav-width;
+    bottom: 0;
+    text-align: center;
+    color: $sidenav-color;
+    margin: 10px 0;
+    .user-name {
+      margin-top: 10px;
+    }
+  }
+  .nav-pills > li > a { 
+    border-radius: 0px;
+  }
+      
+  .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+    background-color: $sidenav-selected;
+    color: $white;
+  }
+
+  .nav > li > a:hover, .nav > li > a:focus {
+    background-color: $sidenav-hover;
+    color: $sidenav-color;
+  }
+
+  .option-name {
+    margin-top: 2px;
+  }
+
+  .nav a { 
+    text-align: center;
+    color: $sidenav-color;
+    span {
+      font-size: 28px;
+    }
   }
 }
 
-#folder-panel,
+#workarea {
+  position: fixed;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  bottom: 0;
+  left: $sidenav-width;
+  right: 0;
+  box-shadow: 0px 0px 5px $grey;
+}
+
+#header-bar {
+  margin: 0;
+  padding: 0;
+  height: 55px;
+  background: $light-grey;
+  border-bottom: 1px solid $line-color;
+  h2 {
+    margin: 0;
+    padding: 0;
+    color: $header-color;
+    font-weight: normal;
+    padding: 8px 0 0 20px;
+  }
+  .actions {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+  }
+}
+
 #lab-req-serv-panel,
 #admin-panel,
 #reports-panel,
@@ -48,10 +107,6 @@ body {
 #service-types-panel,
 #other-types-panel {
   width: $side-panel-width;
-  position: fixed;
-  bottom: 0px;
-  top: 106px;
-  left: 0px;
   background-color: $light-bg;
   border-top: 1px solid $line-color;
   border-left: 1px solid $line-color;

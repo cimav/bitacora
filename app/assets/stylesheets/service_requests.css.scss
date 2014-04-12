@@ -2,6 +2,16 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#folder-search-panel {
+  width: 100%;
+  background: $light-bg;
+  border-top: 1px solid $white;
+  border-bottom: 1px solid $line-color;
+  
+  padding: 10px;
+
+}
+
 #edit-service-request-link {
   position: absolute;
   bottom: 5px;
@@ -16,55 +26,76 @@
   }
 }
 
+#folders {
+ z-index: 99998;
+  position: absolute;
+  bottom: 0px;
+  top: 111px;
+  right: 0px;
+  left: 0px;
+  overflow: auto;
+  table {
+    width: 100%;
+    tr {
+      td {
+        padding: 10px;
+      }
+    }
+  }
+}
+
 .service-request-item {
   cursor: pointer;
-  height: 64px;
-  min-height: 64px;
   background: transparent;
-  border-bottom: 1px solid $line-color;
-  overflow: hidden;
-  &.service-mine .service-request-number {
-    color: $grey;
-  }
-  &.service-supervised .service-request-number {
-    color: #08c;
-  }
+  margin: 10px 0;
+  padding-bottom: 20px;
+
   .service-request-number {
+    vertical-align: top;
+    font-size: 90%;
+    padding: 0 20px;
     text-align: center;
     font-weight: bold;
     padding-left: 4px;
-    width: 48px;
-    height: 64px;
-    float: left;
-    font-size: 11px;
     line-height: 1em;
-  }
-  .service-request-link {
-    padding-top: 10px;
-    font-size: 12px;
-    font-weight: bold;
-    margin-left: 58px;
-    color: #000;
-  }
-  .service-request-description,
-  .service-request-add-info {
-    margin-left: 58px;
-    font-size: 11px;
-    color: $grey;
-  }
-  &.selected {
-    background-color: $bg-selected;
-    color: $selected-color !important;
-    .service-request-number, 
-    .service-request-link,
-    .service-request-description {
-      color: $selected-color !important;
+    .glyphicon {
+      color: $folder-color;
+      font-size: 48px;
     }
-    .service-request-add-info  {
-      color: $selected-color-light !important;
+    .number {
+      margin-top: 10px;
+      margin-bottom: 5px;
     }
-    .lab-service-laboratory {
-      color: $selected-color !important;
+    .type {
+      margin-bottom: 10px;
+      .label {
+        font-size: 100%;
+      }
+    }
+  }
+
+  .service-request-data {
+    .title {
+      font-size: 150%;
+    }
+    .description {
+      color: $grey;
+    }
+  }
+  .service-collaborators {
+    img {
+      width: 32px;
+      height: 32px;
+      padding: 1px;
+      &.folder-owner {
+        border: 2px solid #64a673;
+      }
+      &.folder-supervisor {
+        border: 2px solid #e6b45e;
+      }
+      &.folder-collaborator {
+        border: 2px solid $light-grey;
+      }
     }
   }
 }

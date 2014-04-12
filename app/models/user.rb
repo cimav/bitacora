@@ -62,4 +62,8 @@ class User < ActiveRecord::Base
     access.to_i == ACCESS_ADMIN
   end
 
+  def avatar_url
+    "http://cimav.edu.mx/foto/#{email.split('@')[0]}/64"
+  end
+
 end

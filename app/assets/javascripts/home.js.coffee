@@ -68,6 +68,7 @@ $(document).on('click', '#add-new-folder-button', () ->
   $.get(url, {}, (html) ->
     current_request = id
     $('#workarea').empty().html(html)
+    setHash(url, false)
   )
 
 $(document).on('click', '#select-sample-sample-button', () ->

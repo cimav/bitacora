@@ -63,10 +63,17 @@ class ServiceRequestsController < ApplicationController
 
   def show
     @request = ServiceRequest.find(params[:id])
-    if (@request.status == ServiceRequest::ACTIVE) 
+    authorized = @request.user_id == current_user.id ||
+                 @request.supervisor_id == current_user.id ||
+                 @request.user.supervisor1_id == current_user.id ||
+                 @request.user.supervisor2_id == current_user.id
+
+    if !authorized
+      render :inline => 'No Autorizado'                   
+    elsif (@request.status == ServiceRequest::ACTIVE) 
       render :layout => false
     else
-      render :inline => "Carpeta eliminada"
+      render :inline => 'Carpeta Eliminada'
     end
   end
 

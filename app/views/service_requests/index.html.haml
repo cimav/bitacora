@@ -4,25 +4,23 @@
     %button#add-new-folder-button.btn.btn-success
       %span.glyphicon.glyphicon-plus
       = "Nueva Carpeta"
-#folder-search-panel  
+#folder-search-panel
   = form_tag '/search', :id => 'folder-live-search', :method => 'get', :remote => true do
     = text_field_tag :q, nil, :id => 'search-box', :class => 'form-control', :placeholder => 'Busqueda'
-      
-#folders
 
-#folder-main-panel
+#folders
 
 - if !params[:r].blank?
   - requested_service = RequestedService.where(:number => params[:r]).first
-  :javascript 
+  :javascript
     $(document).ready(function() {
       $("#req-serv-search-box").val("#{params[:r]}");
       folderGo("#{requested_service.sample.service_request.number}","#{requested_service.sample.number}","#{requested_service.id}")
     })
 - else
-  :javascript 
-    $(document).ready(function() {    
-      foldersLiveSearch(); 
+  :javascript
+    $(document).ready(function() {
+      foldersLiveSearch();
     });
-:javascript 
+:javascript
   activeSideNav('#folders-link');

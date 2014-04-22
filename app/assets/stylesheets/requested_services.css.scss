@@ -2,6 +2,18 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.status-initial     { color: $grey; }
+.status-received    { color: #f0842a; }
+.status-assigned    { color: #2ec6c8; }
+.status-suspended   { color: $brand-warning; }
+.status-reinit      { color: $brand-primary; }
+.status-in-progress { color: $brand-primary; }
+.status-finished    { color: $brand-success }
+.status-canceled    { color: $brand-danger; }
+.status-auth        { color: $brand-warning; }
+.status-to-quote    { color: #a58ad5; }
+.status-waiting     { color: #666; }
+
 .total-row {
   td {
     border-top: 2px solid $grey;

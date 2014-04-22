@@ -1,31 +1,46 @@
 $white: #fff;
 $black: #000;
+
 $grey: #777;
 $med-grey: #ddd;
 $light-grey: #f8f8f8;
+$dark-grey: #666;
+
 $red: #d64830;
 $red-dark: #660000;
+
 $blue: #2a3d78;
 $green: #62c462;
-$strong-color: #222;
+
+$strong-color: #333;
 $strong-color2: #444;
+
 $light-bg: #fafafa;
-$bg-color: #fafafa;
+$bg-color: $light-grey;
+$secondary-bg: lighten($light-grey, 5%);
+
 $bg-selected2: #e2f0f4;
 $selected-color2: #222;
 $bg-selected: #0af;
 $selected-color: #fff;
 $selected-color-light: #eef;
-$qty-bg: #fff6bf; 
-$qty-color: #514721; 
-$strip-color: #f9f9f9;
-$bitacora-brand: #4ac461;
-$folder-color: #f9d683;
 
-$sidenav-bg: #262930;
-$sidenav-color: #818693;
-$sidenav-selected: #1e2025;
-$sidenav-hover: #2f323a; 
+$qty-bg: #fff6bf;
+$qty-color: #514721;
+
+$strip-color: #f9f9f9;
+
+$bitacora-brand: #262d40;
+$folder-color: #f9d683;
+$sample-color: #666;
+$owner-color: #64a673;
+$supervisor-color: #e6b45e;
+$collaborator-color: $light-grey;
+
+$sidenav-bg: #262d40;
+$sidenav-color: #7b7e8f;
+$sidenav-selected: darken($sidenav-bg, 5%);
+$sidenav-hover: darken($sidenav-bg, 3%);
 
 $header-color: $sidenav-selected;
 
@@ -34,9 +49,10 @@ $sidenav-width: 110px;
 $nav-width: 101px;
 $work-area-width: $container-width - $nav-width;
 $wide-width: $container-width - $nav-width;
-$sample-list-width: 250px;
+$sample-list-width: 160px;
 $sample-workarea-width: $work-area-width - $sample-list-width - 42;
-$side-panel-width: 250px;
+$side-panel-width: 200px;
+$folder-samples-width: 400px;
 $main-panel-width: $container-width - $side-panel-width - $nav-width - 4;
 $lab-services-list-width: 250px;
 
@@ -62,17 +78,17 @@ $error-bg: #fbe3e4;
 $error-color: #8a1f11;
 $error-border-color: #fbc2c4;
 
-$notice-bg: #fff6bf; 
-$notice-color: #514721; 
+$notice-bg: #fff6bf;
+$notice-color: #514721;
 $notice-border-color: #ffd324;
 
 
-$success-bg: #e6efc2; 
-$success-color: #264409; 
+$success-bg: #e6efc2;
+$success-color: #264409;
 $success-border-color: #c6d880;
 
-$info-bg: #d5edf8; 
-$info-color: #205791; 
+$info-bg: #d5edf8;
+$info-color: #205791;
 $info-border-color: #92cae4;
 
 
@@ -100,5 +116,3 @@ $status_8: #ff00ff;
 $status_21: #d800ff;
 // WAITING_START
 $status_22: #aa77aa;
-
-

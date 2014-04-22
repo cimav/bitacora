@@ -21,7 +21,7 @@ hash = false
 
     if innerDoc.body.offsetHeight
       iframe.height = innerDoc.body.offsetHeight + 400
-    else 
+    else
       if iframe.Document && iframe.Document.body.scrollHeight
         iframe.height = iframe.Document.body.scrollHeight + 400
 
@@ -33,31 +33,25 @@ hash = false
 #------------
 my_request_search_results = false
 
-@foldersLiveSearch = foldersLiveSearch = () -> 
+@foldersLiveSearch = foldersLiveSearch = () ->
   #return false if $("#search-box").val().length < 3
   form = $('#folder-live-search')
   url = '/service_requests/live_search'
   formData = form.serialize()
   $.get(url, formData, (html) ->
     $('#folders').empty().html(html)
-    # $("#folders .items .service-request-item:first").click();
   )
 $(document).on('change', '#folder_filter', () ->
-  foldersLiveSearch() 
+  foldersLiveSearch()
 )
 $(document).on('keyup', '#search-box', () ->
-  foldersLiveSearch() 
+  foldersLiveSearch()
 )
 $(document).on('click', '#search-box', () ->
-  foldersLiveSearch() 
+  foldersLiveSearch()
 )
 
 $(document).on('click', '.service-request-item', () ->
-    $('.service-request-number i').removeClass('icon-folder-open-alt')
-    $('.service-request-item.selected i').addClass($('.service-request-item.selected').data('original-icon'))
-    $('.service-request-item').removeClass('selected')
-    $(this).addClass('selected')
-    $(this).find('i').addClass('icon-folder-open-alt')
     getServiceRequest($(this).attr('service_request_id'))
   )
 
@@ -65,7 +59,7 @@ $(document).on('click', '.service-request-item', () ->
 $(document).on('click', '#add-new-folder-button', () ->
     url = '/service_requests/new'
     $.get(url, {}, (html) ->
-      $('#folder-main-panel').empty().html(html)
+      $('#workarea').empty().html(html)
     )
   )
 
@@ -73,7 +67,7 @@ $(document).on('click', '#add-new-folder-button', () ->
   url = '/service_requests/' + id
   $.get(url, {}, (html) ->
     current_request = id
-    $('#folder-main-panel').empty().html(html)
+    $('#workarea').empty().html(html)
   )
 
 $(document).on('click', '#select-sample-sample-button', () ->
@@ -259,13 +253,13 @@ current_requestor = 0
       if (cur_req.offset().top > $('#req-serv-items').offset().top + 20)
         current_requestor -= 2
         if current_requestor <= 1
-          current_requestor = 1 
+          current_requestor = 1
           $('#current-requestor').html($("#requestor_1").html())
       if (next_req.offset().top < $('#req-serv-items').offset().top + 20)
         current_requestor += 1
         $('#current-requestor').html(next_req.html())
 
-        
+
     )
   )
 
@@ -400,7 +394,7 @@ $(document).on('ajax:success', '#send-quote-sample-form', (evt, data, status, xh
     getRequestedService(res['sample_id'], res['id'])
     $('#send-quote-modal').modal('hide').remove()
     # Change color to 22 (Waiting Status)
-    changeSampleTagColor(res['id'], 22)  
+    changeSampleTagColor(res['id'], 22)
   )
 $(document).on('ajax:error', '#send-quote-sample-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
@@ -778,14 +772,14 @@ $(document).on('ajax:error', '#new-laboratory-service-form', (evt, xhr, status, 
 $(document).on('click', '#add-technician-template', () ->
     laboratory_service = $('#laboratory_service_id').val()
     url = '/laboratory_services/' + laboratory_service + '/new_technician'
-    $.post(url, 
-           { user_id: $('#new_tech_user_id').val(), participation: $('#new_tech_participation').val(), hours: $('#new_tech_hours').val() }, 
+    $.post(url,
+           { user_id: $('#new_tech_user_id').val(), participation: $('#new_tech_participation').val(), hours: $('#new_tech_hours').val() },
            (xhr) ->
              res = $.parseJSON(xhr)
              showFlash(res['flash']['notice'], 'success')
              reloadTechniciansTableTemplate()
      )
-     .fail( (data) -> 
+     .fail( (data) ->
        res = $.parseJSON(data.responseText)
        showFlash(res['flash']['error'], 'alert-error')
      )
@@ -824,8 +818,8 @@ $(document).on('ajax:error', '#technicians-template .close', (evt, xhr, status, 
 $(document).on('change', '.tech_participation_template', () ->
     laboratory_service = $('#laboratory_service_id').val()
     url = '/laboratory_services/' + laboratory_service + '/update_participation'
-    $.post(url, 
-           { tech_id: $(this).attr('data-id'), participation: $(this).val() }, 
+    $.post(url,
+           { tech_id: $(this).attr('data-id'), participation: $(this).val() },
            (xhr) ->
              res = $.parseJSON(xhr)
              showFlash(res['flash']['notice'], 'success')
@@ -837,8 +831,8 @@ $(document).on('change', '.tech_participation_template', () ->
 $(document).on('click', '.tech_hours_template', () ->
     laboratory_service = $('#laboratory_service_id').val()
     url = '/laboratory_services/' + laboratory_service + '/update_hours'
-    $.post(url, 
-           { tech_id: $(this).attr('data-id'), hours: $(this).val() }, 
+    $.post(url,
+           { tech_id: $(this).attr('data-id'), hours: $(this).val() },
            (xhr) ->
              res = $.parseJSON(xhr)
              showFlash(res['flash']['notice'], 'success')
@@ -852,14 +846,14 @@ $(document).on('click', '.tech_hours_template', () ->
 $(document).on('click', '#add-equipment-template', () ->
     laboratory_service = $('#laboratory_service_id').val()
     url = '/laboratory_services/' + laboratory_service + '/new_equipment'
-    $.post(url, 
-           { eq_id: $('#new_eq_id').val(), hours: $('#new_eq_hours').val() }, 
+    $.post(url,
+           { eq_id: $('#new_eq_id').val(), hours: $('#new_eq_hours').val() },
            (xhr) ->
              res = $.parseJSON(xhr)
              showFlash(res['flash']['notice'], 'success')
              reloadEquipmentTableTemplate()
      )
-     .fail( (data) -> 
+     .fail( (data) ->
        res = $.parseJSON(data.responseText)
        showFlash(res['flash']['error'], 'alert-error')
      )
@@ -894,8 +888,8 @@ $(document).on('ajax:error', '#equipment-template .close', (evt, xhr, status, er
 $(document).on('change', '.eq_hours_template', () ->
     laboratory_service = $('#laboratory_service_id').val()
     url = '/laboratory_services/' + laboratory_service + '/update_eq_hours'
-    $.post(url, 
-          { eq_id: $(this).attr('data-id'), hours: $(this).val() }, 
+    $.post(url,
+          { eq_id: $(this).attr('data-id'), hours: $(this).val() },
           (xhr) ->
             res = $.parseJSON(xhr)
             showFlash(res['flash']['notice'], 'success')
@@ -909,14 +903,14 @@ $(document).on('change', '.eq_hours_template', () ->
 $(document).on('click', '#add-material-template', () ->
     laboratory_service = $('#laboratory_service_id').val()
     url = '/laboratory_services/' + laboratory_service + '/new_material'
-    $.post(url, 
-           { mat_id: $('#new_mat_id').val(), quantity: $('#new_mat_qty').val() }, 
+    $.post(url,
+           { mat_id: $('#new_mat_id').val(), quantity: $('#new_mat_qty').val() },
            (xhr) ->
              res = $.parseJSON(xhr)
              showFlash(res['flash']['notice'], 'success')
              reloadMaterialTableTemplate()
      )
-     .fail( (data) -> 
+     .fail( (data) ->
        res = $.parseJSON(data.responseText)
        showFlash(res['flash']['error'], 'alert-error')
      )
@@ -951,8 +945,8 @@ $(document).on('ajax:error', '#materials-template .close', (evt, xhr, status, er
 $(document).on('change', '.mat_qty_template', () ->
     laboratory_service = $('#laboratory_service_id').val()
     url = '/laboratory_services/' + laboratory_service + '/update_mat_qty'
-    $.post(url, 
-          { mat_id: $(this).attr('data-id'), quantity: $(this).val() }, 
+    $.post(url,
+          { mat_id: $(this).attr('data-id'), quantity: $(this).val() },
           (xhr) ->
             res = $.parseJSON(xhr)
             showFlash(res['flash']['notice'], 'success')
@@ -966,14 +960,14 @@ $(document).on('change', '.mat_qty_template', () ->
 $(document).on('click', '#add-other-template', () ->
     laboratory_service = $('#laboratory_service_id').val()
     url = '/laboratory_services/' + laboratory_service + '/new_other'
-    $.post(url, 
-           { other_type_id: $('#new_other_type').val(), concept: $('#new_other_concept').val(), price: $('#new_other_price').val() }, 
+    $.post(url,
+           { other_type_id: $('#new_other_type').val(), concept: $('#new_other_concept').val(), price: $('#new_other_price').val() },
            (xhr) ->
              res = $.parseJSON(xhr)
              showFlash(res['flash']['notice'], 'success')
              reloadOthersTableTemplate()
      )
-     .fail( (data) -> 
+     .fail( (data) ->
        res = $.parseJSON(data.responseText)
        showFlash(res['flash']['error'], 'alert-error')
      )
@@ -1008,8 +1002,8 @@ $(document).on('ajax:error', '#others-template .close', (evt, xhr, status, error
 $(document).on('change', '.other_price_template', () ->
     laboratory_service = $('#laboratory_service_id').val()
     url = '/laboratory_services/' + laboratory_service + '/update_other_price'
-    $.post(url, 
-          { other_id: $(this).attr('data-id'), price: $(this).val() }, 
+    $.post(url,
+          { other_id: $(this).attr('data-id'), price: $(this).val() },
           (xhr) ->
             res = $.parseJSON(xhr)
             showFlash(res['flash']['notice'], 'success')
@@ -1040,14 +1034,14 @@ updateGrandTotal = () ->
 
 $(document).on('click', '#add-technician', () ->
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/new_technician'
-    $.post(url, 
-           { user_id: $('#new_tech_user_id').val(), participation: $('#new_tech_participation').val(), hours: $('#new_tech_hours').val() }, 
+    $.post(url,
+           { user_id: $('#new_tech_user_id').val(), participation: $('#new_tech_participation').val(), hours: $('#new_tech_hours').val() },
            (xhr) ->
              res = $.parseJSON(xhr)
              showFlash(res['flash']['notice'], 'success')
              reloadTechniciansTable()
      )
-     .fail( (data) -> 
+     .fail( (data) ->
        res = $.parseJSON(data.responseText)
        showFlash(res['flash']['error'], 'alert-error')
      )
@@ -1079,8 +1073,8 @@ $(document).on('ajax:error', '#technicians .close', (evt, xhr, status, error) ->
 
 $(document).on('change', '.tech_participation', () ->
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/update_participation'
-    $.post(url, 
-           { tech_id: $(this).attr('data-id'), participation: $(this).val() }, 
+    $.post(url,
+           { tech_id: $(this).attr('data-id'), participation: $(this).val() },
            (xhr) ->
              res = $.parseJSON(xhr)
              showFlash(res['flash']['notice'], 'success')
@@ -1091,8 +1085,8 @@ $(document).on('change', '.tech_participation', () ->
 
 $(document).on('change', '.tech_hours', () ->
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/update_hours'
-    $.post(url, 
-           { tech_id: $(this).attr('data-id'), hours: $(this).val() }, 
+    $.post(url,
+           { tech_id: $(this).attr('data-id'), hours: $(this).val() },
            (xhr) ->
              res = $.parseJSON(xhr)
              showFlash(res['flash']['notice'], 'success')
@@ -1105,14 +1099,14 @@ $(document).on('change', '.tech_hours', () ->
 #
 $(document).on('click', '#add-equipment', () ->
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/new_equipment'
-    $.post(url, 
-           { eq_id: $('#new_eq_id').val(), hours: $('#new_eq_hours').val() }, 
+    $.post(url,
+           { eq_id: $('#new_eq_id').val(), hours: $('#new_eq_hours').val() },
            (xhr) ->
              res = $.parseJSON(xhr)
              showFlash(res['flash']['notice'], 'success')
              reloadEquipmentTable()
      )
-     .fail( (data) -> 
+     .fail( (data) ->
        res = $.parseJSON(data.responseText)
        showFlash(res['flash']['error'], 'alert-error')
      )
@@ -1145,8 +1139,8 @@ $(document).on('ajax:error', '#equipment .close', (evt, xhr, status, error) ->
 
 $(document).on('change', '.eq_hours', () ->
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/update_eq_hours'
-    $.post(url, 
-          { eq_id: $(this).attr('data-id'), hours: $(this).val() }, 
+    $.post(url,
+          { eq_id: $(this).attr('data-id'), hours: $(this).val() },
           (xhr) ->
             res = $.parseJSON(xhr)
             showFlash(res['flash']['notice'], 'success')
@@ -1160,14 +1154,14 @@ $(document).on('change', '.eq_hours', () ->
 #
 $(document).on('click', '#add-material', () ->
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/new_material'
-    $.post(url, 
-           { mat_id: $('#new_mat_id').val(), quantity: $('#new_mat_qty').val() }, 
+    $.post(url,
+           { mat_id: $('#new_mat_id').val(), quantity: $('#new_mat_qty').val() },
            (xhr) ->
              res = $.parseJSON(xhr)
              showFlash(res['flash']['notice'], 'success')
              reloadMaterialTable()
      )
-     .fail( (data) -> 
+     .fail( (data) ->
        res = $.parseJSON(data.responseText)
        showFlash(res['flash']['error'], 'alert-error')
      )
@@ -1200,8 +1194,8 @@ $(document).on('ajax:error', '#materials .close', (evt, xhr, status, error) ->
 
 $(document).on('change', '.mat_qty', () ->
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/update_mat_qty'
-    $.post(url, 
-          { mat_id: $(this).attr('data-id'), quantity: $(this).val() }, 
+    $.post(url,
+          { mat_id: $(this).attr('data-id'), quantity: $(this).val() },
           (xhr) ->
             res = $.parseJSON(xhr)
             showFlash(res['flash']['notice'], 'success')
@@ -1214,14 +1208,14 @@ $(document).on('change', '.mat_qty', () ->
 #
 $(document).on('click', '#add-other', () ->
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/new_other'
-    $.post(url, 
-           { other_type_id: $('#new_other_type').val(), concept: $('#new_other_concept').val(), price: $('#new_other_price').val() }, 
+    $.post(url,
+           { other_type_id: $('#new_other_type').val(), concept: $('#new_other_concept').val(), price: $('#new_other_price').val() },
            (xhr) ->
              res = $.parseJSON(xhr)
              showFlash(res['flash']['notice'], 'success')
              reloadOthersTable()
      )
-     .fail( (data) -> 
+     .fail( (data) ->
        res = $.parseJSON(data.responseText)
        showFlash(res['flash']['error'], 'alert-error')
      )
@@ -1255,8 +1249,8 @@ $(document).on('ajax:error', '#others .close', (evt, xhr, status, error) ->
 
 $(document).on('change', '.other_price', () ->
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/update_other_price'
-    $.post(url, 
-          { other_id: $(this).attr('data-id'), price: $(this).val() }, 
+    $.post(url,
+          { other_id: $(this).attr('data-id'), price: $(this).val() },
           (xhr) ->
             res = $.parseJSON(xhr)
             showFlash(res['flash']['notice'], 'success')
@@ -1267,7 +1261,7 @@ $(document).on('change', '.other_price', () ->
 
 
 #----------------
-# LAB ADMIN USERS 
+# LAB ADMIN USERS
 #----------------
 $(document).on('ajax:beforeSend', '.admin-users', (evt, xhr, settings) ->
     lab_id = $(this).attr('laboratory_id')
@@ -1350,7 +1344,7 @@ $(document).on('ajax:error', '#new-laboratory-member-form', (evt, xhr, status, e
   )
 
 #--------------------
-# LAB ADMIN EQUIPMENT 
+# LAB ADMIN EQUIPMENT
 #--------------------
 $(document).on('ajax:beforeSend', '.admin-equipment', (evt, xhr, settings) ->
     lab_id = $(this).attr('data-laboratory-id')
@@ -1770,7 +1764,7 @@ $(document).on('ajax:error', '#edit-user-form', (evt, xhr, status, error) ->
       $("#" + folder_number).addClass('selected')
       current_request = folder_number
       $('#folder-main-panel').empty().html(html)
-      setTimeout -> 
+      setTimeout ->
         sample_id = $("#" + sample_number).attr("sample_id")
         url = '/samples/' + sample_id
         current_sample = sample_id
@@ -1845,31 +1839,31 @@ $(document).on('ajax:success', '#edit-service-request-dialog-form', (evt, data, 
 $(document).on('ajax:error', '#edit-service-request-dialog-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
-  
+
 
 
 #-------
 # ERRORS
 #-------
 @showFormErrors = showFormErrors = (xhr, status, error) ->
-  try 
+  try
     res = $.parseJSON(xhr.responseText)
   catch err
     res['errors'] = { generic_error: "Error:" + err.description }
 
   showFlash(res['flash']['error'], 'error')
 
-  for e in res['errors']  
+  for e in res['errors']
     errorMsg = $('<div>' + res['errors'][e] + '</div>').addClass('error-message')
     $('#field_' + model_name + '_' + e.replace('.', '_')).addClass('has-errors').append(errorMsg)
-  
+
 
 @showFlash = showFlash = (msg, type) ->
   $("#flash-notice").remove()
   $('body').append('<div id="flash-notice" class="alert"></div>')
   $("#flash-notice").addClass('alert-' + type).html(msg)
   $("#flash-notice").slideDown()
-  $("#flash-notice").delay(1500).slideUp() if (type != 'error') 
+  $("#flash-notice").delay(1500).slideUp() if (type != 'error')
 
 
 #--------------------
@@ -1881,7 +1875,7 @@ $(document).on('ajax:error', '#edit-service-request-dialog-form', (evt, xhr, sta
 
 #--------------
 # LOCATION HASH
-#-------------- 
+#--------------
 setHash = (h, get_url) ->
   hash = h
   window.location.hash = hash
@@ -1893,7 +1887,7 @@ setHash = (h, get_url) ->
     if (hash.slice(0, 2) == '#!' && hash.length > 3)
       if hash.indexOf("?") != -1
         from_url = "&__from__=url"
-      else 
+      else
         from_url = "?__from__=url"
       url = hash.slice(2 - hash.length) + from_url
       $.get(url, {}, (html) ->
@@ -1906,4 +1900,3 @@ $(document).on("click", "#folders-link", () ->
   window.location = '/#!/folders'
   checkHash()
 )
-

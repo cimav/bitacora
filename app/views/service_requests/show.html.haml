@@ -1,11 +1,50 @@
-#request-workarea
-%a#edit-service-request-link{"data-id" => @request.id}= "Editar"
-- if @request.sample.count == 0
-  #no-samples
-    = 'La carpeta aún no tiene muestras.'
-    %a{:id => 'open-new-sample-modal-link'}= '¿Deseas agregar una?'
-- else
-  :javascript
-    $(function() {
-      getSample(#{@request.sample[0].id})
-    })
+#folder-info
+  .folder-icon
+    %span.glyphicon.glyphicon-folder-close
+    .folder-number= @request.number
+  .folder-data
+    .title
+      = "#{@request.request_link}" rescue "Sin tipo"
+    .description= @request.description
+
+  .folder-actions
+    %button.btn.btn-default.btn-block= "Editar"
+
+  .folder-collaborators
+    %h3 Colaboradores
+    = image_tag (@request.user.avatar_url), :class => 'img-circle folder-owner'
+    - if @request.supervisor
+      = image_tag (@request.supervisor.avatar_url), :class => 'img-circle folder-supervisor'
+
+#folder-samples
+  .header
+    %h2 MUESTRAS
+    .actions
+      %button.btn.btn-success.btn-xs
+        %span.glyphicon.glyphicon-plus
+  - @request.sample.each do |s|
+    .sample-item
+      .sample-item-info
+        .data
+          .identification
+            = s.identification
+            - if s.quantity > 1
+              %span.badge= s.quantity
+          .description= s.description
+          .number= "ID: #{s.number}"
+        .clearfix
+      %table.table.table-hover.sample-services
+        - s.requested_service.each do |rs|
+          %tr
+            %td.icon{:class => rs.status_class}
+              %span.glyphicon{:class => rs.icon_class}
+            %td.name= rs.laboratory_service.name
+            %td.date= date_text(rs.created_at)
+        %tr.add-service
+          %td.icon
+            %span.glyphicon.glyphicon-plus-sign
+          %td.name{:colspan => 2}= "Agregar Servicio"
+
+#requested-service-workarea-wrapper
+  #requested-service-workarea
+    = "TODO"

@@ -6,7 +6,6 @@
       - klass = 'service-mine' 
     %tr.service-request-item{:service_request_id => r.id, :class => klass, :id => r.number}
       %td.service-request-number
-        .type
         %span.glyphicon.glyphicon-folder-close
         .number= r.number
       %td.service-request-data 
@@ -19,6 +18,3 @@
         = image_tag (r.user.avatar_url), :class => 'img-circle folder-owner'
         - if r.supervisor
           = image_tag (r.supervisor.avatar_url), :class => 'img-circle folder-supervisor'
-
-:javascript
-  $('.service-request-number').tooltip()

@@ -16,6 +16,13 @@
   }
 }
 
+.label_SERVICIO      { background-color: $servicio-color; }
+.label_ARTICULO      { background-color: $articulo-color; }
+.label_TESIS         { background-color: $tesis-color; }
+.label_TESIS_EXTERNA { background-color: $tesis-color; }
+.label_CONVENIO      { background-color: $convenio-color; }
+.label_PROYECTO      { background-color: $proyecto-color; }
+
 #folders {
  z-index: 99998;
   position: absolute;
@@ -56,12 +63,10 @@
       margin-top: 10px;
       margin-bottom: 5px;
     }
-    .type {
-      margin-bottom: 10px;
-      .label {
-        font-size: 100%;
-      }
-    }
+  }
+  
+  .request-type {
+    font-size: 12px;
   }
 
   .service-request-data {

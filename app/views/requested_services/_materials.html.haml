@@ -22,7 +22,7 @@
   %table.table.table-striped
     %thead
       %tr
-        %th{:colspan => 5, :class => "th-header"}= "Consumibles"
+        %th{:colspan => 6, :class => "th-header"}= "Consumibles"
       - if @requested_service.requested_service_materials.count > 0
         %tr
           %th= "Nombre"
@@ -30,6 +30,7 @@
           %th= "Unidad"
           %th= "Precio Unitario"
           %th= "Subtotal"
+          %th
     %tbody
       - mat_total = 0
       - mats = []
@@ -46,10 +47,9 @@
             = mat.material.name
             - if !mat.details.blank?
               .mat-details= mat.details
-            = link_to '×', {:controller => 'requested_services', :action => 'delete_mat', :mat_id => mat.id}, :method => :post, :remote => true, :class => 'close', :'data-type' => 'html', 'data-id' => mat.id
           %td
             - if editable
-              = text_field_tag "quantity_#{mat.id}", mat.quantity, {:class => "mat_qty", "data-id" => mat.id}
+              = text_field_tag "quantity_#{mat.id}", mat.quantity, {:class => "mat_qty form-control input-sm", "data-id" => mat.id}
             - else
               .align-right= "#{mat.quantity}"
           %td
@@ -59,12 +59,15 @@
             .align-right= number_to_currency(mat.unit_price)
           %td
             .align-right= number_to_currency(mat_cost)
+          %td
+            = link_to '×', {:controller => 'requested_services', :action => 'delete_mat', :mat_id => mat.id}, :method => :post, :remote => true, :class => 'close', :'data-type' => 'html', 'data-id' => mat.id
       - if @requested_service.requested_service_materials.count > 0
         %tr.total-row
           %td{:colspan => 4}
             .align-right= "Subtotal Materiales"
           %td
             .align-right= number_to_currency(mat_total)
+          %td
       - if editable
         - if mats.count > 0
           - materials = Material.where("id NOT IN (#{(mats.join(','))})").order('name')
@@ -76,9 +79,9 @@
           - u_options += "<option value=\"#{m.id}\">#{m.name} (#{unit})</option>"
       - if u_options != '' && editable
         %tr.add-row
+          %td{:colspan => 2}
+            = select_tag :new_mat_id, u_options.html_safe, {:class => "form-control input-sm"}
           %td
-            = select_tag :new_mat_id, u_options.html_safe, {:style => "width: 100%;"}
-          %td
-            = text_field_tag 'new_mat_qty'
+            = text_field_tag 'new_mat_qty', '', {:class => 'form-control input-sm'}
           %td{:colspan => 3}
-            %button.btn.btn-mini.btn-info#add-material= "Agregar consumible"
+            %button.btn.btn-primary.btn-sm.btn-block#add-material= "Agregar"

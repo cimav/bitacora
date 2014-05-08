@@ -1,46 +1,28 @@
 // Place all the styles related to the LaboratoryServices controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-#add-service-modal {
-  .modal-body {
-    margin: 0;
-    padding: 0;
-    max-height: 350px;
-    height: 350px;
-  }
+#add-service-dialog-content {
 }
 
-#add-service-modal-panel {
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
+#add-service {
   border-right: 1px solid $line-color;
   width: 200px;
+  float: left;
   .search-area {
     margin: 0;
-    padding: 0;
+    padding: 5px;
     border-bottom: 1px solid $line-color;
     background-color: $light-grey;
-    select, input {
-      margin: 5px 10px;
-      font-size: 12px;
-    }
     select {
-      width: 180px;
-    }
-    input {
-      width: 165px;
-    }
-    form {
-      padding: 0;
-      margin: 0 0 5px 0;
+      margin-bottom: 5px;
     }
   }
+
   #laboratory-services-list {
-    position: absolute;
-    top: 86px;
     width: 200px;
-    bottom: 0px;
+    height: 350px;
+    max-height: 350px;
+    border-right: 1px solid $line-color;
     overflow: auto;
     background: #fff;
     .lab-service-item {
@@ -68,7 +50,14 @@
 }
 
 #service-details {
-  margin-left: 200px;
+  float: left;
+  padding: 10px; 
+  width: -moz-calc(100% - 200px);
+  width: -webkit-calc(100% - 200px);
+  width: calc(100% - 200px);
+  height: 100%;
+  overflow: auto;
+
   .add-service-laboratory {
     color: $grey;
     font-size: 12px;
@@ -86,12 +75,15 @@
   .add-service-field {
     padding: 0 0 10px 10px;
   }
-}
 
+  h3 {
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    font-weight: normal;
+  }
 
-.no-actions {
-  color: $grey;
-  text-align: center;
-  font-size: 90%;
-  padding: 10px;
+  textarea {
+    height: 80px;
+  }
 }

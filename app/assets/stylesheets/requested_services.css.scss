@@ -35,10 +35,15 @@
 .bg-status-send-quote  { background: darken(#a58ad5, 10%); }
 .bg-status-waiting     { background: #666; }
 
+.bg-dialog { background: $brand-primary; }
+
 .header-status {
   font-size: 14px;
   padding: 10px 20px;
   color: #fff;
+  .title {
+
+  }
   .number {
     float: right;
   }
@@ -108,34 +113,5 @@
     font-weight: bold;
     font-size: 30px;
     margin-bottom: 20px;
-  }
-}
-
-
-.dialog-content {
-  padding: 20px;
-  .dialog-title {
-    font-weight: normal;
-    h3 {
-      margin: 0 0 20px 0;
-      padding: 0;
-    }
-  }
-  .field {
-    margin-bottom: 10px;
-  }
-  .notes {
-    textarea {
-      height: 100px;
-    }
-  }
-  .dialog-footer {
-    border-top: 1px solid $line-color;
-    margin-top: 20px;
-    padding: 20px 0;
-    button {
-      float: right;
-      margin-left: 10px;
-    }
   }
 }

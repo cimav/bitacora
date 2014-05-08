@@ -112,16 +112,14 @@ $(document).on('click', '.sample-details', () ->
   )
 
 addServiceDialog = (from_id = false) ->
-  $("#add-service-dialog").remove()
-  $('body').append('<div id="add-service-dialog"></div>')
   url = "/laboratory_services/add_service_dialog/?from_id=#{from_id}"
   $.get(url, {}, (html) ->
-    $('#add-service-dialog').empty().html(html)
-    $('#add-service-modal').modal({ keyboard:true, backdrop:true, show: true })
+    $('#folder-work-panel').empty().html(html)
     labServicesLiveSearch()
   )
 
-$(document).on('click', '#open-add-service-modal', () ->
+$(document).on('click', '.add-service-link', () ->
+    current_sample = $(this).data('sample-id')
     addServiceDialog()
   )
 
@@ -190,6 +188,7 @@ $(document).on('ajax:error', '#new-requested-service-form', (evt, xhr, status, e
   )
 
 @getRequestedService = getRequestedService = (sample_id, id) ->
+  current_sample = sample_id
   url = '/samples/' + sample_id + '/requested_services/' + id
   current_requested_service = id
   $.get(url, {}, (html) ->

@@ -293,6 +293,8 @@ class RequestedServicesController < ApplicationController
             json[:flash] = flash
             json[:sample_id] = @requested_service.sample_id
             json[:id] = @requested_service.id
+            json[:status_class] = @requested_service.status_class
+            json[:icon_class] = @requested_service.icon_class
             render :json => json
           else
             redirect_to @requested_service

@@ -14,6 +14,69 @@
 .status-to-quote    { color: #a58ad5; }
 .status-waiting     { color: #666; }
 
+.btn-status {
+  color: #fff;
+  &:hover {
+    color: #fff;
+  }
+}
+
+.bg-status-initial     { background: $grey; }
+.bg-status-received    { background: #f0842a; }
+.bg-status-assigned    { background: #2ec6c8; }
+.bg-status-suspended   { background: $brand-warning; }
+.bg-status-reinit      { background: $brand-primary; }
+.bg-status-in-progress { background: $brand-primary; }
+.bg-status-finished    { background: $brand-success }
+.bg-status-canceled    { background: $brand-danger; }
+.bg-status-auth        { background: $brand-warning; }
+.bg-status-to-quote    { background: #a58ad5; }
+.bg-status-waiting     { background: #666; }
+
+.header-status {
+  font-size: 14px;
+  padding: 10px 20px;
+  color: #fff;
+  .number {
+    float: right;
+  }
+  .close {
+    position: relative;
+    float: right;
+    margin: 0 0 0 10px !important;
+    padding: 0px !important;
+    top: -3px;
+  }
+}
+
+#folder-work-panel {
+  #requested-service-tabs, .tab-content {
+    margin: 20px;
+  }
+}
+
+
+#requested-service-data {
+  padding: 20px;
+  width: 70%;
+  float: left;
+  h3 {
+    margin: 0;
+    padding: 0;
+  } 
+}
+
+#requested-service-actions {
+  padding: 20px;
+  float: right;
+  width: 30%;
+}
+
+#requested-service-tabs {
+  margin-top: 20px;
+}
+
+
 .total-row {
   td {
     border-top: 2px solid $grey;
@@ -25,5 +88,52 @@
 .add-row {
   td {
     background-color: $white !important;
+  }
+}
+
+#costeo {
+  margin-top: 20px;
+  table {
+    margin-bottom: 40px;
+    .th-header {
+      font-weight: bold;
+      font-size: 150%;
+    }
+  }
+
+  #grand_total {
+    float: right;
+    font-weight: bold;
+    font-size: 30px;
+    margin-bottom: 20px;
+  }
+}
+
+
+.dialog-content {
+  padding: 20px;
+  .dialog-title {
+    font-weight: normal;
+    h3 {
+      margin: 0 0 20px 0;
+      padding: 0;
+    }
+  }
+  .field {
+    margin-bottom: 10px;
+  }
+  .notes {
+    textarea {
+      height: 100px;
+    }
+  }
+  .dialog-footer {
+    border-top: 1px solid $line-color;
+    margin-top: 20px;
+    padding: 20px 0;
+    button {
+      float: right;
+      margin-left: 10px;
+    }
   }
 }

@@ -1,21 +1,24 @@
-#receive-modal.modal.hide.fade{:tabindex => "-1", :role => "dialog", "aria-labelledby" => "receive-modal-label", "aria-hidden" => "true"}
+.header-status{:class => "bg-status-received"}
+  %span.status= "Recibir muestras"
+  %a.close{:class => 'requested-service-link', 'data-id' => @requested_service.id, 'data-sample-id' => @requested_service.sample_id}="×"
+  %span.number= @requested_service.number
+.dialog-content
   = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'receive-sample-form'} do |f|
-    .modal-header
-      %button.close{"data-dismiss" => "modal", "aria-hidden" => "true"}= "×"
-      %h3#receive-modal-label
+    .dialog-title
+      %h3
         - if @requested_service.sample.quantity > 1 
-          = "[#{@requested_service.sample.number}] Recibir #{@requested_service.sample.quantity} muestras"
+          = "Recibir #{@requested_service.sample.quantity} muestras"
         - else
-          = "[#{@requested_service.sample.number}] Recibir muestra"
-    .modal-body
+          = "Recibir muestra"
+    .dialog-body
       = f.hidden_field :status, {:value => RequestedService::RECEIVED}
-      #field_service_request_sample_description
+      .notes.field
         = label_tag 'activity_log_msg', 'Notas:'
-        = text_area_tag 'activity_log_msg', '', {:style => 'width: 515px;', :rows => 8}
+        = text_area_tag 'activity_log_msg', '', {:class => 'form-control'}
       %table
         %tr
           %td
-            #field_service_request_user_id
+            .requested-user.field
               = label_tag :user_id, 'Técnico:'
               - members = LaboratoryMember.where(:laboratory_id => @requested_service.laboratory_service.laboratory_id)
               - u_options = '<option value="-">Sin asignar</option>'
@@ -27,15 +30,15 @@
                   - sel = 'selected="selected"'
                   
                 - u_options += "<option value=\"#{m.user_id}\" #{sel}>#{sug}#{m.user.full_name}</option>"
-              = f.select :user_id, u_options.html_safe
+              = f.select :user_id, u_options.html_safe, {}, :class => "form-control"
           %td
             - display = sug == ''? "display: none;" : ""
-            #field_service_start{:style => "margin-top: 8px; padding-left: 1em; #{display}"}
+            .service_start{:style => "#{display}"}
               = check_box_tag 'start_service', 'yes', false, {:style => 'float: left;'}
               = label_tag 'start_service', ' Iniciar servicio', {:style => 'white-space: pre;'}
-    .modal-footer
+    .dialog-footer
       .send-mail-footer
         = check_box_tag 'send_mail', 'yes', false, {:style => 'float: left;'}
         = label_tag 'send_mail', 'Enviar por correo.', {:style => 'margin-left: 4px; float: left;'}
       = button_tag "Recibir", {:class => "btn btn-primary", :type => "submit"}
-      %button.btn{"data-dismiss" => "modal", "aria-hidden" => "true"}= "Cerrar"
+    .clearfix

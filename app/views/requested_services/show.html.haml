@@ -44,114 +44,66 @@
 
 - waiting_action = @requested_service.status.to_i == RequestedService::WAITING_START && im_requestor
 
+.header-status{:class => "bg-#{@requested_service.status_class}"}
+  %span.status= @requested_service.status_text
+  %span.number= @requested_service.number
 
+#requested-service-data
+  %h3
+    = @requested_service.laboratory_service.name
+  - if !@requested_service.details.blank?
+    %p= @requested_service.details
+  %strong= "Técnico Sugerido: "
+  = "#{(@requested_service.suggested_user.full_name rescue 'Cualquier Técnico')}"
+  - if !@requested_service.user_id.blank?
+    %br
+    %strong=  "Técnico Asignado: "
+    = "#{(@requested_service.user.full_name)}"
 
+  
+#requested-service-actions
+  - if initial_action
+    %button{:class => "btn btn-block btn-status bg-status-initial", :status_action => RequestedService::INITIAL, :id => 'change_status_initial'}
+      = "Regresar a inicio"
+  - if received_action
+    %button{:class => "btn btn-block btn-status bg-status-received", :status_action => RequestedService::RECEIVED, :id => 'change_status_received'}
+      = "Recibir muestra"
+  - if assigned_action
+    %button{:class => "btn btn-block btn-status bg-status-assigned", :status_action => RequestedService::ASSIGNED, :id => 'change_status_assigned'}
+      = "Asignar técnico"
+  - if suspended_action
+    %button{:class => "btn btn-block btn-status bg-status-suspended", :status_action => RequestedService::SUSPENDED, :id => 'change_status_suspended'}
+      = "Suspender servicio"
+  - if reinit_action
+    %button{:class => "btn btn-block btn-status bg-status-reinit", :status_action => RequestedService::REINIT, :id => 'change_status_reinit'}
+      = "Reiniciar servicio"
+  - if in_progress_action
+    %button{:class => "btn btn-block btn-status bg-status-in-progress", :status_action => RequestedService::IN_PROGRESS, :id => 'change_status_in_progress'}
+      = "Empezar servicio"
+  - if finished_action
+    %button{:class => "btn btn-block btn-status bg-status-finished", :status_action => RequestedService::FINISHED, :id => 'change_status_finished'}
+      = "Finalizar servicio"
+  - if sup_auth_action
+    %button{:class => "btn btn-block btn-status bg-status-sup_auth", :status_action => RequestedService::INITIAL, :id => 'change_status_sup_auth'}
+      = "Autorizar el servicio"
+  - if owner_auth_action
+    %button{:class => "btn btn-block btn-status bg-status-owner_auth", :status_action => RequestedService::INITIAL, :id => 'change_status_owner_auth'}
+      = "Autorizar el servicio"
+  - if send_quote_action
+    %button{:class => "btn btn-block btn-status bg-status-send_quote", :status_action => RequestedService::TO_QUOTE, :id => 'change_status_send_quote'}
+      = "Enviar costeo"
+  - if canceled_action
+    %button{:class => "btn btn-block btn-status bg-status-canceled", :status_action => RequestedService::CANCELED, :id => 'change_status_canceled'}
+      = "Cancelar servicio"
 
-#requested-service-header 
-  #requested-service-name= @requested_service.laboratory_service.name
-  #requested-service-actions.white-gradient
-    #requested-service-number.tag= @requested_service.number
-    .btn-group
-      %a.btn.dropdown-toggle{"data-toggle" => "dropdown"}
-        %span{:class => "badge status_#{@requested_service.status}"}
-          %i.icon-white{:class => @requested_service.icon_class}
-        = @requested_service.status_text
-        %span.caret
-      %ul.dropdown-menu
-        - klass = ''
-        - if initial_action
-          - klass = "badge status_#{RequestedService::INITIAL}"
-          %li
-            %a{:status_action => RequestedService::INITIAL, :id => 'change_status_initial'}
-              %span{:class => klass}
-                %i.icon-asterisk.icon-white
-              = "Regresar a inicio"
+.clearfix
 
-        - if received_action
-          - klass = "badge status_#{RequestedService::RECEIVED}"
-          %li
-            %a{:status_action => RequestedService::RECEIVED, :id => 'change_status_received'}
-              %span{:class => klass}
-                %i.icon-check.icon-white
-              = "Recibir muestra"
+#requested-service-action-dialog
 
-        - if assigned_action
-          - klass = "badge status_#{RequestedService::ASSIGNED}"
-          %li
-            %a{:status_action => RequestedService::ASSIGNED, :id => 'change_status_assigned'}
-              %span{:class => klass}
-                %i.icon-user.icon-white
-              = "Asignar técnico"
-
-        - if suspended_action
-          - klass = "badge status_#{RequestedService::SUSPENDED}"
-          %li
-            %a{:status_action => RequestedService::SUSPENDED, :id => 'change_status_suspended'}
-              %span{:class => klass}
-                %i.icon-minus.icon-white
-              = "Suspender servicio"
-
-        - if reinit_action
-          - klass = "badge status_#{RequestedService::REINIT}"
-          %li
-            %a{:status_action => RequestedService::REINIT, :id => 'change_status_reinit'}
-              %span{:class => klass}
-                %i.icon-repeat.icon-white
-              = "Reiniciar servicio"
-
-        - if in_progress_action
-          - klass = "badge status_#{RequestedService::IN_PROGRESS}"
-          %li
-            %a{:status_action => RequestedService::IN_PROGRESS, :id => 'change_status_in_progress'}
-              %span{:class => klass}
-                %i.icon-play.icon-white
-              = "Empezar servicio"
-
-        - if finished_action
-          - klass = "badge status_#{RequestedService::FINISHED}"
-          %li
-            %a{:status_action => RequestedService::FINISHED, :id => 'change_status_finished'}
-              %span{:class => klass}
-                %i.icon-ok.icon-white
-              = "Finalizar servicio"
-        - if sup_auth_action
-          - klass = "badge status_unlock"
-          %li
-            %a{:status_action => RequestedService::INITIAL, :id => 'change_status_sup_auth'}
-              %span{:class => klass}
-                %i.icon-ok.icon-white
-              = "Autorizar el servicio"
-
-        - if owner_auth_action
-          - klass = "badge status_unlock"
-          %li
-            %a{:status_action => RequestedService::INITIAL, :id => 'change_status_owner_auth'}
-              %span{:class => klass}
-                %i.icon-ok.icon-white
-              = "Autorizar el servicio"
-
-        - if send_quote_action
-          - klass = "badge status_#{RequestedService::TO_QUOTE}"
-          %li
-            %a{:status_action => RequestedService::TO_QUOTE, :id => 'change_status_send_quote'}
-              %span{:class => klass}
-                %i.icon-ok.icon-white
-              = "Enviar cotización"
-
-        - if canceled_action
-          - klass = "badge status_#{RequestedService::CANCELED}"
-          %li
-            %a{:status_action => RequestedService::CANCELED, :id => 'change_status_canceled'}
-              %span{:class => klass}
-                %i.icon-remove.icon-white
-              = "Cancelar servicio"
-        - if klass == ''
-          %li.no-actions= "No hay acciones que realizar"
+.clearfix
 
 #requested-service-tabs
   %ul.nav.nav-tabs
-    %li
-      %a{:href => "#detalles", "data-toggle" => "tab"}= "Detalles"
     %li.active
       %a{:href => "#bitacora", "data-toggle" => "tab"}= "Bitácora"
     %li
@@ -162,65 +114,6 @@
 
 .tab-content
 
-  #detalles.tab-pane
-    .info-row
-      .laboratory-name
-        %i.icon-asterisk
-        %strong= "Laboratorio: " 
-        = @requested_service.laboratory_service.laboratory.name
-    .info-row
-      .suggested-user
-        %i.icon-star
-        %strong= "Técnico Sugerido: "
-        = "#{(@requested_service.suggested_user.full_name rescue 'Cualquier Técnico')}"
-        - if !@requested_service.user_id.blank?
-          %strong= "/ Técnico Asignado: "
-          = "#{(@requested_service.user.full_name)}"
-    .info-row
-      .folder-type
-        %i.icon-folder-open
-        %strong= "#{(@requested_service.sample.service_request.request_type.name rescue 'Sin Tipo')}: "
-        = @requested_service.sample.service_request.request_link
-        .info-extra
-          - if @requested_service.sample.service_request.request_type
-            - template = @requested_service.sample.service_request.request_type.short_name 
-            = render :partial => "service_requests/info_#{template}", :locals => {:service_request => @requested_service.sample.service_request}
-    .info-row
-      .folder-owner
-        %i.icon-user
-        %strong= "Dueño: "
-        = @requested_service.sample.service_request.user.full_name
-
-    - if !@requested_service.sample.service_request.supervisor_id.blank?
-      .info-row
-        .folder-supervisor
-          %i.icon-user
-          %strong= "Supervisor: "
-          = @requested_service.sample.service_request.supervisor.full_name
-    
-    .info-row
-      .service-details
-        %i.icon-comment
-        %strong= "Anotaciones Particulares: "
-        .info-extra
-          - if !@requested_service.details.blank?
-            %div= @requested_service.details
-          - else
-            = "Ninguna"
-    .info-row
-      .other-services
-        %i.icon-th
-        %strong= "Servicios solicitados a la muestra #{@requested_service.sample.identification}"
-        %ul
-          - @requested_service.sample.requested_service.each do |rs|
-            %li
-              %span.service-bullet{:class => "status_#{rs.status}"}= "%02d" %  rs.consecutive
-              = rs.laboratory_service.name
-          %li#add-service
-            .service-bullet.add
-              %i.icon-plus
-              %a#open-add-service-by-lab-modal{"data-for-sample" => @requested_service.sample.id, "data-from-id" => @requested_service.id}= "Agregar servicio"
-
   #bitacora.tab-pane.active
     #activity_log
       = render :partial => 'activity_log/activity_log', :locals => {:activity_log => @activity_log, 
@@ -230,6 +123,7 @@
   #archivos.tab-pane
     #files_iframe_outer
       %iframe{"name" => "submit_iframe", "id" => "files_iframe", "src" => "/service_files/ui/#{@requested_service.sample.service_request_id}/#{@requested_service.sample_id}/#{@requested_service.id}"}
+    .clearfix
 
   #costeo.tab-pane
     #costeo_inner

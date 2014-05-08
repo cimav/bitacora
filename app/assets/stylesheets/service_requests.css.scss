@@ -151,6 +151,7 @@
 
 #folder-samples {
   float: left;
+  background: darken($bg-color, 2%);
   left: $side-panel-width;
   width: $folder-samples-width;
   border-right: 1px solid $line-color;
@@ -158,12 +159,13 @@
   top: 0;
   bottom: 0;
   right: 0;
+  overflow: auto;
 
   .header {
     margin: 0;
     padding: 0;
     height: 40px;
-    background: $light-bg;
+    background: $bg-color;
     border-bottom: 1px solid $line-color;
     h2 {
       margin: 0;
@@ -181,8 +183,11 @@
   }
 
   .sample-item {
-    margin: 0px;
-    border-bottom: 1px solid $line-color;
+    margin: 5px 5px 10px 5px;
+    @include shadow(2px, 2px, 0px, #ddd);
+
+    background: #fff;
+    border: 1px solid $line-color;
     .sample-item-info {
       background: $light-bg;
       border-bottom: 1px solid $white;
@@ -190,9 +195,9 @@
         padding: 10px;
         color: $grey;
         .identification {
-          font-weight: bold;
+          font-weight: normal;
           color: $strong-color;
-          font-size: 16px;
+          font-size: 20px;
         }
         .number {
         }
@@ -229,6 +234,8 @@
     .empty {
       color: $grey;
       text-align: center;
+      padding: 20px;
+      font-size: 90%;
     }
 
     .date {
@@ -240,7 +247,7 @@
   }
 }
 
-#requested-service-workarea-wrapper {
+#folder-work-panel-wrapper {
   background: darken($bg-color, 3%);
   width: -moz-calc(100% - $folder-samples-width - $side-panel-width);
   width: -webkit-calc(100% - $folder-samples-width - $side-panel-width);
@@ -250,10 +257,13 @@
   top: 0;
   bottom: 0;
   right: 0;
+  overflow: auto;
 }
 
-#requested-service-workarea {
+#folder-work-panel {
+  @include shadow(2px, 2px, 0px, #ddd);
   margin: 20px;
+  padding: 0px;
   border: 1px solid $line-color;
   background: $white;
 }

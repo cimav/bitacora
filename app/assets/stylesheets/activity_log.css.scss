@@ -3,20 +3,10 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 #activity_log {
-  border: 1px solid $line-color;
-  position: fixed;
-  left: ($sample-list-width * 2) + 14;
-  bottom: 30px;
-  top: 216px;
-  right: 10px;
-  @include rounded(6px);
+  margin-top: 20px; 
   .write-message {
-    background: $light-grey;
+    background: #fff;
     border-bottom: 1px solid $line-color;
-  }
-
-  #new-activity-log-form {
-    margin-right: 5px;
   }
 
   .btn {
@@ -28,8 +18,8 @@
     margin-bottom: 5px;
     background: #fff;
     border: 1px solid $line-color;
-    @include rounded(6px);
     textarea {
+      outline: none;
       resize: none;
       padding: 0;
       width: 100%;
@@ -42,11 +32,7 @@
   }
 
   .media-list {
-    position: absolute;
-    overflow: auto;
     width: 100%;
-    top: 118px;
-    bottom: 0px;
   }
 
   .media {

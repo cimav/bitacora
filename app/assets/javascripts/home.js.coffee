@@ -68,8 +68,15 @@ $(document).on('click', '#add-new-folder-button', () ->
   $.get(url, {}, (html) ->
     current_request = id
     $('#workarea').empty().html(html)
-    setHash(url, false)
+    setHash('#!' + url, false)
   )
+
+$(document).on('click', '.requested-service-link', () ->
+    id = $(this).data('id')
+    sample_id = $(this).data('sample-id')
+    getRequestedService(sample_id, id) 
+  )
+  
 
 $(document).on('click', '#select-sample-sample-button', () ->
     $('#sample-list').toggle()
@@ -186,9 +193,9 @@ $(document).on('ajax:error', '#new-requested-service-form', (evt, xhr, status, e
   url = '/samples/' + sample_id + '/requested_services/' + id
   current_requested_service = id
   $.get(url, {}, (html) ->
-    $('.requested_service').removeClass('selected')
-    $('#requested_service_' + id).addClass('selected')
-    $('#requested-service-workarea').empty().html(html)
+    $('.requested-service-link').removeClass('active')
+    $('#requested-service-link-' + id).addClass('active')
+    $('#folder-work-panel').empty().html(html)
   )
 
 getSampleRequestedServices = (sample_id) ->
@@ -309,23 +316,19 @@ $(document).on('ajax:error', (evt, xhr, status, error) ->
 #--------
 # ACTIONS
 #--------
-$(document).on('click', '#requested-service-status', () ->
-    $('#action-list').toggle()
-  )
 
-# Change color
-changeSampleTagColor = (rs, new_status) ->
-  $("#requested_service_" + rs + " .service-bullet").removeClass("status_-1").removeClass("status_1").removeClass("status_2").removeClass("status_3").removeClass("status_4").removeClass("status_5").removeClass("status_6").removeClass("status_21").removeClass("status_22").removeClass("status_23").removeClass("status_99")
-  $("#requested_service_" + rs + " .service-bullet").addClass("status_" + new_status)
+updateIcon = (id, status_class, icon_class) ->
+  $item = $('#requested-service-link-' + id + ' .icon')
+  $item.removeClass()
+  $item.addClass('icon')
+  $item.addClass(status_class)
+  $item.html('<span class="glyphicon ' + icon_class + '"></span>')
 
 # OWNER AUTH
 $(document).on('click', '#change_status_owner_auth', () ->
-    $("#owner-auth-dialog").remove()
-    $('body').append('<div id="owner-auth-dialog"></div>')
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/owner_auth_dialog'
     $.get(url, {}, (html) ->
-      $('#owner-auth-dialog').empty().html(html)
-      $('#owner-auth-modal').modal({ keyboard:true, backdrop:true, show: true });
+      $('#folder-work-panel').empty().html(html)
     )
   )
 
@@ -338,8 +341,7 @@ $(document).on('ajax:success', '#owner-auth-sample-form', (evt, data, status, xh
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     getRequestedService(res['sample_id'], res['id'])
-    $('#owner-auth-modal').modal('hide').remove()
-    changeSampleTagColor(res['id'], 1)
+    updateIcon(res['id'], res['status_class'], res['icon_class'])
   )
 $(document).on('ajax:error', '#owner-auth-sample-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
@@ -348,12 +350,9 @@ $(document).on('ajax:error', '#owner-auth-sample-form', (evt, xhr, status, error
 
 # SUP AUTH
 $(document).on('click', '#change_status_sup_auth', () ->
-    $("#sup-auth-dialog").remove()
-    $('body').append('<div id="sup-auth-dialog"></div>')
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/sup_auth_dialog'
     $.get(url, {}, (html) ->
-      $('#sup-auth-dialog').empty().html(html)
-      $('#sup-auth-modal').modal({ keyboard:true, backdrop:true, show: true });
+      $('#folder-work-panel').empty().html(html)
     )
   )
 
@@ -366,8 +365,7 @@ $(document).on('ajax:success', '#sup-auth-sample-form', (evt, data, status, xhr)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     getRequestedService(res['sample_id'], res['id'])
-    $('#sup-auth-modal').modal('hide').remove()
-    changeSampleTagColor(res['id'], 1)
+    updateIcon(res['id'], res['status_class'], res['icon_class'])
   )
 $(document).on('ajax:error', '#sup-auth-sample-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
@@ -375,12 +373,9 @@ $(document).on('ajax:error', '#sup-auth-sample-form', (evt, xhr, status, error) 
 
 # SEND QUOTE
 $(document).on('click', '#change_status_send_quote', () ->
-    $("#initial-dialog").remove()
-    $('body').append('<div id="send-quote-dialog"></div>')
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/send_quote_dialog'
     $.get(url, {}, (html) ->
-      $('#send-quote-dialog').empty().html(html)
-      $('#send-quote-modal').modal({ keyboard:true, backdrop:true, show: true });
+      $('#folder-work-panel').empty().html(html)
     )
   )
 
@@ -393,9 +388,7 @@ $(document).on('ajax:success', '#send-quote-sample-form', (evt, data, status, xh
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     getRequestedService(res['sample_id'], res['id'])
-    $('#send-quote-modal').modal('hide').remove()
-    # Change color to 22 (Waiting Status)
-    changeSampleTagColor(res['id'], 22)
+    updateIcon(res['id'], res['status_class'], res['icon_class'])
   )
 $(document).on('ajax:error', '#send-quote-sample-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
@@ -403,14 +396,11 @@ $(document).on('ajax:error', '#send-quote-sample-form', (evt, xhr, status, error
 
 # INITIAL
 $(document).on('click', '#change_status_initial', () ->
-    $("#initial-dialog").remove()
-    $('body').append('<div id="initial-dialog"></div>')
-    url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/initial_dialog'
-    $.get(url, {}, (html) ->
-      $('#initial-dialog').empty().html(html)
-      $('#initial-modal').modal({ keyboard:true, backdrop:true, show: true });
-    )
+  url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/initial_dialog'
+  $.get(url, {}, (html) ->
+    $('#folder-work-panel').empty().html(html)
   )
+)
 
 $(document).on('ajax:beforeSend', '#initial-sample-form', (evt, xhr, settings) ->
     $('.error-message').remove()
@@ -421,8 +411,7 @@ $(document).on('ajax:success', '#initial-sample-form', (evt, data, status, xhr) 
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     getRequestedService(res['sample_id'], res['id'])
-    $('#initial-modal').modal('hide').remove()
-    changeSampleTagColor(res['id'], 1)
+    updateIcon(res['id'], res['status_class'], res['icon_class'])
   )
 $(document).on('ajax:error', '#initial-sample-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
@@ -430,39 +419,34 @@ $(document).on('ajax:error', '#initial-sample-form', (evt, xhr, status, error) -
 
 # RECEIVED
 $(document).on('click', '#change_status_received', () ->
-    $("#receive-dialog").remove()
-    $('body').append('<div id="receive-dialog"></div>')
-    url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/receive_dialog'
-    $.get(url, {}, (html) ->
-      $('#receive-dialog').empty().html(html)
-      $('#receive-modal').modal({ keyboard:true, backdrop:true, show: true });
-    )
+  url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/receive_dialog'
+  $.get(url, {}, (html) ->
+    $('#folder-work-panel').empty().html(html)
   )
+)
 
 $(document).on('ajax:beforeSend', '#receive-sample-form', (evt, xhr, settings) ->
     $('.error-message').remove()
     $('.has-errors').removeClass('has-errors')
   )
+
 $(document).on('ajax:success', '#receive-sample-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     getRequestedService(res['sample_id'], res['id'])
-    $('#receive-modal').modal('hide').remove()
-    changeSampleTagColor(res['id'], 2)
+    updateIcon(res['id'], res['status_class'], res['icon_class'])
   )
+
 $(document).on('ajax:error', '#receive-sample-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
 # ASSIGN
 $(document).on('click', '#change_status_assigned', () ->
-    $("#assign-dialog").remove()
-    $('body').append('<div id="assign-dialog"></div>')
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/assign_dialog'
     $.get(url, {}, (html) ->
-      $('#assign-dialog').empty().html(html)
-      $('#assign-modal').modal({ keyboard:true, backdrop:true, show: true });
+      $('#folder-work-panel').empty().html(html)
     )
   )
 
@@ -476,8 +460,7 @@ $(document).on('ajax:success', '#assign-sample-form', (evt, data, status, xhr) -
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     getRequestedService(res['sample_id'], res['id'])
-    $('#assign-modal').modal('hide').remove()
-    changeSampleTagColor(res['id'], 3)
+    updateIcon(res['id'], res['status_class'], res['icon_class'])
   )
 $(document).on('ajax:error', '#assign-sample-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
@@ -485,12 +468,9 @@ $(document).on('ajax:error', '#assign-sample-form', (evt, xhr, status, error) ->
 
 # SUSPEND
 $(document).on('click', '#change_status_suspended', () ->
-    $("#suspend-dialog").remove()
-    $('body').append('<div id="suspend-dialog"></div>')
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/suspend_dialog'
     $.get(url, {}, (html) ->
-      $('#suspend-dialog').empty().html(html)
-      $('#suspend-modal').modal({ keyboard:true, backdrop:true, show: true });
+      $('#folder-work-panel').empty().html(html)
     )
   )
 
@@ -503,8 +483,7 @@ $(document).on('ajax:success', '#suspend-sample-form', (evt, data, status, xhr) 
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     getRequestedService(res['sample_id'], res['id'])
-    $('#suspend-modal').modal('hide').remove()
-    changeSampleTagColor(res['id'], 4)
+    updateIcon(res['id'], res['status_class'], res['icon_class'])
   )
 $(document).on('ajax:error', '#suspend-sample-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
@@ -512,12 +491,9 @@ $(document).on('ajax:error', '#suspend-sample-form', (evt, xhr, status, error) -
 
 # REINIT
 $(document).on('click', '#change_status_reinit', () ->
-    $("#reinit-dialog").remove()
-    $('body').append('<div id="reinit-dialog"></div>')
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/reinit_dialog'
     $.get(url, {}, (html) ->
-      $('#reinit-dialog').empty().html(html)
-      $('#reinit-modal').modal({ keyboard:true, backdrop:true, show: true });
+      $('#folder-work-panel').empty().html(html)
     )
   )
 
@@ -530,8 +506,7 @@ $(document).on('ajax:success', '#reinit-sample-form', (evt, data, status, xhr) -
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     getRequestedService(res['sample_id'], res['id'])
-    $('#reinit-modal').modal('hide').remove()
-    changeSampleTagColor(res['id'], 5)
+    updateIcon(res['id'], res['status_class'], res['icon_class'])
   )
 $(document).on('ajax:error', '#reinit-sample-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
@@ -539,12 +514,9 @@ $(document).on('ajax:error', '#reinit-sample-form', (evt, xhr, status, error) ->
 
 # START
 $(document).on('click', '#change_status_in_progress', () ->
-    $("#start-dialog").remove()
-    $('body').append('<div id="start-dialog"></div>')
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/start_dialog'
     $.get(url, {}, (html) ->
-      $('#start-dialog').empty().html(html)
-      $('#start-modal').modal({ keyboard:true, backdrop:true, show: true });
+      $('#folder-work-panel').empty().html(html)
     )
   )
 
@@ -557,8 +529,7 @@ $(document).on('ajax:success', '#start-sample-form', (evt, data, status, xhr) ->
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     getRequestedService(res['sample_id'], res['id'])
-    $('#start-modal').modal('hide').remove()
-    changeSampleTagColor(res['id'], 6)
+    updateIcon(res['id'], res['status_class'], res['icon_class'])
   )
 $(document).on('ajax:error', '#start-sample-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
@@ -566,12 +537,9 @@ $(document).on('ajax:error', '#start-sample-form', (evt, xhr, status, error) ->
 
 # FINISH
 $(document).on('click', '#change_status_finished', () ->
-    $("#finish-dialog").remove()
-    $('body').append('<div id="finish-dialog"></div>')
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/finish_dialog'
     $.get(url, {}, (html) ->
-      $('#finish-dialog').empty().html(html)
-      $('#finish-modal').modal({ keyboard:true, backdrop:true, show: true });
+      $('#folder-work-panel').empty().html(html)
     )
   )
 
@@ -584,8 +552,7 @@ $(document).on('ajax:success', '#finish-sample-form', (evt, data, status, xhr) -
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     getRequestedService(res['sample_id'], res['id'])
-    $('#finish-modal').modal('hide').remove()
-    changeSampleTagColor(res['id'], 99)
+    updateIcon(res['id'], res['status_class'], res['icon_class'])
   )
 $(document).on('ajax:error', '#finish-sample-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
@@ -593,14 +560,11 @@ $(document).on('ajax:error', '#finish-sample-form', (evt, xhr, status, error) ->
 
 # CANCEL
 $(document).on('click', '#change_status_canceled', () ->
-    $("#cancel-dialog").remove()
-    $('body').append('<div id="cancel-dialog"></div>')
-    url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/cancel_dialog'
-    $.get(url, {}, (html) ->
-      $('#cancel-dialog').empty().html(html)
-      $('#cancel-modal').modal({ keyboard:true, backdrop:true, show: true });
-    )
+  url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/cancel_dialog'
+  $.get(url, {}, (html) ->
+    $('#folder-work-panel').empty().html(html)
   )
+)
 
 $(document).on('ajax:beforeSend', '#cancel-sample-form', (evt, xhr, settings) ->
     $('.error-message').remove()
@@ -611,9 +575,9 @@ $(document).on('ajax:success', '#cancel-sample-form', (evt, data, status, xhr) -
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     getRequestedService(res['sample_id'], res['id'])
-    $('#cancel-modal').modal('hide').remove()
-    changeSampleTagColor(res['id'], -1)
+    updateIcon(res['id'], res['status_class'], res['icon_class'])
   )
+
 $(document).on('ajax:error', '#cancel-sample-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )

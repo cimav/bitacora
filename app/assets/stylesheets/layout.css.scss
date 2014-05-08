@@ -191,24 +191,6 @@ body {
 .align-left { text-align: left; }
 .align-center { text-align: center; }
 
-#costeo {
-  table {
-    margin-bottom: 40px;
-  }
-}
-
-.th-header {
-  font-weight: bold;
-  font-size: 150%;
-}
-
-#grand_total {
-  position: absolute;
-  right: 40px;
-  font-weight: bold;
-  font-size: 30px;
-  margin: 40px 0;
-}
 
 .empty-cell {
   color: $grey;

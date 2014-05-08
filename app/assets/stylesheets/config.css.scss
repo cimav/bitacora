@@ -21,7 +21,7 @@ $secondary-bg: lighten($light-grey, 5%);
 
 $bg-selected2: #e2f0f4;
 $selected-color2: #222;
-$bg-selected: #0af;
+$bg-selected: #8cf;
 $selected-color: #fff;
 $selected-color-light: #eef;
 
@@ -61,6 +61,8 @@ $workarea-top: 106px;
 $line-color: #ddd;
 $link-color: #06c;
 $bullet-color: #ddd;
+
+$table-bg-active: $bg-selected;
 
 
 $button-gradient-from: #fafafa;

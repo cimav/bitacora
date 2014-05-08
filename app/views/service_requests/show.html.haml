@@ -35,8 +35,11 @@
             .number= "ID: #{s.number}"
           .clearfix
         %table.table.table-hover.sample-services
-          - s.requested_service.each do |rs|
+          - if s.requested_service.count == 0
             %tr
+              %td{:colspan => 3, :class => 'empty'}= "No tiene servicios"
+          - s.requested_service.each do |rs|
+            %tr{:class => 'requested-service-link', 'data-id' => rs.id, 'data-sample-id' => rs.sample_id, :id => "requested-service-link-#{rs.id}"}
               %td.icon{:class => rs.status_class}
                 %span.glyphicon{:class => rs.icon_class}
               %td.name= rs.laboratory_service.name
@@ -46,6 +49,5 @@
               %span.glyphicon.glyphicon-plus-sign
             %td.name{:colspan => 2}= "Agregar Servicio"
 
-  #requested-service-workarea-wrapper
-    #requested-service-workarea
-      = "TODO"
+  #folder-work-panel-wrapper
+    #folder-work-panel.inner-area

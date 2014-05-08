@@ -21,7 +21,7 @@
     .header
       %h2 MUESTRAS
       .actions
-        %button.btn.btn-success.btn-xs
+        %button#add-new-sample-button.btn.btn-success.btn-xs{'data-id' => @request.id}
           %span.glyphicon.glyphicon-plus
     - @request.sample.each do |s|
       .sample-item

@@ -76,39 +76,16 @@ $(document).on('click', '.requested-service-link', () ->
     sample_id = $(this).data('sample-id')
     getRequestedService(sample_id, id) 
   )
-  
-
-$(document).on('click', '#select-sample-sample-button', () ->
-    $('#sample-list').toggle()
-  )
 
 newSampleDialog = () ->
-  $("#new-sample-dialog").remove()
-  $('body').append('<div id="new-sample-dialog"></div>')
   url = '/samples/new_dialog/' + current_request
   $.get(url, {}, (html) ->
-    $('#new-sample-dialog').empty().html(html)
-    $('#add-new-sample-modal').modal({ keyboard:true, backdrop:true, show: true });
+    $('#folder-work-panel').empty().html(html)
   )
 
 $(document).on('click', '#add-new-sample-button', () ->
+    current_request = $(this).data('id')
     newSampleDialog()
-  )
-
-$(document).on('click', '#open-new-sample-modal-link', () ->
-    newSampleDialog()
-  )
-
-@getSample = getSample = (id) ->
-    url = '/samples/' + id
-    current_sample = id
-    $.get(url, {}, (html) ->
-      $('#no-samples').remove()
-      $('#request-workarea').empty().html(html)
-    )
-
-$(document).on('click', '.sample-details', () ->
-    getSample($(this).attr('sample_id'))
   )
 
 addServiceDialog = (from_id = false) ->
@@ -215,8 +192,7 @@ $(document).on('ajax:success', '#new-sample-form', (evt, data, status, xhr) ->
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
-    $('#add-new-sample-modal').modal('hide').remove()
-    getSample(res['id'])
+    getServiceRequest(res['service_request_id'])
   )
 $(document).on('ajax:error', '#new-sample-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)

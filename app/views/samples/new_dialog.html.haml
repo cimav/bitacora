@@ -1,25 +1,26 @@
-#add-new-sample-modal.modal.hide.fade{:tabindex => "-1", :role => "dialog", "aria-labelledby" => "add-new-sample-modal-label", "aria-hidden" => "true"}
+.header-status{:class => "bg-dialog"}
+  %span.status= "Nueva muestra"
+  %span.number= @request.number
+  %a.close{:class => 'requested-service-link', 'data-id' => @request.id}="×"
+.dialog-content.padded
   = form_for Sample.new, :remote => true, :html => {:'data-type' => 'html', :id => 'new-sample-form', :class => 'form-horizontal'} do |f|
-    .modal-header
-      %button.close{"data-dismiss" => "modal", "aria-hidden" => "true"}= "×"
-      %h3#add-new-sample-modal-label= "Nueva muestra"
-    .modal-body
+    .dialog-title
+      %h3= "Nueva muestra"
+    .dialog-body
       = f.hidden_field :service_request_id, {:value => @request.id}
-      
       .control-group#cg_Sample_identification
         = f.label :identification, 'Identificación de muestra:', {:class => 'control-label'}
         .controls
-          = f.text_field :identification, {:class => 'input-xlarge', :placeholder => 'Identificación de muestra'}
+          = f.text_field :identification, {:class => 'form-control', :placeholder => 'Identificación de muestra'}
       .control-group#cg_Sample_description
         = f.label :description, 'Descripción:', {:class => 'control-label'}
         .controls
-          = f.text_area :description, {:class => 'input-xlarge', :rows => 4, :placeholder => 'Descripción de la muestra'}
+          = f.text_area :description, {:class => 'form-control', :rows => 4, :placeholder => 'Descripción de la muestra'}
       .control-group#cg_Sample_quantity
         = f.label :quantity, 'Cantidad:', {:class => 'control-label'}
         .controls
-          = f.select :quantity, 1..200
+          = f.select :quantity, 1..200, {}, :class => 'form-control'
           %span.help-block= "Seleccionar mas de 1 si son muestras a las que se les hará exactamente lo mismo" 
-        
-    .modal-footer
-      = f.submit "Agregar muestra", {:class => "btn btn-primary"}
-      %button.btn{"data-dismiss" => "modal", "aria-hidden" => "true"}= "Cerrar"
+    .dialog-footer
+      = button_tag "Agregar", {:class => "btn btn-primary", :type => "submit"}
+    .clearfix

@@ -102,6 +102,8 @@ class RequestedServicesController < ApplicationController
   end
 
   def create
+
+    # TODO: No permitir crear servicios en carpetas tipo vinculación (en la UI ya no se muestra botón)
     
     if params[:requested_service][:from_id] == 'false'
       params[:requested_service][:from_id] = nil

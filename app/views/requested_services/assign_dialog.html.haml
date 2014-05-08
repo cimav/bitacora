@@ -2,7 +2,7 @@
   %span.status= "Asignar técnico"
   %a.close{:class => 'requested-service-link', 'data-id' => @requested_service.id, 'data-sample-id' => @requested_service.sample_id}="×"
   %span.number= @requested_service.number
-.dialog-content
+.dialog-content.padded
   = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'assign-sample-form'} do |f|
     .dialog-title
       %h3= "Asignar técnico"
@@ -34,4 +34,4 @@
         = check_box_tag 'send_mail', 'yes', false, {:style => 'float: left;'}
         = label_tag 'send_mail', 'Enviar por correo.', {:style => 'margin-left: 4px; float: left;'}
       = button_tag "Asignar técnico", {:class => "btn btn-primary", :type => "submit"}
-
+    .clearfix

@@ -2,7 +2,7 @@
   %span.status= "Recibir muestras"
   %a.close{:class => 'requested-service-link', 'data-id' => @requested_service.id, 'data-sample-id' => @requested_service.sample_id}="×"
   %span.number= @requested_service.number
-.dialog-content
+.dialog-content.padded
   = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'receive-sample-form'} do |f|
     .dialog-title
       %h3

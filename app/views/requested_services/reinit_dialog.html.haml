@@ -2,7 +2,7 @@
   %span.status= "Reanudar servicio"
   %a.close{:class => 'requested-service-link', 'data-id' => @requested_service.id, 'data-sample-id' => @requested_service.sample_id}="×"
   %span.number= @requested_service.number
-.dialog-content
+.dialog-content.padded
   = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'reinit-sample-form'} do |f|
     .dialog-title
       %h3= "Reanudar servicio"
@@ -16,4 +16,5 @@
         = check_box_tag 'send_mail', 'yes', false, {:style => 'float: left;'}
         = label_tag 'send_mail', 'Enviar por correo.', {:style => 'margin-left: 4px; float: left;'}
       = button_tag "Reanudar", {:class => "btn btn-primary", :type => "submit"}
+    .clearfix
 

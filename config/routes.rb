@@ -7,11 +7,11 @@ Bitacora::Application.routes.draw do
   get '/login' => 'login#index'
 
   get '/folders' => 'service_requests#index'
-
-  get '/service_requests/:id/sample_list' => 'service_requests#sample_list'
+ 
   match '/service_requests/live_search' => 'service_requests#live_search', via: [:get, :post]
   get '/service_requests/edit_dialog/:id' => 'service_requests#edit_dialog'
   get '/service_requests/form/:request_type_id' => 'service_requests#form'
+  get '/service_requests/:id/actions' => 'service_requests#actions'
   resources :service_requests 
   get '/samples/:id/requested_services_list' => 'samples#requested_services_list'
   get '/samples/new_dialog/:service_request_id' => 'samples#new_dialog'

@@ -63,6 +63,12 @@ $(document).on('click', '#add-new-folder-button', () ->
     )
   )
 
+getServiceRequestActions = (id) ->
+  url = '/service_requests/' + id + '/actions'
+  $.get(url, {}, (html) ->
+    $('#folder-actions').empty().html(html)
+  )
+
 @getServiceRequest = getServiceRequest = (id) ->
   url = '/service_requests/' + id
   $.get(url, {}, (html) ->
@@ -152,11 +158,11 @@ $(document).on('ajax:success', '#new-requested-service-form', (evt, data, status
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
-    $('#add-service-modal').modal('hide').remove()
+    getSampleRequestedServices(res['sample_id'])
+    getServiceRequestActions(res['service_request_id'])
     if (res['from_lab'])
       getRequestedService(res['sample_id'], res['from_id'])
     else
-      getSampleRequestedServices(res['sample_id'])
       getRequestedService(res['sample_id'], res['id'])
   )
 
@@ -177,7 +183,7 @@ $(document).on('ajax:error', '#new-requested-service-form', (evt, xhr, status, e
 getSampleRequestedServices = (sample_id) ->
   url = '/samples/' + sample_id + '/requested_services_list'
   $.get(url, {}, (html) ->
-    $('#sample-' + sample_id + '-services').empty().html(html)
+    $('#sample-' + sample_id + '-services').empty().html(html) 
   )
 
 $(document).on('click', '.requested_service', () ->
@@ -299,6 +305,24 @@ updateIcon = (id, status_class, icon_class) ->
   $item.addClass(status_class)
   $item.html('<span class="glyphicon ' + icon_class + '"></span>')
 
+
+# STATUS FORM ACTIONS
+$(document).on('ajax:beforeSend', '#status-form', (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.has-errors').removeClass('has-errors')
+  )
+$(document).on('ajax:success', '#status-form', (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    getRequestedService(res['sample_id'], res['id'])
+    getServiceRequestActions(res['service_request_id'])
+    updateIcon(res['id'], res['status_class'], res['icon_class'])
+  )
+$(document).on('ajax:error', '#status-form', (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
 # OWNER AUTH
 $(document).on('click', '#change_status_owner_auth', () ->
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/owner_auth_dialog'
@@ -307,43 +331,12 @@ $(document).on('click', '#change_status_owner_auth', () ->
     )
   )
 
-$(document).on('ajax:beforeSend', '#owner-auth-sample-form', (evt, xhr, settings) ->
-    $('.error-message').remove()
-    $('.has-errors').removeClass('has-errors')
-  )
-$(document).on('ajax:success', '#owner-auth-sample-form', (evt, data, status, xhr) ->
-    $form = $(this)
-    res = $.parseJSON(xhr.responseText)
-    showFlash(res['flash']['notice'], 'success')
-    getRequestedService(res['sample_id'], res['id'])
-    updateIcon(res['id'], res['status_class'], res['icon_class'])
-  )
-$(document).on('ajax:error', '#owner-auth-sample-form', (evt, xhr, status, error) ->
-    showFormErrors(xhr, status, error)
-  )
-
-
 # SUP AUTH
 $(document).on('click', '#change_status_sup_auth', () ->
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/sup_auth_dialog'
     $.get(url, {}, (html) ->
       $('#folder-work-panel').empty().html(html)
     )
-  )
-
-$(document).on('ajax:beforeSend', '#sup-auth-sample-form', (evt, xhr, settings) ->
-    $('.error-message').remove()
-    $('.has-errors').removeClass('has-errors')
-  )
-$(document).on('ajax:success', '#sup-auth-sample-form', (evt, data, status, xhr) ->
-    $form = $(this)
-    res = $.parseJSON(xhr.responseText)
-    showFlash(res['flash']['notice'], 'success')
-    getRequestedService(res['sample_id'], res['id'])
-    updateIcon(res['id'], res['status_class'], res['icon_class'])
-  )
-$(document).on('ajax:error', '#sup-auth-sample-form', (evt, xhr, status, error) ->
-    showFormErrors(xhr, status, error)
   )
 
 # SEND QUOTE
@@ -354,21 +347,6 @@ $(document).on('click', '#change_status_send_quote', () ->
     )
   )
 
-$(document).on('ajax:beforeSend', '#send-quote-sample-form', (evt, xhr, settings) ->
-    $('.error-message').remove()
-    $('.has-errors').removeClass('has-errors')
-  )
-$(document).on('ajax:success', '#send-quote-sample-form', (evt, data, status, xhr) ->
-    $form = $(this)
-    res = $.parseJSON(xhr.responseText)
-    showFlash(res['flash']['notice'], 'success')
-    getRequestedService(res['sample_id'], res['id'])
-    updateIcon(res['id'], res['status_class'], res['icon_class'])
-  )
-$(document).on('ajax:error', '#send-quote-sample-form', (evt, xhr, status, error) ->
-    showFormErrors(xhr, status, error)
-  )
-
 # INITIAL
 $(document).on('click', '#change_status_initial', () ->
   url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/initial_dialog'
@@ -376,21 +354,6 @@ $(document).on('click', '#change_status_initial', () ->
     $('#folder-work-panel').empty().html(html)
   )
 )
-
-$(document).on('ajax:beforeSend', '#initial-sample-form', (evt, xhr, settings) ->
-    $('.error-message').remove()
-    $('.has-errors').removeClass('has-errors')
-  )
-$(document).on('ajax:success', '#initial-sample-form', (evt, data, status, xhr) ->
-    $form = $(this)
-    res = $.parseJSON(xhr.responseText)
-    showFlash(res['flash']['notice'], 'success')
-    getRequestedService(res['sample_id'], res['id'])
-    updateIcon(res['id'], res['status_class'], res['icon_class'])
-  )
-$(document).on('ajax:error', '#initial-sample-form', (evt, xhr, status, error) ->
-    showFormErrors(xhr, status, error)
-  )
 
 # RECEIVED
 $(document).on('click', '#change_status_received', () ->
@@ -400,45 +363,12 @@ $(document).on('click', '#change_status_received', () ->
   )
 )
 
-$(document).on('ajax:beforeSend', '#receive-sample-form', (evt, xhr, settings) ->
-    $('.error-message').remove()
-    $('.has-errors').removeClass('has-errors')
-  )
-
-$(document).on('ajax:success', '#receive-sample-form', (evt, data, status, xhr) ->
-    $form = $(this)
-    res = $.parseJSON(xhr.responseText)
-    showFlash(res['flash']['notice'], 'success')
-    getRequestedService(res['sample_id'], res['id'])
-    updateIcon(res['id'], res['status_class'], res['icon_class'])
-  )
-
-$(document).on('ajax:error', '#receive-sample-form', (evt, xhr, status, error) ->
-    showFormErrors(xhr, status, error)
-  )
-
 # ASSIGN
 $(document).on('click', '#change_status_assigned', () ->
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/assign_dialog'
     $.get(url, {}, (html) ->
       $('#folder-work-panel').empty().html(html)
     )
-  )
-
-
-$(document).on('ajax:beforeSend', '#assign-sample-form', (evt, xhr, settings) ->
-    $('.error-message').remove()
-    $('.has-errors').removeClass('has-errors')
-  )
-$(document).on('ajax:success', '#assign-sample-form', (evt, data, status, xhr) ->
-    $form = $(this)
-    res = $.parseJSON(xhr.responseText)
-    showFlash(res['flash']['notice'], 'success')
-    getRequestedService(res['sample_id'], res['id'])
-    updateIcon(res['id'], res['status_class'], res['icon_class'])
-  )
-$(document).on('ajax:error', '#assign-sample-form', (evt, xhr, status, error) ->
-    showFormErrors(xhr, status, error)
   )
 
 # SUSPEND
@@ -449,42 +379,12 @@ $(document).on('click', '#change_status_suspended', () ->
     )
   )
 
-$(document).on('ajax:beforeSend', '#suspend-sample-form', (evt, xhr, settings) ->
-    $('.error-message').remove()
-    $('.has-errors').removeClass('has-errors')
-  )
-$(document).on('ajax:success', '#suspend-sample-form', (evt, data, status, xhr) ->
-    $form = $(this)
-    res = $.parseJSON(xhr.responseText)
-    showFlash(res['flash']['notice'], 'success')
-    getRequestedService(res['sample_id'], res['id'])
-    updateIcon(res['id'], res['status_class'], res['icon_class'])
-  )
-$(document).on('ajax:error', '#suspend-sample-form', (evt, xhr, status, error) ->
-    showFormErrors(xhr, status, error)
-  )
-
 # REINIT
 $(document).on('click', '#change_status_reinit', () ->
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/reinit_dialog'
     $.get(url, {}, (html) ->
       $('#folder-work-panel').empty().html(html)
     )
-  )
-
-$(document).on('ajax:beforeSend', '#reinit-sample-form', (evt, xhr, settings) ->
-    $('.error-message').remove()
-    $('.has-errors').removeClass('has-errors')
-  )
-$(document).on('ajax:success', '#reinit-sample-form', (evt, data, status, xhr) ->
-    $form = $(this)
-    res = $.parseJSON(xhr.responseText)
-    showFlash(res['flash']['notice'], 'success')
-    getRequestedService(res['sample_id'], res['id'])
-    updateIcon(res['id'], res['status_class'], res['icon_class'])
-  )
-$(document).on('ajax:error', '#reinit-sample-form', (evt, xhr, status, error) ->
-    showFormErrors(xhr, status, error)
   )
 
 # START
@@ -495,42 +395,12 @@ $(document).on('click', '#change_status_in_progress', () ->
     )
   )
 
-$(document).on('ajax:beforeSend', '#start-sample-form', (evt, xhr, settings) ->
-    $('.error-message').remove()
-    $('.has-errors').removeClass('has-errors')
-  )
-$(document).on('ajax:success', '#start-sample-form', (evt, data, status, xhr) ->
-    $form = $(this)
-    res = $.parseJSON(xhr.responseText)
-    showFlash(res['flash']['notice'], 'success')
-    getRequestedService(res['sample_id'], res['id'])
-    updateIcon(res['id'], res['status_class'], res['icon_class'])
-  )
-$(document).on('ajax:error', '#start-sample-form', (evt, xhr, status, error) ->
-    showFormErrors(xhr, status, error)
-  )
-
 # FINISH
 $(document).on('click', '#change_status_finished', () ->
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/finish_dialog'
     $.get(url, {}, (html) ->
       $('#folder-work-panel').empty().html(html)
     )
-  )
-
-$(document).on('ajax:beforeSend', '#finish-sample-form', (evt, xhr, settings) ->
-    $('.error-message').remove()
-    $('.has-errors').removeClass('has-errors')
-  )
-$(document).on('ajax:success', '#finish-sample-form', (evt, data, status, xhr) ->
-    $form = $(this)
-    res = $.parseJSON(xhr.responseText)
-    showFlash(res['flash']['notice'], 'success')
-    getRequestedService(res['sample_id'], res['id'])
-    updateIcon(res['id'], res['status_class'], res['icon_class'])
-  )
-$(document).on('ajax:error', '#finish-sample-form', (evt, xhr, status, error) ->
-    showFormErrors(xhr, status, error)
   )
 
 # CANCEL
@@ -540,22 +410,6 @@ $(document).on('click', '#change_status_canceled', () ->
     $('#folder-work-panel').empty().html(html)
   )
 )
-
-$(document).on('ajax:beforeSend', '#cancel-sample-form', (evt, xhr, settings) ->
-    $('.error-message').remove()
-    $('.has-errors').removeClass('has-errors')
-  )
-$(document).on('ajax:success', '#cancel-sample-form', (evt, data, status, xhr) ->
-    $form = $(this)
-    res = $.parseJSON(xhr.responseText)
-    showFlash(res['flash']['notice'], 'success')
-    getRequestedService(res['sample_id'], res['id'])
-    updateIcon(res['id'], res['status_class'], res['icon_class'])
-  )
-
-$(document).on('ajax:error', '#cancel-sample-form', (evt, xhr, status, error) ->
-    showFormErrors(xhr, status, error)
-  )
 
 
 

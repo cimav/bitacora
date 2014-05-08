@@ -7,9 +7,8 @@
       = "#{@request.request_link}" rescue "Sin tipo"
     .description= @request.description
 
-  .folder-actions
-    %button.btn.btn-default.btn-block= "Editar"
-
+  #folder-actions
+    = render :partial => 'actions', :locals => {:request => @request}
   .folder-collaborators
     %h3 Colaboradores
     = image_tag (@request.user.avatar_url), :class => 'img-circle folder-owner'

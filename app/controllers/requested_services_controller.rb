@@ -168,6 +168,7 @@ class RequestedServicesController < ApplicationController
           if request.xhr?
             json = {}
             json[:flash] = flash
+            json[:service_request_id] = @requested_service.sample.service_request_id
             json[:sample_id] = @requested_service.sample_id
             json[:id] = @requested_service.id
             
@@ -278,6 +279,31 @@ class RequestedServicesController < ApplicationController
           Resque.enqueue(StatusChangeMailer, @requested_service.id, current_user.id, prv_msg)
         end
 
+        # If status changed to WAITING_START then change service_request status
+        if @requested_service.status.to_i == RequestedService::WAITING_START
+          sr = @requested_service.sample.service_request
+          quoted = 0
+          qty = 0
+          
+          sr.sample.each do |s|
+            s.requested_service.each do |rs|
+              qty += 1
+              if rs.status.to_i == RequestedService::WAITING_START
+                quoted += 1
+              end
+            end
+          end
+
+          if quoted == qty
+            sr.system_status = ServiceRequest::SYSTEM_QUOTED
+          elsif quoted == 0 
+            sr.system_status = ServiceRequest::SYSTEM_TO_QUOTE
+          else
+            sr.system_status = ServiceRequest::SYSTEM_PARTIAL_QUOTED
+          end
+          sr.save
+        end
+
         # Publish recibir_costeo to Vinculacion system.
         # if @requested_service.status.to_i == RequestedService::WAITING_START
         #   ResqueBus.redis = '127.0.0.1:6379' # TODO: Mover a config
@@ -291,6 +317,7 @@ class RequestedServicesController < ApplicationController
           if request.xhr?
             json = {}
             json[:flash] = flash
+            json[:service_request_id] = @requested_service.sample.service_request_id
             json[:sample_id] = @requested_service.sample_id
             json[:id] = @requested_service.id
             json[:status_class] = @requested_service.status_class

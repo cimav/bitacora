@@ -1,0 +1,7 @@
+- if request.system_status == ServiceRequest::SYSTEM_FREE
+  %button.btn.btn-default.btn-block= "Editar"
+- else
+  #folder-status-message
+    = request.system_status_text
+  - if request.system_status == ServiceRequest::SYSTEM_QUOTED
+    %button.btn.btn-primary.btn-block= "Enviar cotización"

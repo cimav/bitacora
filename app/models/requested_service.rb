@@ -139,9 +139,20 @@ class RequestedService < ActiveRecord::Base
   end
 
   def set_system_based_status
-    if self.sample.service_request.system_status == ServiceRequest::SYSTEM_TO_QUOTE
+    st = self.sample.service_request.system_status
+    if st == ServiceRequest::SYSTEM_TO_QUOTE ||
+       st == ServiceRequest::SYSTEM_PARTIAL_QUOTED ||
+       st == ServiceRequest::SYSTEM_QUOTED
+
       self.status = TO_QUOTE
       self.save(:validate => false)
+
+      if st == ServiceRequest::SYSTEM_QUOTED
+        sr = self.sample.service_request
+        sr.system_status = ServiceRequest::SYSTEM_PARTIAL_QUOTED
+        sr.save(:validate => false)
+      end
+
     end
   end
 

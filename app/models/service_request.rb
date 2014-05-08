@@ -34,6 +34,25 @@ class ServiceRequest < ActiveRecord::Base
   SYSTEM_NOT_ACCEPTED      = 98
   SYSTEM_CANCELED          = 99
 
+  SYSTEM_STATUS = {
+    SYSTEM_FREE              => 'Libre',
+    SYSTEM_TO_QUOTE          => 'Por costear',
+    SYSTEM_PARTIAL_QUOTED    => 'Costeado parcialmente',
+    SYSTEM_QUOTED            => 'Costeado',
+    SYSTEM_QUOTE_SENT        => 'Costeo enviado',
+    SYSTEM_ACCEPTED          => 'Costeo aceptado',
+    SYSTEM_SAMPLES_DELIVERED => 'Muestras entregadas',
+    SYSTEM_PARTIAL_FINISHED  => 'Algunos servicios finalizados',
+    SYSTEM_ALL_FINISHED      => 'Servicios finalizados',
+    SYSTEM_REPORT_SENT       => 'Reporte enviado',
+    SYSTEM_NOT_ACCEPTED      => 'No aceptado por cliente',
+    SYSTEM_CANCELED          => 'Cancelado'
+  }
+
+  def system_status_text
+    SYSTEM_STATUS[system_status.to_i]
+  end
+
   def add_extra
     # If is not Servicio Vinculacion then create number
     if self.request_type_id != 1 || self.number.nil?

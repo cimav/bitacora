@@ -96,6 +96,15 @@
   border: 2px solid $collaborator-color;
 }
 
+#folder-status-message {
+  background: #fff;
+  border: 1px solid $line-color;
+  padding: 10px;
+  text-align: center;
+  @include rounded(20px);
+  margin-bottom: 10px;
+}
+
 #folder-info {
   background: $bg-color;
   width: $side-panel-width;
@@ -144,7 +153,7 @@
     }
   }
 
-  .folder-actions {
+  #folder-actions {
     margin-top: 20px;
   }
 }

@@ -56,7 +56,7 @@ class ServiceRequestsController < ApplicationController
     render :layout => false
   end
 
-  def sample_list
+  def actions
     @request = ServiceRequest.find(params[:id])
     render :layout => false
   end

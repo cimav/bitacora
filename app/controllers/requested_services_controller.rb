@@ -279,11 +279,11 @@ class RequestedServicesController < ApplicationController
         end
 
         # Publish recibir_costeo to Vinculacion system.
-        if @requested_service.status.to_i == RequestedService::WAITING_START
-          ResqueBus.redis = '127.0.0.1:6379' # TODO: Mover a config
-          # TODO: Enviar todos los datos del costeo
-          ResqueBus.publish('recibir_costeo', costs_details(@requested_service))
-        end
+        # if @requested_service.status.to_i == RequestedService::WAITING_START
+        #   ResqueBus.redis = '127.0.0.1:6379' # TODO: Mover a config
+        #   # TODO: Enviar todos los datos del costeo
+        #   ResqueBus.publish('recibir_costeo', costs_details(@requested_service))
+        # end
 
       end
       respond_with do |format|

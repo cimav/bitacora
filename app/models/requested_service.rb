@@ -45,8 +45,8 @@ class RequestedService < ActiveRecord::Base
     REQ_SUP_AUTH   => 'Aut. de supervisor',
     REQ_OWNER_AUTH => 'Aut. de solicitante',
 
-    TO_QUOTE       => 'Cotizando',
-    WAITING_START  => 'Se envio cotización',
+    TO_QUOTE       => 'Costeando',
+    WAITING_START  => 'Se envio costeo',
 
     FINISHED       => 'Finalizado'
   }

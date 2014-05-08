@@ -1,16 +1,18 @@
-#owner-auth-modal.modal.hide.fade{:tabindex => "-1", :role => "dialog", "aria-labelledby" => "owner-auth-modal-label", "aria-hidden" => "true"}
+.header-status{:class => "bg-status-owner-auth"}
+  %span.status= "Autorizar servicio"
+  %a.close{:class => 'requested-service-link', 'data-id' => @requested_service.id, 'data-sample-id' => @requested_service.sample_id}="×"
+  %span.number= @requested_service.number
+.dialog-content
   = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'owner-auth-sample-form'} do |f|
-    .modal-header
-      %button.close{"data-dismiss" => "modal", "aria-hidden" => "true"}= "×"
-      %h3#owner-auth-modal-label= "Autorizar servicio para #{@requested_service.sample.number}"
-    .modal-body
+    .dialog-title
+      %h3= "Autorizar servicio"
+    .dialog-body
       = f.hidden_field :status, {:value => RequestedService::INITIAL}
-      #field_service_request_sample_description
+      .notes.field
         = label_tag 'activity_log_msg', 'Notas:'
-        = text_area_tag 'activity_log_msg', '', {:style => 'width: 515px;', :rows => 8}
-    .modal-footer
+        = text_area_tag 'activity_log_msg', '', {:class => 'form-control'}
+    .dialog-footer
       .send-mail-footer
-        = check_box_tag 'send_mail', 'yes', true, {:style => 'float: left;'}
+        = check_box_tag 'send_mail', 'yes', false, {:style => 'float: left;'}
         = label_tag 'send_mail', 'Enviar por correo.', {:style => 'margin-left: 4px; float: left;'}
-      = button_tag "Autorizar el servicio", {:class => "btn btn-primary", :type => "submit"}
-      %button.btn{"data-dismiss" => "modal", "aria-hidden" => "true"}= "Cerrar"
+      = button_tag "Autorizar", {:class => "btn btn-primary", :type => "submit"}

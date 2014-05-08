@@ -84,13 +84,13 @@
     %button{:class => "btn btn-block btn-status bg-status-finished", :status_action => RequestedService::FINISHED, :id => 'change_status_finished'}
       = "Finalizar servicio"
   - if sup_auth_action
-    %button{:class => "btn btn-block btn-status bg-status-sup_auth", :status_action => RequestedService::INITIAL, :id => 'change_status_sup_auth'}
+    %button{:class => "btn btn-block btn-status bg-status-sup-auth", :status_action => RequestedService::INITIAL, :id => 'change_status_sup_auth'}
       = "Autorizar el servicio"
   - if owner_auth_action
-    %button{:class => "btn btn-block btn-status bg-status-owner_auth", :status_action => RequestedService::INITIAL, :id => 'change_status_owner_auth'}
+    %button{:class => "btn btn-block btn-status bg-status-owner-auth", :status_action => RequestedService::INITIAL, :id => 'change_status_owner_auth'}
       = "Autorizar el servicio"
   - if send_quote_action
-    %button{:class => "btn btn-block btn-status bg-status-send_quote", :status_action => RequestedService::TO_QUOTE, :id => 'change_status_send_quote'}
+    %button{:class => "btn btn-block btn-status bg-status-send-quote", :status_action => RequestedService::TO_QUOTE, :id => 'change_status_send_quote'}
       = "Enviar costeo"
   - if canceled_action
     %button{:class => "btn btn-block btn-status bg-status-canceled", :status_action => RequestedService::CANCELED, :id => 'change_status_canceled'}

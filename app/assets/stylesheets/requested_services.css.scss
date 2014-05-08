@@ -12,6 +12,7 @@
 .status-canceled    { color: $brand-danger; }
 .status-auth        { color: $brand-warning; }
 .status-to-quote    { color: #a58ad5; }
+.status-send-quote    { color: darken(#a58ad5, 10%); }
 .status-waiting     { color: #666; }
 
 .btn-status {
@@ -31,6 +32,7 @@
 .bg-status-canceled    { background: $brand-danger; }
 .bg-status-auth        { background: $brand-warning; }
 .bg-status-to-quote    { background: #a58ad5; }
+.bg-status-send-quote  { background: darken(#a58ad5, 10%); }
 .bg-status-waiting     { background: #666; }
 
 .header-status {

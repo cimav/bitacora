@@ -1,16 +1,18 @@
-#start-modal.modal.hide.fade{:tabindex => "-1", :role => "dialog", "aria-labelledby" => "start-modal-label", "aria-hidden" => "true"}
+.header-status{:class => "bg-status-in-progress"}
+  %span.status= "Iniciar servicio"
+  %a.close{:class => 'requested-service-link', 'data-id' => @requested_service.id, 'data-sample-id' => @requested_service.sample_id}="×"
+  %span.number= @requested_service.number
+.dialog-content
   = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'start-sample-form'} do |f|
-    .modal-header
-      %button.close{"data-dismiss" => "modal", "aria-hidden" => "true"}= "×"
-      %h3#start-modal-label= "Empezar servicio #{@requested_service.number}"
-    .modal-body
+    .dialog-title
+      %h3= "Iniciar servicio"
+    .dialog-body
       = f.hidden_field :status, {:value => RequestedService::IN_PROGRESS}
-      #field_service_request_sample_description
+      .notes.field
         = label_tag 'activity_log_msg', 'Notas:'
-        = text_area_tag 'activity_log_msg', '', {:style => 'width: 515px;', :rows => 8}
-    .modal-footer
+        = text_area_tag 'activity_log_msg', '', {:class => 'form-control'}
+    .dialog-footer
       .send-mail-footer
         = check_box_tag 'send_mail', 'yes', false, {:style => 'float: left;'}
         = label_tag 'send_mail', 'Enviar por correo.', {:style => 'margin-left: 4px; float: left;'}
-      = button_tag "Iniciar servicio", {:class => "btn btn-primary", :type => "submit"}
-      %button.btn{"data-dismiss" => "modal", "aria-hidden" => "true"}= "Cerrar"
+      = button_tag "Iniciar", {:class => "btn btn-primary", :type => "submit"}

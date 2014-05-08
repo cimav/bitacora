@@ -51,10 +51,10 @@ Bitacora::Application.routes.draw do
       end
     end
   end
-  get '/requested_services/delete_tech' => 'requested_services#delete_tech'
-  get '/requested_services/delete_eq' => 'requested_services#delete_eq'
-  get '/requested_services/delete_mat' => 'requested_services#delete_mat'
-  get '/requested_services/delete_other' => 'requested_services#delete_other'
+  post '/requested_services/delete_tech' => 'requested_services#delete_tech'
+  post '/requested_services/delete_eq' => 'requested_services#delete_eq'
+  post '/requested_services/delete_mat' => 'requested_services#delete_mat'
+  post '/requested_services/delete_other' => 'requested_services#delete_other'
 
 
 

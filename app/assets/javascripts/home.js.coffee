@@ -177,7 +177,7 @@ $(document).on('ajax:error', '#new-requested-service-form', (evt, xhr, status, e
 getSampleRequestedServices = (sample_id) ->
   url = '/samples/' + sample_id + '/requested_services_list'
   $.get(url, {}, (html) ->
-    $('#sample-services').empty().html(html)
+    $('#sample-' + sample_id + '-services').empty().html(html)
   )
 
 $(document).on('click', '.requested_service', () ->

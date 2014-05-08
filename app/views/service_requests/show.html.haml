@@ -34,20 +34,21 @@
             .description= s.description
             .number= "ID: #{s.number}"
           .clearfix
-        %table.table.table-hover.sample-services
-          - if s.requested_service.count == 0
-            %tr
-              %td{:colspan => 3, :class => 'empty'}= "No tiene servicios"
-          - s.requested_service.each do |rs|
-            %tr{:class => 'requested-service-link', 'data-id' => rs.id, 'data-sample-id' => rs.sample_id, :id => "requested-service-link-#{rs.id}"}
-              %td.icon{:class => rs.status_class}
-                %span.glyphicon{:class => rs.icon_class}
-              %td.name= rs.laboratory_service.name
-              %td.date= date_text(rs.created_at)
-          %tr.add-service
-            %td.icon
-              %span.glyphicon.glyphicon-plus-sign
-            %td.name.add-service-link{'data-sample-id' => s.id ,:colspan => 2}= "Agregar Servicio"
+        %div{:id => "sample-#{s.id}-services"}
+          %table.table.table-hover.sample-services
+            - if s.requested_service.count == 0
+              %tr
+                %td{:colspan => 3, :class => 'empty'}= "No tiene servicios"
+            - s.requested_service.each do |rs|
+              %tr{:class => 'requested-service-link', 'data-id' => rs.id, 'data-sample-id' => rs.sample_id, :id => "requested-service-link-#{rs.id}"}
+                %td.icon{:class => rs.status_class}
+                  %span.glyphicon{:class => rs.icon_class}
+                %td.name= rs.laboratory_service.name
+                %td.date= date_text(rs.created_at)
+            %tr.add-service
+              %td.icon
+                %span.glyphicon.glyphicon-plus-sign
+              %td.name.add-service-link{'data-sample-id' => s.id ,:colspan => 2}= "Agregar Servicio"
 
   #folder-work-panel-wrapper
     #folder-work-panel.inner-area

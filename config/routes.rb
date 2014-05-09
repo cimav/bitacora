@@ -12,6 +12,8 @@ Bitacora::Application.routes.draw do
   get '/service_requests/edit_dialog/:id' => 'service_requests#edit_dialog'
   get '/service_requests/form/:request_type_id' => 'service_requests#form'
   get '/service_requests/:id/actions' => 'service_requests#actions'
+  get '/service_requests/:id/quotation' => 'service_requests#quotation'
+  post '/service_requests/:id/send_quote' => 'service_requests#send_quote'
   resources :service_requests 
   get '/samples/:id/requested_services_list' => 'samples#requested_services_list'
   get '/samples/new_dialog/:service_request_id' => 'samples#new_dialog'

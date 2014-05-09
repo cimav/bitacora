@@ -1,0 +1,23 @@
+#costeo-vista
+  - rheader = {'personal' => ['Nombre', 'Horas', 'Costo x Hora'], 'equipos' => ['Equipo', 'Horas', 'Costo x Hora'], 'consumibles' => ['Nombre', 'Cantidad', 'Precio Unitario'], 'otros' => ['Concepto', 'Cantidad', 'Precio']}
+  - @details['servicios'].each do |s|
+    %h2= "#{s['muestra_identificador']}: #{s['nombre_servicio']}"
+    %table.table.table-bordered
+      - ['personal', 'equipos', 'consumibles', 'otros'].each do |r|
+        %tr
+          %th.rubro-header{:colspan=>4}=r
+        %tr
+          %th=rheader[r][0]
+          %th=rheader[r][1]
+          %th=rheader[r][2]
+          %th="Subtotal"
+        - total = 0
+        - s[r].each do |i|
+          - subtotal = i['cantidad'] * i['precio_unitario']
+          - total += subtotal
+          %tr
+            %td=i['detalle']
+            %td=i['cantidad']
+            %td=i['precio_unitario']
+            %td=subtotal
+      

@@ -4,4 +4,4 @@
   #folder-status-message
     = request.system_status_text
   - if request.system_status == ServiceRequest::SYSTEM_QUOTED
-    %button.btn.btn-primary.btn-block= "Enviar cotización"
+    %button#send-quote-button.btn.btn-primary.btn-block{'data-id' => request.id}= "Enviar costeo"

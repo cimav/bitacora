@@ -172,18 +172,18 @@ class ServiceRequestsController < ApplicationController
   end
 
   def quotation
-    @service_request = ServiceRequest.find(params[:id])
-    @details = cost_details(@service_request)
+    @request = ServiceRequest.find(params[:id])
+    @details = cost_details(@request)
     render :layout => false
   end
 
   def send_quote
     # Publish recibir_costeo to Vinculacion system.
-    # if @requested_service.status.to_i == RequestedService::WAITING_START
-    #   ResqueBus.redis = '127.0.0.1:6379' # TODO: Mover a config
-    #   # TODO: Enviar todos los datos del costeo
-    #   ResqueBus.publish('recibir_costeo', costs_details(@requested_service))
-    # end
+    request = ServiceRequest.find(params[:id])
+    details = cost_details(request)
+    ResqueBus.redis = '127.0.0.1:6379' # TODO: Mover a config
+    ResqueBus.publish('recibir_costeo', cost_details(request))
+    render :layout => false
   end
 
   private
@@ -193,12 +193,13 @@ class ServiceRequestsController < ApplicationController
 
     service_request.sample.each do |s|
       s.requested_service.each do |rs|
-        services_costs << costs_details_requested_service(rs)
+        services_costs << cost_details_requested_service(rs)
       end
     end
     
     details = {
       "system_id" => service_request.system_id, 
+      "codigo" => service_request.number, 
       "servicios" => services_costs
     }
     
@@ -206,7 +207,7 @@ class ServiceRequestsController < ApplicationController
   
   end
 
-  def costs_details_requested_service(requested_service)
+  def cost_details_requested_service(requested_service)
 
     # Technicians
     technicians = Array.new

@@ -20,3 +20,11 @@ $(document).on('click', '#send-quote-button', () ->
     $('#folder-work-panel').empty().html(html)
   )
 )
+
+$(document).on('click', '#send-quote-to-vinculacion', () ->
+  id = $(this).data('id')
+  url = '/service_requests/' + id + '/send_quote';
+  $.post(url, {}, (html) ->
+    $('#folder-work-panel').empty().html(html)
+  )
+)

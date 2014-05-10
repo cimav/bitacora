@@ -371,8 +371,24 @@
 
 #costeo-vista {
   margin: 20px;
+  h2 {
+    margin-bottom: 40px;
+    width: 100%;
+  }
+  h4 { width: 100%; }
+  table {
+    margin-bottom: 40px;
+    .total {
+      float: right;
+      font-weight: bold;
+    }
+  }
   .rubro-header {
     text-transform: uppercase;
     background: $light-bg;
+  }
+  .actions {
+    text-align: center;
+    margin: 40px;
   }
 }

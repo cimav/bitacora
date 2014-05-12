@@ -11,7 +11,7 @@ class VinculacionSubscriptions
       folder = u_requestor.service_request.new 
       folder.system_id       = attributes['id']
       folder.request_type_id = 1  # ID servicio vinculacion     
-      folder.request_link    = attributes['codigo']
+      folder.request_link    = attributes['nombre']
       folder.number          = attributes['codigo']
       folder.description     = attributes['descripcion']
       folder.system_status   = ServiceRequest::SYSTEM_TO_QUOTE

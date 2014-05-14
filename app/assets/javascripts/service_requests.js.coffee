@@ -25,6 +25,7 @@ $(document).on('click', '#send-quote-to-vinculacion', () ->
   id = $(this).data('id')
   url = '/service_requests/' + id + '/send_quote';
   $.post(url, {}, (html) ->
+    getServiceRequestActions(id)
     $('#folder-work-panel').empty().html(html)
   )
 )

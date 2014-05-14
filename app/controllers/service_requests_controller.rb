@@ -183,6 +183,8 @@ class ServiceRequestsController < ApplicationController
     details = cost_details(request)
     ResqueBus.redis = '127.0.0.1:6379' # TODO: Mover a config
     ResqueBus.publish('recibir_costeo', cost_details(request))
+    request.system_status = ServiceRequest::SYSTEM_QUOTE_SENT
+    request.save
     render :layout => false
   end
 

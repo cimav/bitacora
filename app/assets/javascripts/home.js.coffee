@@ -63,7 +63,7 @@ $(document).on('click', '#add-new-folder-button', () ->
     )
   )
 
-getServiceRequestActions = (id) ->
+@getServiceRequestActions = getServiceRequestActions = (id) ->
   url = '/service_requests/' + id + '/actions'
   $.get(url, {}, (html) ->
     $('#folder-actions').empty().html(html)

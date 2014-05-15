@@ -8,7 +8,8 @@
         %span.glyphicon{:class => rs.icon_class}
       %td.name= rs.laboratory_service.name
       %td.date= date_text(rs.created_at)
-  %tr.add-service
-    %td.icon
-      %span.glyphicon.glyphicon-plus-sign
-    %td.name.add-service-link{'data-sample-id' => sample.id ,:colspan => 2}= "Agregar Servicio"
+  - if sample.service_request.system_status < ServiceRequest::SYSTEM_QUOTE_SENT
+    %tr.add-service
+      %td.icon
+        %span.glyphicon.glyphicon-plus-sign
+      %td.name.add-service-link{'data-sample-id' => sample.id ,:colspan => 2}= "Agregar Servicio"

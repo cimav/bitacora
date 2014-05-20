@@ -49,6 +49,7 @@
 
 :javascript
   $(function() {
+    activeSideNav("#lab-#{@laboratory.id}-link");
     $("#req-serv-search-box").val("#{params[:r]}");
     labReqServicesLiveSearch();
   })

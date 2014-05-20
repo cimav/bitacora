@@ -99,10 +99,8 @@
 }
 
 .admin-toolbar {
-  position: fixed;
-  right: 10px;
-  top: 52px;
-  margin: 8px 10px 0 0;
+  float: right;
+  margin: 20px 10px 0 0;
 }
 
 #admin-area {

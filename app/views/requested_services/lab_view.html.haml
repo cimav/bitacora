@@ -1,0 +1,19 @@
+#rs-info
+  .rs-icon
+    %span.glyphicon.glyphicon-file
+    .rs-number= @requested_service.number
+  .rs-status
+    %span.label.label-default{:class => "bg-#{@requested_service.status_class}"}
+      = @requested_service.status_text
+  .rs-data
+    .title
+      = @requested_service.laboratory_service.name
+    .description= @requested_service.details
+  .folder-data
+    %h4 Colaboradores
+    = image_tag (@requested_service.sample.service_request.user.avatar_url), :class => 'img-circle folder-owner'
+    - if @requested_service.sample.service_request.supervisor
+      = image_tag (@requested_service.sample.service_request.supervisor.avatar_url), :class => 'img-circle folder-supervisor'
+
+
+#folder-work-panel

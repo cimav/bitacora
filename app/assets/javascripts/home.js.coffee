@@ -180,6 +180,7 @@ $(document).on('ajax:error', '#new-requested-service-form', (evt, xhr, status, e
     $('#folder-work-panel').empty().html(html)
   )
 
+
 getSampleRequestedServices = (sample_id) ->
   url = '/samples/' + sample_id + '/requested_services_list'
   $.get(url, {}, (html) ->
@@ -220,53 +221,6 @@ $(document).on('ajax:success', '#new-request-form', (evt, data, status, xhr) ->
   )
 $(document).on('ajax:error', '#new-request-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
-  )
-
-#-----------
-# LABORATORY
-#-----------
-current_requestor = 0
-@labReqServicesLiveSearch = labReqServicesLiveSearch = () ->
-  $("#lab-req-serv-search-box").addClass("loading")
-  form = $("#lab-req-serv-live-search")
-  url = '/laboratory/' + form.attr('laboratory_id')  + '/live_search'
-  formData = form.serialize()
-  $.get(url, formData, (html) ->
-    $("#lab-req-serv-search-box").removeClass("loading")
-    $("#lab-req-serv-panel .items-placeholder").empty().html(html)
-    $("#lab-req-serv-panel .items-placeholder .lab-req-serv-item:first").click()
-    current_requestor = 1
-    $('#req-serv-items').bind('scroll', () ->
-      cur_req = $("#requestor_#{current_requestor}")
-      next_req = $("#requestor_#{current_requestor + 1}")
-      if (cur_req.offset().top > $('#req-serv-items').offset().top + 20)
-        current_requestor -= 2
-        if current_requestor <= 1
-          current_requestor = 1
-          $('#current-requestor').html($("#requestor_1").html())
-      if (next_req.offset().top < $('#req-serv-items').offset().top + 20)
-        current_requestor += 1
-        $('#current-requestor').html(next_req.html())
-
-
-    )
-  )
-
-$(document).on('change', '#lrs_status', () ->
-    labReqServicesLiveSearch()
-  )
-
-$(document).on('change', '#lrs_requestor', () ->
-    labReqServicesLiveSearch()
-  )
-
-$(document).on('change', '#lrs_assigned_to', () ->
-    labReqServicesLiveSearch()
-  )
-
-$(document).on('keyup', '#req-serv-search-box', () ->
-    $('#req-serv-items').scroll()
-    labReqServicesLiveSearch()
   )
 
 #-------------

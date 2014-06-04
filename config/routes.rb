@@ -50,6 +50,8 @@ Bitacora::Application.routes.draw do
         post 'new_other'
         post 'update_other_price'
         get 'others_table'
+
+        get 'lab_view'
       end
     end
   end

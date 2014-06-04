@@ -88,6 +88,11 @@ class RequestedServicesController < ApplicationController
     render :layout => false
   end
 
+  def lab_view 
+    @requested_service = RequestedService.find(params['id'])
+    render :layout => false
+  end
+
   def show
     @requested_service = RequestedService.find(params['id'])
     @activity_log = ActivityLog.where(" (service_request_id = :service_request AND sample_id = 0 AND requested_service_id = 0)

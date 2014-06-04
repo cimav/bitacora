@@ -1,30 +1,23 @@
-- current_user = ''
-- req_c = 0
-- @requested_services.each do |rs|
-  - next if !rs.sample.service_request
-  - next if rs.sample.service_request.status == ServiceRequest::DELETED
-  - if current_user != rs.sample.service_request.user.full_name
-    - req_c = req_c + 1
-    - if current_user == ''
-      #current-requestor= rs.sample.service_request.user.full_name
-    .requested-by{:id => "requestor_#{req_c}"}
-      = rs.sample.service_request.user.full_name
-    - current_user = rs.sample.service_request.user.full_name
-  .requested_service.lab-req-serv-item{:requested_service_id => rs.id, :sample_id => rs.sample_id, :id => "requested_service_#{rs.id}"}
-    .req-serv-item-inner{:class => "req_serv_status_#{rs.status}"}
-      .sample-tag
-        .rs-consecutive
-          = rs.number
-          - if rs.sample.quantity > 1
-            %span.badge= "#{rs.sample.quantity}"
-        .sample-requested-service-date
-          = l rs.created_at, :format => :short
-      .sample-identification
-        %span.sample-identificator
-          = rs.sample.identification
-        %span.sample-description
-          = rs.sample.description
-      .requested-service-details
-        .sample-requested-service
+%table.table-striped.table-hover
+  - @requested_services.each do |rs|
+    - next if !rs.sample.service_request
+    - next if rs.sample.service_request.status == ServiceRequest::DELETED
+    %tr.requested-service.lab-req-serv-item{'data-requested-service-id' => rs.id, 'data-sample-id' => rs.sample_id, :id => "requested_service_#{rs.id}"}
+      %td.avatar
+        = image_tag (rs.sample.service_request.user.avatar_url), :class => 'img-circle'
+      %td.requested-service-data
+        .service-name
           = rs.laboratory_service.name
-    
+        .number= rs.number
+        .full-name= "Solicitado por #{rs.sample.service_request.user.full_name}"  
+      %td.requested-service-sample
+        .identification= rs.sample.identification
+        .description= truncate(rs.sample.description, length: 100)
+        - if rs.sample.quantity > 1
+          .quantity= "#{rs.sample.quantity} muestras"
+        - else
+          .quantity= "#{rs.sample.quantity} muestra"
+      %td.requested-service-status
+        = rs.status
+      %td.requested-service-date
+        = l rs.created_at, :format => :short

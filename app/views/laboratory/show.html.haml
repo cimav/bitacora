@@ -8,11 +8,10 @@
     .admin-toolbar
       = link_to "Administrar", {:controller => 'laboratory', :action => 'admin', :id => @laboratory.id}, :method => :get, :remote => true, :class => 'admin-lab', :'data-type' => 'html', :id => "admin-lab-#{@laboratory.id}", :laboratory_id => @laboratory.id
 
-
-#laboratory-workarea
+#lab-work-panel
   #lab-req-serv-panel
     .search-box
-      = form_tag "/laboratory/#{@laboratory.id}/live_search", :id => 'lab-req-serv-live-search', :laboratory_id => @laboratory.id, :method => 'get', :remote => true do
+      = form_tag "/laboratory/#{@laboratory.id}/live_search", :id => 'lab-req-serv-live-search', 'data-laboratory-id' => @laboratory.id, :method => 'get', :remote => true do
         = text_field_tag :q, nil, :id => 'req-serv-search-box', :placeholder => 'Busqueda'
 
         - status_options = "<option value=\"0\">Todos los estados</option>"
@@ -41,11 +40,7 @@
         - if lab_access.to_i == LaboratoryMember::ACCESS_TRAINED
           - assigned_to_options = "<option value=\"#{current_user.id}\">#{current_user.full_name}</option>" 
         = select_tag "lrs_assigned_to", assigned_to_options.html_safe
-
-    #req-serv-items.items-placeholder
-
-  #lab-main-panel
-    #requested-service-workarea
+  #lab-req-serv-items
 
 :javascript
   $(function() {

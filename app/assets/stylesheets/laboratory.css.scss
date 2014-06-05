@@ -115,7 +115,9 @@
     margin-bottom: 20px;
   }
   .rs-data {
-      .title {
+    padding-bottom: 20px;
+    border-bottom: 1px solid darken($bg-color, 5%);
+    .title {
       text-align: center;
       font-weight: bold;
       font-size: 120%;
@@ -126,14 +128,76 @@
       color: $grey;
     }
   }
-  .rs-collaborators {
+  .sample {
+    padding-bottom : 20px;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid darken($bg-color, 5%);
     h3 {
-      font-size: 14px;
+      font-size: 13px;
+      color: $grey;
+      text-transform: uppercase;
+      margin: 10px 0;
+      padding: 0;
     }
-    img {
-      width: 48px;
-      height: 48px;
-      padding: 1px;
+    .sample-icon {
+      color: $sample-color;
+      font-size: 22px;
+      width: 28px;
+      float: left;
+      text-align: center;
+      .glyphicon { margin: 0; padding: 0;}
+      .badge { margin: 0; }
+    }
+    .sample-data {
+      float: right;
+      padding-left: 10px;
+      width: $lab-req-serv-panel-width - 86;
+      h4 {
+        margin: 2px 0;
+      }
+
+      .services {
+        
+        margin-top: 10px;
+        
+      }
+      
+    }
+  }
+  .folder {
+    h3 {
+      font-size: 13px;
+      color: $grey;
+      text-transform: uppercase;   
+      margin: 10px 0;
+      padding: 0;
+    }
+    border-top: 1px solid #fff;
+    
+    .folder-icon {
+      color: $folder-color;
+      width: 28px;
+      font-size: 28px;
+      float: left;
+    }
+    .folder-data {
+      float: right;
+      padding-left: 10px;
+      width: $lab-req-serv-panel-width - 86;
+      h4 {
+        margin: 2px 0;
+      }
+      
+    }
+    .folder-collaborators {
+      h3 {
+        font-size: 14px;
+      }
+      img {
+        width: 32px;
+        height: 32px;
+        padding: 1px;
+      }
     }
   }
 

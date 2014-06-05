@@ -155,16 +155,12 @@
       h4 {
         margin: 2px 0;
       }
-
-      .services {
-        
-        margin-top: 10px;
-        
-      }
-      
     }
   }
-  .folder {
+  .services {
+    padding-bottom : 20px;
+    border-top: 1px solid #fff;
+    
     h3 {
       font-size: 13px;
       color: $grey;
@@ -172,7 +168,20 @@
       margin: 10px 0;
       padding: 0;
     }
+  }
+  
+  .folder {
+    padding-bottom : 20px;
     border-top: 1px solid #fff;
+    border-bottom: 1px solid darken($bg-color, 5%);
+    h3 {
+      font-size: 13px;
+      color: $grey;
+      text-transform: uppercase;   
+      margin: 10px 0;
+      padding: 0;
+    }
+    
     
     .folder-icon {
       color: $folder-color;

@@ -9,27 +9,6 @@
     .title
       = @requested_service.laboratory_service.name
     .description= @requested_service.details
-  .sample 
-    %h3 Muestra
-    .sample-icon 
-      - if @requested_service.sample.quantity > 1
-        %span.glyphicon.glyphicon-tags
-      - else 
-        %span.glyphicon.glyphicon-tag
-      %br
-      %span.badge= @requested_service.sample.quantity 
-    .sample-data
-      %h4= @requested_service.sample.identification
-      .description= @requested_service.sample.description
-      .services
-        %strong Servicios 
-        = render :partial => 'samples/requested_services_list', :locals => {:sample => @requested_service.sample}
-        //%ul
-        //- @requested_service.sample.requested_service.each do |other_service|
-        //  - sel_class = other_service.id == @requested_service.id ? 'selected' : ''
-        //  %li.requested-service.lab-req-serv-item{'data-requested-service-id' => other_service.id, 'data-sample-id' => other_service.sample_id, :class => sel_class}= other_service.laboratory_service.name
-
-    .clearfix
 
   .folder
     %h3 Carpeta
@@ -43,6 +22,28 @@
         = image_tag (@requested_service.sample.service_request.user.avatar_url), :class => 'img-circle folder-owner'
         - if @requested_service.sample.service_request.supervisor
           = image_tag (@requested_service.sample.service_request.supervisor.avatar_url), :class => 'img-circle folder-supervisor'
+    .clearfix
+          
+
+  .sample 
+    %h3 Muestra
+    .sample-icon 
+      - if @requested_service.sample.quantity > 1
+        %span.glyphicon.glyphicon-tags
+      - else 
+        %span.glyphicon.glyphicon-tag
+      %br
+      %span.badge= @requested_service.sample.quantity 
+    .sample-data
+      %h4= @requested_service.sample.identification
+      .description= @requested_service.sample.description
+    .clearfix
+  .services
+    %h3 Servicios 
+    = render :partial => 'samples/requested_services_list', :locals => {:sample => @requested_service.sample}
+    .clearfix
+
+  
 
 
 #folder-work-panel

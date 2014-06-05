@@ -1,44 +1,45 @@
-.header-status{:class => "bg-status-received"}
-  %span.status= "Recibir muestras"
-  %a.close{:class => 'requested-service-link', 'data-id' => @requested_service.id, 'data-sample-id' => @requested_service.sample_id}="×"
-  %span.number= @requested_service.number
-.dialog-content.padded
-  = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'status-form'} do |f|
-    .dialog-title
-      %h3
-        - if @requested_service.sample.quantity > 1 
-          = "Recibir #{@requested_service.sample.quantity} muestras"
-        - else
-          = "Recibir muestra"
-    .dialog-body
-      = f.hidden_field :status, {:value => RequestedService::RECEIVED}
-      .notes.field
-        = label_tag 'activity_log_msg', 'Notas:'
-        = text_area_tag 'activity_log_msg', '', {:class => 'form-control'}
-      %table
-        %tr
-          %td
-            .requested-user.field
-              = label_tag :user_id, 'Técnico:'
-              - members = LaboratoryMember.where(:laboratory_id => @requested_service.laboratory_service.laboratory_id)
-              - u_options = '<option value="-">Sin asignar</option>'
-              - sug = ''
-              - sel = ''
-              - members.each do |m|
-                - if m.user_id == @requested_service.suggested_user_id
-                  - sug = '* '
-                  - sel = 'selected="selected"'
-                  
-                - u_options += "<option value=\"#{m.user_id}\" #{sel}>#{sug}#{m.user.full_name}</option>"
-              = f.select :user_id, u_options.html_safe, {}, :class => "form-control"
-          %td
-            - display = sug == ''? "display: none;" : ""
-            .service_start{:style => "#{display}"}
-              = check_box_tag 'start_service', 'yes', false, {:style => 'float: left;'}
-              = label_tag 'start_service', ' Iniciar servicio', {:style => 'white-space: pre;'}
-    .dialog-footer
-      .send-mail-footer
-        = check_box_tag 'send_mail', 'yes', false, {:style => 'float: left;'}
-        = label_tag 'send_mail', 'Enviar por correo.', {:style => 'margin-left: 4px; float: left;'}
-      = button_tag "Recibir", {:class => "btn btn-primary", :type => "submit"}
-    .clearfix
+.sheet
+  .header-status{:class => "bg-status-received"}
+    %span.status= "Recibir muestras"
+    %a.close{:class => 'requested-service-link', 'data-id' => @requested_service.id, 'data-sample-id' => @requested_service.sample_id}="×"
+    %span.number= @requested_service.number
+  .dialog-content.padded
+    = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'status-form'} do |f|
+      .dialog-title
+        %h3
+          - if @requested_service.sample.quantity > 1 
+            = "Recibir #{@requested_service.sample.quantity} muestras"
+          - else
+            = "Recibir muestra"
+      .dialog-body
+        = f.hidden_field :status, {:value => RequestedService::RECEIVED}
+        .notes.field
+          = label_tag 'activity_log_msg', 'Notas:'
+          = text_area_tag 'activity_log_msg', '', {:class => 'form-control'}
+        %table
+          %tr
+            %td
+              .requested-user.field
+                = label_tag :user_id, 'Técnico:'
+                - members = LaboratoryMember.where(:laboratory_id => @requested_service.laboratory_service.laboratory_id)
+                - u_options = '<option value="-">Sin asignar</option>'
+                - sug = ''
+                - sel = ''
+                - members.each do |m|
+                  - if m.user_id == @requested_service.suggested_user_id
+                    - sug = '* '
+                    - sel = 'selected="selected"'
+                    
+                  - u_options += "<option value=\"#{m.user_id}\" #{sel}>#{sug}#{m.user.full_name}</option>"
+                = f.select :user_id, u_options.html_safe, {}, :class => "form-control"
+            %td
+              - display = sug == ''? "display: none;" : ""
+              .service_start{:style => "#{display}"}
+                = check_box_tag 'start_service', 'yes', false, {:style => 'float: left;'}
+                = label_tag 'start_service', ' Iniciar servicio', {:style => 'white-space: pre;'}
+      .dialog-footer
+        .send-mail-footer
+          = check_box_tag 'send_mail', 'yes', false, {:style => 'float: left;'}
+          = label_tag 'send_mail', 'Enviar por correo.', {:style => 'margin-left: 4px; float: left;'}
+        = button_tag "Recibir", {:class => "btn btn-primary", :type => "submit"}
+      .clearfix

@@ -1,19 +1,20 @@
-.header-status{:class => "bg-status-sup-auth"}
-  %span.status= "Autorizar servicio"
-  %a.close{:class => 'requested-service-link', 'data-id' => @requested_service.id, 'data-sample-id' => @requested_service.sample_id}="×"
-  %span.number= @requested_service.number
-.dialog-content.padded
-  = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'status-form'} do |f|
-    .dialog-title
-      %h3= "Autorizar servicio"
-    .dialog-body
-      = f.hidden_field :status, {:value => RequestedService::INITIAL}
-      .notes.field
-        = label_tag 'activity_log_msg', 'Notas:'
-        = text_area_tag 'activity_log_msg', '', {:class => 'form-control'}
-    .dialog-footer
-      .send-mail-footer
-        = check_box_tag 'send_mail', 'yes', false, {:style => 'float: left;'}
-        = label_tag 'send_mail', 'Enviar por correo.', {:style => 'margin-left: 4px; float: left;'}
-      = button_tag "Autorizar", {:class => "btn btn-primary", :type => "submit"}
-    .clearfix
+.sheet
+  .header-status{:class => "bg-status-sup-auth"}
+    %span.status= "Autorizar servicio"
+    %a.close{:class => 'requested-service-link', 'data-id' => @requested_service.id, 'data-sample-id' => @requested_service.sample_id}="×"
+    %span.number= @requested_service.number
+  .dialog-content.padded
+    = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'status-form'} do |f|
+      .dialog-title
+        %h3= "Autorizar servicio"
+      .dialog-body
+        = f.hidden_field :status, {:value => RequestedService::INITIAL}
+        .notes.field
+          = label_tag 'activity_log_msg', 'Notas:'
+          = text_area_tag 'activity_log_msg', '', {:class => 'form-control'}
+      .dialog-footer
+        .send-mail-footer
+          = check_box_tag 'send_mail', 'yes', false, {:style => 'float: left;'}
+          = label_tag 'send_mail', 'Enviar por correo.', {:style => 'margin-left: 4px; float: left;'}
+        = button_tag "Autorizar", {:class => "btn btn-primary", :type => "submit"}
+      .clearfix

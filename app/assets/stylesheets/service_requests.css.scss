@@ -216,14 +216,18 @@
       }
     }
   }
+}
 
-  .sample-services {
+table.sample-services {
     margin: 0;
     padding: 0;
     font-size: 14px;
 
     tr {
       cursor: pointer;
+      td {
+        border: none;
+      }
     }
 
     tr.add-service {
@@ -255,7 +259,6 @@
     }
 
   }
-}
 
 #folder-work-panel-wrapper {
   background: darken($bg-color, 3%);

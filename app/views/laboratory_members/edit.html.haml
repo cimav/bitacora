@@ -13,7 +13,7 @@
     - acc_options += "<option #{sel_member} value=\"#{LaboratoryMember::ACCESS_MEMBER}\">Miembro</option>"
     - acc_options += "<option #{sel_trained} value=\"#{LaboratoryMember::ACCESS_TRAINED}\">Facultado</option>"
     - acc_options += "<option #{sel_admin} value=\"#{LaboratoryMember::ACCESS_ADMIN}\">Administrador</option>"
-    = f.select :access, acc_options.html_safe
+    = f.select :access, acc_options.html_safe, {}, {:class => 'form-control'}
   .field#field_laboratory_member_status
     = f.label :status, 'Estado:'
     - sel_active = sel_inactive = ''
@@ -22,7 +22,7 @@
     - st_options = ''
     - st_options += "<option #{sel_active} value=\"#{LaboratoryMember::ACTIVE}\">Activo</option>"
     - st_options += "<option #{sel_inactive} value=\"#{LaboratoryMember::INACTIVE}\">Inactivo</option>"
-    = f.select :status, st_options.html_safe
+    = f.select :status, st_options.html_safe, {}, {:class => 'form-control'}
 
   .submit-button
     = f.submit "Actualizar miembro", {:class => "btn btn-primary"}

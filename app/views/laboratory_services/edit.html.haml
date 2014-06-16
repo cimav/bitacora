@@ -1,22 +1,33 @@
-= form_for @laboratory_service, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-laboratory-service-form'} do |f|
-  .field#field_laboratory_service_name
-    = f.label :name, 'Nombre:'
-    = f.text_field :name, :placeholder => 'Nombre del servicio'
-  .field#field_laboratory_service_description
-    = f.label :description, 'Descripción:'
-    = f.text_area :description
-  .field#field_laboratory_service_service_type_id
-    = f.label :service_type_id, 'Tipo de Servicio:'
-    - st_options = ''
-    - ServiceType.order(:name).each do |item|
-      - if item.id == @laboratory_service.service_type_id
-        - sel = 'selected = "selected"'
-      - else
-        - sel = ''
-      - st_options += "<option value=\"#{item.id}\" #{sel}>#{item.name}</option>"
-    = f.select :service_type_id, st_options.html_safe
-  .field#field_laboratory_service_internal_cost
-    = f.label :internal_cost, 'Costo Interno:'
-    = f.text_field :internal_cost, :placeholder => 'Costo Interno'
-  .submit-button
-    = f.submit "Actualizar servicio", {:class => "btn btn-primary"}
+%ul.nav.nav-pills#admin-service-tabs
+  %li.active#tab-service-details
+    %a{:href => "#admin-service-details", "data-toggle" => "tab", "id" => "service_details_tab"}= "Editar"
+  %li#tab-service-costs
+    %a{:href => "#admin-service-costs", "data-toggle" => "tab", "id" => "service_costs_tab"}= "Costeo"
+
+.tab-content
+  #admin-service-details.tab-pane.active
+    = form_for @laboratory_service, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-laboratory-service-form'} do |f|
+      .field#field_laboratory_service_name
+        = f.label :name, 'Nombre:'
+        = f.text_field :name, :placeholder => 'Nombre del servicio', :class => 'form-control'
+      .field#field_laboratory_service_description
+        = f.label :description, 'Descripción:'
+        = f.text_area :description, :class => 'form-control'
+      .field#field_laboratory_service_service_type_id
+        = f.label :service_type_id, 'Tipo de Servicio:'
+        - st_options = ''
+        - ServiceType.order(:name).each do |item|
+          - if item.id == @laboratory_service.service_type_id
+            - sel = 'selected = "selected"'
+          - else
+            - sel = ''
+          - st_options += "<option value=\"#{item.id}\" #{sel}>#{item.name}</option>"
+        = f.select :service_type_id, st_options.html_safe, {}, {:class => 'form-control'}
+      .field#field_laboratory_service_internal_cost
+        = f.label :internal_cost, 'Costo Interno:'
+        = f.text_field :internal_cost, :placeholder => 'Costo Interno', :class => 'form-control'
+      .submit-button
+        = f.submit "Actualizar servicio", {:class => "btn btn-primary"}
+
+  #admin-service-costs.tab-pane
+  .clearfix

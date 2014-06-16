@@ -5,7 +5,7 @@
 - sel_equipment = 'active' if option_selected == 'equipment'
 #admin-lab-tabs
   %ul.nav.nav-tabs
-    %li{:class => sel_details}= link_to "Detalles", {:controller => 'laboratory', :action => 'admin', :id => laboratory.id}, :method => :get, :remote => true, :class => 'admin-lab', :'data-type' => 'html', :id => "admin-link-lab-#{laboratory.id}", :laboratory_id => laboratory.id
-    %li{:class => sel_services}= link_to "Servicios que ofrece", {:controller => 'laboratory', :action => 'admin_services', :id => laboratory.id}, :method => :get, :remote => true, :class => 'admin-services', :'data-type' => 'html', :id => "admin-link-services-#{laboratory.id}", :laboratory_id => laboratory.id
-    %li{:class => sel_users}= link_to "Usuarios", {:controller => 'laboratory', :action => 'admin_members', :id => laboratory.id}, :method => :get, :remote => true, :class => 'admin-users', :'data-type' => 'html', :id => "admin-link-users-#{laboratory.id}", :laboratory_id => laboratory.id
-    %li{:class => sel_equipment}= link_to "Equipo", {:controller => 'laboratory', :action => 'admin_equipment', :id => laboratory.id}, :method => :get, :remote => true, :class => 'admin-equipment', :'data-type' => 'html', :id => "admin-link-equipment-#{laboratory.id}", 'data-laboratory-id' => laboratory.id
+    %li{:class => sel_details}= link_to "Detalles", {:controller => 'laboratory', :action => 'admin', :id => laboratory.id}, :method => :get, :remote => true, :class => 'admin-lab', :'data-type' => 'html', 'data-laboratory-id' => laboratory.id
+    %li{:class => sel_services}= link_to "Servicios que ofrece", {:controller => 'laboratory', :action => 'admin_services', :id => laboratory.id}, :method => :get, :remote => true, :class => 'admin-services', :'data-type' => 'html', 'data-laboratory-id' => laboratory.id
+    %li{:class => sel_users}= link_to "Usuarios", {:controller => 'laboratory', :action => 'admin_members', :id => laboratory.id}, :method => :get, :remote => true, :class => 'admin-users', :'data-type' => 'html', 'data-laboratory-id' => laboratory.id
+    %li{:class => sel_equipment}= link_to "Equipo", {:controller => 'laboratory', :action => 'admin_equipment', :id => laboratory.id}, :method => :get, :remote => true, :class => 'admin-equipment', :'data-type' => 'html', 'data-laboratory-id' => laboratory.id

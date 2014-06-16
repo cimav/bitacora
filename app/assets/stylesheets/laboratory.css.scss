@@ -221,12 +221,12 @@
 
 #admin-area {
   position: fixed;
-  top: 100px;
+  top: 60px;
   bottom: 0px;
-  padding-top: 20px;
+  padding: 20px;
   overflow: auto;
   background: #fff;
-  width: 100%;
+  width: calc(100% - 100px);
   #edit-laboratory-form {  
     margin-top: 20px;
   }
@@ -241,6 +241,13 @@
     }
     #laboratory_prefix {
       width: 100px;
+    }
+    select {
+      max-width: 400px;
+      width: 400px;
+    }
+    input {
+      max-width: 400px;
     }
     textarea {
       width: 400px;
@@ -265,8 +272,12 @@
     top: 72px !important;
     border: 1px solid $line-color;
     @include rounded(4px);
-    padding: 6px;
+    padding: 5px;
     background: $light-grey;
+    width: $side-panel-width + 10;
+    input, select {
+      width: $side-panel-width - 10;
+    }
     #services-search-panel,
     #members-search-panel {
       
@@ -336,12 +347,15 @@
 
 }
 
-#admin-service-details, 
-#admin-service-tabs,
-#admin-service-costs,
+#admin-service-workarea,
+#admin-service-costs, 
 #admin-equipment-details,
 #admin-member-details {
   margin-left: $side-panel-width + 40;
+}
+
+#admin-service-tabs {
+  margin: 20px 0;
 }
 
 

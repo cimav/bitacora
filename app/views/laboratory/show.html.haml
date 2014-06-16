@@ -6,26 +6,26 @@
   %h2= @laboratory.name
   - if lab_access.to_i == LaboratoryMember::ACCESS_ADMIN
     .admin-toolbar
-      = link_to "Administrar", {:controller => 'laboratory', :action => 'admin', :id => @laboratory.id}, :method => :get, :remote => true, :class => 'admin-lab', :'data-type' => 'html', :id => "admin-lab-#{@laboratory.id}", :laboratory_id => @laboratory.id
+      = link_to "Administrar", {:controller => 'laboratory', :action => 'admin', :id => @laboratory.id}, :method => :get, :remote => true, :class => 'admin-lab', :'data-type' => 'html', :id => "admin-lab-#{@laboratory.id}", 'data-laboratory-id' => @laboratory.id
 
 #lab-work-panel
   #lab-req-serv-panel
     .search-box
       = form_tag "/laboratory/#{@laboratory.id}/live_search", :id => 'lab-req-serv-live-search', 'data-laboratory-id' => @laboratory.id, :method => 'get', :remote => true do
-        = text_field_tag :q, nil, :id => 'req-serv-search-box', :placeholder => 'Busqueda'
+        = text_field_tag :q, nil, :id => 'req-serv-search-box', :placeholder => 'Busqueda', :class => 'form-control'
 
         - status_options = "<option value=\"0\">Todos los estados</option>"
         - status_options += "<option value=\"abiertos\" selected=\"selected\">Abiertos</option>"
         - sts = [-1,1,2,3,4,5,6,99]
         - sts.each do |st| 
           - status_options += "<option value=\"#{st}\">#{RequestedService::STATUS[st]}</option>"
-        = select_tag "lrs_status", status_options.html_safe
+        = select_tag "lrs_status", status_options.html_safe, {:class => 'form-control'}
 
         - requestor_options = "<option value=\"0\">Todos los solicitantes</option>"
         - User.find_by_sql("SELECT DISTINCT u.id, u.first_name, u.last_name FROM users u INNER JOIN service_requests sr ON sr.user_id = u.id INNER JOIN samples sam ON sam.service_request_id = sr.id INNER JOIN requested_services rs ON sam.id = rs.sample_id INNER JOIN laboratory_services ls ON laboratory_service_id = ls.id WHERE laboratory_id = #{@laboratory.id} ORDER BY first_name, last_name").each do |u|
           - requestor_options += "<option value=\"#{u.id}\">#{u.first_name} #{u.last_name}</option>"
 
-        = select_tag "lrs_requestor", requestor_options.html_safe
+        = select_tag "lrs_requestor", requestor_options.html_safe, {:class => 'form-control'}
         - if lab_access.to_i == LaboratoryMember::ACCESS_ADMIN
           - assigned_to_options = "<option value=\"0\">Cualquier asignado</option>"
           - assigned_to_options += '<optgroup label="Personal">'
@@ -39,7 +39,7 @@
           - assigned_to_options = "<option value=\"#{current_user.id}\">#{current_user.full_name}</option>" 
         - if lab_access.to_i == LaboratoryMember::ACCESS_TRAINED
           - assigned_to_options = "<option value=\"#{current_user.id}\">#{current_user.full_name}</option>" 
-        = select_tag "lrs_assigned_to", assigned_to_options.html_safe
+        = select_tag "lrs_assigned_to", assigned_to_options.html_safe, {:class => 'form-control'}
   #lab-req-serv-items
 
 :javascript

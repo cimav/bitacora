@@ -46,12 +46,11 @@ getLabRequestedService = (sample_id, id) ->
 #----------
 
 $(document).on('ajax:beforeSend', '.admin-lab', (evt, xhr, settings) ->
-    lab_id = $(this).attr('laboratory_id')
+    lab_id = $(this).data('laboratory-id')
     url = '/laboratory/' + lab_id + '/admin'
     setHash('#!' + url, false)
   )
 $(document).on('ajax:success', '.admin-lab', (evt, data, status, xhr) ->
-    alert('test');
     $('#lab-work-panel').empty().html(data)
   )
 
@@ -80,7 +79,7 @@ $(document).on('ajax:error', '#edit-laboratory-form', (evt, xhr, status, error) 
 # LAB ADMIN SERVICES
 #-------------------
 $(document).on('ajax:beforeSend', '.admin-services', (evt, xhr, settings) ->
-    lab_id = $(this).attr('laboratory_id')
+    lab_id = $(this).data('laboratory-id')
     url = '/laboratory/' + lab_id + '/admin_services'
     setHash('#!' + url, false)
   )
@@ -118,7 +117,7 @@ $(document).on('click', '.admin-lab-service-item', () ->
     $(this).addClass('selected')
     url = '/laboratory_services/' + $(this).attr('laboratory_service_id') + '/edit'
     $.get(url, {}, (html) ->
-      $('#admin-service-details').html(html)
+      $('#admin-service-workarea').html(html)
     )
     url = '/laboratory_services/' + $(this).attr('laboratory_service_id') + '/edit_cost'
     $.get(url, {}, (html) ->
@@ -143,7 +142,7 @@ $(document).on('ajax:error', '#edit-laboratory-service-form', (evt, xhr, status,
 $(document).on('click', '#add-new-service-button', () ->
     url = '/laboratory/' + $(this).attr('lab_id') + '/new_service'
     $.get(url, {}, (html) ->
-      $('#admin-service-details').empty().html(html)
+      $('#admin-service-workarea').empty().html(html)
     )
   )
 
@@ -408,7 +407,170 @@ $(document).on('change', '.other_price_template', () ->
     )
   )
 
+#----------------
+# LAB ADMIN USERS
+#----------------
+$(document).on('ajax:beforeSend', '.admin-users', (evt, xhr, settings) ->
+    lab_id = $(this).data('laboratory-id')
+    url = '/laboratory/' + lab_id + '/admin_members'
+    setHash('#!' + url, false)
+  )
+$(document).on('ajax:success', '.admin-users', (evt, data, status, xhr) ->
+    $('#lab-work-panel').empty().html(data)
+  )
 
+$(document).on('ajax:error', '.admin-users', (evt, xhr, status, error) ->
+    alert('Error')
+  )
+
+$(document).on('change', '#admin_lab_member_access', () ->
+    adminLabMembersLiveSearch()
+  )
+
+$(document).on('keyup', '#admin-lab-members-search-box', () ->
+    adminLabMembersLiveSearch()
+  )
+
+
+@adminLabMembersLiveSearch = adminLabMembersLiveSearch = () ->
+  $("#admin-lab-members-search-box").addClass("loading")
+  form = $("#admin-lab-members-live-search")
+  lab_id = form.attr('lab_id')
+  url = "/laboratory/#{lab_id}/admin_lab_members_live_search"
+  formData = form.serialize()
+  $.get(url, formData, (html) ->
+    $("#admin-lab-members-search-box").removeClass("loading")
+    $("#admin-lab-members-list").empty().html(html)
+    $("#admin-lab-members-list .admin-lab-member-item:first").click()
+  )
+
+$(document).on('click', '.admin-lab-member-item', () ->
+    $('.admin-lab-member-item').removeClass('selected')
+    $(this).addClass('selected')
+    url = '/laboratory_members/' + $(this).attr('laboratory_member_id') + '/edit'
+    $.get(url, {}, (html) ->
+      $('#admin-member-details').html(html)
+    )
+  )
+
+$(document).on('ajax:beforeSend', '#edit-laboratory-member-form', (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.has-errors').removeClass('has-errors')
+  )
+$(document).on('ajax:success', '#edit-laboratory-member-form', (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+  )
+
+$(document).on('ajax:error', '#edit-laboratory-member-form', (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+$(document).on('click', '#add-new-member-button', () ->
+    url = '/laboratory/' + $(this).attr('lab_id') + '/new_member'
+    $.get(url, {}, (html) ->
+      $('#admin-member-details').empty().html(html)
+    )
+  )
+
+$(document).on('ajax:beforeSend', '#new-laboratory-member-form', (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.has-errors').removeClass('has-errors')
+  )
+$(document).on('ajax:success', '#new-laboratory-member-form', (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    $('#admin-lab-members-search-box').val(res['name'])
+    adminLabMembersLiveSearch()
+  )
+
+$(document).on('ajax:error', '#new-laboratory-member-form', (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+#--------------------
+# LAB ADMIN EQUIPMENT
+#--------------------
+$(document).on('ajax:beforeSend', '.admin-equipment', (evt, xhr, settings) ->
+    lab_id = $(this).attr('data-laboratory-id')
+    url = '/laboratory/' + lab_id + '/admin_equipment'
+    setHash('#!' + url, false)
+  )
+$(document).on('ajax:success', '.admin-equipment', (evt, data, status, xhr) ->
+    $('#lab-work-panel').empty().html(data)
+  )
+
+$(document).on('ajax:error', '.admin-equipment', (evt, xhr, status, error) ->
+    alert('Error')
+  )
+
+$(document).on('keyup', '#admin-lab-equipment-search-box', () ->
+    adminLabEquipmentLiveSearch()
+  )
+
+
+@adminLabEquipmentLiveSearch = adminLabEquipmentLiveSearch = () ->
+  $("#admin-lab-equipment-search-box").addClass("loading")
+  form = $("#admin-lab-equipment-live-search")
+  lab_id = form.attr('data-laboratory-id')
+  url = "/laboratory/#{lab_id}/admin_lab_equipment_live_search"
+  formData = form.serialize()
+  $.get(url, formData, (html) ->
+    $("#admin-lab-equipment-search-box").removeClass("loading")
+    $("#admin-lab-equipment-list").empty().html(html)
+    $("#admin-lab-equipment-list .admin-lab-equipment-item:first").click()
+  )
+
+$(document).on('click', '.admin-lab-equipment-item', () ->
+    $('.admin-lab-equipment-item').removeClass('selected')
+    $(this).addClass('selected')
+    url = '/equipment/' + $(this).attr('data-equipment-id') + '/edit'
+    $.get(url, {}, (html) ->
+      $('#admin-equipment-details').html(html)
+    )
+  )
+
+$(document).on('ajax:beforeSend', '#edit-equipment-form', (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.has-errors').removeClass('has-errors')
+  )
+$(document).on('ajax:success', '#edit-equipment-form', (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    id = res['id']
+    $('#equipment_name_' + id).html(res['name'])
+    $('#equipment_lab_' + id).html(res['laboratory'])
+    showFlash(res['flash']['notice'], 'success')
+  )
+
+$(document).on('ajax:error', '#edit-equipment-form', (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+$(document).on('click', '#add-new-equipment-button', () ->
+    url = '/laboratory/' + $(this).attr('data-laboratory-id') + '/new_equipment'
+    $.get(url, {}, (html) ->
+      $('#admin-equipment-details').empty().html(html)
+    )
+  )
+
+$(document).on('ajax:beforeSend', '#new-laboratory-equipment-form', (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.has-errors').removeClass('has-errors')
+  )
+$(document).on('ajax:success', '#new-laboratory-equipment-form', (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    $('#admin-lab-equipment-search-box').val(res['name'])
+    adminLabEquipmentLiveSearch()
+  )
+
+$(document).on('ajax:error', '#new-laboratory-equipment-form', (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
 
 
 

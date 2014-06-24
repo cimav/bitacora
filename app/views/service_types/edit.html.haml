@@ -2,10 +2,10 @@
 = form_for @service_type, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-service-type-form'} do |f|
   .field#field_service_type_short_name
     = f.label :short_name, 'Nombre Corto:'
-    = f.text_field :short_name, {:class => 'input-large', :placeholder => 'Nombre corto'}
+    = f.text_field :short_name, {:class => 'form-control', :placeholder => 'Nombre corto'}
   .field#field_service_type_name
     = f.label :name, 'Nombre:'
-    = f.text_field :name, {:class => 'input-xxlarge', :placeholder => 'Nombre'}
+    = f.text_field :name, {:class => 'form-control', :placeholder => 'Nombre'}
  
       
   .submit-button

@@ -2,13 +2,13 @@
 = form_for @user, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-user-form'} do |f|
   .field#field_first_name
     = f.label :first_name, 'Nombre:'
-    = f.text_field :first_name, {:class => 'input-xxlarge', :placeholder => 'Nombre del usuario'}
+    = f.text_field :first_name, {:placeholder => 'Nombre del usuario', :class => 'form-control'}
   .field#field_last_name
     = f.label :last_name, 'Apellidos:'
-    = f.text_field :last_name, {:class => 'input-xxlarge', :placeholder => 'Apellido del usuario'}
+    = f.text_field :last_name, {:placeholder => 'Apellido del usuario', :class => 'form-control'}
   .field#field_last_name
     = f.label :email, 'Correo electrónico:'
-    = f.text_field :email, {:class => 'input-xxlarge', :placeholder => 'Correo electrónico'}
+    = f.text_field :email, {:placeholder => 'Correo electrónico', :class => 'form-control'}
   .field#field_business_unit_id
     - bu_options = ""
     - BusinessUnit.order("name").each do |b|
@@ -17,7 +17,7 @@
       - else
         - bu_options += "<option value=\"#{b.id}\">#{b.name}</option>"
     = f.label :business_unit_id, 'Sede:'
-    = f.select :business_unit_id, bu_options.html_safe
+    = f.select :business_unit_id, bu_options.html_safe, {}, :class => 'form-control'
   .field#field_access
     = f.label :unit_id, 'Tipo de acceso:'
     - access_options = ""
@@ -26,10 +26,10 @@
         - access_options += "<option value=\"#{k}\" selected=\"selected\">#{v}</option>"
       - else
         - access_options += "<option value=\"#{k}\">#{v}</option>"
-    = f.select :access, access_options.html_safe
+    = f.select :access, access_options.html_safe, {}, {:class => 'form-control'}
   .field#field_employee_number
     = f.label :employee_number, 'Identificador de empleado:'
-    = f.text_field :employee_number, {:class => 'input-large'}
+    = f.text_field :employee_number, {:class => 'form-control'}
   - if !@user.hourly_wage.blank?
     .field#field_hourly_wage
       = f.label :hourly_wage, 'Sueldo por hora:'
@@ -42,7 +42,7 @@
       - else
         - sup_options += "<option value=\"#{u.id}\">#{u.first_name} #{u.last_name}</option>"
     = f.label :supervisor1_id, 'Supervisor 1 o Asesor:'
-    = f.select :supervisor1_id, sup_options.html_safe
+    = f.select :supervisor1_id, sup_options.html_safe, {}, :class => 'form-control'
   .field#field_supervisor2_id
     - sup_options = "<option value=\"\">Sin supervisor</option>"
     - User.where("access = :admin OR access = :employee", {:admin => User::ACCESS_ADMIN, :employee => User::ACCESS_EMPLOYEE}).order("first_name, last_name").each do |u|
@@ -51,14 +51,14 @@
       - else
         - sup_options += "<option value=\"#{u.id}\">#{u.first_name} #{u.last_name}</option>"
     = f.label :supervisor2_id, 'Supervisor 2 o Co-asesor:'
-    = f.select :supervisor2_id, sup_options.html_safe
+    = f.select :supervisor2_id, sup_options.html_safe, {}, :class => 'form-control'
   .field#field_require_auth
     - sel_0 = !@user.require_auth? ? 'selected = "selected"': ''
     - sel_1 = @user.require_auth?  ? 'selected = "selected"': ''
     - req_options = "<option value=\"0\" #{sel_0}>No</option>"
     - req_options += "<option value=\"1\" #{sel_1}>Si</option>"
     = f.label :require_auth, 'Requiere autorización:'
-    = f.select :require_auth, req_options.html_safe
+    = f.select :require_auth, req_options.html_safe, {}, :class => 'form-control'
   .field#field_status
     = f.label :unit_id, 'Estado:'
     - status_options = ""
@@ -67,7 +67,7 @@
         - status_options += "<option value=\"#{k}\" selected=\"selected\">#{v}</option>"
       - else
         - status_options += "<option value=\"#{k}\">#{v}</option>"
-    = f.select :status, status_options.html_safe
+    = f.select :status, status_options.html_safe, {}, :class => 'form-control'
   %br  
   .submit-button
     = f.submit "Actualizar usuario", {:class => "btn btn-primary"}

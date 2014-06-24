@@ -2,13 +2,13 @@
 = form_for @request_type, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-request-type-form'} do |f|
   .field#field_request_short_name
     = f.label :short_name, 'Nombre Corto:'
-    = f.text_field :short_name, {:class => 'input-large', :placeholder => 'Nombre corto'}
+    = f.text_field :short_name, {:class => 'form-control', :placeholder => 'Nombre corto'}
   .field#field_request_type_name
     = f.label :name, 'Nombre:'
-    = f.text_field :name, {:class => 'input-xxlarge', :placeholder => 'Nombre'}
+    = f.text_field :name, {:class => 'form-control', :placeholder => 'Nombre'}
   .field#field_request_type_prefix
     = f.label :prefix, 'Prefijo:'
-    = f.text_field :prefix, {:class => 'input-small', :placeholder => 'Prefijo'}
+    = f.text_field :prefix, {:class => 'form-control', :placeholder => 'Prefijo'}
  
       
   .submit-button

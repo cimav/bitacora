@@ -100,16 +100,7 @@ body {
 }
 
 #lab-req-serv-panel,
-#admin-panel,
-#reports-panel,
-#laboratories-panel,
-#clients-panel,
-#materials-panel,
-#equipment-panel,
-#users-panel,
-#request-types-panel,
-#service-types-panel,
-#other-types-panel {
+#reports-panel {
   width: $side-panel-width;
   background-color: $light-bg;
   border-top: 1px solid $line-color;

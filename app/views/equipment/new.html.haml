@@ -5,16 +5,16 @@
   - lab_options = ''
   - Laboratory.order('name').each do |lab|
     - lab_options += "<option value=\"#{lab.id}\">#{lab.name}</option>"
-  = f.select :laboratory_id, lab_options.html_safe
+  = f.select :laboratory_id, lab_options.html_safe, {}, :class => 'form-control'
 
   .field#field_equipment_name
     = f.label :name, 'Nombre:'
-    = f.text_field :name, {:class => 'input-xxlarge', :placeholder => 'Nombre del equipo'}
+    = f.text_field :name, {:class => 'form-control', :placeholder => 'Nombre del equipo'}
   .field#field_equipment_description
     = f.label :description, 'Descripción:'
-    = f.text_area :description, {:class => 'input-xxlarge', :rows => 10}
+    = f.text_area :description, {:class => 'form-control', :rows => 10}
   .field#field_equipment_hourly_cost
     = f.label :hourly_rate, 'Costo por hora:'
-    = f.text_field :hourly_rate, {:class => 'input-large'}
+    = f.text_field :hourly_rate, {:class => 'form-control'}
   .submit-button
     = f.submit "Agregar equipo", {:class => "btn btn-primary"}

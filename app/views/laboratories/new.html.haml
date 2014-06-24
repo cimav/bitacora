@@ -2,13 +2,13 @@
 = form_for @laboratory, :remote => true, :html => {:'data-type' => 'html', :id => 'new-laboratory-form'} do |f|
   .field#field_laboratory_name
     = f.label :name, 'Nombre:'
-    = f.text_field :name, {:class => 'input-xxlarge', :placeholder => 'Nombre del laboratorio'}
+    = f.text_field :name, {:class => 'form-control', :placeholder => 'Nombre del laboratorio'}
   .field#field_laboratory_prefix
     = f.label :prefix, 'Prefijo:'
-    = f.text_field :prefix, {:class => 'input-medium', :placeholder => '3 o 4 letras'}
+    = f.text_field :prefix, {:class => 'form-control', :placeholder => '3 o 4 letras'}
   .field#field_laboratory_description
     = f.label :description, 'Descripción:'
-    = f.text_area :description, {:class => 'input-xxlarge', :rows => 8}
+    = f.text_area :description, {:class => 'form-control', :rows => 8}
   .field#field_laboratory_business_unit_id
     = f.label :business_unit_id, 'Sede:'
     - bu_options = ''
@@ -18,13 +18,13 @@
       - else
         - sel = ''
       - bu_options += "<option value=\"#{item.id}\" #{sel}>#{item.name}</option>"
-    = f.select :business_unit_id, bu_options.html_safe, {}, {:class => 'input-medium'}
+    = f.select :business_unit_id, bu_options.html_safe, {}, {:class => 'form-control'}
   .field#field_laboratory_user_id
     = f.label :user_id, 'Responsable:'
     - resp_options = ''
     - User.where("access = :a OR access = :b", {:a => User::ACCESS_EMPLOYEE, :b => User::ACCESS_ADMIN}).order('first_name, last_name').each do |item|
       - resp_options += "<option value=\"#{item.id}\">#{item.full_name}</option>"
-    = f.select :user_id, resp_options.html_safe, {}, {:class => 'input-xxlarge'}
+    = f.select :user_id, resp_options.html_safe
       
   .submit-button{:style => 'margin-top: 20px;'}
     = f.submit "Agregar laboratorio", {:class => "btn btn-primary"}

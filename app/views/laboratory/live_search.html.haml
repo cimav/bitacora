@@ -18,6 +18,6 @@
         - else
           .quantity= "#{rs.sample.quantity} muestra"
       %td.requested-service-status
-        = rs.status
+        %span.label.status{:class => "bg-#{rs.status_class}"}= rs.status_text
       %td.requested-service-date
         = l rs.created_at, :format => :short

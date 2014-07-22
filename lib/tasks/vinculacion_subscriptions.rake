@@ -34,4 +34,25 @@ class VinculacionSubscriptions
       end
     end
   end
+
+  def notificar_arranque(attributes)
+    if service = ServiceRequest.find(:system_id => attributes['id'])
+      # TODO: validar agente
+      service.status = ServiceRequest::SYSTEM_ACCEPTED
+      service.save
+    else
+      puts "Servicio no encontrado"
+    end
+  end
+
+  def notificar_cancelacion(attributes)
+    if service = ServiceRequest.find(:system_id => attributes['id'])
+      # TODO: validar agente
+      service.status = ServiceRequest::SYSTEM_CANCELED
+      service.save
+    else
+      puts "Servicio no encontrado"
+    end
+  end
+
 end

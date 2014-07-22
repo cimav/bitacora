@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140329195449) do
+ActiveRecord::Schema.define(version: 20140722232118) do
 
   create_table "activity_logs", force: true do |t|
     t.integer  "user_id"
@@ -295,17 +295,18 @@ ActiveRecord::Schema.define(version: 20140329195449) do
 
   create_table "service_requests", force: true do |t|
     t.integer  "user_id"
-    t.string   "number",          limit: 20
+    t.string   "number",            limit: 20
     t.integer  "request_type_id"
     t.string   "request_link"
     t.text     "description"
-    t.integer  "status",                     default: 1
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.integer  "status",                       default: 1
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.integer  "supervisor_id"
     t.integer  "consecutive"
     t.string   "system_id"
-    t.integer  "system_status",              default: 1
+    t.integer  "system_status",                default: 1
+    t.integer  "system_request_id"
   end
 
   add_index "service_requests", ["request_type_id"], name: "index_service_requests_on_request_type_id", using: :btree

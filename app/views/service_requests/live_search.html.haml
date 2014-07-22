@@ -12,6 +12,8 @@
         .title
           = "#{r.request_link}" rescue "Sin tipo"
         .description= r.description
+      %td.service-request-date
+        = date_text(r.created_at)
       %td.type
         %span.request-type.label.label-default{:class => "label_#{r.request_type.short_name}"}= r.request_type.name
       %td.service-collaborators

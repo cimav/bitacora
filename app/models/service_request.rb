@@ -10,6 +10,8 @@ class ServiceRequest < ActiveRecord::Base
   has_many :sample
   accepts_nested_attributes_for :sample
 
+  has_many :requested_services, through: :sample
+
   belongs_to :request_type
   belongs_to :user
   belongs_to :supervisor, :class_name => 'User', :foreign_key => 'supervisor_id'

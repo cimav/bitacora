@@ -41,8 +41,6 @@ class VinculacionSubscriptions
   def notificar_arranque(attributes)
     puts "Arranque de la solicitud #{attributes['solicitud_id']}"
     if services = ServiceRequest.where(:system_request_id => attributes['solicitud_id'])
-      puts services
-      puts services.count
       services.each do |s|    
         # TODO: validar agente
         s.system_status = ServiceRequest::SYSTEM_ACCEPTED
@@ -65,15 +63,13 @@ class VinculacionSubscriptions
   def notificar_cancelacion(attributes)
     puts "Cancelar solicitud #{attributes['solicitud_id']}"
     if services = ServiceRequest.where(:system_request_id => attributes['solicitud_id'])
-      puts services
-      puts services.count
       services.each do |s|    
         # TODO: validar agente
         s.system_status = ServiceRequest::SYSTEM_CANCELED
         if s.save
           puts "Cancelado el folder #{s.id}"
           s.requested_services.each do |rs|
-            puts "Iniciado el servicio #{rs.id}"
+            puts "Cancelando el servicio #{rs.id}"
             rs.status = RequestedService::CANCELED
             rs.save
           end

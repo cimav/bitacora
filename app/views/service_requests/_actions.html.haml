@@ -3,5 +3,9 @@
 - else
   #folder-status-message
     = request.system_status_text
+
   - if request.system_status == ServiceRequest::SYSTEM_QUOTED
     %button#send-quote-button.btn.btn-primary.btn-block{'data-id' => request.id}= "Enviar costeo"
+
+  - if request.system_status == ServiceRequest::SYSTEM_ALL_FINISHED
+    %button#send-report-button.btn.btn-primary.btn-block{'data-id' => request.id}= "Enviar reporte"

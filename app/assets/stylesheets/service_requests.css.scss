@@ -377,11 +377,18 @@ table.sample-services {
   }
 }
 
-#costeo-vista {
+#costeo-vista,
+#reporte-vista {
   margin: 20px;
   h2 {
     margin-bottom: 40px;
     width: 100%;
+  }
+  h3 {
+    background: #aaa; 
+    color: #fff;
+    font-size: 14px;
+    padding: 10px;
   }
   .total { float: right; }
   h4 { width: 100%; }

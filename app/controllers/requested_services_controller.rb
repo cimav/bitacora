@@ -311,6 +311,30 @@ class RequestedServicesController < ApplicationController
           sr.save
         end
 
+        # If status changed to FINISHED then change service_request status
+        if @requested_service.status.to_i == RequestedService::FINISHED
+          sr = @requested_service.sample.service_request
+          finished = 0
+          qty = 0
+          
+          sr.sample.each do |s|
+            s.requested_service.each do |rs|
+              qty += 1
+              if rs.status.to_i == RequestedService::FINISHED
+                finished += 1
+              end
+            end
+          end
+
+          if finished == qty
+            sr.system_status = ServiceRequest::SYSTEM_ALL_FINISHED
+          elsif finished > 0
+            sr.system_status = ServiceRequest::SYSTEM_PARTIAL_FINISHED
+          end
+          sr.save
+        end
+        
+
       end
       respond_with do |format|
         format.html do

@@ -29,3 +29,21 @@ $(document).on('click', '#send-quote-to-vinculacion', () ->
     $('#folder-work-panel').empty().html(html)
   )
 )
+
+
+$(document).on('click', '#send-report-button', () ->
+  id = $(this).data('id')
+  url = '/service_requests/' + id + '/view_report';
+  $.get(url, {}, (html) ->
+    $('#folder-work-panel').empty().html(html)
+  )
+)
+
+$(document).on('click', '#send-report-to-vinculacion', () ->
+  id = $(this).data('id')
+  url = '/service_requests/' + id + '/send_report';
+  $.post(url, {}, (html) ->
+    getServiceRequestActions(id)
+    $('#folder-work-panel').empty().html(html)
+  )
+)

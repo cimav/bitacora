@@ -191,6 +191,17 @@ class ServiceRequestsController < ApplicationController
   def view_report
     @request = ServiceRequest.find(params[:id])
     @details = cost_details(@request)
+    @participants = []
+
+    @participants << @request.user
+
+    @request.requested_services.each do |rs|
+      rs.requested_service_technicians.each do |t|
+        @participants << t.user
+      end
+    end
+    puts @participants
+    
     render :layout => false
   end
 

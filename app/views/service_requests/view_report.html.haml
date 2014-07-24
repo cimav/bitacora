@@ -22,6 +22,16 @@
       = "Reporte del servicio #{@details['codigo']}"
 
     %h3= "Participación"
+    %table.table.table-bordered
+      %thead
+        %tr
+          %th Participante
+          %th Participación
+      %tbody
+        - @participants.each do |p|
+          %tr
+            %td= p.full_name
+            %td= "%"
     
     %h3
       = "Costeo final" 

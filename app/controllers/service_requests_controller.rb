@@ -216,11 +216,19 @@ class ServiceRequestsController < ApplicationController
       participation.save
     end  
 
+    participations = Array.new
+    request.service_request_participations.each.each do |p|
+      participations << {
+        "email" => p.user.email,
+        "porcentaje" => p.percentage,
+      }
+    end
+
     # Publish reporte to Vinculacion system.
-    
     details = cost_details(request)
+    details['participaciones'] = participations
     ResqueBus.redis = '127.0.0.1:6379' # TODO: Mover a config
-    ResqueBus.publish('recibir_reporte', cost_details(request))
+    ResqueBus.publish('recibir_reporte', details)
     request.system_status = ServiceRequest::SYSTEM_REPORT_SENT
     request.save
     render :layout => false

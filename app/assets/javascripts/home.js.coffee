@@ -1110,3 +1110,21 @@ $(document).on("click", "#folders-link", () ->
   window.location = '/#!/folders'
   checkHash()
 )
+
+#--------
+# Ready
+#--------
+$ ->
+  $(document).on('keyup keypress', 'form input[type="text"]',(e) ->
+    if (e.which == 13)
+      e.preventDefault()
+      false
+  )
+  
+  $(document).on('keyup keypress', 'form input[type="number"]',(e) ->
+    if (e.which == 13)
+      e.preventDefault()
+      false
+  )
+
+

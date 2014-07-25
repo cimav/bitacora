@@ -41,9 +41,12 @@ $(document).on('click', '#send-report-button', () ->
 
 $(document).on('click', '#send-report-to-vinculacion', () ->
   id = $(this).data('id')
+  form = $('#send-report-form')
+  formData = form.serialize()
   url = '/service_requests/' + id + '/send_report';
-  $.post(url, {}, (html) ->
+  $.post(url, formData, (html) ->
     getServiceRequestActions(id)
     $('#folder-work-panel').empty().html(html)
   )
+  false
 )

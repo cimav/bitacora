@@ -206,8 +206,18 @@ class ServiceRequestsController < ApplicationController
   end
 
   def send_report
-    # Publish reporte to Vinculacion system.
+
     request = ServiceRequest.find(params[:id])
+
+    params['user'].each do |user_id,percentage|
+      participation = request.service_request_participations.new
+      participation.user_id = user_id
+      participation.percentage = percentage
+      participation.save
+    end  
+
+    # Publish reporte to Vinculacion system.
+    
     details = cost_details(request)
     ResqueBus.redis = '127.0.0.1:6379' # TODO: Mover a config
     ResqueBus.publish('recibir_reporte', cost_details(request))

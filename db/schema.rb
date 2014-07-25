@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140722232118) do
+ActiveRecord::Schema.define(version: 20140725164111) do
 
   create_table "activity_logs", force: true do |t|
     t.integer  "user_id"
@@ -292,6 +292,14 @@ ActiveRecord::Schema.define(version: 20140722232118) do
   add_index "service_files", ["sample_id"], name: "index_service_files_on_sample_id", using: :btree
   add_index "service_files", ["service_request_id"], name: "index_service_files_on_service_request_id", using: :btree
   add_index "service_files", ["user_id"], name: "index_service_files_on_user_id", using: :btree
+
+  create_table "service_request_participations", force: true do |t|
+    t.integer  "service_request_id"
+    t.integer  "user_id"
+    t.integer  "percentage"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "service_requests", force: true do |t|
     t.integer  "user_id"

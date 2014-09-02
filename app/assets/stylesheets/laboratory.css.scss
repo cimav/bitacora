@@ -25,7 +25,18 @@
   overflow: auto;
   top: 54px;
   bottom: 0;
-  padding: 20px;
+  padding: 0px;
+  input {
+    width: $lab-req-serv-panel-width - 10px !important;
+  }
+  select {
+    width: $lab-req-serv-panel-width - 10px !important;
+  }
+  label {
+    font-size: 14px;
+    padding-left: 5px;
+    margin-top: 10px;
+  }
 }
 
 #lab-req-serv-items {
@@ -167,6 +178,12 @@
       text-transform: uppercase;   
       margin: 10px 0;
       padding: 0;
+    }
+
+    .sample-services {
+      background: $white;
+      border: 1px solid $line-color;
+      font-size: 95%;
     }
   }
   

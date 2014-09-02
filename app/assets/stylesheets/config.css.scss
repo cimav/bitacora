@@ -15,8 +15,8 @@ $green: #62c462;
 $strong-color: #333;
 $strong-color2: #444;
 
-$light-bg: #fafafa;
-$bg-color: $light-grey;
+$light-bg: #f9fafc;
+$bg-color: #edf2f8;
 $secondary-bg: lighten($light-grey, 5%);
 
 $bg-selected2: #e2f0f4;
@@ -30,7 +30,10 @@ $qty-color: #514721;
 
 $strip-color: #f9f9f9;
 
-$bitacora-brand: #262d40;
+$top-header-bg: #4791d2;
+$top-header-color: #fff;
+
+$bitacora-brand: #252c3f;
 $folder-color: #f9d683;
 $sample-color: #f90;
 $owner-color: #64a673;
@@ -38,7 +41,7 @@ $supervisor-color: #e6b45e;
 $collaborator-color: $red;
 $rs-color: #ddd;
 
-$sidenav-bg: #262d40;
+$sidenav-bg: darken($bitacora-brand, 1%);
 $sidenav-color: #7b7e8f;
 $sidenav-selected: darken($sidenav-bg, 5%);
 $sidenav-hover: darken($sidenav-bg, 3%);
@@ -60,7 +63,7 @@ $lab-req-serv-panel-width: 300px;
 
 $workarea-top: 106px;
 
-$line-color: #ddd;
+$line-color: #d9d8e0;
 $link-color: #06c;
 $bullet-color: #ddd;
 

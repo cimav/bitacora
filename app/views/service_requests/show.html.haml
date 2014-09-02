@@ -9,11 +9,10 @@
 
   #folder-actions
     = render :partial => 'actions', :locals => {:request => @request}
-  .folder-collaborators
-    %h3 Colaboradores
-    = image_tag (@request.user.avatar_url), :class => 'img-circle folder-owner'
-    - if @request.supervisor
-      = image_tag (@request.supervisor.avatar_url), :class => 'img-circle folder-supervisor'
+  #collaborators.folder-collaborators
+    = render :partial => 'collaborators', :locals => {:request => @request}
+  #collaborator-panel
+
 
 #folder-workarea
   #folder-samples

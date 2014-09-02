@@ -18,7 +18,9 @@ class ServiceRequestsController < ApplicationController
                                                       OR service_requests.supervisor_id = :u 
                                                       OR (users.require_auth = 1 AND 
                                                             (users.supervisor1_id = :u OR users.supervisor2_id = :u)
-                                                          )) 
+                                                          )
+                                                      OR (:u IN (SELECT user_id FROM collaborators WHERE service_request_id = service_requests.id))
+                                                      ) 
                                                      AND service_requests.status = :s
                                                    GROUP BY service_requests.request_type_id 
                                                    ORDER BY request_types.name", 
@@ -40,6 +42,7 @@ class ServiceRequestsController < ApplicationController
     @requests = ServiceRequest.includes(:user).where("service_requests.status = :s AND 
                                                      (service_requests.user_id = :u 
                                                       OR service_requests.supervisor_id = :u 
+                                                      OR (:u IN (SELECT user_id FROM collaborators WHERE service_request_id = service_requests.id))
                                                       OR (users.require_auth = 1 AND 
                                                             (users.supervisor1_id = :u OR users.supervisor2_id = :u)
                                                           )" + extra_sql + "
@@ -63,10 +66,12 @@ class ServiceRequestsController < ApplicationController
 
   def show
     @request = ServiceRequest.find(params[:id])
+    collaborators = @request.collaborators.map { |c| c.user_id }
     authorized = @request.user_id == current_user.id ||
                  @request.supervisor_id == current_user.id ||
                  @request.user.supervisor1_id == current_user.id ||
-                 @request.user.supervisor2_id == current_user.id
+                 @request.user.supervisor2_id == current_user.id ||
+                 (collaborators.include? current_user.id)
 
     if !authorized
       render :inline => 'No Autorizado'                   
@@ -234,6 +239,62 @@ class ServiceRequestsController < ApplicationController
     render :layout => false
   end
 
+  def add_collaborator_dialog
+    @request = ServiceRequest.find(params[:id])
+    render :layout => false
+  end
+
+  def add_collaborator
+    @request = ServiceRequest.find(params[:id])
+    collaborator = @request.collaborators.new
+    collaborator.user_id = params[:collaborator_id]
+    collaborator.save
+    render :layout => false
+  end
+
+  def get_collaborators
+    @request = ServiceRequest.find(params[:id])
+    render :layout => false
+  end
+
+  def delete_collaborator 
+    flash = {}
+    collaborator = Collaborator.find(params[:collaborator_id])
+    # TODO: Validar que el tecnico que esta haciendo el borrado sea el dueño del servicio
+    if collaborator.destroy
+      flash[:notice] = "Participante eliminado"
+
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:id] = collaborator.id
+            render :json => json
+          else
+            redirect_to collaborator
+          end
+        end
+      end
+
+    else
+
+      flash[:error] = "Error al eliminar el participante."
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:errors] = collaborator.errors
+            render :json => json, :status => :unprocessable_entity
+          else
+            redirect_to collaborator
+          end
+        end
+      end
+    end
+  end
+
   private
   def cost_details(service_request)
     
@@ -312,5 +373,6 @@ class ServiceRequestsController < ApplicationController
 
     return details
   end
+
 
 end

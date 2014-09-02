@@ -148,15 +148,22 @@
       font-size: 14px;
     }
     img {
-      width: 48px;
-      height: 48px;
+      width: 32px;
+      height: 32px;
       padding: 1px;
+      margin-right: 5px;
     }
   }
 
   #folder-actions {
     margin-top: 20px;
   }
+}
+
+.no-collab {
+  color: #999;
+  margin: 10px;
+  text-align: center;
 }
 
 #folder-samples {
@@ -406,5 +413,39 @@ table.sample-services {
   .actions {
     text-align: center;
     margin: 40px;
+  }
+}
+
+#collaborators {
+  .col-md-12 {
+    margin-bottom: 0.5em;
+  }
+  .collaborator-item {
+    .remove-collaborator {
+      display: none;
+    }
+    &:hover {
+      .remove-collaborator {
+        display: inline;
+      }
+    }
+  }
+  
+}
+
+#add-collaborator-button {
+  margin-top: 0.5em;
+  width: 100%;
+  padding: 4px;
+}
+
+#collaborator-panel {
+  h3 {
+    font-size: 14px;
+  }
+  button {
+    margin-top: 0.5em;
+    width: 100%;
+    padding: 4px;
   }
 }

@@ -1,0 +1,12 @@
+%h3= "Agregar colaborador"
+
+- collab_options = ''
+- collabs = @request.collaborators.map { |c| c.user_id }
+- User.where("status = :a", {:a => User::STATUS_ACTIVE}).order('first_name, last_name').each do |u|
+  - if !collabs.include? u.id
+    - collab_options += "<option value=\"#{u.id}\">#{u.full_name}</option>"
+
+= select_tag "collaborator_id", collab_options.html_safe
+%button#add-collaborator-save.btn.btn-success.btn-xs{'data-id' => @request.id}= "Agregar"
+:javascript
+  $("#collaborator_id").select2({ width: 'resolve' });

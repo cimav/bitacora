@@ -20,3 +20,6 @@
         = image_tag (r.user.avatar_url), :class => 'img-circle folder-owner'
         - if r.supervisor
           = image_tag (r.supervisor.avatar_url), :class => 'img-circle folder-supervisor'
+        - r.collaborators.each do |collaborator|
+          = image_tag (collaborator.user.avatar_url), :class => 'img-circle folder-collaborator'
+

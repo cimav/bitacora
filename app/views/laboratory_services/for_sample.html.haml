@@ -12,9 +12,13 @@
     .controls
       - sug_options = "<option value=\"\">Cualquier Técnico</option>"
       - LaboratoryMember.where("laboratory_id = :lab AND access <> :a", {:lab => @laboratory_service.laboratory_id, :a => LaboratoryMember::ACCESS_TRAINED}).each do |sug|
-        - sug_options += "<option value=\"#{sug.user.id}\">#{sug.user.full_name}</option>"
+        - if !sug.user.nil?
+          - sug_options += "<option value=\"#{sug.user.id}\">#{sug.user.full_name}</option>"
+
       - if LaboratoryMember.where("laboratory_id = :lab AND access = :a AND user_id = :u", {:lab => @laboratory_service.laboratory_id, :a => LaboratoryMember::ACCESS_TRAINED, :u => current_user.id}).count == 1
         - sug_options += "<option value=\"#{current_user.id}\">#{current_user.full_name} (Facultado)</option>"
+
+
       = f.select "suggested_user_id", sug_options.html_safe, {}, :class => 'form-control'
   
   .add-service-field.field

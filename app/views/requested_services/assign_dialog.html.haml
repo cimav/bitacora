@@ -20,7 +20,8 @@
             - else 
               - sug = ''
               - sel = ''
-            - u_options += "<option value=\"#{m.user_id}\" #{sel}>#{sug}#{m.user.full_name}</option>"
+            - if !m.user.nil?
+              - u_options += "<option value=\"#{m.user_id}\" #{sel}>#{sug}#{m.user.full_name}</option>"
           = f.select :user_id, u_options.html_safe, {}, :class => "form-control"
         
         .notes.field

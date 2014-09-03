@@ -23,11 +23,13 @@
     = f.label :user_id, 'Responsable:'
     - resp_options = ''
     - LaboratoryMember.where("laboratory_id = :lab AND access <> :a", {:lab => @laboratory.id, :a => LaboratoryMember::ACCESS_TRAINED}).each do |item|
-      - if item.user.id == @laboratory.user_id
-        - sel = 'selected = "selected"'
-      - else
-        - sel = ''
-      - resp_options += "<option value=\"#{item.user.id}\" #{sel}>#{item.user.full_name}</option>"
+      - if !item.user.nil?
+        - if item.user.id == @laboratory.user_id
+          - sel = 'selected = "selected"'
+        - else
+          - sel = ''
+        - resp_options += "<option value=\"#{item.user.id}\" #{sel}>#{item.user.full_name}</option>"
+
     = f.select :user_id, resp_options.html_safe, {}, {:class => 'form-control'}
       
   .submit-button

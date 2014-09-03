@@ -146,6 +146,7 @@ class ServiceRequestsController < ApplicationController
         format.html do
           if request.xhr?
             json = {}
+            json[:id] = @request.id
             json[:flash] = flash
             render :json => json
           else 
@@ -160,6 +161,7 @@ class ServiceRequestsController < ApplicationController
           if request.xhr?
             json = {}
             json[:flash] = flash
+            json[:id] = params[:id]
             json[:errors] = @request.errors
             render :json => json, :status => :unprocessable_entity
           else 

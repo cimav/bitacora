@@ -1,5 +1,5 @@
 - if request.system_status == ServiceRequest::SYSTEM_FREE
-  %button.btn.btn-default.btn-block= "Editar"
+  %button#edit-service-request-button.btn.btn-default.btn-block{'data-id' => request.id}= "Editar"
 - else
   #folder-status-message
     = request.system_status_text

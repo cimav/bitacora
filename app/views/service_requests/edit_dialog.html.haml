@@ -1,34 +1,39 @@
-#edit-service-request-modal.modal.hide.fade{:tabindex => "-1", :role => "dialog", "aria-labelledby" => "edit-service-request-label", "aria-hidden" => "true"}
-  = form_for @service_request, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-service-request-dialog-form'} do |f|
-    .modal-header
-      %button.close{"data-dismiss" => "modal", "aria-hidden" => "true"}= "×"
-      %h3#edit-service-request-label= "Editar carpeta"
-    .modal-body
-      .field#field_service_request_name
-        = f.label :request_type, 'Tipo:'
-        = @service_request.request_type.name
-        
-      .field#field_service_request_request_link
-        = f.label :request_link, 'Nombre:'
-        = f.text_field :request_link, {:class => 'input-xxlarge'}
-      .field#field_service_request_description
-        = f.label :description, 'Descripción:', {:class => 'control-label'}
-        = f.text_area :description, {:class => 'input-xxlarge',:rows => 4}
+#edit-folder
+  .sheet
+    .header-status{:class => "bg-status-assigned"}
+      %span.status= "Asignar técnico"
+      %a.close{:class => 'service-request-link', 'data-id' => @service_request.id}="×"
+    .dialog-content.padded
+      = form_for @service_request, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-service-request-form'} do |f|
+        %h2= "Editar carpeta"
 
-      .field#field_service_request_supervisor_id
-        = f.label :supervisor_id, 'Supervisor:', {:class => 'control-label'}
-        - supervisor_options = ''
-        - if current_user.supervisor1_id.blank? && current_user.supervisor2_id.blank?
-          - supervisor_options += "<option value=\"\">Ninguno</option>"
-        - User.where("access >= :a", {:a => User::ACCESS_EMPLOYEE}).order('first_name, last_name').each do |u|
-          - if @service_request.supervisor_id == u.id
-            - selected = 'selected = "selected"'
-          - else
-            - selected = ''
-          - supervisor_options += "<option value=\"#{u.id}\" #{selected}>#{u.full_name}</option>"
-    
-        = f.select :supervisor_id, supervisor_options.html_safe
 
-    .modal-footer
-      = button_tag "Actualizar", {:class => "btn btn-primary", :type => "submit"}
-      %button.btn{"data-dismiss" => "modal", "aria-hidden" => "true"}= "Cerrar"
+        .field#field_service_request_name
+          = f.label :request_type, 'Tipo:'
+          = @service_request.request_type.name
+          
+        .field#field_service_request_request_link
+          = f.label :request_link, 'Nombre:'
+          = f.text_field :request_link, {:class => 'form-control'}
+        .field#field_service_request_description
+          = f.label :description, 'Descripción:', {:class => 'control-label'}
+          = f.text_area :description, {:class => 'form-control',:rows => 4}
+
+        .field#field_service_request_supervisor_id
+          = f.label :supervisor_id, 'Supervisor:', {:class => 'control-label'}
+          - supervisor_options = ''
+          - if current_user.supervisor1_id.blank? && current_user.supervisor2_id.blank?
+            - supervisor_options += "<option value=\"\">Ninguno</option>"
+          - User.where("access >= :a", {:a => User::ACCESS_EMPLOYEE}).order('first_name, last_name').each do |u|
+            - if @service_request.supervisor_id == u.id
+              - selected = 'selected = "selected"'
+            - else
+              - selected = ''
+            - supervisor_options += "<option value=\"#{u.id}\" #{selected}>#{u.full_name}</option>"
+      
+          = f.select :supervisor_id, supervisor_options.html_safe, {}, {:class => 'form-control'}
+          .clearfix
+          .edit-folder-buttons
+            = button_tag "Actualizar", {:class => "btn btn-primary", :type => "submit"}
+            = button_tag "Cancelar", {:class => "btn btn-default service-request-link", 'data-id' => @service_request.id, :type => "button"}
+          .clearfix

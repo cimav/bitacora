@@ -55,6 +55,9 @@ $(document).on('click', '.service-request-item', () ->
     getServiceRequest($(this).attr('service_request_id'))
   )
 
+$(document).on('click', '.service-request-link', () ->
+    getServiceRequest($(this).data('id'))
+  )
 
 $(document).on('click', '#add-new-folder-button', () ->
     setHash('#!/folders/new', true)
@@ -1019,31 +1022,25 @@ $(document).on('ajax:error', '#new-material-dialog-form', (evt, xhr, status, err
 #--------------------
 # Edit folder dialog
 #--------------------
-$(document).on('click', '#edit-service-request-link', () ->
-    $("#edit-service-request-dialog").remove()
-    $('body').append('<div id="edit-service-request-dialog"></div>')
+$(document).on('click', '#edit-service-request-button', () ->
     id = $(this).data('id')
     url = "/service_requests/edit_dialog/#{id}"
     $.get(url, {}, (html) ->
-      $('#edit-service-request-dialog').empty().html(html)
-      $('#edit-service-request-modal').modal({ keyboard:true, backdrop:true, show: true });
+      $('#folder-workarea').empty().html(html)
     )
   )
 
-$(document).on('ajax:beforeSend', '#edit-service-request-dialog-form', (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '#edit-service-request-form', (evt, xhr, settings) ->
     $('.error-message').remove()
     $('.has-errors').removeClass('has-errors')
   )
-$(document).on('ajax:success', '#edit-service-request-dialog-form', (evt, data, status, xhr) ->
-    $form = $(this)
+$(document).on('ajax:success', '#edit-service-request-form', (evt, data, status, xhr) ->
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
-    $('#edit-service-request-modal').modal('hide').remove()
-    $("#new_mat_id").append("<option value=#{res['id']}>#{res['name']}</option>")
-    # TODO: Locate new material and focus on qty
+    getServiceRequest(res['id'])
   )
 
-$(document).on('ajax:error', '#edit-service-request-dialog-form', (evt, xhr, status, error) ->
+$(document).on('ajax:error', '#edit-service-request-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 

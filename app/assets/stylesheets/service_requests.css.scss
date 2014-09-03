@@ -176,6 +176,21 @@
   border: 1px solid $line-color;
 }
 
+#edit-folder {
+  float: left;
+  background: darken($bg-color, 2%);
+  left: $side-panel-width;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+  .edit-folder-buttons {
+    float: right;
+    margin-top: 20px;
+  }
+}
+
 #folder-samples {
   float: left;
   background: darken($bg-color, 2%);

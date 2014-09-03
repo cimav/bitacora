@@ -57,10 +57,7 @@ $(document).on('click', '.service-request-item', () ->
 
 
 $(document).on('click', '#add-new-folder-button', () ->
-    url = '/service_requests/new'
-    $.get(url, {}, (html) ->
-      $('#workarea').empty().html(html)
-    )
+    setHash('#!/folders/new', true)
   )
 
 @getServiceRequestActions = getServiceRequestActions = (id) ->
@@ -217,7 +214,7 @@ $(document).on('ajax:success', '#new-request-form', (evt, data, status, xhr) ->
     $('#search-filter').val('*')
     $('#search-box').val(res['number'])
     foldersLiveSearch()
-    #getServiceRequest(res['id'])
+    getServiceRequest(res['id'])
   )
 $(document).on('ajax:error', '#new-request-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
@@ -1087,9 +1084,11 @@ $(document).on('ajax:error', '#edit-service-request-dialog-form', (evt, xhr, sta
 # LOCATION HASH
 #--------------
 @setHash = setHash = (h, get_url) ->
-  hash = h
-  window.location.hash = hash
+  window.location.hash = h
   checkHash() if get_url
+  hash = h
+  
+  
 
 @checkHash = checkHash = () ->
   if window.location.hash != hash

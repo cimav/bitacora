@@ -22,6 +22,9 @@
         - if @request.request_type_id != ServiceRequest::SERVICIO_VINCULACION
           %button#add-new-sample-button.btn.btn-success.btn-xs{'data-id' => @request.id}
             %span.glyphicon.glyphicon-plus
+    - if @request.sample.count <= 0 
+      .no-samples 
+        = "La carpeta no tiene muestras"
     - @request.sample.each do |s|
       .sample-item
         .sample-item-info

@@ -7,7 +7,8 @@ Bitacora::Application.routes.draw do
   get '/login' => 'login#index'
 
   get '/folders' => 'service_requests#index'
- 
+  get '/folders/new' => 'service_requests#new'
+
   match '/service_requests/live_search' => 'service_requests#live_search', via: [:get, :post]
   get '/service_requests/edit_dialog/:id' => 'service_requests#edit_dialog'
   get '/service_requests/form/:request_type_id' => 'service_requests#form'
@@ -20,6 +21,7 @@ Bitacora::Application.routes.draw do
   get '/service_requests/:id/get_collaborators' => 'service_requests#get_collaborators'
   post '/service_requests/:id/send_report' => 'service_requests#send_report'
   post '/service_requests/delete_collaborator' => 'service_requests#delete_collaborator'
+
 
   resources :service_requests 
   get '/samples/:id/requested_services_list' => 'samples#requested_services_list'

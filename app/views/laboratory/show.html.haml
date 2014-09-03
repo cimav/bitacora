@@ -6,7 +6,8 @@
   %h2= @laboratory.name
   - if lab_access.to_i == LaboratoryMember::ACCESS_ADMIN
     .admin-toolbar
-      = link_to "Administrar", {:controller => 'laboratory', :action => 'admin', :id => @laboratory.id}, :method => :get, :remote => true, :class => 'admin-lab', :'data-type' => 'html', :id => "admin-lab-#{@laboratory.id}", 'data-laboratory-id' => @laboratory.id
+      = link_to "Administrar laboratorio", {:controller => 'laboratory', :action => 'admin', :id => @laboratory.id}, :method => :get, :remote => true, :class => 'admin-lab btn btn-default', :'data-type' => 'html', :id => "admin-lab-#{@laboratory.id}", 'data-laboratory-id' => @laboratory.id
+
 
 #lab-work-panel
   #lab-req-serv-panel

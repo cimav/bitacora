@@ -21,7 +21,7 @@
   background: $bg-color;
   width: $lab-req-serv-panel-width;
   position: absolute;
-  border-right: 1px solid $line-color;
+  border-right: 1px solid darken($line-color, 10%);
   overflow: auto;
   top: 54px;
   bottom: 0;
@@ -41,8 +41,9 @@
 
 #lab-req-serv-items {
   float: left;
-  background: darken($bg-color, 2%);
+  background: $white;
   left: $lab-req-serv-panel-width;
+  border-left: 1px solid $line-color;
   position: absolute;
   top: 55px;
   bottom: 0;
@@ -233,7 +234,7 @@
 
 .admin-toolbar {
   float: right;
-  margin: 20px 10px 0 0;
+  margin: 10px 10px 0 0;
 }
 
 #admin-area {

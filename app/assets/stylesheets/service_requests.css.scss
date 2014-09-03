@@ -166,6 +166,16 @@
   text-align: center;
 }
 
+.no-samples {
+  color: #999;
+  text-align: center; 
+  margin: 5px 5px 10px 5px;
+  @include shadow(2px, 2px, 0px, #ddd);
+  padding: 20px;
+  background: #fff;
+  border: 1px solid $line-color;
+}
+
 #folder-samples {
   float: left;
   background: darken($bg-color, 2%);
@@ -449,4 +459,8 @@ table.sample-services {
     width: 100%;
     padding: 4px;
   }
+}
+
+#cg_ServiceRequest_submit {
+  margin-top: 1em;
 }

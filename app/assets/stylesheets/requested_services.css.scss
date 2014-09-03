@@ -68,8 +68,6 @@
 
 #requested-service-data {
   padding: 20px;
-  width: 70%;
-  float: left;
   h3 {
     font-size: 16px;
     margin: 0;
@@ -80,13 +78,21 @@
   }
 }
 
-#requested-service-actions {
+#rs-actions-area {
+  border-top: 1px solid $line-color;
+  border-bottom: 1px solid $line-color;
+}
+
+#requested-service-actions-title {
   padding: 20px;
-  float: right;
   width: 30%;
-  button {
-    font-size: 90%;
-  }
+  float: left;
+  text-align: center;
+} 
+#requested-service-actions {
+  padding: 10px;
+  width: 70%;
+  float: right;
 }
 
 #requested-service-tabs {

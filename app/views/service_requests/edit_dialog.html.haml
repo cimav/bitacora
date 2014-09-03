@@ -1,12 +1,10 @@
 #edit-folder
   .sheet
-    .header-status{:class => "bg-status-assigned"}
-      %span.status= "Asignar técnico"
+    .header-status{:class => "bg-edit-folder"}
+      %span.status= "Editar carpeta"
       %a.close{:class => 'service-request-link', 'data-id' => @service_request.id}="×"
     .dialog-content.padded
       = form_for @service_request, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-service-request-form'} do |f|
-        %h2= "Editar carpeta"
-
 
         .field#field_service_request_name
           = f.label :request_type, 'Tipo:'

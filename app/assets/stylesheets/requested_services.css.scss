@@ -35,6 +35,9 @@
 .bg-status-send-quote  { background: darken(#a58ad5, 10%); }
 .bg-status-waiting     { background: #666; }
 
+
+.bg-edit-folder { background: $folder-color; color: darken($folder-color,50%) !important; }
+
 .bg-dialog { background: $brand-primary; }
 
 .header-status {

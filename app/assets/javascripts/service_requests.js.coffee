@@ -50,3 +50,44 @@ $(document).on('click', '#send-report-to-vinculacion', () ->
   )
   false
 )
+
+
+$(document).on('click', '#add-collaborator-button', () ->
+  id = $(this).data('id')
+  url = '/service_requests/' + id + '/add_collaborator_dialog';
+  $('#add-collaborator-button').hide();
+  $.get(url, {}, (html) ->
+    $('#collaborator-panel').empty().html(html)
+  )
+)
+
+$(document).on('click', '#add-collaborator-save', () ->
+  id = $(this).data('id')
+  url = '/service_requests/' + id + '/add_collaborator';
+  $('#collaborators').hide();
+  collab_id = $('#collaborator_id').select2('data').id;
+  $.post(url, {'collaborator_id': collab_id}, (html) ->
+    $('#collaborator-panel').empty().html(html)
+    url = '/service_requests/' + id + '/get_collaborators';
+    $('#collaborators').show();
+    $.get(url, {}, (html) ->
+      $('#collaborators').empty().html(html)
+    )
+  )
+)
+
+$(document).on('ajax:beforeSend', '.collaborator-item .close', (evt, xhr, settings) ->
+    $(".equipment-row").removeClass('error')
+  )
+$(document).on('ajax:success', '.collaborator-item .close', (evt, data, status, xhr) ->
+    res = $.parseJSON(xhr.responseText)
+    collab_id = res['id']
+    showFlash(res['flash']['notice'], 'success')
+    $("#collaborator-item#{collab_id}").remove()
+    reloadEquipmentTable()
+  )
+
+$(document).on('ajax:error', '.collaborator-item .close', (evt, xhr, status, error) ->
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['error'], 'error')
+  )

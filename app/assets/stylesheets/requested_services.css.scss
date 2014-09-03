@@ -68,15 +68,22 @@
   width: 70%;
   float: left;
   h3 {
+    font-size: 16px;
     margin: 0;
     padding: 0;
   } 
+  strong { 
+    color: $grey;
+  }
 }
 
 #requested-service-actions {
   padding: 20px;
   float: right;
   width: 30%;
+  button {
+    font-size: 90%;
+  }
 }
 
 #requested-service-tabs {

@@ -9,11 +9,10 @@
 
   #folder-actions
     = render :partial => 'actions', :locals => {:request => @request}
-  .folder-collaborators
-    %h3 Colaboradores
-    = image_tag (@request.user.avatar_url), :class => 'img-circle folder-owner'
-    - if @request.supervisor
-      = image_tag (@request.supervisor.avatar_url), :class => 'img-circle folder-supervisor'
+  #collaborators.folder-collaborators
+    = render :partial => 'collaborators', :locals => {:request => @request}
+  #collaborator-panel
+
 
 #folder-workarea
   #folder-samples
@@ -23,6 +22,9 @@
         - if @request.request_type_id != ServiceRequest::SERVICIO_VINCULACION
           %button#add-new-sample-button.btn.btn-success.btn-xs{'data-id' => @request.id}
             %span.glyphicon.glyphicon-plus
+    - if @request.sample.count <= 0 
+      .no-samples 
+        = "La carpeta no tiene muestras"
     - @request.sample.each do |s|
       .sample-item
         .sample-item-info

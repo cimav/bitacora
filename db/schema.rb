@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140725164111) do
+ActiveRecord::Schema.define(version: 20140901222942) do
 
   create_table "activity_logs", force: true do |t|
     t.integer  "user_id"
@@ -77,6 +77,18 @@ ActiveRecord::Schema.define(version: 20140725164111) do
   add_index "clients", ["client_type_id"], name: "index_clients_on_client_type_id", using: :btree
   add_index "clients", ["country_id"], name: "index_clients_on_country_id", using: :btree
   add_index "clients", ["state_id"], name: "index_clients_on_state_id", using: :btree
+
+  create_table "collaborators", force: true do |t|
+    t.integer  "service_request_id"
+    t.integer  "user_id"
+    t.integer  "collaboration_type"
+    t.integer  "status",             default: 1
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "collaborators", ["service_request_id"], name: "index_collaborators_on_service_request_id", using: :btree
+  add_index "collaborators", ["user_id"], name: "index_collaborators_on_user_id", using: :btree
 
   create_table "countries", force: true do |t|
     t.string   "name"

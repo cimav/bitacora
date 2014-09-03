@@ -18,6 +18,8 @@ class ServiceRequest < ActiveRecord::Base
   belongs_to :user
   belongs_to :supervisor, :class_name => 'User', :foreign_key => 'supervisor_id'
 
+  has_many :collaborators
+
   after_create :add_extra
 
   ACTIVE = 1

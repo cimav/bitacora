@@ -148,15 +148,32 @@
       font-size: 14px;
     }
     img {
-      width: 48px;
-      height: 48px;
+      width: 32px;
+      height: 32px;
       padding: 1px;
+      margin-right: 5px;
     }
   }
 
   #folder-actions {
     margin-top: 20px;
   }
+}
+
+.no-collab {
+  color: #999;
+  margin: 10px;
+  text-align: center;
+}
+
+.no-samples {
+  color: #999;
+  text-align: center; 
+  margin: 5px 5px 10px 5px;
+  @include shadow(2px, 2px, 0px, #ddd);
+  padding: 20px;
+  background: #fff;
+  border: 1px solid $line-color;
 }
 
 #folder-samples {
@@ -200,7 +217,7 @@
     border: 1px solid $line-color;
     .sample-item-info {
       background: $light-bg;
-      border-bottom: 1px solid $white;
+      border-bottom: 1px solid $line-color;
       .data {
         padding: 10px;
         color: $grey;
@@ -256,6 +273,7 @@ table.sample-services {
       color: $grey;
       width: 90px;
       text-align: right;
+      font-size: 80%;
     }
 
   }
@@ -407,4 +425,42 @@ table.sample-services {
     text-align: center;
     margin: 40px;
   }
+}
+
+#collaborators {
+  .col-md-12 {
+    margin-bottom: 0.5em;
+  }
+  .collaborator-item {
+    .remove-collaborator {
+      display: none;
+    }
+    &:hover {
+      .remove-collaborator {
+        display: inline;
+      }
+    }
+  }
+  
+}
+
+#add-collaborator-button {
+  margin-top: 0.5em;
+  width: 100%;
+  padding: 4px;
+}
+
+#collaborator-panel {
+  h3 {
+    font-size: 14px;
+  }
+  button {
+    margin-top: 0.5em;
+    width: 100%;
+    padding: 4px;
+  }
+}
+
+#cg_ServiceRequest_submit {
+  margin-top: 1em;
 }

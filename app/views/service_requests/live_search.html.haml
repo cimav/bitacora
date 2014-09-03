@@ -1,10 +1,6 @@
-%table.table-striped.table-hover
+%table.table.table-hover
   - @requests.each do |r|
-    - if current_user.id == r.supervisor_id || current_user.id == r.user.supervisor1_id || current_user.id == r.user.supervisor2_id
-      - klass = 'service-supervised'
-    - else
-      - klass = 'service-mine' 
-    %tr.service-request-item{:service_request_id => r.id, :class => klass, :id => r.number}
+    %tr.service-request-item{:service_request_id => r.id, :id => r.number}
       %td.service-request-number
         %span.glyphicon.glyphicon-folder-close
         .number= r.number
@@ -20,3 +16,6 @@
         = image_tag (r.user.avatar_url), :class => 'img-circle folder-owner'
         - if r.supervisor
           = image_tag (r.supervisor.avatar_url), :class => 'img-circle folder-supervisor'
+        - r.collaborators.each do |collaborator|
+          = image_tag (collaborator.user.avatar_url), :class => 'img-circle folder-collaborator'
+

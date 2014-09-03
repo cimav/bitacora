@@ -21,17 +21,29 @@
   background: $bg-color;
   width: $lab-req-serv-panel-width;
   position: absolute;
-  border-right: 1px solid $line-color;
+  border-right: 1px solid darken($line-color, 10%);
   overflow: auto;
   top: 54px;
   bottom: 0;
-  padding: 20px;
+  padding: 0px;
+  input {
+    width: $lab-req-serv-panel-width - 10px !important;
+  }
+  select {
+    width: $lab-req-serv-panel-width - 10px !important;
+  }
+  label {
+    font-size: 14px;
+    padding-left: 5px;
+    margin-top: 10px;
+  }
 }
 
 #lab-req-serv-items {
   float: left;
-  background: darken($bg-color, 2%);
+  background: $white;
   left: $lab-req-serv-panel-width;
+  border-left: 1px solid $line-color;
   position: absolute;
   top: 55px;
   bottom: 0;
@@ -168,6 +180,12 @@
       margin: 10px 0;
       padding: 0;
     }
+
+    .sample-services {
+      background: $white;
+      border: 1px solid $line-color;
+      font-size: 95%;
+    }
   }
   
   .folder {
@@ -216,7 +234,7 @@
 
 .admin-toolbar {
   float: right;
-  margin: 20px 10px 0 0;
+  margin: 10px 10px 0 0;
 }
 
 #admin-area {

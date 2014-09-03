@@ -1,4 +1,4 @@
-%table.table-striped.table-hover
+%table.table.table-hover
   - @requested_services.each do |rs|
     - next if !rs.sample.service_request
     - next if rs.sample.service_request.status == ServiceRequest::DELETED

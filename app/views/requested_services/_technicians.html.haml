@@ -98,7 +98,8 @@
         - members = LaboratoryMember.where("laboratory_id = #{@requested_service.laboratory_service.laboratory_id} #{not_in}")
         - u_options = ''
         - members.each do |m|
-          - u_options += "<option value=\"#{m.user_id}\">#{m.user.full_name}</option>"
+          - if !m.user.nil?
+            - u_options += "<option value=\"#{m.user_id}\">#{m.user.full_name}</option>"
       - if u_options != '' && editable
         %tr.add-row
           %td

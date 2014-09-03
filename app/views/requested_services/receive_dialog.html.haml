@@ -29,8 +29,8 @@
                   - if m.user_id == @requested_service.suggested_user_id
                     - sug = '* '
                     - sel = 'selected="selected"'
-                    
-                  - u_options += "<option value=\"#{m.user_id}\" #{sel}>#{sug}#{m.user.full_name}</option>"
+                  - if !m.user.nil?  
+                    - u_options += "<option value=\"#{m.user_id}\" #{sel}>#{sug}#{m.user.full_name}</option>"
                 = f.select :user_id, u_options.html_safe, {}, :class => "form-control"
             %td
               - display = sug == ''? "display: none;" : ""

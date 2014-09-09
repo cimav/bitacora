@@ -6,7 +6,7 @@
 
 #add-service {
   border-right: 1px solid $line-color;
-  width: 200px;
+  width: 200px; 
   float: left;
   .search-area {
     margin: 0;
@@ -20,9 +20,8 @@
 
   #laboratory-services-list {
     width: 200px;
-    height: 350px;
-    max-height: 350px;
     border-right: 1px solid $line-color;
+    height: 300px;
     overflow: auto;
     background: #fff;
     .lab-service-item {

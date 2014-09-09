@@ -1,3 +1,5 @@
+#folder-type{:class => "bg_#{@request.request_type.short_name}"}
+  %h2= @request.request_type.name
 #folder-info
   .folder-icon
     %span.glyphicon.glyphicon-folder-close

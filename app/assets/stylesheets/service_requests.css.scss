@@ -22,6 +22,22 @@
 .label_TESIS_EXTERNA { background-color: $tesis-color; }
 .label_CONVENIO      { background-color: $convenio-color; }
 .label_PROYECTO      { background-color: $proyecto-color; }
+.label_CALIBRACION   { background-color: $calibracion-color; }
+.label_ESTANCIAS     { background-color: $estancias-color; }
+.label_MAQUINADO     { background-color: $maquinado-color; }
+.label_PROTOTIPO     { background-color: $prototipo-color; }
+
+.bg_SERVICIO      { background-color: $servicio-color; border-bottom: 1px solid darken($servicio-color, 5%);}
+.bg_ARTICULO      { background-color: $articulo-color; border-bottom: 1px solid darken($articulo-color, 5%);}
+.bg_TESIS         { background-color: $tesis-color; border-bottom: 1px solid darken($tesis-color, 5%);}
+.bg_TESIS_EXTERNA { background-color: $tesis-color; border-bottom: 1px solid darken($tesis-color, 5%);}
+.bg_CONVENIO      { background-color: $convenio-color; border-bottom: 1px solid darken($convenio-color, 5%);}
+.bg_PROYECTO      { background-color: $proyecto-color; border-bottom: 1px solid darken($proyecto-color, 5%);}
+.bg_CALIBRACION    { background-color: $calibracion-color; border-bottom: 1px solid darken($calibracion-color, 5%);}
+.bg_ESTANCIAS      { background-color: $estancias-color; border-bottom: 1px solid darken($estancias-color, 5%);}
+.bg_MAQUINADO      { background-color: $maquinado-color; border-bottom: 1px solid darken($maquinado-color, 5%);}
+.bg_PROTOTIPO      { background-color: $prototipo-color; border-bottom: 1px solid darken($prototipo-color, 5%);}
+
 
 #folders {
  z-index: 99998;
@@ -106,15 +122,31 @@
   margin-bottom: 10px;
 }
 
+#folder-type {
+  height: 39px;
+  color: #fff;
+  padding: 0;
+  h2 {
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+    padding: 12px 0 0 10px;
+    font-size: 16px;
+    text-transform: uppercase;
+  }
+}
+
 #folder-info {
   background: $bg-color;
   width: $side-panel-width;
   position: absolute;
   border-right: 1px solid $line-color;
   overflow: auto;
-  top: 0;
+  top: 39px;
   bottom: 0;
   padding: 20px;
+
+
 
   .folder-icon {
     height: 160px;
@@ -178,7 +210,7 @@
 
 #edit-folder {
   float: left;
-  background: darken($bg-color, 2%);
+  background: #fff;
   left: $side-panel-width;
   position: absolute;
   top: 0;
@@ -207,8 +239,9 @@
     margin: 0;
     padding: 0;
     height: 40px;
-    background: $bg-color;
-    border-bottom: 1px solid $line-color;
+    background: $folder-color;
+    border-bottom: 1px solid darken($folder-color, 5%);
+    color: darken($folder-color, 10%);
     h2 {
       margin: 0;
       padding: 0;
@@ -294,7 +327,7 @@ table.sample-services {
   }
 
 #folder-work-panel-wrapper {
-  background: darken($bg-color, 3%);
+  background: #fff;
   width: -moz-calc(100% - $folder-samples-width - $side-panel-width);
   width: -webkit-calc(100% - $folder-samples-width - $side-panel-width);
   width: calc(100% - $folder-samples-width - $side-panel-width);
@@ -306,18 +339,26 @@ table.sample-services {
   overflow: auto;
 }
 
-#folder-work-panel {
-  background: darken($bg-color, 3%);
-}
-
 .sheet {
-  @include shadow(2px, 2px, 0px, #ddd);
-  margin: 20px;
-  padding: 0px;
-  border: 1px solid $line-color;
+  margin: 0;
+  padding: 0;
   background: $white;
 }
 
+#folder-work-panel {
+  background: #fff;
+  .sheet {
+    width: -moz-calc(100% - $folder-samples-width - $side-panel-width);
+    width: -webkit-calc(100% - $folder-samples-width - $side-panel-width);
+    width: calc(100% - $folder-samples-width - $side-panel-width);
+    position: relative;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    overflow: auto;
+  }  
+}
 
 #services-panel,
 #members-panel,

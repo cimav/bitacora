@@ -204,7 +204,9 @@ class ServiceRequestsController < ApplicationController
 
     @request.requested_services.each do |rs|
       rs.requested_service_technicians.each do |t|
-        @participants << t.user
+        if !@participants.include? t.user
+          @participants << t.user
+        end
       end
     end
     puts @participants

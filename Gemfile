@@ -14,17 +14,13 @@ gem 'json', '~> 1.7.7'
 gem 'haml'
 
 
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'sass-rails', '~> 4.0.2'
-  gem 'coffee-rails'
+gem 'sass-rails', '4.0.3'
+gem 'coffee-rails'
 
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  gem 'therubyracer', :platform => :ruby
+# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+gem 'therubyracer', :platform => :ruby
 
-  gem 'uglifier'
-end
+gem 'uglifier'
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'

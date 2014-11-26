@@ -226,7 +226,7 @@ class ServiceRequestsController < ApplicationController
     end  
 
     participations = Array.new
-    request.service_request_participations.each.each do |p|
+    request.service_request_participations.each do |p|
       participations << {
         "email" => p.user.email,
         "porcentaje" => p.percentage,

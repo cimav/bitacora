@@ -39,7 +39,7 @@ class ServiceRequestsController < ApplicationController
       extra_sql = ""
     end
     
-    @requests = ServiceRequest.includes(:user).where("service_requests.status = :s AND 
+    @requests = ServiceRequest.joins(:user).where("service_requests.status = :s AND 
                                                      (service_requests.user_id = :u 
                                                       OR service_requests.supervisor_id = :u 
                                                       OR (:u IN (SELECT user_id FROM collaborators WHERE service_request_id = service_requests.id))

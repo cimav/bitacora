@@ -146,12 +146,12 @@ class LaboratoryController < ApplicationController
     @laboratory_members = @laboratory.laboratory_members
 
     if params[:admin_lab_member_access] != '0'
-      @laboratory_members = @laboratory_members.includes(:user).where(:access => params[:admin_lab_member_access])
+      @laboratory_members = @laboratory_members.joins(:user).where(:access => params[:admin_lab_member_access])
     end
 
 
     if !params[:q].blank?
-      @laboratory_members = @laboratory_members.includes(:user).where("(users.first_name LIKE :q OR users.last_name LIKE :q)", {:q => "%#{params[:q]}%"})
+      @laboratory_members = @laboratory_members.joins(:user).where("(users.first_name LIKE :q OR users.last_name LIKE :q)", {:q => "%#{params[:q]}%"})
     end
 
     render :layout => false

@@ -33,7 +33,7 @@ $strip-color: #f9f9f9;
 $top-header-bg: #4791d2;
 $top-header-color: #fff;
 
-$bitacora-brand: #252c3f;
+$bitacora-brand: #244060;
 $folder-color: #f9d683;
 $sample-color: #f90;
 $owner-color: #64a673;
@@ -42,7 +42,7 @@ $collaborator-color: $red;
 $rs-color: #ddd;
 
 $sidenav-bg: darken($bitacora-brand, 1%);
-$sidenav-color: #7b7e8f;
+$sidenav-color: lighten($bitacora-brand, 40%);
 $sidenav-selected: darken($sidenav-bg, 5%);
 $sidenav-hover: darken($sidenav-bg, 3%);
 

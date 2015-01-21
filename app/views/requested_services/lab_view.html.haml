@@ -40,7 +40,7 @@
     .clearfix
   .services
     %h3 Servicios 
-    = render :partial => 'samples/requested_services_list', :locals => {:sample => @requested_service.sample}
+    = render :partial => 'samples/requested_services_list', :locals => {:sample => @requested_service.sample, :request => @requested_service.sample.service_request}
     .clearfix
 
   

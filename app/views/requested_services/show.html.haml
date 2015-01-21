@@ -44,6 +44,8 @@
 
 - waiting_action = @requested_service.status.to_i == RequestedService::WAITING_START && im_requestor
 
+- has_action = initial_action || received_action || assigned_action || suspended_action || reinit_action || in_progress_action || finished_action || canceled_action || sup_auth_action || owner_auth_action || send_quote_action || waiting_action
+
 .sheet
   .header-status{:class => "bg-#{@requested_service.status_class}"}
     %span.status= @requested_service.status_text
@@ -61,43 +63,44 @@
       %strong=  "Técnico Asignado: "
       = "#{(@requested_service.user.full_name)}"
   #rs-actions-area
-    #requested-service-actions-title
-      = "Acciones"
-    #requested-service-actions
-      - if initial_action
-        %button{:class => "btn btn-block btn-status bg-status-initial", :status_action => RequestedService::INITIAL, :id => 'change_status_initial'}
-          = "Regresar a inicio"
-      - if received_action
-        %button{:class => "btn btn-block btn-status bg-status-received", :status_action => RequestedService::RECEIVED, :id => 'change_status_received'}
-          = "Recibir muestra"
-      - if assigned_action
-        %button{:class => "btn btn-block btn-status bg-status-assigned", :status_action => RequestedService::ASSIGNED, :id => 'change_status_assigned'}
-          = "Asignar técnico"
-      - if suspended_action
-        %button{:class => "btn btn-block btn-status bg-status-suspended", :status_action => RequestedService::SUSPENDED, :id => 'change_status_suspended'}
-          = "Suspender servicio"
-      - if reinit_action
-        %button{:class => "btn btn-block btn-status bg-status-reinit", :status_action => RequestedService::REINIT, :id => 'change_status_reinit'}
-          = "Reiniciar servicio"
-      - if in_progress_action
-        %button{:class => "btn btn-block btn-status bg-status-in-progress", :status_action => RequestedService::IN_PROGRESS, :id => 'change_status_in_progress'}
-          = "Empezar servicio"
-      - if finished_action
-        %button{:class => "btn btn-block btn-status bg-status-finished", :status_action => RequestedService::FINISHED, :id => 'change_status_finished'}
-          = "Finalizar servicio"
-      - if sup_auth_action
-        %button{:class => "btn btn-block btn-status bg-status-sup-auth", :status_action => RequestedService::INITIAL, :id => 'change_status_sup_auth'}
-          = "Autorizar el servicio"
-      - if owner_auth_action
-        %button{:class => "btn btn-block btn-status bg-status-owner-auth", :status_action => RequestedService::INITIAL, :id => 'change_status_owner_auth'}
-          = "Autorizar el servicio"
-      - if send_quote_action
-        %button{:class => "btn btn-block btn-status bg-status-send-quote", :status_action => RequestedService::TO_QUOTE, :id => 'change_status_send_quote'}
-          = "Enviar costeo"
-      - if canceled_action
-        %button{:class => "btn btn-block btn-status bg-status-canceled", :status_action => RequestedService::CANCELED, :id => 'change_status_canceled'}
-          = "Cancelar servicio"
-    .clearfix
+    - if has_action
+      #requested-service-actions-title
+        = "Acciones"
+      #requested-service-actions
+        - if initial_action
+          %button{:class => "btn btn-block btn-status bg-status-initial", :status_action => RequestedService::INITIAL, :id => 'change_status_initial'}
+            = "Regresar a inicio"
+        - if received_action
+          %button{:class => "btn btn-block btn-status bg-status-received", :status_action => RequestedService::RECEIVED, :id => 'change_status_received'}
+            = "Recibir muestra"
+        - if assigned_action
+          %button{:class => "btn btn-block btn-status bg-status-assigned", :status_action => RequestedService::ASSIGNED, :id => 'change_status_assigned'}
+            = "Asignar técnico"
+        - if suspended_action
+          %button{:class => "btn btn-block btn-status bg-status-suspended", :status_action => RequestedService::SUSPENDED, :id => 'change_status_suspended'}
+            = "Suspender servicio"
+        - if reinit_action
+          %button{:class => "btn btn-block btn-status bg-status-reinit", :status_action => RequestedService::REINIT, :id => 'change_status_reinit'}
+            = "Reiniciar servicio"
+        - if in_progress_action
+          %button{:class => "btn btn-block btn-status bg-status-in-progress", :status_action => RequestedService::IN_PROGRESS, :id => 'change_status_in_progress'}
+            = "Empezar servicio"
+        - if finished_action
+          %button{:class => "btn btn-block btn-status bg-status-finished", :status_action => RequestedService::FINISHED, :id => 'change_status_finished'}
+            = "Finalizar servicio"
+        - if sup_auth_action
+          %button{:class => "btn btn-block btn-status bg-status-sup-auth", :status_action => RequestedService::INITIAL, :id => 'change_status_sup_auth'}
+            = "Autorizar el servicio"
+        - if owner_auth_action
+          %button{:class => "btn btn-block btn-status bg-status-owner-auth", :status_action => RequestedService::INITIAL, :id => 'change_status_owner_auth'}
+            = "Autorizar el servicio"
+        - if send_quote_action
+          %button{:class => "btn btn-block btn-status bg-status-send-quote", :status_action => RequestedService::TO_QUOTE, :id => 'change_status_send_quote'}
+            = "Enviar costeo"
+        - if canceled_action
+          %button{:class => "btn btn-block btn-status bg-status-canceled", :status_action => RequestedService::CANCELED, :id => 'change_status_canceled'}
+            = "Cancelar servicio"
+      .clearfix
 
   .clearfix
   #requested-service-action-dialog

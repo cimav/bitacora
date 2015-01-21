@@ -9,6 +9,7 @@ class SamplesController < ApplicationController
   
   def requested_services_list
     @sample = Sample.find(params['id'])
+    @request = @sample.service_request
     render :layout => false
   end
 

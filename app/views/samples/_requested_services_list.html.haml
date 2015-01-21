@@ -8,7 +8,7 @@
         %span.glyphicon{:class => rs.icon_class}
       %td.name= rs.laboratory_service.name
       %td.date= date_text(rs.created_at)
-  - if sample.service_request.system_status < ServiceRequest::SYSTEM_QUOTE_SENT
+  - if request.request_type_id != ServiceRequest::SERVICIO_VINCULACION || sample.service_request.system_status < ServiceRequest::SYSTEM_QUOTE_SENT
     %tr.add-service
       %td.icon
         %span.glyphicon.glyphicon-plus-sign

@@ -71,6 +71,7 @@ class ServiceRequest < ActiveRecord::Base
         con += 1
       end
       consecutive = "%04d" % con
+      self.system_status = SYSTEM_FREE
       self.consecutive = con
       year = Date.today.year.to_s.last(2)
       self.number = "#{self.request_type.prefix}#{year}#{consecutive}"

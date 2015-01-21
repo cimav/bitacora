@@ -56,6 +56,7 @@ class ServiceRequestsController < ApplicationController
     if !params[:folder_filter].blank? && params[:folder_filter] != '*'
       @requests = @requests.where("(request_type_id = :t)", {:t => params[:folder_filter]}) 
     end
+    @requests = @requests.order('service_requests.created_at DESC')
     render :layout => false
   end
 

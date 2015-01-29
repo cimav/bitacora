@@ -113,15 +113,15 @@ class RequestedService < ActiveRecord::Base
     end
 
     # Material
-    template_service.requested_service_materials.each do |mat|
-      new_mat = self.requested_service_materials.new
-      new_mat.material_id = mat.material_id
-      the_mat = Material.find(mat.material_id)
-      new_mat.quantity = mat.quantity
-      new_mat.unit_price = the_mat.unit_price
-      new_mat.details = mat.details
-      new_mat.save
-    end
+    # template_service.requested_service_materials.each do |mat|
+    #   new_mat = self.requested_service_materials.new
+    #   new_mat.material_id = mat.material_id
+    #   the_mat = Material.find(mat.material_id)
+    #   new_mat.quantity = mat.quantity
+    #   new_mat.unit_price = the_mat.unit_price
+    #   new_mat.details = mat.details
+    #   new_mat.save
+    # end
 
     # Other
     template_service.requested_service_others.each do |other|

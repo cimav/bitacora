@@ -3,6 +3,7 @@ class VinculacionSubscriptions
 
   subscribe :solicitar_costeo 
   subscribe :notificar_arranque
+  subscribe :notificar_arranque_no_coordinado
   subscribe :notificar_cancelacion
   
   def solicitar_costeo(attributes)
@@ -39,7 +40,7 @@ class VinculacionSubscriptions
   end
 
   def notificar_arranque(attributes)
-    puts "Arranque de la solicitud #{attributes['solicitud_id']}"
+    puts "Arranque de la solicitud coordinada #{attributes['solicitud_id']}"
     if services = ServiceRequest.where(:system_request_id => attributes['solicitud_id'])
       services.each do |s|    
         # TODO: validar agente
@@ -59,6 +60,48 @@ class VinculacionSubscriptions
       puts "Servicio no encontrado"
     end
   end
+
+  def notificar_arranque_no_coordinado(attributes)
+    puts "Arranque de la solicitud #{attributes['solicitud_id']}"
+
+    # Create service_request
+    if u_requestor = User.where(:email => attributes['agente_email']).first
+      folder = u_requestor.service_request.new 
+      folder.system_id         = attributes['id']
+      folder.system_request_id = attributes['solicitud_id']
+      folder.request_type_id   = ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
+      folder.request_link      = attributes['nombre']
+      folder.number            = attributes['codigo']
+      folder.description       = attributes['descripcion']
+      folder.system_status     = ServiceRequest::SYSTEM_FREE
+      folder.save(:validate => false)
+
+      # Add samples to service_request  
+      m = attributes['muestra'] 
+      puts "Agregar muestra #{m['identificacion']}"
+      muestra = folder.sample.new
+      muestra.system_id      = m['id']
+      muestra.identification = m['identificacion']
+      muestra.description    = m['descripcion']
+      muestra.quantity       = m['cantidad']
+      muestra.save
+
+      if lab_service = LaboratoryService.find(attributes['servicio_bitacora_id'])
+        requested_service = RequestedService.new
+        requested_service.laboratory_service_id = lab_service.id
+        requested_service.sample_id = muestra.id
+        requested_service.details = attributes['descripcion']
+        # TODO:
+        # requested_service.suggested_user_id = lab_service.default_user_id
+        requested_service.status = RequestedService::INITIAL
+        requested_service.save(:validate => false) 
+      end
+      
+    end
+
+  end
+
+
 
   def notificar_cancelacion(attributes)
     puts "Cancelar solicitud #{attributes['solicitud_id']}"

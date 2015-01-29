@@ -28,6 +28,7 @@ class ServiceRequest < ActiveRecord::Base
   IMPORTED = 98
 
   SERVICIO_VINCULACION = 1
+  SERVICIO_VINCULACION_NO_COORDINADO = 12
 
   SYSTEM_FREE              = 1
   SYSTEM_TO_QUOTE          = 2
@@ -63,7 +64,7 @@ class ServiceRequest < ActiveRecord::Base
 
   def add_extra
     # If is not Servicio Vinculacion then create number
-    if self.request_type_id != SERVICIO_VINCULACION || self.number.nil?
+    if self.request_type_id != SERVICIO_VINCULACION || self.request_type_id != SERVICIO_VINCULACION_NO_COORDINADO || self.number.nil?
       con = ServiceRequest.where("number LIKE :prefix AND YEAR(created_at) = :year", {:prefix => "#{self.request_type.prefix}%", :year => Date.today.year}).maximum('consecutive')
       if con.nil?
         con = 1

@@ -1,6 +1,8 @@
-%table.table.table-hover
+%table.table
   - @requests.each do |r|
     %tr.service-request-item{:service_request_id => r.id, :id => r.number}
+      %td.type{:class => "label_#{r.request_type.short_name}"}
+        %div= r.request_type.name
       %td.service-request-number
         %span.glyphicon.glyphicon-folder-close
         .number= r.number
@@ -8,10 +10,10 @@
         .title
           = "#{r.request_link}" rescue "Sin tipo"
         .description= r.description
+        - if r.request_type_id == ServiceRequest::SERVICIO_VINCULACION || r.request_type_id == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
+          .cliente= r.vinculacion_client_name
       %td.service-request-date
         = date_text(r.created_at)
-      %td.type
-        %span.request-type.label.label-default{:class => "label_#{r.request_type.short_name}"}= r.request_type.name
       %td.service-collaborators
         = image_tag (r.user.avatar_url), :class => 'img-circle folder-owner'
         - if r.supervisor

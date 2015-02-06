@@ -65,15 +65,18 @@ class VinculacionSubscriptions
     puts "Arranque de la solicitud #{attributes['solicitud_id']}"
 
     # Create service_request
+    puts "Crear carpeta #{attributes['codigo']}"
     if u_requestor = User.where(:email => attributes['agente_email']).first
       folder = u_requestor.service_request.new 
-      folder.system_id         = attributes['id']
-      folder.system_request_id = attributes['solicitud_id']
-      folder.request_type_id   = ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
-      folder.request_link      = attributes['nombre']
-      folder.number            = attributes['codigo']
-      folder.description       = attributes['descripcion']
-      folder.system_status     = ServiceRequest::SYSTEM_FREE
+      folder.system_id               = attributes['id']
+      folder.system_request_id       = attributes['solicitud_id']
+      folder.request_type_id         = ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
+      folder.request_link            = attributes['descripcion']     # Descripción de la solicitud
+      folder.number                  = attributes['carpeta_codigo']
+      folder.description             = attributes['nombre']          # Nombre del servicio solicitado
+      folder.vinculacion_client_id   = attributes['cliente_id']
+      folder.vinculacion_client_name = attributes['cliente_nombre']
+      folder.system_status           = ServiceRequest::SYSTEM_FREE
       folder.save(:validate => false)
 
       # Add samples to service_request  

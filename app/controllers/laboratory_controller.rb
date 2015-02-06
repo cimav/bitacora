@@ -29,6 +29,12 @@ class LaboratoryController < ApplicationController
     if params[:lrs_assigned_to] != '0'
       @requested_services = @requested_services.where('requested_services.user_id' => params[:lrs_assigned_to])
     end
+    if params[:lrs_client] != '0'
+      @requested_services = @requested_services.where('service_requests.vinculacion_client_id' => params[:lrs_client])
+    end
+    if params[:lrs_type] != '0'
+      @requested_services = @requested_services.where('service_requests.request_type_id' => params[:lrs_type])
+    end
     if !params[:q].blank?
       @requested_services = @requested_services.where("(laboratory_services.description LIKE :q OR laboratory_services.name LIKE :q OR samples.identification LIKE :q OR requested_services.number LIKE :q OR samples.description LIKE :q)", {:q => "%#{params[:q]}%"})
     end

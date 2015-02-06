@@ -18,6 +18,14 @@ $(document).on('change', '#lrs_requestor', () ->
     labReqServicesLiveSearch()
   )
 
+$(document).on('change', '#lrs_client', () ->
+    labReqServicesLiveSearch()
+  )
+
+$(document).on('change', '#lrs_type', () ->
+    labReqServicesLiveSearch()
+  )
+
 $(document).on('change', '#lrs_assigned_to', () ->
     labReqServicesLiveSearch()
   )

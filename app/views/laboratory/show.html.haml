@@ -46,6 +46,18 @@
         - if lab_access.to_i == LaboratoryMember::ACCESS_TRAINED
           - assigned_to_options = "<option value=\"#{current_user.id}\">#{current_user.full_name}</option>" 
         = select_tag "lrs_assigned_to", assigned_to_options.html_safe, {:class => 'form-control'}
+
+        %label Tipo
+        - type_options = "<option value=\"0\">Todos los tipos</option>"
+        - RequestType.order('name').each do |rt|
+          - type_options += "<option value=\"#{rt.id}\">#{rt.name}</option>"
+        = select_tag "lrs_type", type_options.html_safe, {:class => 'form-control'}
+
+        %label Cliente
+        - client_options = "<option value=\"0\">Todos los clientes</option>"
+        - User.find_by_sql("SELECT DISTINCT vinculacion_client_id, vinculacion_client_name FROM service_requests sr INNER JOIN samples sam ON sam.service_request_id = sr.id INNER JOIN requested_services rs ON sam.id = rs.sample_id INNER JOIN laboratory_services ls ON laboratory_service_id = ls.id WHERE laboratory_id = #{@laboratory.id} ORDER BY vinculacion_client_name").each do |c|
+          - client_options += "<option value=\"#{c.vinculacion_client_id}\">#{c.vinculacion_client_name}</option>"
+        = select_tag "lrs_client", client_options.html_safe, {:class => 'form-control'}
   #lab-req-serv-items
 
 :javascript

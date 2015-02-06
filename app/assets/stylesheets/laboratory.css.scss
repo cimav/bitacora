@@ -57,39 +57,61 @@
 
 .lab-req-serv-item {
   cursor: pointer;
-  padding: 1px;
-  margin-left: 1px;
+  padding: 0;
+  margin: 0;
   border-bottom: 1px solid $line-color;
-
-  td {
-    vertical-align: top;
-    padding: 10px;
-    &.avatar {
-      width: 64px;
+  .rs-header {
+    font-size: 12px;
+    height: 32px;
+    padding: 0px;
+    border-bottom: 1px solid $line-color;
+    background: $light-grey;
+    .rs-type {
+      float: left;
+      font-weight: bold;
+      color: #fff;
+      height: 32px;
+      padding: 8px 10px;
     }
-    &.requested-service-data {
-      width: 40%;
-      .service-name {
-        font-weight: bold;
-        font-size: 120%;
-      }
-      .number {
-        font-weight: normal;
-        color: $grey;
-      }
+    .rs-status {
+      float: left;
+      font-weight: bold;
+      color: #fff;
+      height: 32px;
+      padding: 8px 10px;
     }
+    .rs-number {
+      float: left;
+      height: 32px;
+      padding: 8px 10px;
+      font-size: 110%;
+      font-weight: bold;
+    }
+    .rs-date {
+      float: right;
+      height: 32px;
+      padding: 8px 10px;
+      color: $grey;
+      font-weight: bold;
+    }
+  }
 
-    &.requested-service-sample {
-      width: 30%;
-      .identification {
-
-      }
-      .description {
+  .rs-area {
+    .rs-user {
+      width: 80px;
+      text-align: center;
+      padding: 10px;
+      min-height: 140px;
+      .full-name {
         font-size: 90%;
         color: $grey;
       }
-      .quantity {
-
+    }
+    .rs-data {
+      padding: 10px;
+      .rs-name {
+        font-size: 150%;
+        font-weight: bold;
       }
     }
   }

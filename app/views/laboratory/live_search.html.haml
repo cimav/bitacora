@@ -1,25 +1,35 @@
-%table.table.table-hover
-  - @requested_services.each do |rs|
-    - next if !rs.sample.service_request
-    - next if rs.sample.service_request.status == ServiceRequest::DELETED
-    %tr.requested-service.lab-req-serv-item{'data-requested-service-id' => rs.id, 'data-sample-id' => rs.sample_id, :id => "requested_service_#{rs.id}"}
-      %td.requested-service-date
-        = date_text(rs.created_at)
-      %td.avatar
-        = image_tag (rs.sample.service_request.user.avatar_url), :class => 'img-circle'
-      %td
-        .requested-service-data
-          .service-name
+- @requested_services.each do |rs|
+  - next if !rs.sample.service_request
+  - next if rs.sample.service_request.status == ServiceRequest::DELETED
+  .requested-service.lab-req-serv-item{'data-requested-service-id' => rs.id, 'data-sample-id' => rs.sample_id, :id => "requested_service_#{rs.id}"}
+    .rs-header
+      .rs-type{:class => "label_#{rs.sample.service_request.request_type.short_name}"}= rs.sample.service_request.request_type.name
+      .rs-status{:class => "bg-#{rs.status_class}"}= rs.status_text
+      .rs-number= rs.number  
+      .rs-date= date_text(rs.created_at)
+    %table.rs-area
+      %tr
+        %td.rs-user
+          .avatar
+            = image_tag (rs.sample.service_request.user.avatar_url), :class => 'img-circle'
+          .full-name= rs.sample.service_request.user.full_name
+        %td.rs-data
+          .rs-name
             = rs.laboratory_service.name
-          .number= rs.number
-          .full-name= "Solicitado por #{rs.sample.service_request.user.full_name}"  
-        .requested-service-sample
-          .identification= rs.sample.identification
-          .description= truncate(rs.sample.description, length: 100)
-          - if rs.sample.quantity > 1
-            .quantity= "#{rs.sample.quantity} muestras"
-          - else
-            .quantity= "#{rs.sample.quantity} muestra"
-        .requested-service-status
-          %span.label.status{:class => "bg-#{rs.status_class}"}= rs.status_text
+          - if rs.sample.service_request.request_type_id == ServiceRequest::SERVICIO_VINCULACION || rs.sample.service_request.request_type_id == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
+            .rs-client
+              %strong= "Cliente: "
+              = rs.sample.service_request.vinculacion_client_name
+          .rs-sample
+            .rs-sample-identification
+              %strong= "Muestra: "
+              = rs.sample.identification
+            - if rs.sample.quantity > 1
+              %strong= "Cantidad: "
+              .quantity= "#{rs.sample.quantity} muestras"
+            - else
+              %strong= "Cantidad: "
+              .quantity= "#{rs.sample.quantity} muestra"
       
+    .clearfix
+  

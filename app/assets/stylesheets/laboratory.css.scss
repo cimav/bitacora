@@ -97,6 +97,7 @@
   }
 
   .rs-area {
+    width: 100%;
     .rs-user {
       width: 80px;
       text-align: center;
@@ -113,6 +114,12 @@
         font-size: 150%;
         font-weight: bold;
       }
+    }
+  }
+
+  &:hover {
+    .rs-area {
+      background: $hover-bg;
     }
   }
 }

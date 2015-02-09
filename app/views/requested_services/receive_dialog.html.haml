@@ -34,7 +34,7 @@
                 = f.select :user_id, u_options.html_safe, {}, :class => "form-control"
             %td
               - display = sug == ''? "display: none;" : ""
-              .service_start{:style => "#{display}"}
+              #service-start{:style => "#{display}"}
                 = check_box_tag 'start_service', 'yes', false, {:style => 'float: left;'}
                 = label_tag 'start_service', ' Iniciar servicio', {:style => 'white-space: pre;'}
       .dialog-footer

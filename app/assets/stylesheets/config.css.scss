@@ -15,8 +15,8 @@ $green: #62c462;
 $strong-color: #333;
 $strong-color2: #444;
 
-$light-bg: #f9fafc;
-$bg-color: #edf2f8;
+$light-bg: #fefefe;
+$bg-color: #fafafa;
 $secondary-bg: lighten($light-grey, 5%);
 
 $bg-selected2: #e2f0f4;
@@ -32,10 +32,10 @@ $qty-color: #514721;
 
 $strip-color: #f9f9f9;
 
-$top-header-bg: #4791d2;
-$top-header-color: #fff;
+$top-header-bg: #fff;
+$top-header-color: $red;
 
-$bitacora-brand: #244060;
+$bitacora-brand: #333;
 $folder-color: #f9d683;
 $sample-color: #f90;
 $owner-color: #64a673;

@@ -40,6 +40,20 @@
 .bg_PROTOTIPO      { background-color: $prototipo-color; border-bottom: 1px solid darken($prototipo-color, 5%);}
 .bg_SERVICIO2      { background-color: $servicio2-color; border-bottom: 1px solid darken($servicio2-color, 5%);}
 
+
+.item_SERVICIO      { border-top: 2px solid $servicio-color; }
+.item_ARTICULO      { border-top: 2px solid $articulo-color; }
+.item_TESIS         { border-top: 2px solid $tesis-color; }
+.item_TESIS_EXTERNA { border-top: 2px solid $tesis-color; }
+.item_CONVENIO      { border-top: 2px solid $convenio-color; }
+.item_PROYECTO      { border-top: 2px solid $proyecto-color; }
+.item_CALIBRACION    { border-top: 2px solid $calibracion-color; }
+.item_ESTANCIAS      { border-top: 2px solid $estancias-color; }
+.item_MAQUINADO      { border-top: 2px solid $maquinado-color; }
+.item_PROTOTIPO      { border-top: 2px solid $prototipo-color; }
+.item_SERVICIO2      { border-top: 2px solid $servicio2-color; }
+
+
 #folders {
  z-index: 99998;
   position: absolute;
@@ -52,7 +66,7 @@
     width: 100%;
     tr {
       td {
-        padding: 10px;
+        padding: 0px;
         border-bottom: 1px solid $line-color;
       }
     }
@@ -62,13 +76,13 @@
 .service-request-item {
   cursor: pointer;
   background: transparent;
-  margin: 10px 0;
-  padding-bottom: 20px;
+  padding: 100px !important;
 
   .service-request-number {
     vertical-align: top;
     font-size: 90%;
-    padding: 0 20px;
+    width: 60px !important;
+    padding: 24px 20px !important;
     text-align: center;
     font-weight: bold;
     padding-left: 4px;
@@ -82,17 +96,6 @@
       margin-bottom: 5px;
     }
   }
-  
-  .type {
-    width: 32px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    div {
-      font-weight: bold;
-      color: #fff;
-      padding: 0.5em;
-    }
-  }
 
   &:hover {
     background: #fafafa;
@@ -102,14 +105,29 @@
   }
 
   .service-request-data {
+    padding-bottom: 20px !important;
+    .type {
+      color: #fff;
+      display: inline;
+      padding: 3px;
+      font-weight: bold;
+    }
     .title {
       font-size: 150%;
+      padding-top: 10px;
     }
     .description {
       color: $grey;
     }
   }
+
+  .service-request-date {
+    padding-top: 20px !important;
+    font-size: 150%;
+  }
+
   .service-collaborators {
+    padding-top: 20px !important; 
     img {
       width: 32px;
       height: 32px;

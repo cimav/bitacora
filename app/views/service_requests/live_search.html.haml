@@ -1,12 +1,11 @@
-%table.table
+%table.table.sr-table
   - @requests.each do |r|
-    %tr.service-request-item{:service_request_id => r.id, :id => r.number}
-      %td.type{:class => "label_#{r.request_type.short_name}"}
-        %div= r.request_type.name
+    %tr.service-request-item{:service_request_id => r.id, :id => r.number, :class => "item_#{r.request_type.short_name}"}
       %td.service-request-number
         %span.glyphicon.glyphicon-folder-close
         .number= r.number
-      %td.service-request-data 
+      %td.service-request-data
+        .type{:class => "label_#{r.request_type.short_name}"}= r.request_type.name 
         .title
           = "#{r.request_link}" rescue "Sin tipo"
         .description= r.description

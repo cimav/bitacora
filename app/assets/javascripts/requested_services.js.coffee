@@ -9,13 +9,13 @@
  # WAITING_START = 22
  # FINISHED      = 99 
 
-$(document).on('change', '#receive-dialog #requested_service_user_id', () ->
+$(document).on('change', '#requested_service_user_id', () ->
   if $('#requested_service_user_id').val() == '-'
-    $('#field_service_start').hide()
+    $('#service-start').hide()
     $('#start_service').prop('checked', false)
     $('#requested_service_status').val("2")
   else
-    $('#field_service_start').show()
+    $('#service-start').show()
     $('#requested_service_status').val("3")
 )
 

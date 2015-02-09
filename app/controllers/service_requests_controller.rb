@@ -345,14 +345,14 @@ class ServiceRequestsController < ApplicationController
     end
 
     # Materials
-    materials = Array.new
-    requested_service.requested_service_materials.each do |mat|
-      materials << {
-        "detalle" => mat.material.name,
-        "cantidad" => mat.quantity,
-        "precio_unitario" => mat.unit_price
-      }
-    end
+    # materials = Array.new
+    # requested_service.requested_service_materials.each do |mat|
+    #   materials << {
+    #     "detalle" => mat.material.name,
+    #     "cantidad" => mat.quantity,
+    #     "precio_unitario" => mat.unit_price
+    #   }
+    # end
 
     # Others
     others = Array.new
@@ -371,7 +371,6 @@ class ServiceRequestsController < ApplicationController
       "muestra_identificador" => requested_service.sample.identification,
       "nombre_servicio"       => requested_service.laboratory_service.name,
       "personal"              => technicians,
-      "consumibles"           => materials,
       "equipos"               => equipment,
       "otros"                 => others
     }

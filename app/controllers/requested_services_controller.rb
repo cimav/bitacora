@@ -286,9 +286,11 @@ class RequestedServicesController < ApplicationController
           Resque.enqueue(StatusChangeMailer, @requested_service.id, current_user.id, prv_msg)
         end
 
+        sr = @requested_service.sample.service_request
+
         # If status changed to WAITING_START then change service_request status
         if @requested_service.status.to_i == RequestedService::WAITING_START
-          sr = @requested_service.sample.service_request
+    
           quoted = 0
           qty = 0
           
@@ -313,7 +315,6 @@ class RequestedServicesController < ApplicationController
 
         # If status changed to FINISHED then change service_request status
         if @requested_service.status.to_i == RequestedService::FINISHED
-          sr = @requested_service.sample.service_request
           finished = 0
           qty = 0
           
@@ -332,12 +333,50 @@ class RequestedServicesController < ApplicationController
             sr.system_status = ServiceRequest::SYSTEM_PARTIAL_FINISHED
           end
           sr.save
-        end
-        
 
+
+          # Enviar mensaje a Vinculación a traves del bus. 
+          if (sr.request_type_id == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO)
+            
+            @requested_service.requested_service_technicians.each do |p|
+              participation = sr.service_request_participations.new
+              participation.user_id = p.user_id
+              participation.percentage = p.participation
+              participation.save
+            end  
+
+            participations = Array.new
+            sr.service_request_participations.each do |p|
+              participations << {
+                "email" => p.user.email,
+                "porcentaje" => p.percentage,
+              }
+            end
+
+            # Publish reporte to Vinculacion system.
+            services_costs = []
+            services_costs << cost_details_requested_service(@requested_service)
+      
+            details = {
+              "system_id" => sr.system_id, 
+              "system_request_id" => sr.system_request_id, 
+              "codigo" => sr.number, 
+              "servicios" => services_costs
+            }
+
+
+            details['participaciones'] = participations
+            ResqueBus.redis = '127.0.0.1:6379' # TODO: Mover a config
+            ResqueBus.publish('recibir_reporte', details)
+            sr.system_status = ServiceRequest::SYSTEM_REPORT_SENT
+            sr.save
+          end
+        end
       end
+
       respond_with do |format|
         format.html do
+          puts "RESPOND"
           if request.xhr?
             json = {}
             json[:flash] = flash
@@ -954,6 +993,53 @@ class RequestedServicesController < ApplicationController
       end
     end
     
+  end
+
+
+  def cost_details_requested_service(requested_service)
+
+    # Technicians
+    technicians = Array.new
+    requested_service.requested_service_technicians.each do |tech|
+      technicians << {
+        "detalle" => tech.user.full_name,
+        "cantidad" => tech.hours,
+        "precio_unitario" => tech.hourly_wage 
+      }
+    end
+
+    # Equipment
+    equipment = Array.new
+    requested_service.requested_service_equipments.each do |eq|
+      equipment << {
+        "detalle" => eq.equipment.name,
+        "cantidad" => eq.hours,
+        "precio_unitario" => eq.hourly_rate
+      }
+    end
+
+    # Others
+    others = Array.new
+    requested_service.requested_service_others.each do |ot|
+      others << {
+        "detalle" => "#{ot.other_type.name}: #{ot.concept}",
+        "cantidad" => 1,
+        "precio_unitario" => ot.price
+      }
+    end
+
+    # Details
+    details = {
+      "bitacora_id"           => requested_service.id,
+      "muestra_system_id"     => requested_service.sample.system_id,
+      "muestra_identificador" => requested_service.sample.identification,
+      "nombre_servicio"       => requested_service.laboratory_service.name,
+      "personal"              => technicians,
+      "equipos"               => equipment,
+      "otros"                 => others
+    }
+
+    return details
   end
 
 end

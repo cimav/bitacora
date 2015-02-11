@@ -66,33 +66,43 @@
 }
 
 
-#requested-service-data {
-  padding: 20px;
-  h3 {
-    font-size: 16px;
-    margin: 0;
-    padding: 0;
-  } 
-  strong { 
-    color: $grey;
+#rs-header {
+  margin-top: 20px;
+  width: 100%;
+
+  #requested-service-data {
+    padding: 0 20px;
+    vertical-align: top;
+    h3 {
+      font-size: 16px;
+      font-weight: bold;
+      margin: 0;
+      padding: 0;
+    } 
+    strong { 
+      color: $grey;
+    }
   }
-}
 
-#rs-actions-area {
-  border-top: 1px solid $line-color;
-  border-bottom: 1px solid $line-color;
-}
-
-#requested-service-actions-title {
-  padding: 20px;
-  width: 30%;
-  float: left;
-  text-align: center;
-} 
-#requested-service-actions {
-  padding: 10px;
-  width: 70%;
-  float: right;
+  #requested-service-actions {
+    text-align: right;
+    min-width: 300px;
+    width: 300px;
+    vertical-align: top;
+    button {
+      float: left;
+      margin: 5px;
+      span {
+        display: block;
+        font-size: 20px;
+        margin-bottom: 5px;
+      }
+      font-size: 11px;
+      text-align: center;
+      width: 64px;
+      height: 64px;
+    }
+  }
 }
 
 #requested-service-tabs {

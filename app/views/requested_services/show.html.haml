@@ -131,13 +131,12 @@
                                                                       :service_request_id => @requested_service.sample.service_request_id, 
                                                                       :sample_id => @requested_service.sample_id, 
                                                                       :requested_service_id => @requested_service.id}
-    #archivos.tab-pane
-      #files_iframe_outer
-        %iframe{"name" => "submit_iframe", "id" => "files_iframe", "src" => "/service_files/ui/#{@requested_service.sample.service_request_id}/#{@requested_service.sample_id}/#{@requested_service.id}"}
-      .clearfix
-
+    
     #costeo.tab-pane
       #costeo_inner
         = render :partial => 'costs', :locals => {:requested_service => @requested_service, :grand_total => @grand_total }
 
+    #archivos.tab-pane
+      = render :partial => 'files', :locals => {:requested_service => @requested_service }
+      .clearfix
         

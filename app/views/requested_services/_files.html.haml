@@ -1,0 +1,52 @@
+:javascript
+  $(document).on('ajax:success', '.delete-file', function(data, status, xhr) {
+    $(this).closest('tr').hide("slow", function() { $(this).remove(); });
+    $('#content-panel').html(status);
+  });
+
+  $(document).on('ajax:beforeSend', '.delete-file', function(ev, xhr, settings) {
+     $(this).closest('tr').addClass("loading");
+  });
+
+
+- req_services = RequestedService.where(:sample_id => requested_service.sample_id).order("FIELD(id,#{requested_service.id}) DESC, id")
+%table#files-table
+  %tr
+    %td#files-area
+      - cur_serv = ''
+      - others_header = false;
+      - req_services.each do |rs|
+        - if rs.id.to_i != @requested_service_id.to_i && !others_header
+          - others_header = true
+          %h4= "Archivos en otros servicios"
+        %table.table.table-striped.table-bordered
+          %tr
+            %th{:colspan => 3}
+              %span.service-bullet{:class => "status_#{rs.status}"}= "%02d" %  rs.consecutive
+              = rs.laboratory_service.name
+          - the_files = rs.service_files.where(:status => ServiceFile::ACTIVE)
+          - if the_files.count == 0
+            %tr
+              %td.empty-cell= "No hay archivos"
+          - the_files.each do |service_file|
+            %tr{'id' => "file-#{service_file.id}"}
+              - if File.extname(service_file.file.to_s) == ''
+                - ext = 'unknown'
+              - else 
+                - ext = File.extname(service_file.file.to_s)[1..-1]
+              %td{"class" => "file-entry type-unknown type-" + ext, "title" => File.basename(service_file.file.to_s)}
+                = form_for(service_file, :remote => true, :html => {:'data-type' => 'html', :class => 'file-desc-form'}) do |ff|
+                  - t_options = "<option value=\"#{ServiceFile::FILE}\">Documento</option>"
+                  - t_options += "<option value=\"#{ServiceFile::FINAL_REPORT}\">Reporte Final</option>"
+                  = ff.select :file_type, t_options.html_safe, {}, {:class => 'file_type_combo', :id => "file_type_id_#{service_file.id}"}
+                  = ff.text_field :description, :class => 'description_field', :id => "description_#{service_file.id}"
+                %span.file-desc{:title => service_file.type_text}
+                  %i{:class => "file-icon #{service_file.file_type_icon}"}
+                  %a{'href' => "/service_files/#{service_file.id}/file"}
+                    = service_file.description
+                %br
+                %span.file-details= ext.upcase + ", " + number_to_human_size(File.size(service_file.file.to_s)) + ". Subido por #{service_file.user.full_name}"
+                - if service_file.user_id == current_user.id
+                  = link_to "×", {:controller => "service_files", :action => "remove_file", :id => service_file.id, :remote => true}, :class => 'close delete-file', data: { confirm: "¿Estas seguro?" }
+    %td#td-upload-area
+      %iframe{"name" => "submit_iframe", "id" => "files_iframe", "src" => "/service_files/ui/#{@requested_service.sample.service_request_id}/#{@requested_service.sample_id}/#{@requested_service.id}", "width" => "350"}

@@ -1042,4 +1042,11 @@ class RequestedServicesController < ApplicationController
     return details
   end
 
+  def files_list
+     @requested_service = RequestedService.find(params[:id])
+     @req_services = RequestedService.where(:sample_id => @requested_service.sample_id).order("FIELD(id,#{@requested_service.id}) DESC, id")
+     @requested_service_id = params[:id]
+     render :layout => false
+  end
+
 end

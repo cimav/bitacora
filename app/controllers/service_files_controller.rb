@@ -70,7 +70,7 @@ class ServiceFilesController < ApplicationController
     end
     # Generate zip version
     Resque.enqueue(GenerateSampleZip, params[:service_file]['sample_id'])
-
+    session[:has_upload] = true
     redirect_to :back
   end
 

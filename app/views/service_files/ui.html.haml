@@ -52,3 +52,10 @@
   #download-zip
     %a#zip-link{"data-sample-id" => @sample_id}= "Descargar ZIP de todos los servicios"
   .clearfix
+  - if session[:has_upload]
+    :javascript
+      url = "/requested_services/#{@requested_service_id}/files_list"; 
+      $.get(url, {}, function (html) {
+        $('#files-area', parent.document).empty().html(html);
+      });
+    - session[:has_upload] = false

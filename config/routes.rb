@@ -68,6 +68,7 @@ Bitacora::Application.routes.draw do
   post '/requested_services/delete_eq' => 'requested_services#delete_eq'
   post '/requested_services/delete_mat' => 'requested_services#delete_mat'
   post '/requested_services/delete_other' => 'requested_services#delete_other'
+  get  '/requested_services/:id/files_list' => 'requested_services#files_list'
 
 
 
@@ -195,6 +196,6 @@ Bitacora::Application.routes.draw do
   get '/auth/failure' => 'sessions#failure'
   get "/logout" => 'sessions#destroy'
 
-  get ':number' => 'home#redirect_requested_service', :constraints => { :number => /[^\/]*/ }
+  # get ':number' => 'home#redirect_requested_service', :constraints => { :number => /[^\/]*/ }
 
 end

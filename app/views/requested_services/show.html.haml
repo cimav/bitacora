@@ -70,8 +70,8 @@
             = "Inicio"
         - if received_action
           %button{:class => "btn btn-block btn-status bg-status-received", :status_action => RequestedService::RECEIVED, :id => 'change_status_received'}
-          %span.glyphicon.glyphicon-th-large
-          = "Recibir"
+            %span.glyphicon.glyphicon-th-large
+            = "Recibir"
         - if assigned_action
           %button{:class => "btn btn-block btn-status bg-status-assigned", :status_action => RequestedService::ASSIGNED, :id => 'change_status_assigned'}
             %span.glyphicon.glyphicon-user

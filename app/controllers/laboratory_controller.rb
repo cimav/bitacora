@@ -29,10 +29,16 @@ class LaboratoryController < ApplicationController
     if params[:lrs_assigned_to] != '0'
       @requested_services = @requested_services.where('requested_services.user_id' => params[:lrs_assigned_to])
     end
+    if params[:lrs_client] != '0'
+      @requested_services = @requested_services.where('service_requests.vinculacion_client_id' => params[:lrs_client])
+    end
+    if params[:lrs_type] != '0'
+      @requested_services = @requested_services.where('service_requests.request_type_id' => params[:lrs_type])
+    end
     if !params[:q].blank?
       @requested_services = @requested_services.where("(laboratory_services.description LIKE :q OR laboratory_services.name LIKE :q OR samples.identification LIKE :q OR requested_services.number LIKE :q OR samples.description LIKE :q)", {:q => "%#{params[:q]}%"})
     end
-    @requested_services = @requested_services.order('users.first_name, users.last_name, requested_services.created_at DESC')
+    @requested_services = @requested_services.order('requested_services.created_at DESC')
     render :layout => false
   end
 
@@ -146,12 +152,12 @@ class LaboratoryController < ApplicationController
     @laboratory_members = @laboratory.laboratory_members
 
     if params[:admin_lab_member_access] != '0'
-      @laboratory_members = @laboratory_members.includes(:user).where(:access => params[:admin_lab_member_access])
+      @laboratory_members = @laboratory_members.joins(:user).where(:access => params[:admin_lab_member_access])
     end
 
 
     if !params[:q].blank?
-      @laboratory_members = @laboratory_members.includes(:user).where("(users.first_name LIKE :q OR users.last_name LIKE :q)", {:q => "%#{params[:q]}%"})
+      @laboratory_members = @laboratory_members.joins(:user).where("(users.first_name LIKE :q OR users.last_name LIKE :q)", {:q => "%#{params[:q]}%"})
     end
 
     render :layout => false

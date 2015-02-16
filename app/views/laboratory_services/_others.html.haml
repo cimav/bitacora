@@ -23,7 +23,7 @@
             .other-details= other.details
           = link_to '×', {:controller => 'requested_services', :action => 'delete_other', :other_id => other.id}, :method => :post, :remote => true, :class => 'close', :'data-type' => 'html', 'data-id' => other.id
         %td
-          = text_field_tag "price_#{other.id}", other.price, {:class => "other_price_template", "data-id" => other.id}
+          = text_field_tag "price_#{other.id}", other.price, {:class => "other_price_template form-control", "data-id" => other.id}
     - if @requested_service.requested_service_others.count > 0
       %tr.total-row
         %td{:colspan => 3}
@@ -36,10 +36,10 @@
     - if u_options != ''
       %tr.add-row
         %td
-          = select_tag :new_other_type, u_options.html_safe, {:style => "width: 200px;"}
+          = select_tag :new_other_type, u_options.html_safe, {:style => "width: 200px;", :class => 'form-control'}
         %td
-          = text_field_tag 'new_other_concept', nil,  { :placeholder => "Concepto…" }
+          = text_field_tag 'new_other_concept', nil,  { :placeholder => "Concepto…", :class => 'form-control' }
         %td
-          = text_field_tag 'new_other_price', nil, { :placeholder => "Precio…" }
+          = text_field_tag 'new_other_price', nil, { :placeholder => "Precio…", :class => 'form-control' }
         %td{:colspan => 2}
           %button.btn.btn-mini.btn-info#add-other-template= "Agregar concepto"

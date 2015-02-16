@@ -1,0 +1,49 @@
+#rs-info
+  .rs-icon
+    %span.glyphicon.glyphicon-file
+    .rs-number= @requested_service.number
+  .rs-status
+    %span.label.label-default{:class => "bg-#{@requested_service.status_class}"}
+      = @requested_service.status_text
+  .rs-data
+    .title
+      = @requested_service.laboratory_service.name
+    .description= @requested_service.details
+
+  .folder
+    %h3 Carpeta
+    .folder-icon 
+      %span.glyphicon.glyphicon-folder-close
+    .folder-data
+      %span.request-type.label.label-default{:class => "label_#{@requested_service.sample.service_request.request_type.short_name}"}= @requested_service.sample.service_request.request_type.name
+      %h4= @requested_service.sample.service_request.request_link
+      %p= @requested_service.sample.service_request.description
+      .folder-collaborators
+        = image_tag (@requested_service.sample.service_request.user.avatar_url), :class => 'img-circle folder-owner'
+        - if @requested_service.sample.service_request.supervisor
+          = image_tag (@requested_service.sample.service_request.supervisor.avatar_url), :class => 'img-circle folder-supervisor'
+    .clearfix
+          
+
+  .sample 
+    %h3 Muestra
+    .sample-icon 
+      - if @requested_service.sample.quantity > 1
+        %span.glyphicon.glyphicon-tags
+      - else 
+        %span.glyphicon.glyphicon-tag
+      %br
+      %span.badge= @requested_service.sample.quantity 
+    .sample-data
+      %h4= @requested_service.sample.identification
+      .description= @requested_service.sample.description
+    .clearfix
+  .services
+    %h3 Servicios 
+    = render :partial => 'samples/requested_services_list', :locals => {:sample => @requested_service.sample, :request => @requested_service.sample.service_request}
+    .clearfix
+
+  
+
+
+#folder-work-panel

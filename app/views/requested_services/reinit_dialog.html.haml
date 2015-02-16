@@ -1,17 +1,21 @@
-#reinit-modal.modal.hide.fade{:tabindex => "-1", :role => "dialog", "aria-labelledby" => "reinit-modal-label", "aria-hidden" => "true"}
-  = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'reinit-sample-form'} do |f|
-    .modal-header
-      %button.close{"data-dismiss" => "modal", "aria-hidden" => "true"}= "×"
-      %h3#reinit-modal-label= "Reiniciar servicio #{@requested_service.number}"
-    .modal-body
-      = f.hidden_field :status, {:value => RequestedService::REINIT}
-      #field_service_request_sample_description
-        = label_tag 'activity_log_msg', 'Notas:'
-        = text_area_tag 'activity_log_msg', '', {:style => 'width: 515px;', :rows => 8}
-    .modal-footer
-      .send-mail-footer
-        = check_box_tag 'send_mail', 'yes', false, {:style => 'float: left;'}
-        = label_tag 'send_mail', 'Enviar por correo.', {:style => 'margin-left: 4px; float: left;'}
-      = button_tag "Reiniciar servicio", {:class => "btn btn-primary", :type => "submit"}
-      %button.btn{"data-dismiss" => "modal", "aria-hidden" => "true"}= "Cerrar"
+.sheet
+  .header-status{:class => "bg-status-reinit"}
+    %span.status= "Reanudar servicio"
+    %a.close{:class => 'requested-service-link', 'data-id' => @requested_service.id, 'data-sample-id' => @requested_service.sample_id}="×"
+    %span.number= @requested_service.number
+  .dialog-content.padded
+    = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'status-form'} do |f|
+      .dialog-title
+        %h3= "Reanudar servicio"
+      .dialog-body
+        = f.hidden_field :status, {:value => RequestedService::REINIT}
+        .notes.field
+          = label_tag 'activity_log_msg', 'Notas:'
+          = text_area_tag 'activity_log_msg', '', {:class => 'form-control'}
+      .dialog-footer
+        .send-mail-footer
+          = check_box_tag 'send_mail', 'yes', false, {:style => 'float: left;'}
+          = label_tag 'send_mail', 'Enviar por correo.', {:style => 'margin-left: 4px; float: left;'}
+        = button_tag "Reanudar", {:class => "btn btn-primary", :type => "submit"}
+      .clearfix
 

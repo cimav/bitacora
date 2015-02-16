@@ -2,12 +2,12 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#edit-service-request-link {
-  position: absolute;
-  bottom: 5px;
-  right: 20px;
-  cursor: pointer;
-  z-index: 99999;
+#folder-search-panel {
+  width: 100%;
+  background: $light-bg;
+  border-top: 1px solid $white;
+  border-bottom: 1px solid darken($line-color, 10%);
+  padding: 10px;
 }
 
 #new-request-area {
@@ -16,323 +16,381 @@
   }
 }
 
+.label_SERVICIO      { background-color: $servicio-color; }
+.label_SERVICIO2      { background-color: $servicio2-color; }
+.label_ARTICULO      { background-color: $articulo-color; }
+.label_TESIS         { background-color: $tesis-color; }
+.label_TESIS_EXTERNA { background-color: $tesis-color; }
+.label_CONVENIO      { background-color: $convenio-color; }
+.label_PROYECTO      { background-color: $proyecto-color; }
+.label_CALIBRACION   { background-color: $calibracion-color; }
+.label_ESTANCIAS     { background-color: $estancias-color; }
+.label_MAQUINADO     { background-color: $maquinado-color; }
+.label_PROTOTIPO     { background-color: $prototipo-color; }
+
+.bg_SERVICIO      { background-color: $servicio-color; border-bottom: 1px solid darken($servicio-color, 5%);}
+.bg_ARTICULO      { background-color: $articulo-color; border-bottom: 1px solid darken($articulo-color, 5%);}
+.bg_TESIS         { background-color: $tesis-color; border-bottom: 1px solid darken($tesis-color, 5%);}
+.bg_TESIS_EXTERNA { background-color: $tesis-color; border-bottom: 1px solid darken($tesis-color, 5%);}
+.bg_CONVENIO      { background-color: $convenio-color; border-bottom: 1px solid darken($convenio-color, 5%);}
+.bg_PROYECTO      { background-color: $proyecto-color; border-bottom: 1px solid darken($proyecto-color, 5%);}
+.bg_CALIBRACION    { background-color: $calibracion-color; border-bottom: 1px solid darken($calibracion-color, 5%);}
+.bg_ESTANCIAS      { background-color: $estancias-color; border-bottom: 1px solid darken($estancias-color, 5%);}
+.bg_MAQUINADO      { background-color: $maquinado-color; border-bottom: 1px solid darken($maquinado-color, 5%);}
+.bg_PROTOTIPO      { background-color: $prototipo-color; border-bottom: 1px solid darken($prototipo-color, 5%);}
+.bg_SERVICIO2      { background-color: $servicio2-color; border-bottom: 1px solid darken($servicio2-color, 5%);}
+
+
+.item_SERVICIO      { border-top: 2px solid $servicio-color; }
+.item_ARTICULO      { border-top: 2px solid $articulo-color; }
+.item_TESIS         { border-top: 2px solid $tesis-color; }
+.item_TESIS_EXTERNA { border-top: 2px solid $tesis-color; }
+.item_CONVENIO      { border-top: 2px solid $convenio-color; }
+.item_PROYECTO      { border-top: 2px solid $proyecto-color; }
+.item_CALIBRACION    { border-top: 2px solid $calibracion-color; }
+.item_ESTANCIAS      { border-top: 2px solid $estancias-color; }
+.item_MAQUINADO      { border-top: 2px solid $maquinado-color; }
+.item_PROTOTIPO      { border-top: 2px solid $prototipo-color; }
+.item_SERVICIO2      { border-top: 2px solid $servicio2-color; }
+
+
+#folders {
+ z-index: 99998;
+  position: absolute;
+  bottom: 0px;
+  top: 111px;
+  right: 0px;
+  left: 0px;
+  overflow: auto;
+  table {
+    width: 100%;
+    tr {
+      td {
+        padding: 0px;
+        border-bottom: 1px solid $line-color;
+      }
+    }
+  }
+}
+
 .service-request-item {
   cursor: pointer;
-  height: 64px;
-  min-height: 64px;
   background: transparent;
-  border-bottom: 1px solid $line-color;
-  overflow: hidden;
-  &.service-mine .service-request-number {
-    color: $grey;
-  }
-  &.service-supervised .service-request-number {
-    color: #08c;
-  }
+  padding: 100px !important;
+
   .service-request-number {
+    vertical-align: top;
+    font-size: 90%;
+    width: 60px !important;
+    padding: 24px 20px !important;
     text-align: center;
     font-weight: bold;
     padding-left: 4px;
-    width: 48px;
-    height: 64px;
-    float: left;
-    font-size: 11px;
     line-height: 1em;
-  }
-  .service-request-link {
-    padding-top: 10px;
-    font-size: 12px;
-    font-weight: bold;
-    margin-left: 58px;
-    color: #000;
-  }
-  .service-request-description,
-  .service-request-add-info {
-    margin-left: 58px;
-    font-size: 11px;
-    color: $grey;
-  }
-  &.selected {
-    background-color: $bg-selected;
-    color: $selected-color !important;
-    .service-request-number, 
-    .service-request-link,
-    .service-request-description {
-      color: $selected-color !important;
+    .glyphicon {
+      color: $folder-color;
+      font-size: 48px;
     }
-    .service-request-add-info  {
-      color: $selected-color-light !important;
-    }
-    .lab-service-laboratory {
-      color: $selected-color !important;
+    .number {
+      margin-top: 10px;
+      margin-bottom: 5px;
     }
   }
-}
 
+  &:hover {
+    background: #fafafa;
+    .type {
 
-
-#field_service_request_request_type_id, 
-#field_service_request_request_link {
-  margin-bottom: 1em;
-}
-
-#field_service_request_description {
-  label {
-    display: block;
-    line-height: 2em;
+    }
   }
-  textarea {
-    width: 100%;
-    height: 80px;
-    margin-bottom: 10px;
-  }
-}
 
-.sample-details {
-  padding: 20px 10px;
-  border-bottom: 1px solid $line-color;
-  &.selected {
-    background-color: $bg-selected;
-    color: $selected-color;
-  }
-  .sample-consecutive {
-    font-size: 10px;
-    padding: 4px;
-    @include rounded(4px);
-    background-color: $link-color;
-    color: $white;
-    text-align: center;
-    line-height: 1.4em;
-    width: 48px;
-    float: right;
-    strong {
-      font-size: 12px;
+  .service-request-data {
+    padding-bottom: 20px !important;
+    .type {
+      color: #fff;
+      display: inline;
+      padding: 3px;
       font-weight: bold;
-      color: $white;
     }
-  }
-  .sample-identificator {
-    font-weight: bold;
-  }
-  .sample-description {
-  }
-}
-
-#sample {
-  position: fixed;
-  top: 96px;
-  bottom: 0px;
-  left: $sample-list-width + 2;
-  width: $sample-list-width;
-  border-right: 1px solid $line-color;
-  #sample-header {
-    border-bottom: 1px solid $line-color;
-    height: 40px;
-    cursor: pointer;
-    .sample-n {
-      float: left;
-      width: $sample-list-width / 2;
-      font-weight: bold;
-      color: $black;
-      margin: 10px 0 0 10px;
-    }
-    .btn-toolbar {
-      float: right;
-      padding: 0;
-      margin: 0;
-      .btn-group {
-        margin: 5px 5px 0 0;
-      }
-    }
-  }
-  #current-sample {
-    .sample-details {
-      height: 48px;
-      overflow: hidden;
-    }
-    .sample-description {
-      font-size: 11px;
-      color: $grey;
-    }
-  }
-  #sample-services-header {
-    height: 24px;
-    border-bottom: 1px solid $line-color;
-    background-color: $light-grey;
     .title {
-      padding-top: 3px;
-      padding-left: 6px;
-      font-weight: bold;
+      font-size: 150%;
+      padding-top: 10px;
+    }
+    .description {
       color: $grey;
-      text-transform: uppercase;
     }
   }
-  #sample-services {
-    position: absolute;
-    overflow: auto;
-    top: 154px;
-    bottom: 0px;
-    ul {
-      margin: 0px;
-      width: $sample-list-width;
-      list-style: none;
-      li {
-        font-size: 95%;
-        list-style: none;
-        padding: 4px;
-        margin: 2px 0;
-        cursor: pointer;
-        color: $black;
-        border-top: 1px solid #fff;
-        border-bottom: 1px solid #fff;
-        &.selected {
-          border-top: 1px solid $line-color;
-          border-bottom: 1px solid $line-color;
-          background: $bg-selected;
-          color: $selected-color;
-           
-          .service-bullet {
-            background-color: $selected-color;
-            color: $white;
-            font-weight: bold;
-          }
-        }
-        .service-bullet {
-          font-size: 12px;
-          padding: 2px 2px 4px 2px;
-          @include rounded(4px);
-          color: $white;
-          text-align: center;
-          width: 20px;
-          height: 20px;
-          float: left;
-          &.add {
-            background-color: $green;
-            color: $white;
-          }
-        }
-        .service-name {
-          margin: 3px 0 3px 32px;
-        }
-        &.no-service {
-          .service-bullet {
-            background-color: $med-grey;
-          }
-          .service-name {
-            color: $grey;
-          }
-        }
-      }
+
+  .service-request-date {
+    padding-top: 20px !important;
+    font-size: 150%;
+  }
+
+  .service-collaborators {
+    padding-top: 20px !important; 
+    img {
+      width: 32px;
+      height: 32px;
+      padding: 1px;
     }
   }
 }
 
-#requested-service-header {
+.folder-owner {
+  border: 2px solid $owner-color;
+}
+.folder-supervisor {
+  border: 2px solid $supervisor-color;
+}
+.folder-collaborator {
+  border: 2px solid $collaborator-color;
+}
+
+#folder-status-message {
   background: #fff;
-  left: 0px;
-  right: 0px;
+  border: 1px solid $line-color;
+  padding: 10px;
+  text-align: center;
+  @include rounded(20px);
+  margin-bottom: 10px;
+}
+
+#folder-type {
+  height: 39px;
+  color: #fff;
+  padding: 0;
+  h2 {
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+    padding: 12px 0 0 10px;
+    font-size: 16px;
+    text-transform: uppercase;
+  }
+}
+
+#folder-info {
+  background: $bg-color;
+  width: $side-panel-width;
+  position: absolute;
+  border-right: 1px solid $line-color;
+  overflow: auto;
+  top: 39px;
+  bottom: 0;
+  padding: 20px;
+
+
+
+  .folder-icon {
+    height: 160px;
+    margin: 0;
+    padding: 0;
+    color: $folder-color;
+    text-align: center;
+    font-size: 128px;
+    .folder-number {
+      text-align: center;
+      font-size: 16px;
+      position: relative;
+      top: -100px;
+      color: darken($folder-color, 50%);
+    }
+  }
+  .folder-data {
+      .title {
+      text-align: center;
+      font-weight: bold;
+      font-size: 120%;
+      margin-bottom: 10px;
+    }
+    .description {
+      text-align: justify;
+      color: $grey;
+    }
+  }
+  .folder-collaborators {
+    h3 {
+      font-size: 14px;
+    }
+    img {
+      width: 32px;
+      height: 32px;
+      padding: 1px;
+      margin-right: 5px;
+    }
+  }
+
+  #folder-actions {
+    margin-top: 20px;
+  }
+}
+
+.no-collab {
+  color: #999;
+  margin: 10px;
+  text-align: center;
+}
+
+.no-samples {
+  color: #999;
+  text-align: center; 
+  margin: 5px 5px 10px 5px;
+  @include shadow(2px, 2px, 0px, #ddd);
+  padding: 20px;
+  background: #fff;
+  border: 1px solid $line-color;
+}
+
+#edit-folder {
+  float: left;
+  background: #fff;
+  left: $side-panel-width;
   position: absolute;
   top: 0;
-  height: 48px;
-  border-top: 1px solid $line-color;
-  border-bottom: 1px solid $line-color;
-  #requested-service-name {
-    padding: 14px 10px 14px 20px;
-    white-space: pre;
-    font-size: 24px;
-    color: $black;
-    font-weight: normal;
-  }
-}
-
-#requested-service-actions {
-  #requested-service-number {
-    float: left;
-    margin-top: 4px;
-    margin-right: 10px;
-  }
-  position: fixed;
-  top: 96px;
-  right: 0px;
-  width: 340px;
-  margin-top: 10px;
-  z-index: 99999;
-  padding-left: 40px;
-  background: rgba(255,255,255,0.1); /* Old browsers */
-  background: -moz-linear-gradient(left,  rgba(255,255,255,0.1) 0%, #fff 12%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,0.1)), color-stop(12%,#fff)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(left,  rgba(255,255,255,0.1) 0%,#fff 12%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(left,  rgba(255,255,255,0.1) 0%,#fff 12%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(left,  rgba(255,255,255,0.1) 0%,#fff 12%); /* IE10+ */
-  background: linear-gradient(to right,  rgba(255,255,255,0.1) 0%,#fff 12%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(255,255,255,0.1)', endColorstr='#fff',GradientType=1 ); /* IE6-9 */
-
-
-}
-
-#requested-service-tabs {
-  padding-top: 64px;
-  padding-left: 10px;
-  background: $light-grey;
-  
-}
-
-#requested-service-tabs-content {
-  padding-left: 10px;
-}
-
-#empty-requests {
-  text-align: center;
-  font-size: 28px;
-  color: #999;
-  margin-top: 100px;
-}
-
-#sample-list {
-  display: none;
-  position: fixed;
-  top: 136px;
-  bottom: 0px;
-  width: $sample-list-width;
-  background: #fff;
+  bottom: 0;
+  right: 0;
   overflow: auto;
-  border: 1px solid $line-color;
-  z-index: 100;
-  .sample-details {
-    cursor: pointer;
-    min-height: 54px;
-  } 
-}
-
-#field_service_request_sample_identification {
-  margin-bottom: 10px;
-  label {
-    margin-bottom: 5px;
-    display: block;
-  }
-  input {
-    width: 300px;
-  }
-}
-#field_service_request_sample_description {
-  margin-bottom: 10px;
-  margin-top: 20px;
-  label {
-    margin-bottom: 5px;
-    display: block;
-  }
-  textarea {
-    width: 300px;
-    height: 100px;
+  .edit-folder-buttons {
+    float: right;
+    margin-top: 20px;
   }
 }
 
-#sample-workarea {
-  left: ($sample-list-width * 2) + 4;
-  right: 0px;
-  position: fixed;
-  top: 96px;
-  bottom: 0px;
+#folder-samples {
+  float: left;
+  background: darken($bg-color, 2%);
+  left: $side-panel-width;
+  width: $folder-samples-width;
+  border-right: 1px solid $line-color;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+
+  .header {
+    margin: 0;
+    padding: 0;
+    height: 40px;
+    background: $folder-color;
+    border-bottom: 1px solid darken($folder-color, 5%);
+    color: darken($folder-color, 10%);
+    h2 {
+      margin: 0;
+      padding: 0;
+      color: $strong-color;
+      font-weight: normal;
+      padding: 12px 0 0 10px;
+      font-size: 16px;
+    }
+    .actions {
+      position: absolute;
+      top: 9px;
+      right: 10px;
+    }
+  }
+
+  .sample-item {
+    margin: 5px 5px 10px 5px;
+    @include shadow(2px, 2px, 0px, #ddd);
+
+    background: #fff;
+    border: 1px solid $line-color;
+    .sample-item-info {
+      background: $light-bg;
+      border-bottom: 1px solid $line-color;
+      .data {
+        padding: 10px;
+        color: $grey;
+        .identification {
+          font-weight: normal;
+          color: $strong-color;
+          font-size: 20px;
+        }
+        .number {
+        }
+        .description {
+        }
+      }
+    }
+  }
+}
+
+table.sample-services {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+
+    tr {
+      cursor: pointer;
+      td {
+        border: none;
+      }
+    }
+
+    tr.add-service {
+      .icon {
+        font-size: 16px;
+        color: $brand-success;
+        padding: 7px 0 0 10px;
+      }
+    }
+
+    .icon {
+      font-size: 14px;
+      width: 22px;
+      text-align: center;
+      padding: 10px 0 0 10px;
+    }
+
+    .empty {
+      color: $grey;
+      text-align: center;
+      padding: 20px;
+      font-size: 90%;
+    }
+
+    .date {
+      color: $grey;
+      width: 90px;
+      text-align: right;
+      font-size: 80%;
+    }
+
+  }
+
+#folder-work-panel-wrapper {
+  background: #fff;
+  width: -moz-calc(100% - $folder-samples-width - $side-panel-width);
+  width: -webkit-calc(100% - $folder-samples-width - $side-panel-width);
+  width: calc(100% - $folder-samples-width - $side-panel-width);
+  position: absolute;
+  left: $folder-samples-width + $side-panel-width;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+}
+
+.sheet {
+  margin: 0;
+  padding: 0;
+  background: $white;
+}
+
+#folder-work-panel {
+  background: #fff;
+  .sheet {
+    width: -moz-calc(100% - $folder-samples-width - $side-panel-width);
+    width: -webkit-calc(100% - $folder-samples-width - $side-panel-width);
+    width: calc(100% - $folder-samples-width - $side-panel-width);
+    position: relative;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    overflow: auto;
+  }  
 }
 
 #services-panel,
@@ -366,7 +424,7 @@
       width: $lab-services-list-width - 20;
     }
   }
-  #laboratory-services-list, 
+  #laboratory-services-list,
   #admin-lab-members-list,
   #admin-lab-services-list {
     border-top: 1px solid $line-color;
@@ -426,110 +484,72 @@
   }
 }
 
-
-// INITIAL
-.status_1 { background-color: $status_1 !important; color: $white; }
-// RECEIVED
-.status_2 { background-color: $status_2 !important; color: $white; }
-// ASSIGNED
-.status_3 { background-color: $status_3 !important; color: $white; }
-// SUSPENDED
-.status_4 { background-color: $status_4 !important; color: $white; }
-// REINIT
-.status_5 { background-color: $status_5 !important; color: $white; }
-// CANCELED
-.status_-1 { background-color: $status_-1 !important; color: $white; }
-// IN_PROGRESS
-.status_6 { background-color: $status_6 !important; color: $white; }
-// FINISHED
-.status_99 { background-color: $status_99 !important; color: $white; }
-// REQ_SUP_AUTH
-.status_7 { background-color: $status_7 !important; color: $white; }
-// REQ_OWNER_AUTH
-.status_8 { background-color: $status_8 !important; color: $white; }
-// TO_QUOTE
-.status_21 { background-color: $status_21 !important; color: $white; }
-// WAITING_START
-.status_22 { background-color: $status_22 !important; color: $white; }
-
-
-// UNLOCK
-.status_unlock { background-color: $status_6 !important; color: $white; }
-
-.req_serv_status_1 { border-left: 5px solid $status_1; }
-.req_serv_status_2 { border-left: 5px solid $status_2; }
-.req_serv_status_3 { border-left: 5px solid $status_3; }
-.req_serv_status_4 { border-left: 5px solid $status_4; }
-.req_serv_status_5 { border-left: 5px solid $status_5; }
-.req_serv_status_6 { border-left: 5px solid $status_6; }
-.req_serv_status_-1 { border-left: 5px solid $status_-1; }
-.req_serv_status_99 { border-left: 5px solid $status_99; }
-.req_serv_status_7 { border-left: 5px solid $status_7; }
-.req_serv_status_8 { border-left: 5px solid $status_8; }
-
-.req_serv_status_21 { border-left: 5px solid $status_21; }
-.req_serv_status_22 { border-left: 5px solid $status_22; }
-
-#no-actions {
-  padding: 10px;
-  color: $grey;
-  font-size: 11px;
-}
-
-#no-samples {
-  text-align: center;
-  font-size: 28px;
-  color: #999;
-  margin-top: 100px;
-  a {
-    cursor: pointer;
+#costeo-vista,
+#reporte-vista {
+  margin: 20px;
+  h2 {
+    margin-bottom: 40px;
+    width: 100%;
+  }
+  h3 {
+    background: #aaa; 
+    color: #fff;
+    font-size: 14px;
+    padding: 10px;
+  }
+  .total { float: right; }
+  h4 { width: 100%; }
+  table {
+    margin-bottom: 40px;
+    .total {
+      float: right;
+      font-weight: bold;
+    }
+  }
+  .rubro-header {
+    text-transform: uppercase;
+    background: $light-bg;
+  }
+  .actions {
+    text-align: center;
+    margin: 40px;
   }
 }
 
-#add-new-sample-modal form {
-  margin: 0;
-  padding: 0;
-}
-
-#cg_ServiceRequest_link,
-#cg_ServiceRequest_description,
-#cg_ServiceRequest_supervisor,
-#cg_ServiceRequest_submit {
-  display: none;
-}
-
-#add-new-client,
-#add-new-client-contact {
-  font-size: 10px;
-  cursor: pointer;
-}
-
-.info-row {
-  margin-bottom: 5px;
-  .info-extra {
-    padding-left: 20px;
-    table {
-      th {
-        text-align: left; 
-        padding-right: 10px;
-        vertical-align: top;
+#collaborators {
+  .col-md-12 {
+    margin-bottom: 0.5em;
+  }
+  .collaborator-item {
+    .remove-collaborator {
+      display: none;
+    }
+    &:hover {
+      .remove-collaborator {
+        display: inline;
       }
     }
   }
+  
 }
 
-#detalles,
-#costeo {
-  padding: 10px 20px;
+#add-collaborator-button {
+  margin-top: 0.5em;
+  width: 100%;
+  padding: 4px;
 }
 
-#requested-service-workarea {
-  .tab-pane {
-    overflow: auto;
-    position: absolute;
-    top: 130px;
-    left: 10px;
-    bottom: 20px;
-    right: 20px;
+#collaborator-panel {
+  h3 {
+    font-size: 14px;
   }
+  button {
+    margin-top: 0.5em;
+    width: 100%;
+    padding: 4px;
+  }
+}
+
+#cg_ServiceRequest_submit {
+  margin-top: 1em;
 }

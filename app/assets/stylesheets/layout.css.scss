@@ -2,51 +2,111 @@ body {
   font-size: 12px;
 }
 
-#workarea {
-  margin: 0;
-  padding: 0;
-}
-
 .inner-area {
   padding: 20px;
 }
 
-#header-bar {
-  background: $light-grey;
-  border-bottom: 1px solid $line-color;
-  margin: 0;
-  height: 56px;
+#sidenav {
+  width: $sidenav-width;
+  background-color: $sidenav-bg;
   position: fixed;
-  top: 40px;
-  left: 0px;
-  width: 100%;
-  h2 {
-    color: $red;
-    font-size: 32px;
-    font-weight: normal;
-    margin: 0;
-    padding-left: 20px;
-    padding-top: 10px;
+  margin: 0;
+  padding: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  #brand {
+    text-align: center;
+    font-size: 130%;
+    background-color: $bitacora-brand;
+    color:#fff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, .4), 0 0 30px rgba(0, 0, 0, .075);
+    padding: 10px 0;
+    img {
+      width: 64px;
+    }
+  }
+  #user-area {
+    position: absolute;
+    width: $sidenav-width;
+    bottom: 0;
+    text-align: center;
+    color: $sidenav-color;
+    margin: 10px 0 0 0;
+    .user-name {
+      margin-top: 10px;
+    }
+    #user-menu {
+      margin-top: 10px;
+      background: lighten($bitacora-brand, 10%);
+      a { color: #fff; }
+    }
+  }
+  .nav-pills > li > a {
+    border-radius: 0px;
+  }
+
+  .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+    background-color: $sidenav-selected;
+    color: $white;
+  }
+
+  .nav > li > a:hover, .nav > li > a:focus {
+    background-color: $sidenav-hover;
+    color: $sidenav-color;
+  }
+
+  .option-name {
+    margin-top: 2px;
+  }
+
+  .nav a {
+    text-align: center;
+    color: $sidenav-color;
+    span {
+      font-size: 28px;
+    }
   }
 }
 
-#folder-panel,
-#lab-req-serv-panel,
-#admin-panel,
-#reports-panel,
-#laboratories-panel,
-#clients-panel,
-#materials-panel,
-#equipment-panel,
-#users-panel,
-#request-types-panel,
-#service-types-panel,
-#other-types-panel {
-  width: $side-panel-width;
+#workarea {
   position: fixed;
-  bottom: 0px;
-  top: 96px;
-  left: 0px;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  bottom: 0;
+  left: $sidenav-width;
+  right: 0;
+  box-shadow: 0px 0px 5px $grey;
+}
+
+#header-bar {
+  margin: 0;
+  padding: 0;
+  height: 55px;
+  background: $top-header-bg;
+  border-bottom: 1px solid $line-color;
+  h2 {
+    margin: 0;
+    padding: 0;
+    color: $top-header-color;
+    font-weight: normal;
+    padding: 8px 0 0 20px;
+    width: 80%;
+    height: 48px;
+    float: left;
+    overflow: hidden;
+  }
+  .actions {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+  }
+}
+
+#lab-req-serv-panel,
+#reports-panel {
+  width: $side-panel-width;
   background-color: $light-bg;
   border-top: 1px solid $line-color;
   border-left: 1px solid $line-color;
@@ -112,14 +172,14 @@ body {
   }
 }
 
-#folder-main-panel, 
+#folder-main-panel,
 #lab-main-panel {
   position: fixed;
   left: $side-panel-width + 2;
   overflow: auto;
   right: 0px;
   bottom: 0px;
-  top: 96px;
+  top: 106px;
 }
 
 .modal form {
@@ -131,24 +191,6 @@ body {
 .align-left { text-align: left; }
 .align-center { text-align: center; }
 
-#costeo {
-  table {
-    margin-bottom: 40px;
-  }
-}
-
-.th-header {
-  font-weight: bold;
-  font-size: 150%;
-}
-
-#grand_total {
-  position: absolute;
-  right: 40px;
-  font-weight: bold;
-  font-size: 30px;
-  margin: 40px 0;
-}
 
 .empty-cell {
   color: $grey;
@@ -169,56 +211,35 @@ body {
   }
 }
 
-.tag {
-  float:left;
-  height:24px;
-  line-height:24px;
-  position:relative;
-  font-size:11px;
-  margin-left:20px;
-  padding:0 10px 0 12px;
-  background:$red;
-  color:#fff;
-  text-decoration:none;
-  -moz-border-radius-bottomright:4px;
-  -webkit-border-bottom-right-radius:4px; 
-  border-bottom-right-radius:4px;
-  -moz-border-radius-topright:4px;
-  -webkit-border-top-right-radius:4px;  
-  border-top-right-radius:4px;  
-  
-  &:before{
-    content:"";
-    float:left;
-    position:absolute;
-    top:0;
-    left:-12px;
-    width:0;
-    height:0;
-    border-color:transparent $red transparent transparent;
-    border-style:solid;
-    border-width:12px 12px 12px 0;    
-  } 
-  &:after{
-    content:"";
-    position:absolute;
-    top:10px;
-    left:0;
-    float:left;
-    width:4px;
-    height:4px;
-    -moz-border-radius:2px;
-    -webkit-border-radius:2px;
-    border-radius:2px;
-    background:#fff;
-    -moz-box-shadow:-1px -1px 2px $red-dark;
-    -webkit-box-shadow:-1px -1px 2px $red-dark;
-    box-shadow:-1px -1px 2px $red-dark;
-  }   
-  &:hover{ background:$grey; } 
-  &:hover:before{border-color:transparent $grey transparent transparent;}
-}
-
-.small {
-  font-size: 80%;
+.dialog-content {
+  &.padded {
+    padding: 20px;
+    .dialog-footer {
+      margin-top: 20px;
+      padding: 20px 0;
+    }
+  }
+  .dialog-title {
+    font-weight: normal;
+    h3 {
+      margin: 0 0 20px 0;
+      padding: 0;
+    }
+  }
+  .field {
+    margin-bottom: 10px;
+  }
+  .notes {
+    textarea {
+      height: 100px;
+    }
+  }
+  .dialog-footer {
+    border-top: 1px solid $line-color;
+    padding: 20px;
+    button {
+      float: right;
+      margin: 0 0 20px 10px;
+    }
+  }
 }

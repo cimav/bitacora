@@ -22,7 +22,6 @@
   text-align: right;
   font-size: 60px;
   height: 150px;
-  border: 1px solid #f90;
   @include opacity(0);
   top: 0px;
   left: 0px;
@@ -52,6 +51,7 @@
 
 #upload-box .upload {
   width: 120px;
+  height: 90px;
   padding: 50px 8px 6px 8px;
   background: #eee url(/assets/up.png) center 5px no-repeat;
 }
@@ -120,26 +120,40 @@
   }
 }
 
-#files_iframe_outer {
-  position: fixed;
-  left: ($sample-list-width * 2) + 14;
-  bottom: 10px;
-  top: 216px;
-  right: 10px;
+#ui-upload {
+  width: 250px !important;
+  height: 400px !important;
+  overflow: hidden; 
 }
 
 #files_iframe {
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  overflow-x: hidden !important;
-  overflow-y: auto;
+  width: 250px !important;
+  height: 400px !important;
+  overflow: hidden;
 }
 
 #download-zip {
-  font-size: 18px;
-  margin: 40px;
+  font-size: 13px;
+  margin-top: 80px;
   font-weight: bold;
   text-align: center;
   cursor: pointer;
+  float: right;
+  position: relative;
+  margin-right: 10px;
+  width: 140px;
+
+}
+
+
+#files-table {
+  width: 100%;
+  td#files-area {
+    vertical-align: top;
+  }
+
+  td#td-upload-area {
+    width: 250px;
+    vertical-align: top;
+  }
 }

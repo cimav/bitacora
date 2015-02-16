@@ -88,6 +88,11 @@ class RequestedServicesController < ApplicationController
     render :layout => false
   end
 
+  def lab_view 
+    @requested_service = RequestedService.find(params['id'])
+    render :layout => false
+  end
+
   def show
     @requested_service = RequestedService.find(params['id'])
     @activity_log = ActivityLog.where(" (service_request_id = :service_request AND sample_id = 0 AND requested_service_id = 0)
@@ -102,6 +107,8 @@ class RequestedServicesController < ApplicationController
   end
 
   def create
+
+    # TODO: No permitir crear servicios en carpetas tipo vinculación (en la UI ya no se muestra botón)
     
     if params[:requested_service][:from_id] == 'false'
       params[:requested_service][:from_id] = nil
@@ -168,6 +175,7 @@ class RequestedServicesController < ApplicationController
           if request.xhr?
             json = {}
             json[:flash] = flash
+            json[:service_request_id] = @requested_service.sample.service_request_id
             json[:sample_id] = @requested_service.sample_id
             json[:id] = @requested_service.id
             
@@ -278,21 +286,105 @@ class RequestedServicesController < ApplicationController
           Resque.enqueue(StatusChangeMailer, @requested_service.id, current_user.id, prv_msg)
         end
 
-        # Publish recibir_costeo to Vinculacion system.
+        sr = @requested_service.sample.service_request
+
+        # If status changed to WAITING_START then change service_request status
         if @requested_service.status.to_i == RequestedService::WAITING_START
-          ResqueBus.redis = '127.0.0.1:6379' # TODO: Mover a config
-          # TODO: Enviar todos los datos del costeo
-          ResqueBus.publish('recibir_costeo', costs_details(@requested_service))
+    
+          quoted = 0
+          qty = 0
+          
+          sr.sample.each do |s|
+            s.requested_service.each do |rs|
+              qty += 1
+              if rs.status.to_i == RequestedService::WAITING_START
+                quoted += 1
+              end
+            end
+          end
+
+          if quoted == qty
+            sr.system_status = ServiceRequest::SYSTEM_QUOTED
+          elsif quoted == 0 
+            sr.system_status = ServiceRequest::SYSTEM_TO_QUOTE
+          else
+            sr.system_status = ServiceRequest::SYSTEM_PARTIAL_QUOTED
+          end
+          sr.save
         end
 
+        # If status changed to FINISHED then change service_request status
+        if @requested_service.status.to_i == RequestedService::FINISHED
+          finished = 0
+          qty = 0
+          
+          sr.sample.each do |s|
+            s.requested_service.each do |rs|
+              qty += 1
+              if rs.status.to_i == RequestedService::FINISHED
+                finished += 1
+              end
+            end
+          end
+
+          if finished == qty
+            sr.system_status = ServiceRequest::SYSTEM_ALL_FINISHED
+          elsif finished > 0
+            sr.system_status = ServiceRequest::SYSTEM_PARTIAL_FINISHED
+          end
+          sr.save
+
+
+          # Enviar mensaje a Vinculación a traves del bus. 
+          if (sr.request_type_id == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO)
+            
+            @requested_service.requested_service_technicians.each do |p|
+              participation = sr.service_request_participations.new
+              participation.user_id = p.user_id
+              participation.percentage = p.participation
+              participation.save
+            end  
+
+            participations = Array.new
+            sr.service_request_participations.each do |p|
+              participations << {
+                "email" => p.user.email,
+                "porcentaje" => p.percentage,
+              }
+            end
+
+            # Publish reporte to Vinculacion system.
+            services_costs = []
+            services_costs << cost_details_requested_service(@requested_service)
+      
+            details = {
+              "system_id" => sr.system_id, 
+              "system_request_id" => sr.system_request_id, 
+              "codigo" => sr.number, 
+              "servicios" => services_costs
+            }
+
+
+            details['participaciones'] = participations
+            ResqueBus.redis = '127.0.0.1:6379' # TODO: Mover a config
+            ResqueBus.publish('recibir_reporte', details)
+            sr.system_status = ServiceRequest::SYSTEM_REPORT_SENT
+            sr.save
+          end
+        end
       end
+
       respond_with do |format|
         format.html do
+          puts "RESPOND"
           if request.xhr?
             json = {}
             json[:flash] = flash
+            json[:service_request_id] = @requested_service.sample.service_request_id
             json[:sample_id] = @requested_service.sample_id
             json[:id] = @requested_service.id
+            json[:status_class] = @requested_service.status_class
+            json[:icon_class] = @requested_service.icon_class
             render :json => json
           else
             redirect_to @requested_service
@@ -903,8 +995,8 @@ class RequestedServicesController < ApplicationController
     
   end
 
-  private
-  def costs_details(requested_service)
+
+  def cost_details_requested_service(requested_service)
 
     # Technicians
     technicians = Array.new
@@ -926,16 +1018,6 @@ class RequestedServicesController < ApplicationController
       }
     end
 
-    # Materials
-    materials = Array.new
-    requested_service.requested_service_materials.each do |mat|
-      materials << {
-        "detalle" => mat.material.name,
-        "cantidad" => mat.quantity,
-        "precio_unitario" => mat.unit_price
-      }
-    end
-
     # Others
     others = Array.new
     requested_service.requested_service_others.each do |ot|
@@ -948,18 +1030,23 @@ class RequestedServicesController < ApplicationController
 
     # Details
     details = {
-      "bitacora_id"       => requested_service.id,
-      "system_id"         => requested_service.sample.service_request.system_id,
-      "muestra_system_id" => requested_service.sample.system_id,
-      "nombre_servicio"   => requested_service.laboratory_service.name,
-      "personal"          => technicians,
-      "consumibles"       => materials,
-      "equipos"           => equipment,
-      "otros"             => others
+      "bitacora_id"           => requested_service.id,
+      "muestra_system_id"     => requested_service.sample.system_id,
+      "muestra_identificador" => requested_service.sample.identification,
+      "nombre_servicio"       => requested_service.laboratory_service.name,
+      "personal"              => technicians,
+      "equipos"               => equipment,
+      "otros"                 => others
     }
 
-    puts details
     return details
+  end
+
+  def files_list
+     @requested_service = RequestedService.find(params[:id])
+     @req_services = RequestedService.where(:sample_id => @requested_service.sample_id).order("FIELD(id,#{@requested_service.id}) DESC, id")
+     @requested_service_id = params[:id]
+     render :layout => false
   end
 
 end

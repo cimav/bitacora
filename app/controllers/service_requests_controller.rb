@@ -5,6 +5,28 @@ class ServiceRequestsController < ApplicationController
   def index
     # Mis solicitudes
     @latest_request = ServiceRequest.where(:user_id => current_user.id, :status => ServiceRequest::ACTIVE).order('created_at DESC').first
+    
+    @request_types = ServiceRequest.find_by_sql (["SELECT request_type_id AS id, request_types.name, COUNT(*) AS how_many
+                                                   FROM 
+                                                     service_requests
+                                                     LEFT JOIN users 
+                                                       ON service_requests.user_id = users.id
+                                                     LEFT JOIN request_types 
+                                                       ON service_requests.request_type_id = request_types.id
+                                                   WHERE 
+                                                     (service_requests.user_id = :u 
+                                                      OR service_requests.supervisor_id = :u 
+                                                      OR (users.require_auth = 1 AND 
+                                                            (users.supervisor1_id = :u OR users.supervisor2_id = :u)
+                                                          )
+                                                      OR (:u IN (SELECT user_id FROM collaborators WHERE service_request_id = service_requests.id))
+                                                      ) 
+                                                     AND service_requests.status = :s
+                                                   GROUP BY service_requests.request_type_id 
+                                                   ORDER BY request_types.name", 
+                                                   :u => current_user.id, 
+                                                   :s => ServiceRequest::ACTIVE])
+
     render :layout => false
   end
 
@@ -17,9 +39,10 @@ class ServiceRequestsController < ApplicationController
       extra_sql = ""
     end
     
-    @requests = ServiceRequest.includes(:user).where("service_requests.status = :s AND 
+    @requests = ServiceRequest.joins(:user).where("service_requests.status = :s AND 
                                                      (service_requests.user_id = :u 
                                                       OR service_requests.supervisor_id = :u 
+                                                      OR (:u IN (SELECT user_id FROM collaborators WHERE service_request_id = service_requests.id))
                                                       OR (users.require_auth = 1 AND 
                                                             (users.supervisor1_id = :u OR users.supervisor2_id = :u)
                                                           )" + extra_sql + "
@@ -33,20 +56,30 @@ class ServiceRequestsController < ApplicationController
     if !params[:folder_filter].blank? && params[:folder_filter] != '*'
       @requests = @requests.where("(request_type_id = :t)", {:t => params[:folder_filter]}) 
     end
+    @requests = @requests.order('service_requests.created_at DESC')
     render :layout => false
   end
 
-  def sample_list
+  def actions
     @request = ServiceRequest.find(params[:id])
     render :layout => false
   end
 
   def show
     @request = ServiceRequest.find(params[:id])
-    if (@request.status == ServiceRequest::ACTIVE) 
+    collaborators = @request.collaborators.map { |c| c.user_id }
+    authorized = @request.user_id == current_user.id ||
+                 @request.supervisor_id == current_user.id ||
+                 @request.user.supervisor1_id == current_user.id ||
+                 @request.user.supervisor2_id == current_user.id ||
+                 (collaborators.include? current_user.id)
+
+    if !authorized
+      render :inline => 'No Autorizado'                   
+    elsif (@request.status == ServiceRequest::ACTIVE) 
       render :layout => false
     else
-      render :inline => "Carpeta eliminada"
+      render :inline => 'Carpeta Eliminada'
     end
   end
 
@@ -114,6 +147,7 @@ class ServiceRequestsController < ApplicationController
         format.html do
           if request.xhr?
             json = {}
+            json[:id] = @request.id
             json[:flash] = flash
             render :json => json
           else 
@@ -128,6 +162,7 @@ class ServiceRequestsController < ApplicationController
           if request.xhr?
             json = {}
             json[:flash] = flash
+            json[:id] = params[:id]
             json[:errors] = @request.errors
             render :json => json, :status => :unprocessable_entity
           else 
@@ -143,5 +178,205 @@ class ServiceRequestsController < ApplicationController
     template = @request_type.short_name
     render template, :layout => false
   end
+
+  def quotation
+    @request = ServiceRequest.find(params[:id])
+    @details = cost_details(@request)
+    render :layout => false
+  end
+
+  def send_quote
+    # Publish recibir_costeo to Vinculacion system.
+    request = ServiceRequest.find(params[:id])
+    details = cost_details(request)
+    ResqueBus.redis = '127.0.0.1:6379' # TODO: Mover a config
+    ResqueBus.publish('recibir_costeo', cost_details(request))
+    request.system_status = ServiceRequest::SYSTEM_QUOTE_SENT
+    request.save
+    render :layout => false
+  end
+
+  def view_report
+    @request = ServiceRequest.find(params[:id])
+    @details = cost_details(@request)
+    @participants = []
+
+    @participants << @request.user
+
+    @request.requested_services.each do |rs|
+      rs.requested_service_technicians.each do |t|
+        if !@participants.include? t.user
+          @participants << t.user
+        end
+      end
+    end
+    puts @participants
+    
+    render :layout => false
+  end
+
+  def send_report
+
+    request = ServiceRequest.find(params[:id])
+
+    params['user'].each do |user_id,percentage|
+      participation = request.service_request_participations.new
+      participation.user_id = user_id
+      participation.percentage = percentage
+      participation.save
+    end  
+
+    participations = Array.new
+    request.service_request_participations.each do |p|
+      participations << {
+        "email" => p.user.email,
+        "porcentaje" => p.percentage,
+      }
+    end
+
+    # Publish reporte to Vinculacion system.
+    details = cost_details(request)
+    details['participaciones'] = participations
+    ResqueBus.redis = '127.0.0.1:6379' # TODO: Mover a config
+    ResqueBus.publish('recibir_reporte', details)
+    request.system_status = ServiceRequest::SYSTEM_REPORT_SENT
+    request.save
+    render :layout => false
+  end
+
+  def add_collaborator_dialog
+    @request = ServiceRequest.find(params[:id])
+    render :layout => false
+  end
+
+  def add_collaborator
+    @request = ServiceRequest.find(params[:id])
+    collaborator = @request.collaborators.new
+    collaborator.user_id = params[:collaborator_id]
+    collaborator.save
+    render :layout => false
+  end
+
+  def get_collaborators
+    @request = ServiceRequest.find(params[:id])
+    render :layout => false
+  end
+
+  def delete_collaborator 
+    flash = {}
+    collaborator = Collaborator.find(params[:collaborator_id])
+    # TODO: Validar que el tecnico que esta haciendo el borrado sea el dueño del servicio
+    if collaborator.destroy
+      flash[:notice] = "Participante eliminado"
+
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:id] = collaborator.id
+            render :json => json
+          else
+            redirect_to collaborator
+          end
+        end
+      end
+
+    else
+
+      flash[:error] = "Error al eliminar el participante."
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            json[:flash] = flash
+            json[:errors] = collaborator.errors
+            render :json => json, :status => :unprocessable_entity
+          else
+            redirect_to collaborator
+          end
+        end
+      end
+    end
+  end
+
+  private
+  def cost_details(service_request)
+    
+    services_costs = []
+
+    service_request.sample.each do |s|
+      s.requested_service.each do |rs|
+        services_costs << cost_details_requested_service(rs)
+      end
+    end
+    
+    details = {
+      "system_id" => service_request.system_id, 
+      "system_request_id" => service_request.system_request_id, 
+      "codigo" => service_request.number, 
+      "servicios" => services_costs
+    }
+    
+    return details
+  
+  end
+
+  def cost_details_requested_service(requested_service)
+
+    # Technicians
+    technicians = Array.new
+    requested_service.requested_service_technicians.each do |tech|
+      technicians << {
+        "detalle" => tech.user.full_name,
+        "cantidad" => tech.hours,
+        "precio_unitario" => tech.hourly_wage 
+      }
+    end
+
+    # Equipment
+    equipment = Array.new
+    requested_service.requested_service_equipments.each do |eq|
+      equipment << {
+        "detalle" => eq.equipment.name,
+        "cantidad" => eq.hours,
+        "precio_unitario" => eq.hourly_rate
+      }
+    end
+
+    # Materials
+    # materials = Array.new
+    # requested_service.requested_service_materials.each do |mat|
+    #   materials << {
+    #     "detalle" => mat.material.name,
+    #     "cantidad" => mat.quantity,
+    #     "precio_unitario" => mat.unit_price
+    #   }
+    # end
+
+    # Others
+    others = Array.new
+    requested_service.requested_service_others.each do |ot|
+      others << {
+        "detalle" => "#{ot.other_type.name}: #{ot.concept}",
+        "cantidad" => 1,
+        "precio_unitario" => ot.price
+      }
+    end
+
+    # Details
+    details = {
+      "bitacora_id"           => requested_service.id,
+      "muestra_system_id"     => requested_service.sample.system_id,
+      "muestra_identificador" => requested_service.sample.identification,
+      "nombre_servicio"       => requested_service.laboratory_service.name,
+      "personal"              => technicians,
+      "equipos"               => equipment,
+      "otros"                 => others
+    }
+
+    return details
+  end
+
 
 end

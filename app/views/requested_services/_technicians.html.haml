@@ -24,7 +24,7 @@
   %table.table.table-striped
     %thead
       %tr
-        %th{:colspan => 5, :class => "th-header"}= "Personal Involucrado"
+        %th{:colspan => 6, :class => "th-header"}= "Personal Involucrado"
       - if @requested_service.requested_service_technicians.count > 0
         %tr
           %th= "Nombre"
@@ -32,6 +32,7 @@
           %th= "Horas"
           %th= "Costo x Hora"
           %th= "Subtotal"
+          %th
     %tbody
       - tech_total = 0
       - part_total = 0
@@ -49,8 +50,6 @@
             = tech.user.full_name
             - if !tech.details.blank?
               .tech-details= tech.details
-            - if tech.user_id != @requested_service.user_id && editable
-              = link_to '×', {:controller => 'requested_services', :action => 'delete_tech', :tech_id => tech.id}, :method => :post, :remote => true, :class => 'close', :'data-type' => 'html', 'data-id' => tech.id
           %td
             - if editable
               - u_options = ''
@@ -59,7 +58,7 @@
                   - u_options += "<option value=\"#{i}\" selected=\"selected\">#{i}%</option>"
                 - else
                   - u_options += "<option value=\"#{i}\">#{i}%</option>"
-              = select_tag "tech_participation_#{tech.id}", u_options.html_safe, {:style => "width: 100%;", "data-id" => tech.id, :class => "tech_participation"}
+              = select_tag "tech_participation_#{tech.id}", u_options.html_safe, {"data-id" => tech.id, :class => "tech_participation form-control input-sm"}
             - else
               .align-right= "#{tech.participation}%"
           %td
@@ -70,23 +69,27 @@
                   - u_options += "<option value=\"#{i}\" selected=\"selected\">#{i} horas</option>"
                 - else 
                   - u_options += "<option value=\"#{i}\">#{i} horas</option>"
-              = select_tag "tech_hours_#{tech.id}", u_options.html_safe, {:style => "width: 100%;", "data-id" => tech.id, :class => "tech_hours"}
+              = select_tag "tech_hours_#{tech.id}", u_options.html_safe, {"data-id" => tech.id, :class => "tech_hours form-control input-sm"}
             - else
               .align-right= "#{tech.hours} horas" 
           %td
             .align-right= number_to_currency(tech.hourly_wage)
           %td
             .align-right= number_to_currency(tech_cost)
+          %td
+            - if tech.user_id != @requested_service.user_id && editable
+              = link_to '×', {:controller => 'requested_services', :action => 'delete_tech', :tech_id => tech.id}, :method => :post, :remote => true, :class => 'close', :'data-type' => 'html', 'data-id' => tech.id
       - if @requested_service.requested_service_technicians.count > 0
         - if part_total != 100
           %tr.error
-            %td{:colspan => 5}
+            %td{:colspan => 6}
               = "La suma de las participaciones no es 100%."
         %tr.total-row
           %td{:colspan => 4}
             .align-right= "Subtotal Personal Involucrado"
           %td
             .align-right= number_to_currency(tech_total)
+          %td
       - if editable
         - if (techs.count > 0)
           - not_in =  "AND user_id NOT IN (#{(techs.join(','))})"
@@ -95,21 +98,21 @@
         - members = LaboratoryMember.where("laboratory_id = #{@requested_service.laboratory_service.laboratory_id} #{not_in}")
         - u_options = ''
         - members.each do |m|
-          - u_options += "<option value=\"#{m.user_id}\">#{m.user.full_name}</option>"
+          - if !m.user.nil?
+            - u_options += "<option value=\"#{m.user_id}\">#{m.user.full_name}</option>"
       - if u_options != '' && editable
         %tr.add-row
           %td
-            = select_tag :new_tech_user_id, u_options.html_safe, {:style => "width: 100%;"}
-
+            = select_tag :new_tech_user_id, u_options.html_safe, {:class => 'form-control input-sm'}
           %td 
             - u_options = ''
             - for i in (100 - part_total).downto(0)
               - u_options += "<option value=\"#{i}\">#{i}%</option>"
-            = select_tag :new_tech_participation, u_options.html_safe, {:style => "width: 100%;"}
+            = select_tag :new_tech_participation, u_options.html_safe, {:class => 'form-control input-sm'}
           %td
             - u_options = ''
             - for i in 0.step(100, 0.5)
               - u_options += "<option value=\"#{i}\">#{i} horas</option>"
-            = select_tag :new_tech_hours, u_options.html_safe, {:style => "width: 100%;"}
-          %td{:colspan => 2}
-            %button.btn.btn-mini.btn-info#add-technician= "Agregar participante"
+            = select_tag :new_tech_hours, u_options.html_safe, {:class => 'form-control input-sm'}
+          %td{:colspan => 3}
+            %button.btn.btn-primary.btn-sm.btn-block#add-technician= "Agregar"

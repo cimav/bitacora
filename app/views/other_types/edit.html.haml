@@ -2,10 +2,10 @@
 = form_for @other_type, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-other-type-form'} do |f|
   .field#field_other_short_name
     = f.label :name, 'Nombre:'
-    = f.text_field :name, {:class => 'input-large', :placeholder => 'Nombre'}
+    = f.text_field :name, {:class => 'form-control', :placeholder => 'Nombre'}
   .field#field_other_type_name
     = f.label :description, 'Descripción:'
-    = f.text_field :description, {:class => 'input-xxlarge', :placeholder => 'Descripción'}
+    = f.text_field :description, {:class => 'form-control', :placeholder => 'Descripción'}
  
       
   .submit-button

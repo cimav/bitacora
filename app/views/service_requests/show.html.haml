@@ -1,11 +1,50 @@
-#request-workarea
-%a#edit-service-request-link{"data-id" => @request.id}= "Editar"
-- if @request.sample.count == 0
-  #no-samples
-    = 'La carpeta aún no tiene muestras.'
-    %a{:id => 'open-new-sample-modal-link'}= '¿Deseas agregar una?'
-- else
-  :javascript
-    $(function() {
-      getSample(#{@request.sample[0].id})
-    })
+#folder-type{:class => "bg_#{@request.request_type.short_name}"}
+  %h2= @request.request_type.name
+#folder-info
+  .folder-icon
+    %span.glyphicon.glyphicon-folder-close
+    .folder-number= @request.number
+  .folder-data
+    .title
+      = "#{@request.request_link}" rescue "Sin tipo"
+    .description= @request.description
+
+  #folder-actions
+    = render :partial => 'actions', :locals => {:request => @request}
+  #collaborators.folder-collaborators
+    = render :partial => 'collaborators', :locals => {:request => @request}
+  #collaborator-panel
+
+
+#folder-workarea
+  #folder-samples
+    .header
+      %h2 MUESTRAS
+      .actions
+        - if @request.request_type_id != ServiceRequest::SERVICIO_VINCULACION
+          %button#add-new-sample-button.btn.btn-success.btn-xs{'data-id' => @request.id}
+            %span.glyphicon.glyphicon-plus
+    - if @request.sample.count <= 0 
+      .no-samples 
+        = "La carpeta no tiene muestras"
+    - @request.sample.each do |s|
+      .sample-item
+        .sample-item-info
+          .data
+            .identification
+              = s.identification
+              - if s.quantity > 1
+                %span.badge= s.quantity
+            .description= s.description
+            .number= "ID: #{s.number}"
+          .clearfix
+        %div{:id => "sample-#{s.id}-services"}
+          = render :partial => 'samples/requested_services_list', :locals => {:sample => s, :request => @request}
+
+  #folder-work-panel-wrapper
+    #folder-work-panel
+
+:javascript
+  $(function() {
+    $('.requested-service-link').first().click();
+  });

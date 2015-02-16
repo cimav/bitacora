@@ -10,9 +10,15 @@ class ServiceRequest < ActiveRecord::Base
   has_many :sample
   accepts_nested_attributes_for :sample
 
+  has_many :requested_services, through: :sample
+
+  has_many :service_request_participations
+
   belongs_to :request_type
   belongs_to :user
   belongs_to :supervisor, :class_name => 'User', :foreign_key => 'supervisor_id'
+
+  has_many :collaborators
 
   after_create :add_extra
 
@@ -20,6 +26,9 @@ class ServiceRequest < ActiveRecord::Base
   DELETED = 2
   
   IMPORTED = 98
+
+  SERVICIO_VINCULACION = 1
+  SERVICIO_VINCULACION_NO_COORDINADO = 12
 
   SYSTEM_FREE              = 1
   SYSTEM_TO_QUOTE          = 2
@@ -34,9 +43,28 @@ class ServiceRequest < ActiveRecord::Base
   SYSTEM_NOT_ACCEPTED      = 98
   SYSTEM_CANCELED          = 99
 
+  SYSTEM_STATUS = {
+    SYSTEM_FREE              => 'Libre',
+    SYSTEM_TO_QUOTE          => 'Por costear',
+    SYSTEM_PARTIAL_QUOTED    => 'Costeado parcialmente',
+    SYSTEM_QUOTED            => 'Costeado',
+    SYSTEM_QUOTE_SENT        => 'Costeo enviado',
+    SYSTEM_ACCEPTED          => 'Costeo aceptado',
+    SYSTEM_SAMPLES_DELIVERED => 'Muestras entregadas',
+    SYSTEM_PARTIAL_FINISHED  => 'Algunos servicios finalizados',
+    SYSTEM_ALL_FINISHED      => 'Servicios finalizados',
+    SYSTEM_REPORT_SENT       => 'Reporte enviado',
+    SYSTEM_NOT_ACCEPTED      => 'No aceptado por cliente',
+    SYSTEM_CANCELED          => 'Cancelado'
+  }
+
+  def system_status_text
+    SYSTEM_STATUS[system_status.to_i]
+  end
+
   def add_extra
     # If is not Servicio Vinculacion then create number
-    if self.request_type_id != 1 || self.number.nil?
+    if (self.request_type_id != SERVICIO_VINCULACION && self.request_type_id != SERVICIO_VINCULACION_NO_COORDINADO) || self.number.nil?
       con = ServiceRequest.where("number LIKE :prefix AND YEAR(created_at) = :year", {:prefix => "#{self.request_type.prefix}%", :year => Date.today.year}).maximum('consecutive')
       if con.nil?
         con = 1
@@ -44,6 +72,7 @@ class ServiceRequest < ActiveRecord::Base
         con += 1
       end
       consecutive = "%04d" % con
+      self.system_status = SYSTEM_FREE
       self.consecutive = con
       year = Date.today.year.to_s.last(2)
       self.number = "#{self.request_type.prefix}#{year}#{consecutive}"

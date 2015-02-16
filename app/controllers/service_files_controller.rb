@@ -48,9 +48,6 @@ class ServiceFilesController < ApplicationController
       Resque.enqueue(GenerateSampleZip, @sample_id)
     end
 
-    
-
-    @req_services = RequestedService.where(:sample_id => params[:sample_id]).order("FIELD(id,#{@requested_service_id}) DESC, id")
     render :layout => 'standalone'
   end
 
@@ -73,7 +70,7 @@ class ServiceFilesController < ApplicationController
     end
     # Generate zip version
     Resque.enqueue(GenerateSampleZip, params[:service_file]['sample_id'])
-
+    session[:has_upload] = true
     redirect_to :back
   end
 

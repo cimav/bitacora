@@ -2,13 +2,13 @@
 = form_for @user, :remote => true, :html => {:'data-type' => 'html', :id => 'new-user-form'} do |f|
   .field#field_first_name
     = f.label :first_name, 'Nombre:'
-    = f.text_field :first_name, {:class => 'input-xxlarge', :placeholder => 'Nombre del usuario'}
+    = f.text_field :first_name, {:class => 'form-control', :placeholder => 'Nombre del usuario'}
   .field#field_last_name
     = f.label :last_name, 'Nombre:'
-    = f.text_field :last_name, {:class => 'input-xxlarge', :placeholder => 'Apellido del usuario'}
+    = f.text_field :last_name, {:class => 'form-control', :placeholder => 'Apellido del usuario'}
   .field#field_last_name
     = f.label :email, 'Correo electrónico:'
-    = f.text_field :email, {:class => 'input-xxlarge', :placeholder => 'Correo electrónico'}
+    = f.text_field :email, {:class => 'form-control', :placeholder => 'Correo electrónico'}
   .field#field_access
     = f.label :unit_id, 'Tipo de acceso:'
     - access_options = ""
@@ -17,9 +17,9 @@
         - access_options += "<option value=\"#{k}\" selected=\"selected\">#{v}</option>"
       - else
         - access_options += "<option value=\"#{k}\">#{v}</option>"
-    = f.select :access, access_options.html_safe
+    = f.select :access, access_options.html_safe, {}, :class => 'form-control'
   .field#field_employee_number
     = f.label :employee_number, 'Identificador de empleado:'
-    = f.text_field :employee_number, {:class => 'input-large'}
+    = f.text_field :employee_number, {:class => 'form-control'}
   .submit-button
     = f.submit "Agregar usuario", {:class => "btn btn-primary"}

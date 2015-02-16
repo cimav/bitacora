@@ -12,17 +12,73 @@
 #request-types-panel,
 #other-types-panel {
   position: fixed;
-  top: 96px;
+  top: 54px;
   bottom: 0px;
-  left: $side-panel-width + 2;
+  left: $side-panel-width + $sidenav-width;
   width: $side-panel-width;
   border-right: 1px solid $line-color;
   border-left: none;
+  .search-box {
+    padding: 5px;
+    select {
+      margin-bottom: 5px;
+      width: $side-panel-width - 10;
+    }
+    input {
+      width: $side-panel-width - 10;
+    }
+  }
+  .items-placeholder {
+    background-color: $white;
+    overflow: scroll;
+    position: absolute;
+    width: $side-panel-width - 1;
+    bottom: 70px;
+    top: 90px;
+    border-top: 1px solid $line-color;
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      li:nth-child(odd) {
+        background-color: $strip-color;
+      }
+      li.item {
+      }
+    }
+    .items-counter {
+      position: fixed;
+      width: $side-panel-width;
+      height: 30px;
+      bottom: 40px;
+      border-top: 1px solid $line-color;
+      border-right: 1px solid $line-color;
+      background-color: $light-grey;
+      .items-counter-inner {
+        font-size: 90%;
+        text-align: center;
+        padding-top: 5px;
+      }
+    }
+  }
+  .bottom-box {
+    position: absolute;
+    width: 250px;
+    height: 40px;
+    bottom: 0px;
+    border-top: 1px solid $line-color;
+    .bottom-box-inner {
+      margin: 5px 10px;
+    }
+  }
+
+
   li {
     min-height: 48px;
     padding: 10px 5px;
     cursor: pointer;
     border-bottom: 1px solid $line-color;
+    border-right: 1px solid $line-color;
     &.active {
       background: $bg-selected !important;
       color: $selected-color !important;
@@ -41,7 +97,7 @@
       position: absolute;
       text-align: center;
       bottom: 0px;
-      height: 35px;
+      height: 40px;
       button {
         margin-top: 3px;
         width: $side-panel-width - 10;
@@ -49,9 +105,18 @@
   }
 }
 
+
+ 
 #users-list {
-  top: 110px !important;
+  top: 130px !important;
 }
+
+#service-types-list,
+#request-types-list,
+#other-types-list {
+  top: 50px !important; 
+}
+
 
 #client-details,
 #equipment-details,
@@ -61,17 +126,28 @@
 #service-types-details,
 #request-types-details,
 #other-types-details {
-  left: ($sample-list-width * 2) + 24;
+  left: $side-panel-width * 2 + $sidenav-width + 24;
   right: 0px;
   position: fixed;
-  top: 96px;
+  top: 54px;
   bottom: 0px;
   overflow: auto;
+  padding-right: 20px;
+  button, .submit-button {
+    margin-top: 20px;
+  }
 }
 
 #admin-panel {
-  background: #fff;
+  width: $side-panel-width;
+  background-color: $light-bg;
+  border-top: 1px solid $line-color;
+  border-left: 1px solid $line-color;
+  border-right: 1px solid $line-color;
   padding-top: 20px;
+  position: absolute;
+  top: 54px;
+  bottom: 0px;
   ul {
     margin: 10px;
   }

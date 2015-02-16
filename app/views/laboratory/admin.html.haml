@@ -4,13 +4,13 @@
   = form_for @laboratory, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-laboratory-form'} do |f|
     .field#field_laboratory_name
       = f.label :name, 'Nombre:'
-      = f.text_field :name, :placeholder => 'Nombre del laboratorio'
+      = f.text_field :name, :placeholder => 'Nombre del laboratorio', :class => 'form-control'
     .field#field_laboratory_prefix
       = f.label :prefix, 'Prefijo:'
-      = f.text_field :prefix, :placeholder => 'Nombre corto'
+      = f.text_field :prefix, :placeholder => 'Nombre corto', :class => 'form-control'
     .field#field_laboratory_description
       = f.label :description, 'Descripción:'
-      = f.text_area :description
+      = f.text_area :description, :class => 'form-control'
     .field#field_laboratory_business_unit_id
       = f.label :business_unit_id, 'Sede:'
       - bu_options = ''
@@ -20,7 +20,7 @@
         - else
           - sel = ''
         - bu_options += "<option value=\"#{item.id}\" #{sel}>#{item.name}</option>"
-      = f.select :business_unit_id, bu_options.html_safe
+      = f.select :business_unit_id, bu_options.html_safe, { }, { :class => 'form-control' }
     .field#field_laboratory_user_id
       = f.label :user_id, 'Responsable:'
       - resp_options = ''
@@ -30,7 +30,8 @@
         - else
           - sel = ''
         - resp_options += "<option value=\"#{item.user.id}\" #{sel}>#{item.user.full_name}</option>"
-      = f.select :user_id, resp_options.html_safe
+      = f.select :user_id, resp_options.html_safe, { }, { :class => 'form-control' }
+
     .submit-button
       = f.submit "Actualizar laboratorio", {:class => 'btn btn-primary'}
   

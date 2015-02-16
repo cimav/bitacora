@@ -21,7 +21,7 @@
     - acc_options += "<option #{sel_member} value=\"#{LaboratoryMember::ACCESS_MEMBER}\">Miembro</option>"
     - acc_options += "<option #{sel_trained} value=\"#{LaboratoryMember::ACCESS_TRAINED}\">Facultado</option>"
     - acc_options += "<option #{sel_admin} value=\"#{LaboratoryMember::ACCESS_ADMIN}\">Administrador</option>"
-    = f.select :access, acc_options.html_safe
+    = f.select :access, acc_options.html_safe, {}, {:class => 'form-control'}
   .submit-button
     = f.submit "Agregar miembro", {:class => "btn btn-primary"}
 

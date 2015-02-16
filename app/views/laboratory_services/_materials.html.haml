@@ -28,7 +28,7 @@
             .mat-details= mat.details
           = link_to '×', {:controller => 'requested_services', :action => 'delete_mat', :mat_id => mat.id}, :method => :post, :remote => true, :class => 'close', :'data-type' => 'html', 'data-id' => mat.id
         %td
-          = text_field_tag "quantity_#{mat.id}", mat.quantity, {:class => "mat_qty_template", "data-id" => mat.id}
+          = text_field_tag "quantity_#{mat.id}", mat.quantity, {:class => "mat_qty_template form-control", "data-id" => mat.id}
         %td
           - unit = mat.material.unit.name rescue 'Sin Unidad'
           = unit
@@ -58,7 +58,7 @@
             = "¿No existe en la lista? "
             %a#new-material-link="Agregar nuevo material"
         %td
-          = text_field_tag 'new_mat_qty'
+          = text_field_tag 'new_mat_qty', '', :class => 'form-control'
         %td{:colspan => 2}
           %button.btn.btn-mini.btn-info#add-material-template= "Agregar consumible"
 

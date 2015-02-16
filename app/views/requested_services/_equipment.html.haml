@@ -22,13 +22,14 @@
   %table.table.table-striped
     %thead
       %tr
-        %th{:colspan => 4, :class => "th-header"}= "Equipos"
+        %th{:colspan => 5, :class => "th-header"}= "Equipos"
       - if @requested_service.requested_service_equipments.count > 0
         %tr
           %th= "Nombre"
           %th= "Horas"
           %th= "Costo x Hora"
           %th= "Subtotal"
+          %th
     %tbody
       - eq_total = 0
       - eqs = []
@@ -44,7 +45,6 @@
             = eq.equipment.name
             - if !eq.details.blank?
               .eq-details= eq.details
-            = link_to '×', {:controller => 'requested_services', :action => 'delete_eq', :eq_id => eq.id}, :method => :post, :remote => true, :class => 'close', :'data-type' => 'html', 'data-id' => eq.id
           %td
             - if editable
               - u_options = ''
@@ -53,19 +53,22 @@
                   - u_options += "<option value=\"#{i}\" selected=\"selected\">#{i} horas</option>"
                 - else 
                   - u_options += "<option value=\"#{i}\">#{i} horas</option>"
-              = select_tag "eq_hours_#{eq.id}", u_options.html_safe, {:style => "width: 100%;", "data-id" => eq.id, :class => "eq_hours"}
+              = select_tag "eq_hours_#{eq.id}", u_options.html_safe, {"data-id" => eq.id, :class => "eq_hours form-control input-sm"}
             - else
               .align-right= "#{eq.hours} horas" 
           %td
             .align-right= number_to_currency(eq.hourly_rate)
           %td
             .align-right= number_to_currency(eq_cost)
+          %td
+            = link_to '×', {:controller => 'requested_services', :action => 'delete_eq', :eq_id => eq.id}, :method => :post, :remote => true, :class => 'close', :'data-type' => 'html', 'data-id' => eq.id
       - if @requested_service.requested_service_equipments.count > 0
         %tr.total-row
           %td{:colspan => 3}
             .align-right= "Subtotal Equipo"
           %td
             .align-right= number_to_currency(eq_total)
+          %td
       - if editable
         - if eqs.count > 0
           - with_eq = " AND id NOT IN (#{(eqs.join(','))})"
@@ -78,12 +81,12 @@
       - if u_options != '' && editable
         %tr.add-row
           %td
-            = select_tag :new_eq_id, u_options.html_safe, {:style => "width: 100%;"}
+            = select_tag :new_eq_id, u_options.html_safe, {:class => "form-control input-sm"}
           %td
             - u_options = ''
             - for i in 0.step(100, 0.5)
               - u_options += "<option value=\"#{i}\">#{i} horas</option>"
-            = select_tag :new_eq_hours, u_options.html_safe, {:style => "width: 100%;"}
-          %td{:colspan => 2}
-            %button.btn.btn-mini.btn-info#add-equipment= "Agregar equipo"
+            = select_tag :new_eq_hours, u_options.html_safe, {:class => "form-control input-sm"}
+          %td{:colspan => 3}
+            %button.btn.btn-primary.btn-sm.btn-block#add-equipment= "Agregar equipo"
 

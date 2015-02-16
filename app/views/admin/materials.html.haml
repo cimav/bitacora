@@ -5,8 +5,8 @@
       - Unit.order('name').each do |unit|
         - unit_options += "<option value=\"#{unit.id}\">#{unit.name}</option>"
       - unit_options += "<option value=\"0\">Sin unidad</option>"
-      = select_tag "search_unit_id", unit_options.html_safe
-      = text_field_tag :q, nil, :id => 'materials-search-box', :placeholder => 'Busqueda'
+      = select_tag "search_unit_id", unit_options.html_safe, :class => 'form-control'
+      = text_field_tag :q, nil, :id => 'materials-search-box', :placeholder => 'Busqueda', :class => 'form-control'
   #materials-list.items-placeholder 
   #materials-buttons.bottom-box
     = button_tag "Agregar nuevo consumible", {:class => 'btn btn-info', :id => 'add-new-admin-materials-button'}

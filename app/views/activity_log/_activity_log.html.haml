@@ -1,6 +1,6 @@
 .media.write-message
   %a.pull-left{:href => '#'}
-    = image_tag ("http://cimav.edu.mx/foto/#{current_user.email.split('@')[0]}/48"), :class => "media-object"
+    = image_tag ("http://cimav.edu.mx/foto/#{current_user.email.split('@')[0]}/48"), :class => "media-object img-circle"
   .media-body
     = form_for ActivityLog.new, :remote => true, :html => {:'data-type' => 'html', :id => 'new-activity-log-form'} do |f|
       = f.hidden_field :service_request_id, {:value => service_request_id}
@@ -15,9 +15,9 @@
   - activity_log.each do |activity|
     %li.media.activity-message
       %a.pull-left{:href => '#'}
-        = image_tag ("http://cimav.edu.mx/foto/#{activity.user.email.split('@')[0]}/48"), :class => "media-object"
+        = image_tag ("http://cimav.edu.mx/foto/#{activity.user.email.split('@')[0]}/48"), :class => "media-object img-circle"
       .media-body
         %h4.media-heading
           = activity.user.full_name 
-          %span.timestamp= l activity.created_at, :format => :long
+          %span.timestamp= date_text(activity.created_at)
         = activity.message

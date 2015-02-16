@@ -1,0 +1,11 @@
+- if request.system_status == ServiceRequest::SYSTEM_FREE
+  %button#edit-service-request-button.btn.btn-default.btn-block{'data-id' => request.id}= "Editar"
+- elsif request.request_type_id == ServiceRequest::SERVICIO_VINCULACION
+  #folder-status-message
+    = request.system_status_text
+
+  - if request.system_status == ServiceRequest::SYSTEM_QUOTED
+    %button#send-quote-button.btn.btn-primary.btn-block{'data-id' => request.id}= "Enviar costeo"
+
+  - if request.system_status == ServiceRequest::SYSTEM_ALL_FINISHED
+    %button#send-report-button.btn.btn-primary.btn-block{'data-id' => request.id}= "Enviar reporte"

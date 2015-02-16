@@ -1,38 +1,75 @@
 $white: #fff;
 $black: #000;
+
 $grey: #777;
 $med-grey: #ddd;
-$light-grey: #fafafa;
+$light-grey: #f8f8f8;
+$dark-grey: #666;
+
 $red: #d64830;
 $red-dark: #660000;
+
 $blue: #2a3d78;
 $green: #62c462;
-$strong-color: #222;
+
+$strong-color: #333;
 $strong-color2: #444;
-$light-bg: #f8f8f8;
+
+$light-bg: #fefefe;
 $bg-color: #fafafa;
+$secondary-bg: lighten($light-grey, 5%);
+
 $bg-selected2: #e2f0f4;
 $selected-color2: #222;
-$bg-selected: #0af;
+$bg-selected: #8cf;
 $selected-color: #fff;
 $selected-color-light: #eef;
-$qty-bg: #fff6bf; 
-$qty-color: #514721; 
+
+$hover-bg: $light-grey;
+
+$qty-bg: #fff6bf;
+$qty-color: #514721;
+
 $strip-color: #f9f9f9;
 
+$top-header-bg: #fff;
+$top-header-color: $red;
+
+$bitacora-brand: #333;
+$folder-color: #f9d683;
+$sample-color: #f90;
+$owner-color: #64a673;
+$supervisor-color: #e6b45e;
+$collaborator-color: $red;
+$rs-color: #ddd;
+
+$sidenav-bg: darken($bitacora-brand, 1%);
+$sidenav-color: lighten($bitacora-brand, 40%);
+$sidenav-selected: darken($sidenav-bg, 5%);
+$sidenav-hover: darken($sidenav-bg, 3%);
+
+$header-color: $sidenav-selected;
+
 $container-width: 1000px;
+$sidenav-width: 110px;
 $nav-width: 101px;
 $work-area-width: $container-width - $nav-width;
 $wide-width: $container-width - $nav-width;
-$sample-list-width: 250px;
+$sample-list-width: 160px;
 $sample-workarea-width: $work-area-width - $sample-list-width - 42;
-$side-panel-width: 250px;
+$side-panel-width: 280px;
+$folder-samples-width: 400px;
 $main-panel-width: $container-width - $side-panel-width - $nav-width - 4;
 $lab-services-list-width: 250px;
+$lab-req-serv-panel-width: 300px;
 
-$line-color: #ddd;
+$workarea-top: 106px;
+
+$line-color: #d9d8e0;
 $link-color: #06c;
 $bullet-color: #ddd;
+
+$table-bg-active: $bg-selected;
 
 
 $button-gradient-from: #fafafa;
@@ -50,43 +87,27 @@ $error-bg: #fbe3e4;
 $error-color: #8a1f11;
 $error-border-color: #fbc2c4;
 
-$notice-bg: #fff6bf; 
-$notice-color: #514721; 
+$notice-bg: #fff6bf;
+$notice-color: #514721;
 $notice-border-color: #ffd324;
 
 
-$success-bg: #e6efc2; 
-$success-color: #264409; 
+$success-bg: #e6efc2;
+$success-color: #264409;
 $success-border-color: #c6d880;
 
-$info-bg: #d5edf8; 
-$info-color: #205791; 
+$info-bg: #d5edf8;
+$info-color: #205791;
 $info-border-color: #92cae4;
 
-
-// INITIAL
-$status_1: #999999;
-// RECEIVED
-$status_2: #37a8ba;
-// ASSIGNED
-$status_3: #5ca6ec;
-// SUSPENDED
-$status_4: #d3c75b;
-// REINIT
-$status_5: #0066cc;
-// CANCELED
-$status_-1: #b83543;
-// IN_PROGRESS
-$status_6: #00bb00;
-// FINISHED
-$status_99: #0066cc;
-// REQ_SUP_AUTH
-$status_7: #ff9900;
-// REQ_OWNER_AUTH
-$status_8: #ff00ff;
-// TO_QUOTE
-$status_21: #d800ff;
-// WAITING_START
-$status_22: #aa77aa;
-
+$servicio-color: #ec1e24;
+$servicio2-color: #f45a2a;
+$articulo-color: #c30dff;
+$tesis-color: #3cb64c;
+$convenio-color: #04aeec;
+$proyecto-color: #3330b5;
+$estancias-color: #fca704;
+$calibracion-color: #f9b53f;
+$maquinado-color: #999;
+$prototipo-color: #ddd;
 

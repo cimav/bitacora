@@ -1,20 +1,16 @@
-%ul
+%table.table.table-hover.sample-services
   - if sample.requested_service.count == 0
-    %li.no-service
-      .service-bullet= "-"
-      .service-name= "Ninguno"
-  - else
-    - sample.requested_service.each do |rs|
-      %li.requested_service{:sample_id => rs.sample_id, :requested_service_id => rs.id, :id => "requested_service_#{rs.id}", 'data-title' => rs.status_text}
-        .service-bullet{:class => "status_#{rs.status}"}= "%02d" %  rs.consecutive
-        .service-name= rs.laboratory_service.name
-  %li#add-service
-    .service-bullet.add
-      %i.icon-white.icon-plus
-    .service-name
-      %a#open-add-service-modal= "Agregar servicio"
-
-:javascript
-  $(document).ready(function () {
-    $('.requested_service').tooltip({placement: 'bottom'});
-  });
+    %tr
+      %td{:colspan => 3, :class => 'empty'}= "No tiene servicios"
+  - sample.requested_service.each do |rs|
+    %tr{:class => 'requested-service-link', 'data-id' => rs.id, 'data-sample-id' => rs.sample_id, :id => "requested-service-link-#{rs.id}"}
+      %td.icon{:class => rs.status_class}
+        %span.glyphicon{:class => rs.icon_class}
+      %td.name= rs.laboratory_service.name
+      %td.date= date_text(rs.created_at)
+  - if request.request_type_id != ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
+    - if request.request_type_id == ServiceRequest::SERVICIO_VINCULACION && sample.service_request.system_status < ServiceRequest::SYSTEM_QUOTE_SENT 
+      %tr.add-service
+        %td.icon
+          %span.glyphicon.glyphicon-plus-sign
+        %td.name.add-service-link{'data-sample-id' => sample.id ,:colspan => 2}= "Agregar Servicio"

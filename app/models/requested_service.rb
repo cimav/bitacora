@@ -2,7 +2,7 @@
 class RequestedService < ActiveRecord::Base
   attr_accessible :laboratory_service_id, :sample_id, :details, :status, :suggested_user_id, :user_id, :from_id
   belongs_to :user
-  belongs_to :suggested_user, :class_name => 'User', :foreign_key => 'suggested_user_id' 
+  belongs_to :suggested_user, :class_name => 'User', :foreign_key => 'suggested_user_id'
   belongs_to :sample
   belongs_to :laboratory_service
   has_many :activity_log
@@ -32,7 +32,7 @@ class RequestedService < ActiveRecord::Base
   TO_QUOTE       = 21
   WAITING_START  = 22
 
-  FINISHED       = 99 
+  FINISHED       = 99
 
   STATUS = {
     INITIAL        => 'Inicio',
@@ -45,8 +45,8 @@ class RequestedService < ActiveRecord::Base
     REQ_SUP_AUTH   => 'Aut. de supervisor',
     REQ_OWNER_AUTH => 'Aut. de solicitante',
 
-    TO_QUOTE       => 'Cotizando',
-    WAITING_START  => 'Se envio cotización',
+    TO_QUOTE       => 'Costeando',
+    WAITING_START  => 'Se envio costeo',
 
     FINISHED       => 'Finalizado'
   }
@@ -111,18 +111,18 @@ class RequestedService < ActiveRecord::Base
       new_eq.details = eq.details
       new_eq.save
     end
-    
+
     # Material
-    template_service.requested_service_materials.each do |mat|
-      new_mat = self.requested_service_materials.new
-      new_mat.material_id = mat.material_id
-      the_mat = Material.find(mat.material_id)
-      new_mat.quantity = mat.quantity
-      new_mat.unit_price = the_mat.unit_price
-      new_mat.details = mat.details
-      new_mat.save
-    end
-    
+    # template_service.requested_service_materials.each do |mat|
+    #   new_mat = self.requested_service_materials.new
+    #   new_mat.material_id = mat.material_id
+    #   the_mat = Material.find(mat.material_id)
+    #   new_mat.quantity = mat.quantity
+    #   new_mat.unit_price = the_mat.unit_price
+    #   new_mat.details = mat.details
+    #   new_mat.save
+    # end
+
     # Other
     template_service.requested_service_others.each do |other|
       new_other = self.requested_service_others.new
@@ -139,25 +139,53 @@ class RequestedService < ActiveRecord::Base
   end
 
   def set_system_based_status
-    if self.sample.service_request.system_status == ServiceRequest::SYSTEM_TO_QUOTE
+    st = self.sample.service_request.system_status
+    if st == ServiceRequest::SYSTEM_TO_QUOTE ||
+       st == ServiceRequest::SYSTEM_PARTIAL_QUOTED ||
+       st == ServiceRequest::SYSTEM_QUOTED
+
       self.status = TO_QUOTE
       self.save(:validate => false)
+
+      if st == ServiceRequest::SYSTEM_QUOTED
+        sr = self.sample.service_request
+        sr.system_status = ServiceRequest::SYSTEM_PARTIAL_QUOTED
+        sr.save(:validate => false)
+      end
+
     end
   end
 
   def icon_class
-    icon = 'icon-asterisk' if status.to_i == INITIAL
-    icon = 'icon-check'    if status.to_i == RECEIVED
-    icon = 'icon-user'     if status.to_i == ASSIGNED
-    icon = 'icon-minus'    if status.to_i == SUSPENDED
-    icon = 'icon-repeat'   if status.to_i == REINIT
-    icon = 'icon-play'     if status.to_i == IN_PROGRESS
-    icon = 'icon-ok'       if status.to_i == FINISHED
-    icon = 'icon-remove'   if status.to_i == CANCELED
-    icon = 'icon-lock'     if status.to_i == REQ_SUP_AUTH
-    icon = 'icon-lock'     if status.to_i == REQ_OWNER_AUTH
-    icon = 'icon-tasks'    if status.to_i == TO_QUOTE
-    icon = 'icon-time'     if status.to_i == WAITING_START
+    icon = 'glyphicon-home'     if status.to_i == INITIAL
+    icon = 'glyphicon-inbox'    if status.to_i == RECEIVED
+    icon = 'glyphicon-user'     if status.to_i == ASSIGNED
+    icon = 'glyphicon-minus'    if status.to_i == SUSPENDED
+    icon = 'glyphicon-repeat'   if status.to_i == REINIT
+    icon = 'glyphicon-cog'      if status.to_i == IN_PROGRESS
+    icon = 'glyphicon-ok'       if status.to_i == FINISHED
+    icon = 'glyphicon-remove'   if status.to_i == CANCELED
+    icon = 'glyphicon-lock'     if status.to_i == REQ_SUP_AUTH
+    icon = 'glyphicon-lock'     if status.to_i == REQ_OWNER_AUTH
+    icon = 'glyphicon-list-alt' if status.to_i == TO_QUOTE
+    icon = 'glyphicon-time'     if status.to_i == WAITING_START
+    icon
+  end
+
+  def status_class
+    st = 'status-initial'     if status.to_i == INITIAL
+    st = 'status-received'    if status.to_i == RECEIVED
+    st = 'status-assigned'    if status.to_i == ASSIGNED
+    st = 'status-suspended'   if status.to_i == SUSPENDED
+    st = 'status-reinit'      if status.to_i == REINIT
+    st = 'status-in-progress' if status.to_i == IN_PROGRESS
+    st = 'status-finished'    if status.to_i == FINISHED
+    st = 'status-canceled'    if status.to_i == CANCELED
+    st = 'status-auth'        if status.to_i == REQ_SUP_AUTH
+    st = 'status-auth'        if status.to_i == REQ_OWNER_AUTH
+    st = 'status-to-quote'    if status.to_i == TO_QUOTE
+    st = 'status-waiting'     if status.to_i == WAITING_START
+    st
   end
 
 end

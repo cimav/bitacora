@@ -4,8 +4,8 @@
       - client_type_options = "<option value=\"0\">Todos los tipos</option>"
       - ClientType.order('id').each do |ct|
         - client_type_options += "<option value=\"#{ct.id}\">#{ct.name}</option>"
-      = select_tag "client_type", client_type_options.html_safe
-      = text_field_tag :q, nil, :id => 'clients-search-box', :placeholder => 'Busqueda'
+      = select_tag "client_type", client_type_options.html_safe, :class => 'form-control'
+      = text_field_tag :q, nil, :id => 'clients-search-box', :placeholder => 'Busqueda', :class => 'form-control'
   #clients-list.items-placeholder 
   #clients-buttons.bottom-box
     = button_tag "Sincronizar con SIG", {:class => 'btn btn-info', :id => 'sync-clients'}

@@ -2,6 +2,114 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.status-initial     { color: $grey; }
+.status-received    { color: #f0842a; }
+.status-assigned    { color: #2ec6c8; }
+.status-suspended   { color: $brand-warning; }
+.status-reinit      { color: $brand-primary; }
+.status-in-progress { color: $brand-primary; }
+.status-finished    { color: $brand-success }
+.status-canceled    { color: $brand-danger; }
+.status-auth        { color: $brand-warning; }
+.status-to-quote    { color: #a58ad5; }
+.status-send-quote    { color: darken(#a58ad5, 10%); }
+.status-waiting     { color: #666; }
+
+.btn-status {
+  color: #fff;
+  &:hover {
+    color: #fff;
+  }
+}
+
+.bg-status-initial     { background: $grey; }
+.bg-status-received    { background: #f0842a; }
+.bg-status-assigned    { background: #2ec6c8; }
+.bg-status-suspended   { background: $brand-warning; }
+.bg-status-reinit      { background: $brand-primary; }
+.bg-status-in-progress { background: $brand-primary; }
+.bg-status-finished    { background: $brand-success }
+.bg-status-canceled    { background: $brand-danger; }
+.bg-status-auth        { background: $brand-warning; }
+.bg-status-to-quote    { background: #a58ad5; }
+.bg-status-send-quote  { background: darken(#a58ad5, 10%); }
+.bg-status-waiting     { background: #666; }
+
+
+.bg-edit-folder { background: $folder-color; color: darken($folder-color,50%) !important; }
+
+.bg-dialog { background: $brand-primary; }
+
+.header-status {
+  font-size: 14px;
+  padding: 10px 20px;
+  color: #fff;
+  .title {
+
+  }
+  .number {
+    float: right;
+  }
+  .close {
+    position: relative;
+    float: right;
+    margin: 0 0 0 10px !important;
+    padding: 0px !important;
+    top: -3px;
+  }
+}
+
+#folder-work-panel {
+  #requested-service-tabs, .tab-content {
+    margin: 20px;
+  }
+}
+
+
+#rs-header {
+  margin-top: 20px;
+  width: 100%;
+
+  #requested-service-data {
+    padding: 0 20px;
+    vertical-align: top;
+    h3 {
+      font-size: 16px;
+      font-weight: bold;
+      margin: 0;
+      padding: 0;
+    } 
+    strong { 
+      color: $grey;
+    }
+  }
+
+  #requested-service-actions {
+    text-align: right;
+    min-width: 300px;
+    width: 300px;
+    vertical-align: top;
+    button {
+      float: left;
+      margin: 5px;
+      span {
+        display: block;
+        font-size: 20px;
+        margin-bottom: 5px;
+      }
+      font-size: 11px;
+      text-align: center;
+      width: 64px;
+      height: 64px;
+    }
+  }
+}
+
+#requested-service-tabs {
+  margin-top: 20px;
+}
+
+
 .total-row {
   td {
     border-top: 2px solid $grey;
@@ -14,4 +122,27 @@
   td {
     background-color: $white !important;
   }
+}
+
+#costeo {
+  margin-top: 20px;
+  table {
+    margin-bottom: 40px;
+    .th-header {
+      font-weight: bold;
+      font-size: 150%;
+    }
+  }
+
+  #grand_total {
+    float: right;
+    font-weight: bold;
+    font-size: 30px;
+    margin-bottom: 20px;
+  }
+}
+
+#service-start {
+  height: 20px;
+  padding-left: 20px;
 }

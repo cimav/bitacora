@@ -1,7 +1,7 @@
 #other-types-panel
   #other-types-search-panel.search-box
     = form_tag 'xxx', :id => 'other-types-live-search', :method => 'get', :remote => true do
-      = text_field_tag :q, nil, :id => 'other-types-search-box', :placeholder => 'Busqueda'
+      = text_field_tag :q, nil, :id => 'other-types-search-box', :placeholder => 'Busqueda', :class => 'form-control'
   #other-types-list.items-placeholder 
   #other-types-buttons.bottom-box
     = button_tag "Agregar nuevo tipo", {:class => 'btn btn-info', :id => 'add-new-admin-other-types-button'}

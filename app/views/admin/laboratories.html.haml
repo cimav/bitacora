@@ -4,8 +4,8 @@
       - laboratory_type_options = "<option value=\"0\">Todos los tipos</option>"
       - BusinessUnit.order('id').each do |ct|
         - laboratory_type_options += "<option value=\"#{ct.id}\">#{ct.name}</option>"
-      = select_tag "laboratory_type", laboratory_type_options.html_safe
-      = text_field_tag :q, nil, :id => 'laboratories-search-box', :placeholder => 'Busqueda'
+      = select_tag "laboratory_type", laboratory_type_options.html_safe, :class => 'form-control'
+      = text_field_tag :q, nil, :id => 'laboratories-search-box', :placeholder => 'Busqueda', :class => 'form-control'
   #laboratories-list.items-placeholder 
   #laboratories-buttons.bottom-box
     = button_tag "Agregar nuevo laboratorio", {:class => 'btn btn-info', :id => 'add-new-admin-laboratory-button'}

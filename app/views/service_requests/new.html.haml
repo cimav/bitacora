@@ -1,5 +1,6 @@
-#new-request-area.inner-area
-  %h2 Nueva carpeta
+#header-bar
+  %h2 Nueva Carpeta
+#new-request-area.inner-area  
   = form_for @request, :remote => true, :html => {:'data-type' => 'html', :id => 'new-request-form', :class => "form-horizontal"} do |f|
     
     .control-group#cg_ServiceRequest_type_id
@@ -12,19 +13,19 @@
               - options += "<option value=\"#{request_type.id}\">#{request_type.name}</option>"
           - else
             - options += "<option value=\"#{request_type.id}\">#{request_type.name}</option>"
-        = f.select :request_type_id, options.html_safe
+        = f.select :request_type_id, options.html_safe, {}, {:class => 'form-control'}
 
     #extra-form
 
     .control-group#cg_ServiceRequest_link
       = f.label :request_link, 'Nombre:', {:class => 'control-label'}
       .controls
-        = f.text_field :request_link, {:class => 'input-xxlarge'}
+        = f.text_field :request_link, {:class => 'form-control'}
 
     .control-group#cg_ServiceRequest_description
       = f.label :description, 'Descripción:', {:class => 'control-label'}
       .controls
-        = f.text_area :description, {:class => 'input-xxlarge',:rows => 4}
+        = f.text_area :description, {:class => 'form-control',:rows => 4}
 
     .control-group#cg_ServiceRequest_supervisor
       = f.label :supervisor_id, 'Supervisor:', {:class => 'control-label'}

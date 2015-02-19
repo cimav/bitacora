@@ -1,7 +1,18 @@
 :javascript
   $(function() {
-    $('#cg_ServiceRequest_link').show();
     $('#cg_ServiceRequest_description').show();
-    $('#cg_ServiceRequest_supervisor').show();
     $('#cg_ServiceRequest_submit').show();
   });
+
+
+.control-group#cg_student_id
+  = f.label :student_id, "Estudiante", {:class => 'control-label'}
+  .controls
+    - options = '<option value="-">Selecciona al estudiante</option>'
+    - RequestType.order(:name).each do |request_type|
+      - if request_type.short_name == 'SERVICIO'
+        - if current_user.can_create_external_services? 
+          - options += "<option value=\"#{request_type.id}\">#{request_type.name}</option>"
+      - else
+        - options += "<option value=\"#{request_type.id}\">#{request_type.name}</option>"
+    = f.select :request_type_id, options.html_safe, {}, {:class => 'form-control'}

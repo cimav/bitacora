@@ -370,22 +370,14 @@ $(document).on('click', '#change_status_canceled', () ->
 #-----------
 # NAVIGATION
 #-----------
-$(document).on('click', '#nav-home', () ->
-    url = '/home'
-    setHash('#!/home', true)
-    $('.nav-item').removeClass('selected')
-    $('#nav-home').addClass('selected')
-  )
 
-$(document).on('click', '#nav-my-requests', () ->
-    url = '/my-requests'
-    setHash('#!' + url, true)
-    $('.nav-item').removeClass('selected')
-    $('#nav-my-requests').addClass('selected')
-  )
+$(document).on("click", "#folders-link", () ->
+  window.location = '/#!/folders'
+  setHash('#!' + url, true)
+)
 
-$(document).on('click', '.nav-lab', () ->
-    lab_id = $(this).attr('laboratory_id')
+$(document).on('click', '.lab-link', () ->
+    lab_id = $(this).data('laboratory_id')
     url = '/laboratory/' + lab_id
     setHash('#!' + url, true)
     $('.nav-item').removeClass('selected')
@@ -1082,13 +1074,13 @@ $(document).on('ajax:error', '#edit-service-request-form', (evt, xhr, status, er
 #--------------
 @setHash = setHash = (h, get_url) ->
   window.location.hash = h
-  checkHash() if get_url
+  checkHash(get_url) if get_url
   hash = h
   
   
 
-@checkHash = checkHash = () ->
-  if window.location.hash != hash
+@checkHash = checkHash = (get_url) ->
+  if window.location.hash != hash || get_url
     hash = window.location.hash
     if (hash.slice(0, 2) == '#!' && hash.length > 3)
       if hash.indexOf("?") != -1
@@ -1101,11 +1093,6 @@ $(document).on('ajax:error', '#edit-service-request-form', (evt, xhr, status, er
       )
 
 hashTimer = setInterval(checkHash, 1000)
-
-$(document).on("click", "#folders-link", () ->
-  window.location = '/#!/folders'
-  checkHash()
-)
 
 #--------
 # Ready

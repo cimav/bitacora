@@ -63,6 +63,10 @@
           %br
           %strong=  "Técnico Asignado: "
           = "#{(@requested_service.user.full_name)}"
+        - if @requested_service.sample.service_request.request_type_id == ServiceRequest::SERVICIO_VINCULACION || @requested_service.sample.service_request.request_type_id == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
+          .rs-client
+            %strong= "Cliente: "
+            = @requested_service.sample.service_request.vinculacion_client_name
       %td#requested-service-actions
         - if initial_action
           %button{:class => "btn btn-block btn-status bg-status-initial", :status_action => RequestedService::INITIAL, :id => 'change_status_initial'}

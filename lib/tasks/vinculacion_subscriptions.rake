@@ -18,6 +18,8 @@ class VinculacionSubscriptions
       folder.request_link      = attributes['nombre']
       folder.number            = attributes['codigo']
       folder.description       = attributes['descripcion']
+      folder.vinculacion_client_id   = attributes['cliente_id']
+      folder.vinculacion_client_name = attributes['cliente_nombre']
       folder.system_status     = ServiceRequest::SYSTEM_TO_QUOTE
       if u_supervisor = User.where(:email => attributes['agente_email']).first
         folder.supervisor_id = u_supervisor.id

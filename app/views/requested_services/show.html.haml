@@ -40,7 +40,7 @@
 
 - owner_auth_action = @requested_service.status.to_i == RequestedService::REQ_OWNER_AUTH && im_requestor
 
-- send_quote_action = @requested_service.status.to_i == RequestedService::TO_QUOTE && im_requestor
+- send_quote_action = @requested_service.status.to_i == RequestedService::TO_QUOTE && (im_lab_admin || im_service_tech)
 
 - waiting_action = @requested_service.status.to_i == RequestedService::WAITING_START && im_requestor
 

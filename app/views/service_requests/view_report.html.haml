@@ -6,7 +6,7 @@
   - totals[s['bitacora_id']] = {}
   - totals[s['bitacora_id']]['total'] = 0
   
-  - ['personal', 'equipos', 'consumibles', 'otros'].each do |r|
+  - ['personal', 'equipos', 'otros'].each do |r|
     - totals[s['bitacora_id']][r] = 0
   
     - s[r].each do |i|
@@ -36,14 +36,14 @@
       %h3
         = "Costeo final" 
         %span.total= number_to_currency(global_total)
-      - rheader = {'personal' => ['Nombre', 'Horas', 'Costo x Hora'], 'equipos' => ['Equipo', 'Horas', 'Costo x Hora'], 'consumibles' => ['Nombre', 'Cantidad', 'Precio Unitario'], 'otros' => ['Concepto', 'Cantidad', 'Precio']}
+      - rheader = {'personal' => ['Nombre', 'Horas', 'Costo x Hora'], 'equipos' => ['Equipo', 'Horas', 'Costo x Hora'], 'otros' => ['Concepto', 'Cantidad', 'Precio']}
 
       - @details['servicios'].each do |s|
         %h4
           = "#{s['muestra_identificador']}: #{s['nombre_servicio']}"
           %span.total= number_to_currency(totals[s['bitacora_id']]['total'])
         %table.table.table-bordered
-          - ['personal', 'equipos', 'consumibles', 'otros'].each do |r|
+          - ['personal', 'equipos', 'otros'].each do |r|
             - if s[r].count > 0
               %tr
                 %th.rubro-header{:colspan=>4}

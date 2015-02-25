@@ -23,6 +23,7 @@ $(document).on('click', '#send-quote-button', () ->
 
 $(document).on('click', '#send-quote-to-vinculacion', () ->
   id = $(this).data('id')
+  $(this).prop('disabled', true)
   url = '/service_requests/' + id + '/send_quote';
   $.post(url, {}, (html) ->
     getServiceRequestActions(id)
@@ -33,6 +34,7 @@ $(document).on('click', '#send-quote-to-vinculacion', () ->
 
 $(document).on('click', '#send-report-button', () ->
   id = $(this).data('id')
+  $(this).prop('disabled', true)
   url = '/service_requests/' + id + '/view_report';
   $.get(url, {}, (html) ->
     $('#folder-work-panel').empty().html(html)
@@ -41,6 +43,7 @@ $(document).on('click', '#send-report-button', () ->
 
 $(document).on('click', '#send-report-to-vinculacion', () ->
   id = $(this).data('id')
+  $(this).prop('disabled', true)
   form = $('#send-report-form')
   formData = form.serialize()
   url = '/service_requests/' + id + '/send_report';
@@ -62,6 +65,7 @@ $(document).on('click', '#add-collaborator-button', () ->
 )
 
 $(document).on('click', '#add-collaborator-save', () ->
+  $(this).prop('disabled', true)
   id = $(this).data('id')
   url = '/service_requests/' + id + '/add_collaborator';
   $('#collaborators').hide();

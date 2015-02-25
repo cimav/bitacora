@@ -60,6 +60,7 @@ $(document).on('click', '.service-request-link', () ->
   )
 
 $(document).on('click', '#add-new-folder-button', () ->
+    $(this).prop('disabled', true)
     setHash('#!/folders/new', true)
   )
 
@@ -90,6 +91,7 @@ newSampleDialog = () ->
   )
 
 $(document).on('click', '#add-new-sample-button', () ->
+    $(this).prop('disabled', true)
     current_request = $(this).data('id')
     newSampleDialog()
   )
@@ -102,13 +104,9 @@ addServiceDialog = (from_id = false) ->
   )
 
 $(document).on('click', '.add-service-link', () ->
+    $(this).prop('disabled', true)
     current_sample = $(this).data('sample-id')
     addServiceDialog()
-  )
-
-$(document).on('click', '#open-add-service-by-lab-modal', () ->
-    current_sample = $('#open-add-service-by-lab-modal').attr('data-for-sample')
-    addServiceDialog($('#open-add-service-by-lab-modal').attr('data-from-id'))
   )
 
 $(document).on('click', '#service_type', () ->
@@ -145,9 +143,6 @@ $(document).on('click', '.lab-service-item', () ->
     )
   )
 
-$(document).on('click', '#add-service-modal-submit', () ->
-    $('#new-requested-service-form').submit();
-  )
 
 $(document).on('ajax:beforeSend', '#new-requested-service-form', (evt, xhr, settings) ->
     $('.error-message').remove()
@@ -233,12 +228,15 @@ getActivityLog = (id) ->
   )
 
 $(document).on('ajax:beforeSend', '#new-activity-log-form', (evt, xhr, settings) ->
+    $("#new-activity-log-form").find('input, textarea, button, select').prop("disabled", true)
     $('.error-message').remove()
     $('.has-errors').removeClass('has-errors')
+
   )
 
 $(document).on('ajax:success', '#new-activity-log-form', (evt, data, status, xhr) ->
     $form = $(this)
+    $("#new-activity-log-form").find('input, textarea, button, select').prop("disabled", false)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     getActivityLog(res['id'])
@@ -262,11 +260,13 @@ updateIcon = (id, status_class, icon_class) ->
 
 # STATUS FORM ACTIONS
 $(document).on('ajax:beforeSend', '#status-form', (evt, xhr, settings) ->
+    $("#status-form").find('input, textarea, button, select').prop("disabled", true)
     $('.error-message').remove()
     $('.has-errors').removeClass('has-errors')
   )
 $(document).on('ajax:success', '#status-form', (evt, data, status, xhr) ->
     $form = $(this)
+    $("#status-form").find('input, textarea, button, select').prop("disabled", false)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     getRequestedService(res['sample_id'], res['id'])
@@ -274,11 +274,13 @@ $(document).on('ajax:success', '#status-form', (evt, data, status, xhr) ->
     updateIcon(res['id'], res['status_class'], res['icon_class'])
   )
 $(document).on('ajax:error', '#status-form', (evt, xhr, status, error) ->
+    $("#status-form").find('input, textarea, button, select').prop("disabled", false)
     showFormErrors(xhr, status, error)
   )
 
 # OWNER AUTH
 $(document).on('click', '#change_status_owner_auth', () ->
+    $(this).prop('disabled', true)
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/owner_auth_dialog'
     $.get(url, {}, (html) ->
       $('#folder-work-panel').empty().html(html)
@@ -287,6 +289,7 @@ $(document).on('click', '#change_status_owner_auth', () ->
 
 # SUP AUTH
 $(document).on('click', '#change_status_sup_auth', () ->
+    $(this).prop('disabled', true)
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/sup_auth_dialog'
     $.get(url, {}, (html) ->
       $('#folder-work-panel').empty().html(html)
@@ -295,6 +298,7 @@ $(document).on('click', '#change_status_sup_auth', () ->
 
 # SEND QUOTE
 $(document).on('click', '#change_status_send_quote', () ->
+    $(this).prop('disabled', true)
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/send_quote_dialog'
     $.get(url, {}, (html) ->
       $('#folder-work-panel').empty().html(html)
@@ -303,6 +307,7 @@ $(document).on('click', '#change_status_send_quote', () ->
 
 # INITIAL
 $(document).on('click', '#change_status_initial', () ->
+  $(this).prop('disabled', true)
   url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/initial_dialog'
   $.get(url, {}, (html) ->
     $('#folder-work-panel').empty().html(html)
@@ -311,6 +316,7 @@ $(document).on('click', '#change_status_initial', () ->
 
 # RECEIVED
 $(document).on('click', '#change_status_received', () ->
+  $(this).prop('disabled', true)
   url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/receive_dialog'
   $.get(url, {}, (html) ->
     $('#folder-work-panel').empty().html(html)
@@ -319,6 +325,7 @@ $(document).on('click', '#change_status_received', () ->
 
 # ASSIGN
 $(document).on('click', '#change_status_assigned', () ->
+    $(this).prop('disabled', true)
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/assign_dialog'
     $.get(url, {}, (html) ->
       $('#folder-work-panel').empty().html(html)
@@ -327,6 +334,7 @@ $(document).on('click', '#change_status_assigned', () ->
 
 # SUSPEND
 $(document).on('click', '#change_status_suspended', () ->
+    $(this).prop('disabled', true)
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/suspend_dialog'
     $.get(url, {}, (html) ->
       $('#folder-work-panel').empty().html(html)
@@ -335,6 +343,7 @@ $(document).on('click', '#change_status_suspended', () ->
 
 # REINIT
 $(document).on('click', '#change_status_reinit', () ->
+    $(this).prop('disabled', true)
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/reinit_dialog'
     $.get(url, {}, (html) ->
       $('#folder-work-panel').empty().html(html)
@@ -343,6 +352,7 @@ $(document).on('click', '#change_status_reinit', () ->
 
 # START
 $(document).on('click', '#change_status_in_progress', () ->
+    $(this).prop('disabled', true)
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/start_dialog'
     $.get(url, {}, (html) ->
       $('#folder-work-panel').empty().html(html)
@@ -351,6 +361,7 @@ $(document).on('click', '#change_status_in_progress', () ->
 
 # FINISH
 $(document).on('click', '#change_status_finished', () ->
+    $(this).prop('disabled', true)
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/finish_dialog'
     $.get(url, {}, (html) ->
       $('#folder-work-panel').empty().html(html)
@@ -359,6 +370,7 @@ $(document).on('click', '#change_status_finished', () ->
 
 # CANCEL
 $(document).on('click', '#change_status_canceled', () ->
+  $(this).prop('disabled', true)
   url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/cancel_dialog'
   $.get(url, {}, (html) ->
     $('#folder-work-panel').empty().html(html)
@@ -401,6 +413,7 @@ updateGrandTotal = () ->
 #
 
 $(document).on('click', '#add-technician', () ->
+    $(this).prop('disabled', true)
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/new_technician'
     $.post(url,
            { user_id: $('#new_tech_user_id').val(), participation: $('#new_tech_participation').val(), hours: $('#new_tech_hours').val() },
@@ -466,6 +479,7 @@ $(document).on('change', '.tech_hours', () ->
 # Equipment
 #
 $(document).on('click', '#add-equipment', () ->
+    $(this).prop('disabled', true)
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/new_equipment'
     $.post(url,
            { eq_id: $('#new_eq_id').val(), hours: $('#new_eq_hours').val() },
@@ -521,6 +535,7 @@ $(document).on('change', '.eq_hours', () ->
 # Materials
 #
 $(document).on('click', '#add-material', () ->
+    $(this).prop('disabled', true)
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/new_material'
     $.post(url,
            { mat_id: $('#new_mat_id').val(), quantity: $('#new_mat_qty').val() },
@@ -575,6 +590,7 @@ $(document).on('change', '.mat_qty', () ->
 # Others
 #
 $(document).on('click', '#add-other', () ->
+    $(this).prop('disabled', true)
     url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/new_other'
     $.post(url,
            { other_type_id: $('#new_other_type').val(), concept: $('#new_other_concept').val(), price: $('#new_other_price').val() },
@@ -704,6 +720,7 @@ $(document).on("click", ".equipment-item", () ->
 )
 
 $(document).on("click", "#add-new-admin-equipment-button", () ->
+  $(this).prop('disabled', true)
   url = '/equipment/new'
   $.get(url, {}, (html) ->
     $('#equipment-details').empty().html(html)

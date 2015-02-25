@@ -1,12 +1,12 @@
 .sheet
   .header-status{:class => "bg-status-finished"}
-    %span.status= "Regresar a inicio"
+    %span.status= "Finalizar servicio"
     %a.close{:class => 'requested-service-link', 'data-id' => @requested_service.id, 'data-sample-id' => @requested_service.sample_id}="×"
     %span.number= @requested_service.number
   .dialog-content.padded
     = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'status-form'} do |f|
       .dialog-title
-        %h3= "Regresar muestra #{@requested_service.sample.number} a inicio"
+        %h3= "Finalizar servicio #{@requested_service.sample.number}"
       .dialog-body
         = f.hidden_field :status, {:value => RequestedService::FINISHED}
         .notes.field

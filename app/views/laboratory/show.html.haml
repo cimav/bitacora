@@ -19,7 +19,7 @@
         %label Estado
         - status_options = "<option value=\"0\">Todos los estados</option>"
         - status_options += "<option value=\"abiertos\" selected=\"selected\">Abiertos</option>"
-        - sts = [-1,1,2,3,4,5,6,99]
+        - sts = [1,2,3,4,5,6,7,8,21,22,99,-1]
         - sts.each do |st| 
           - status_options += "<option value=\"#{st}\">#{RequestedService::STATUS[st]}</option>"
         = select_tag "lrs_status", status_options.html_safe, {:class => 'form-control'}

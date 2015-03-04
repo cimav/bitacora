@@ -8,15 +8,15 @@
 - if @requested_service.status.to_i == RequestedService::CANCELED || @requested_service.status.to_i == RequestedService::FINISHED
   - editable = false
   - show_table = true
-
-- if @requested_service.status.to_i == RequestedService::ASSIGNED || 
--    @requested_service.status.to_i == RequestedService::SUSPENDED ||
--    @requested_service.status.to_i == RequestedService::REINIT || 
--    @requested_service.status.to_i == RequestedService::IN_PROGRESS || 
--    @requested_service.status.to_i == RequestedService::TO_QUOTE
+- elsif @requested_service.sample.service_request.request_type_id.to_i == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
+  - editable = false
+  - show_table = true 
+- elsif @requested_service.sample.service_request.request_type_id.to_i == ServiceRequest::SERVICIO_VINCULACION
+  - editable = @requested_service.status.to_i == RequestedService::TO_QUOTE
+  - show_table = true 
+- elsif @requested_service.status.to_i == RequestedService::ASSIGNED || @requested_service.status.to_i == RequestedService::SUSPENDED || @requested_service.status.to_i == RequestedService::REINIT || @requested_service.status.to_i == RequestedService::IN_PROGRESS || @requested_service.status.to_i == RequestedService::TO_QUOTE
   - editable = true
   - show_table = true
-
 
 - if show_table
   %table.table.table-striped
@@ -61,7 +61,8 @@
           %td
             .align-right= number_to_currency(eq_cost)
           %td
-            = link_to '×', {:controller => 'requested_services', :action => 'delete_eq', :eq_id => eq.id}, :method => :post, :remote => true, :class => 'close', :'data-type' => 'html', 'data-id' => eq.id
+            - if editable
+              = link_to '×', {:controller => 'requested_services', :action => 'delete_eq', :eq_id => eq.id}, :method => :post, :remote => true, :class => 'close', :'data-type' => 'html', 'data-id' => eq.id
       - if @requested_service.requested_service_equipments.count > 0
         %tr.total-row
           %td{:colspan => 3}

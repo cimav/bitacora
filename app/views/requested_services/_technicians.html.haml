@@ -8,12 +8,13 @@
 - if @requested_service.status.to_i == RequestedService::CANCELED || @requested_service.status.to_i == RequestedService::FINISHED
   - editable = false
   - show_table = true
-
-- if @requested_service.status.to_i == RequestedService::ASSIGNED || 
--    @requested_service.status.to_i == RequestedService::SUSPENDED ||
--    @requested_service.status.to_i == RequestedService::REINIT || 
--    @requested_service.status.to_i == RequestedService::IN_PROGRESS || 
--    @requested_service.status.to_i == RequestedService::TO_QUOTE
+- elsif @requested_service.sample.service_request.request_type_id.to_i == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
+  - editable = false
+  - show_table = true 
+- elsif @requested_service.sample.service_request.request_type_id.to_i == ServiceRequest::SERVICIO_VINCULACION
+  - editable = @requested_service.status.to_i == RequestedService::TO_QUOTE
+  - show_table = true 
+- elsif @requested_service.status.to_i == RequestedService::ASSIGNED || @requested_service.status.to_i == RequestedService::SUSPENDED || @requested_service.status.to_i == RequestedService::REINIT || @requested_service.status.to_i == RequestedService::IN_PROGRESS || @requested_service.status.to_i == RequestedService::TO_QUOTE
   - editable = true
   - show_table = true
 

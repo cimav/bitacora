@@ -4,19 +4,27 @@
 - im_requestor = @requested_service.sample.service_request.user_id == current_user.id
 - show_table = true
 - editable = false
+- participation_edit = false
 
 - if @requested_service.status.to_i == RequestedService::CANCELED || @requested_service.status.to_i == RequestedService::FINISHED
   - editable = false
   - show_table = true
+  - participation_edit = false
+
 - elsif @requested_service.sample.service_request.request_type_id.to_i == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
   - editable = false
   - show_table = true 
+  - participation_edit = @requested_service.status.to_i == RequestedService::ASSIGNED || @requested_service.status.to_i == RequestedService::SUSPENDED || @requested_service.status.to_i == RequestedService::REINIT || @requested_service.status.to_i == RequestedService::IN_PROGRESS
+
 - elsif @requested_service.sample.service_request.request_type_id.to_i == ServiceRequest::SERVICIO_VINCULACION
   - editable = @requested_service.status.to_i == RequestedService::TO_QUOTE
+  - participation_edit = @requested_service.status.to_i == RequestedService::TO_QUOTE
   - show_table = true 
+
 - elsif @requested_service.status.to_i == RequestedService::ASSIGNED || @requested_service.status.to_i == RequestedService::SUSPENDED || @requested_service.status.to_i == RequestedService::REINIT || @requested_service.status.to_i == RequestedService::IN_PROGRESS || @requested_service.status.to_i == RequestedService::TO_QUOTE
   - editable = true
   - show_table = true
+  - participation_edit = true
 
 - if !(im_lab_admin || im_service_tech)
   - editable = false
@@ -52,7 +60,7 @@
             - if !tech.details.blank?
               .tech-details= tech.details
           %td
-            - if editable
+            - if editable || participation_edit
               - u_options = ''
               - for i in 100.downto(0)
                 - if tech.participation == i

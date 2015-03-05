@@ -844,7 +844,7 @@ $(document).on('keyup', '#laboratories-search-box', () ->
 
 $(document).on("click", ".laboratories-item", () ->
   id = $(this).attr('data-id')
-  url = '/laboratories/' + id + '/edit'
+  url = '/laboratory/' + id + '/admin'
   $(".laboratories-item").removeClass("active")
   $(this).addClass('active')
   $.get(url, {}, (html) ->

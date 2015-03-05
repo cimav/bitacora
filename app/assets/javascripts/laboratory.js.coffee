@@ -56,10 +56,9 @@ getLabRequestedService = (sample_id, id) ->
 $(document).on('ajax:beforeSend', '.admin-lab', (evt, xhr, settings) ->
     lab_id = $(this).data('laboratory-id')
     url = '/laboratory/' + lab_id + '/admin'
-    setHash('#!' + url, false)
   )
 $(document).on('ajax:success', '.admin-lab', (evt, data, status, xhr) ->
-    $('#lab-work-panel').empty().html(data)
+    $('#admin-area').empty().html(data)
   )
 
 $(document).on('ajax:error', '.admin-lab', (evt, xhr, status, error) ->
@@ -88,11 +87,9 @@ $(document).on('ajax:error', '#edit-laboratory-form', (evt, xhr, status, error) 
 #-------------------
 $(document).on('ajax:beforeSend', '.admin-services', (evt, xhr, settings) ->
     lab_id = $(this).data('laboratory-id')
-    url = '/laboratory/' + lab_id + '/admin_services'
-    setHash('#!' + url, false)
   )
 $(document).on('ajax:success', '.admin-services', (evt, data, status, xhr) ->
-    $('#lab-work-panel').empty().html(data)
+    $('#admin-area').empty().html(data)
   )
 
 $(document).on('ajax:error', '.admin-services', (evt, xhr, status, error) ->
@@ -421,10 +418,9 @@ $(document).on('change', '.other_price_template', () ->
 $(document).on('ajax:beforeSend', '.admin-users', (evt, xhr, settings) ->
     lab_id = $(this).data('laboratory-id')
     url = '/laboratory/' + lab_id + '/admin_members'
-    setHash('#!' + url, false)
   )
 $(document).on('ajax:success', '.admin-users', (evt, data, status, xhr) ->
-    $('#lab-work-panel').empty().html(data)
+    $('#admin-area').empty().html(data)
   )
 
 $(document).on('ajax:error', '.admin-users', (evt, xhr, status, error) ->
@@ -504,10 +500,9 @@ $(document).on('ajax:error', '#new-laboratory-member-form', (evt, xhr, status, e
 $(document).on('ajax:beforeSend', '.admin-equipment', (evt, xhr, settings) ->
     lab_id = $(this).attr('data-laboratory-id')
     url = '/laboratory/' + lab_id + '/admin_equipment'
-    setHash('#!' + url, false)
   )
 $(document).on('ajax:success', '.admin-equipment', (evt, data, status, xhr) ->
-    $('#lab-work-panel').empty().html(data)
+    $('#admin-area').empty().html(data)
   )
 
 $(document).on('ajax:error', '.admin-equipment', (evt, xhr, status, error) ->

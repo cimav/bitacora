@@ -1,5 +1,5 @@
 - lab_access = @laboratory.laboratory_members.where(:user_id => current_user.id).first.access rescue 0
-- if lab_access.to_i == 0
+- if lab_access.to_i == 0 
   - raise "Error: No es miembro de este laboratorio"
 
 #header-bar

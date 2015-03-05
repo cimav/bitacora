@@ -36,6 +36,18 @@
           = f.select :service_type_id, st_options.html_safe, {}, {:class => 'form-control'}
         - else
           = @laboratory_service.service_type.name
+      - if current_user.is_customer_service?
+        .field#field_laboratory_service_service_type_id
+          = f.label :is_catalog, 'Servicio de Catálogo de Vinculación:'
+          - st_options = ''
+          - sel0 = ''
+          - sel1 = ''
+          - sel0 = 'selected="selected"' if @laboratory_service.is_catalog.to_i == 0
+          - sel1 = 'selected="selected"' if @laboratory_service.is_catalog.to_i == 1 
+          - st_options += "<option value=\"0\" #{sel0}>No</option>"
+          - st_options += "<option value=\"1\" #{sel1}>Si</option>"
+          = f.select :is_catalog, st_options.html_safe, {}, {:class => 'form-control'}
+
       - if editable
         .submit-button
           = f.submit "Actualizar servicio", {:class => "btn btn-primary"}

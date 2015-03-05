@@ -3,6 +3,7 @@ class LaboratoryService < ActiveRecord::Base
   belongs_to :laboratory
   has_many :requested_service
   has_many :users, :through => :requested_service
+  belongs_to :service_type
 
   validates :name, :presence => true
   validates :service_type_id, :presence => true

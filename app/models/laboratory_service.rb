@@ -10,6 +10,9 @@ class LaboratoryService < ActiveRecord::Base
 
   after_create :create_template
 
+  SERVICE_FREE = 0
+  SERVICE_CATALOG = 1
+
   def create_template
     template = self.requested_service.new
     template.sample_id = 0

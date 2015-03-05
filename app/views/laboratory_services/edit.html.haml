@@ -23,9 +23,7 @@
             - sel = ''
           - st_options += "<option value=\"#{item.id}\" #{sel}>#{item.name}</option>"
         = f.select :service_type_id, st_options.html_safe, {}, {:class => 'form-control'}
-      .field#field_laboratory_service_internal_cost
-        = f.label :internal_cost, 'Costo Interno:'
-        = f.text_field :internal_cost, :placeholder => 'Costo Interno', :class => 'form-control'
+    
       .submit-button
         = f.submit "Actualizar servicio", {:class => "btn btn-primary"}
 

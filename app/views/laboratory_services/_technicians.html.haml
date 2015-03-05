@@ -1,3 +1,5 @@
+- editable = @requested_service.laboratory_service.is_catalog == LaboratoryService::SERVICE_FREE || (@requested_service.laboratory_service.is_catalog == LaboratoryService::SERVICE_CATALOG && current_user.is_customer_service?)
+
 %table.table.table-striped.table-bordered
   %thead
     %tr
@@ -26,23 +28,30 @@
           = tech.user.full_name
           - if !tech.details.blank?
             .tech-details= tech.details
-          = link_to '×', {:controller => 'requested_services', :action => 'delete_tech', :tech_id => tech.id}, :method => :post, :remote => true, :class => 'close', :'data-type' => 'html', 'data-id' => tech.id
+          - if editable
+            = link_to '×', {:controller => 'requested_services', :action => 'delete_tech', :tech_id => tech.id}, :method => :post, :remote => true, :class => 'close', :'data-type' => 'html', 'data-id' => tech.id
         %td
-          - u_options = ''
-          - for i in 100.downto(0)
-            - if tech.participation == i
-              - u_options += "<option value=\"#{i}\" selected=\"selected\">#{i}%</option>"
-            - else
-              - u_options += "<option value=\"#{i}\">#{i}%</option>"
-          = select_tag "tech_participation_#{tech.id}", u_options.html_safe, {:style => "width: 100%;", "data-id" => tech.id, :class => "tech_participation_template"}
+          - if editable
+            - u_options = ''
+            - for i in 100.downto(0)
+              - if tech.participation == i
+                - u_options += "<option value=\"#{i}\" selected=\"selected\">#{i}%</option>"
+              - else
+                - u_options += "<option value=\"#{i}\">#{i}%</option>"
+            = select_tag "tech_participation_#{tech.id}", u_options.html_safe, {:style => "width: 100%;", "data-id" => tech.id, :class => "tech_participation_template"}
+          - else
+            = "#{tech.participation}%"
         %td
-          - u_options = ''
-          - for i in 0.step(100, 0.5)
-            - if tech.hours == i
-              - u_options += "<option value=\"#{i}\" selected=\"selected\">#{i} horas</option>"
-            - else 
-              - u_options += "<option value=\"#{i}\">#{i} horas</option>"
-          = select_tag "tech_hours_#{tech.id}", u_options.html_safe, {:style => "width: 100%;", "data-id" => tech.id, :class => "tech_hours_template"}
+          - if editable
+            - u_options = ''
+            - for i in 0.step(100, 0.5)
+              - if tech.hours == i
+                - u_options += "<option value=\"#{i}\" selected=\"selected\">#{i} horas</option>"
+              - else 
+                - u_options += "<option value=\"#{i}\">#{i} horas</option>"
+            = select_tag "tech_hours_#{tech.id}", u_options.html_safe, {:style => "width: 100%;", "data-id" => tech.id, :class => "tech_hours_template"}
+          - else
+            = "#{tech.hours} horas"
         %td
           .align-right= number_to_currency(tech.user.hourly_wage)
         %td
@@ -58,28 +67,29 @@
         %td
           .align-right= number_to_currency(tech_total)
 
-    - if (techs.count > 0)
-      - not_in =  "AND user_id NOT IN (#{(techs.join(','))})"
-    - else
-      - not_in = ""
-    - members = LaboratoryMember.where("laboratory_id = #{@requested_service.laboratory_service.laboratory_id} #{not_in}")
-    - u_options = ''
-    - members.each do |m|
-      - u_options += "<option value=\"#{m.user_id}\">#{m.user.full_name}</option>"
-    - if u_options != ''
-      %tr.add-row
-        %td
-          = select_tag :new_tech_user_id, u_options.html_safe, {:style => "width: 100%;"}
+    - if editable
+      - if (techs.count > 0)
+        - not_in =  "AND user_id NOT IN (#{(techs.join(','))})"
+      - else
+        - not_in = ""
+      - members = LaboratoryMember.where("laboratory_id = #{@requested_service.laboratory_service.laboratory_id} #{not_in}")
+      - u_options = ''
+      - members.each do |m|
+        - u_options += "<option value=\"#{m.user_id}\">#{m.user.full_name}</option>"
+      - if u_options != ''
+        %tr.add-row
+          %td
+            = select_tag :new_tech_user_id, u_options.html_safe, {:style => "width: 100%;"}
 
-        %td 
-          - u_options = ''
-          - for i in (100 - part_total).downto(0)
-            - u_options += "<option value=\"#{i}\">#{i}%</option>"
-          = select_tag :new_tech_participation, u_options.html_safe, {:style => "width: 100%;"}
-        %td
-          - u_options = ''
-          - for i in 0.step(100, 0.5)
-            - u_options += "<option value=\"#{i}\">#{i} horas</option>"
-          = select_tag :new_tech_hours, u_options.html_safe, {:style => "width: 100%;"}
-        %td{:colspan => 2}
-          %button.btn.btn-mini.btn-info#add-technician-template= "Agregar participante"
+          %td 
+            - u_options = ''
+            - for i in (100 - part_total).downto(0)
+              - u_options += "<option value=\"#{i}\">#{i}%</option>"
+            = select_tag :new_tech_participation, u_options.html_safe, {:style => "width: 100%;"}
+          %td
+            - u_options = ''
+            - for i in 0.step(100, 0.5)
+              - u_options += "<option value=\"#{i}\">#{i} horas</option>"
+            = select_tag :new_tech_hours, u_options.html_safe, {:style => "width: 100%;"}
+          %td{:colspan => 2}
+            %button.btn.btn-mini.btn-info#add-technician-template= "Agregar participante"

@@ -1,3 +1,5 @@
+- editable = @requested_service.laboratory_service.is_catalog == LaboratoryService::SERVICE_FREE || (@requested_service.laboratory_service.is_catalog == LaboratoryService::SERVICE_CATALOG && current_user.is_customer_service?)
+
 %table.table.table-striped.table-bordered
   %thead
     %tr
@@ -21,25 +23,30 @@
           = other.concept
           - if !other.details.blank?
             .other-details= other.details
-          = link_to '×', {:controller => 'requested_services', :action => 'delete_other', :other_id => other.id}, :method => :post, :remote => true, :class => 'close', :'data-type' => 'html', 'data-id' => other.id
+          - if editable
+            = link_to '×', {:controller => 'requested_services', :action => 'delete_other', :other_id => other.id}, :method => :post, :remote => true, :class => 'close', :'data-type' => 'html', 'data-id' => other.id
         %td
-          = text_field_tag "price_#{other.id}", other.price, {:class => "other_price_template form-control", "data-id" => other.id}
+          - if editable
+            = text_field_tag "price_#{other.id}", other.price, {:class => "other_price_template form-control", "data-id" => other.id}
+          - else
+            = number_to_currency(other.price)
     - if @requested_service.requested_service_others.count > 0
       %tr.total-row
         %td{:colspan => 3}
           .align-right= "Subtotal otros conceptos"
         %td
           .align-right= number_to_currency(other_total)
-    - u_options = ''
-    - OtherType.order('name').each do |o|
-      - u_options += "<option value=\"#{o.id}\">#{o.name}</option>"
-    - if u_options != ''
-      %tr.add-row
-        %td
-          = select_tag :new_other_type, u_options.html_safe, {:style => "width: 200px;", :class => 'form-control'}
-        %td
-          = text_field_tag 'new_other_concept', nil,  { :placeholder => "Concepto…", :class => 'form-control' }
-        %td
-          = text_field_tag 'new_other_price', nil, { :placeholder => "Precio…", :class => 'form-control' }
-        %td{:colspan => 2}
-          %button.btn.btn-mini.btn-info#add-other-template= "Agregar concepto"
+    - if editable
+      - u_options = ''
+      - OtherType.order('name').each do |o|
+        - u_options += "<option value=\"#{o.id}\">#{o.name}</option>"
+      - if u_options != ''
+        %tr.add-row
+          %td
+            = select_tag :new_other_type, u_options.html_safe, {:style => "width: 200px;", :class => 'form-control'}
+          %td
+            = text_field_tag 'new_other_concept', nil,  { :placeholder => "Concepto…", :class => 'form-control' }
+          %td
+            = text_field_tag 'new_other_price', nil, { :placeholder => "Precio…", :class => 'form-control' }
+          %td{:colspan => 2}
+            %button.btn.btn-mini.btn-info#add-other-template= "Agregar concepto"

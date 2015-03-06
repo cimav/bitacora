@@ -74,13 +74,7 @@ class LaboratoryServicesController < ApplicationController
   def get_grand_total(id)
     requested_service = RequestedService.where("(laboratory_service_id = :id AND sample_id = 0)", {:id => id}).first 
     grand_total = RequestedService.find_by_sql(["SELECT IFNULL(SUM(subtotal),0) AS total FROM (
-                                                     SELECT SUM(requested_service_materials.quantity * materials.unit_price) AS subtotal 
-                                                     FROM requested_service_materials 
-                                                       INNER JOIN materials ON material_id = materials.id
-                                                     WHERE requested_service_id = :requested_service
-                                                     GROUP BY requested_service_id 
-                                                   UNION 
-                                                     SELECT SUM(requested_service_equipments.hours * equipment.hourly_rate) AS subtotal 
+                                                   SELECT SUM(requested_service_equipments.hours * equipment.hourly_rate) AS subtotal 
                                                      FROM requested_service_equipments 
                                                        INNER JOIN equipment ON equipment_id = equipment.id
                                                      WHERE requested_service_id = :requested_service
@@ -102,6 +96,13 @@ class LaboratoryServicesController < ApplicationController
   def grand_total
     @grand_total = get_grand_total(params[:id])
     render :layout => false
+  end
+
+  def update_internal_cost(id)
+    grand_total = get_grand_total(id)
+    lab_service = LaboratoryService.find(id)
+    lab_service.internal_cost = grand_total
+    lab_service.save
   end
 
   def edit_cost
@@ -150,6 +151,7 @@ class LaboratoryServicesController < ApplicationController
   def new_technician
     
     flash = {}
+
     
     @requested_service = RequestedService.where("(laboratory_service_id = :id AND sample_id = 0)", {:id => params[:id]}).first
 
@@ -161,6 +163,8 @@ class LaboratoryServicesController < ApplicationController
     tech.hourly_wage = user.hourly_wage
 
     if tech.save
+      update_internal_cost(params[:id])
+
       flash[:notice] = "Participante agregado"
 
       respond_with do |format|
@@ -205,7 +209,7 @@ class LaboratoryServicesController < ApplicationController
 
     if tech.save
       flash[:notice] = "Participación actualizada"
-
+     
       respond_with do |format|
         format.html do
           if request.xhr?
@@ -247,6 +251,7 @@ class LaboratoryServicesController < ApplicationController
 
     if tech.save
       flash[:notice] = "Horas actualizadas"
+      update_internal_cost(tech.requested_service.laboratory_service.id)
 
       respond_with do |format|
         format.html do
@@ -292,6 +297,7 @@ class LaboratoryServicesController < ApplicationController
     # TODO: Validar que el tecnico que esta haciendo el borrado sea el dueño del servicio
     if tech.destroy
       flash[:notice] = "Participante eliminado"
+      update_internal_cost(tech.requested_service.laboratory_service.id)
 
       respond_with do |format|
         format.html do
@@ -339,6 +345,7 @@ class LaboratoryServicesController < ApplicationController
 
     if eq.save
       flash[:notice] = "Equipo agregado"
+      update_internal_cost(params[:id])
 
       respond_with do |format|
         format.html do
@@ -383,6 +390,7 @@ class LaboratoryServicesController < ApplicationController
 
     if eq.save
       flash[:notice] = "Horas actualizadas"
+      update_internal_cost(eq.requested_service.laboratory_service.id)
 
       respond_with do |format|
         format.html do
@@ -428,6 +436,7 @@ class LaboratoryServicesController < ApplicationController
     # TODO: Validar que el tecnico que esta haciendo el borrado sea el dueño del servicio
     if eq.destroy
       flash[:notice] = "Equipo eliminado"
+      update_internal_cost(eq.requested_service.laboratory_service.id)
 
       respond_with do |format|
         format.html do
@@ -475,6 +484,7 @@ class LaboratoryServicesController < ApplicationController
 
     if mat.save
       flash[:notice] = "Material agregado"
+      update_internal_cost(params[:id])
 
       respond_with do |format|
         format.html do
@@ -519,6 +529,7 @@ class LaboratoryServicesController < ApplicationController
 
     if mat.save
       flash[:notice] = "Cantidad actualizada"
+      update_internal_cost(mat.requested_service.laboratory_service.id)
 
       respond_with do |format|
         format.html do
@@ -564,6 +575,7 @@ class LaboratoryServicesController < ApplicationController
     # TODO: Validar que el tecnico que esta haciendo el borrado sea el dueño del servicio
     if mat.destroy
       flash[:notice] = "Material eliminado"
+      update_internal_cost(mat.requested_service.laboratory_service.id)
 
       respond_with do |format|
         format.html do
@@ -611,6 +623,7 @@ class LaboratoryServicesController < ApplicationController
 
     if other.save
       flash[:notice] = "Otro concepto agregado"
+      update_internal_cost(params[:id])
 
       respond_with do |format|
         format.html do
@@ -655,6 +668,7 @@ class LaboratoryServicesController < ApplicationController
 
     if other.save
       flash[:notice] = "Concepto actualizado"
+      update_internal_cost(other.requested_service.laboratory_service.id)
 
       respond_with do |format|
         format.html do
@@ -700,6 +714,7 @@ class LaboratoryServicesController < ApplicationController
     # TODO: Validar que el tecnico que esta haciendo el borrado sea el dueño del servicio
     if other.destroy
       flash[:notice] = "Concepto eliminado"
+      update_internal_cost(other.requested_service.laboratory_service.id)
 
       respond_with do |format|
         format.html do

@@ -36,7 +36,13 @@
           = f.select :service_type_id, st_options.html_safe, {}, {:class => 'form-control'}
         - else
           = @laboratory_service.service_type.name
+      .field#field_laboratory_service_internal_cost
+        = f.label :internal_cost, 'Costo Interno:'
+        %span.grand_total_value= number_to_currency(@laboratory_service.internal_cost)
       - if current_user.is_customer_service?
+        .field#field_laboratory_service_sale_price
+          = f.label :sale_price, 'Precio de Venta:'
+          = f.text_field :sale_price, :placeholder => 'Precio de Venta', :class => 'form-control'
         .field#field_laboratory_service_service_type_id
           = f.label :is_catalog, 'Servicio de Catálogo de Vinculación:'
           - st_options = ''

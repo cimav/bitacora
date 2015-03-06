@@ -1,5 +1,5 @@
 class LaboratoryService < ActiveRecord::Base
-  attr_accessible :name, :description, :service_type_id, :laboratory_id, :internal_cost, :is_catalog
+  attr_accessible :name, :description, :service_type_id, :laboratory_id, :internal_cost, :is_catalog, :sale_price
   belongs_to :laboratory
   has_many :requested_service
   has_many :users, :through => :requested_service

@@ -15,5 +15,6 @@
     = render :partial => 'others', :locals => {:requested_service => @requested_service }
 
   #grand_total
-    = "Total: #{number_to_currency(@grand_total)}"
+    = "Total: "
+    %span.grand_total_value= number_to_currency(@grand_total)
 

@@ -1,6 +1,6 @@
 - editable = @requested_service.laboratory_service.is_catalog == LaboratoryService::SERVICE_FREE || (@requested_service.laboratory_service.is_catalog == LaboratoryService::SERVICE_CATALOG && current_user.is_customer_service?)
 
-%table.table.table-striped.table-bordered
+%table.table.table-striped.table-bordered.costeo_table
   %thead
     %tr
       %th{:colspan => 5, :class => "th-header"}= "Consumibles"

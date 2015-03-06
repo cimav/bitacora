@@ -124,6 +124,10 @@
   }
 }
 
+.costeo_table {
+  width: 500px !important; 
+}
+
 #costeo {
   margin-top: 20px;
   table {
@@ -135,7 +139,6 @@
   }
 
   #grand_total {
-    float: right;
     font-weight: bold;
     font-size: 30px;
     margin-bottom: 20px;

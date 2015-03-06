@@ -1,7 +1,8 @@
 class HomeController < ApplicationController
   before_filter :auth_required
+
   def index
-    
+    #Resque.workers.each {|w| w.unregister_worker}
   end
 
   def redirect_requested_service

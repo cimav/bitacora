@@ -1,11 +1,12 @@
 - editable = @requested_service.laboratory_service.is_catalog == LaboratoryService::SERVICE_FREE || (@requested_service.laboratory_service.is_catalog == LaboratoryService::SERVICE_CATALOG && current_user.is_customer_service?)
 
-%table.table.table-striped.table-bordered
+%table.table.table-striped.table-bordered.costeo_table
   %thead
     %tr
-      %th{:colspan => 4, :class => "th-header"}= "Equipos"
+      %th{:colspan => 5, :class => "th-header"}= "Equipos"
     - if @requested_service.requested_service_equipments.count > 0
       %tr
+        %th= ""
         %th= "Nombre"
         %th= "Horas"
         %th= "Costo x Hora"
@@ -16,18 +17,19 @@
     
     - if @requested_service.requested_service_equipments.count == 0
       %tr.empty-cost
-        %td{:colspan => 4}= "Sin equipos"
+        %td{:colspan => 5}= "Sin equipos"
     - @requested_service.requested_service_equipments.each do |eq|
       - eq_cost = eq.hours * eq.equipment.hourly_rate
       - eq_total = eq_total + eq_cost  
       - eqs << eq.equipment_id
       %tr.equipment-row{'data-id' => eq.id, :id => "equipment_row_#{eq.id}"}
         %td
+          - if editable
+            = link_to '×', {:controller => 'requested_services', :action => 'delete_eq', :eq_id => eq.id}, :method => :post, :remote => true, :class => 'close', :'data-type' => 'html', 'data-id' => eq.id
+        %td
           = eq.equipment.name
           - if !eq.details.blank?
             .eq-details= eq.details
-          - if editable
-            = link_to '×', {:controller => 'requested_services', :action => 'delete_eq', :eq_id => eq.id}, :method => :post, :remote => true, :class => 'close', :'data-type' => 'html', 'data-id' => eq.id
         %td
           - if editable
             - u_options = ''
@@ -45,7 +47,7 @@
           .align-right= number_to_currency(eq_cost)
     - if @requested_service.requested_service_equipments.count > 0
       %tr.total-row
-        %td{:colspan => 3}
+        %td{:colspan => 4}
           .align-right= "Subtotal Equipo"
         %td
           .align-right= number_to_currency(eq_total)
@@ -61,13 +63,18 @@
         - u_options += "<option value=\"#{e.id}\">#{e.name}</option>"
       - if u_options != ''
         %tr.add-row
-          %td
-            = select_tag :new_eq_id, u_options.html_safe, {:style => "width: 100%;", :class => 'form-control'}
-          %td
-            - u_options = ''
-            - for i in 0.step(100, 0.5)
-              - u_options += "<option value=\"#{i}\">#{i} horas</option>"
-            = select_tag :new_eq_hours, u_options.html_safe, {:style => "width: 100%;", :class => 'form-control'}
-          %td{:colspan => 2}
-            %button.btn.btn-mini.btn-info#add-equipment-template= "Agregar equipo"
+          %td{:colspan => 5}
+            %button#show_fields_eq.show_fields.btn.btn-info.btn-sm= "Agregar equipo…"
+            #fields_eq.costeo_fields
+              .field
+                %label= "Equipo: "
+                = select_tag :new_eq_id, u_options.html_safe, {:style => "width: 100%;", :class => 'form-control'}
+              .field
+                %label= "Horas: "
+                - u_options = ''
+                - for i in 0.step(100, 0.5)
+                  - u_options += "<option value=\"#{i}\">#{i} horas</option>"
+                = select_tag :new_eq_hours, u_options.html_safe, {:style => "width: 100%;", :class => 'form-control'}
+              .field
+                %button.btn.btn-mini.btn-info#add-equipment-template= "Agregar equipo"
 

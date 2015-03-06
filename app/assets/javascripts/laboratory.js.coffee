@@ -189,7 +189,7 @@ $(document).on('click', '#add-technician-template', () ->
 updateGrandTotalTemplate = (laboratory_service) ->
   url = '/laboratory_services/' + laboratory_service + '/grand_total'
   $.get(url, {}, (html) ->
-    $('#grand_total').empty().html(html)
+    $('.grand_total_value').empty().html(html)
   )
 
 reloadTechniciansTableTemplate = () ->
@@ -229,7 +229,7 @@ $(document).on('change', '.tech_participation_template', () ->
   )
 
 
-$(document).on('click', '.tech_hours_template', () ->
+$(document).on('change', '.tech_hours_template', () ->
     laboratory_service = $('#laboratory_service_id').val()
     url = '/laboratory_services/' + laboratory_service + '/update_hours'
     $.post(url,
@@ -576,5 +576,9 @@ $(document).on('ajax:error', '#new-laboratory-equipment-form', (evt, xhr, status
   )
 
 
-
-
+$(document).on('click', '.show_fields', () ->
+  the_id = $(this).attr('id')
+  fields = $('#' + the_id.replace('show_',''))
+  fields.slideDown()
+  $(this).hide()
+)

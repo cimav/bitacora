@@ -14,7 +14,7 @@
   position: fixed;
   top: 54px;
   bottom: 0px;
-  left: $side-panel-width + $sidenav-width;
+  left: $sidenav-width;
   width: $side-panel-width;
   border-right: 1px solid $line-color;
   border-left: none;
@@ -126,7 +126,7 @@
 #service-types-details,
 #request-types-details,
 #other-types-details {
-  left: $side-panel-width * 2 + $sidenav-width + 24;
+  left: $side-panel-width + $sidenav-width + 24;
   right: 0px;
   position: fixed;
   top: 54px;
@@ -139,17 +139,11 @@
 }
 
 #admin-panel {
-  width: $side-panel-width;
-  background-color: $light-bg;
-  border-top: 1px solid $line-color;
-  border-left: 1px solid $line-color;
-  border-right: 1px solid $line-color;
-  padding-top: 20px;
+  width: 100%;
   position: absolute;
-  top: 54px;
-  bottom: 0px;
+  top: 10px;
   ul {
-    margin: 10px;
+    float: right;
   }
   li {
     cursor: pointer;

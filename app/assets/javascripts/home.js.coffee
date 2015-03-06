@@ -384,8 +384,8 @@ $(document).on('click', '#change_status_canceled', () ->
 #-----------
 
 $(document).on("click", "#folders-link", () ->
-  window.location = '/#!/folders'
-  setHash('#!' + url, true)
+  url = '/#!/folders'
+  window.location = url
 )
 
 $(document).on('click', '.lab-link', () ->

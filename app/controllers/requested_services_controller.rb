@@ -60,7 +60,8 @@ class RequestedServicesController < ApplicationController
   end
 
   def get_grand_total(id)
-    grand_total = RequestedService.find_by_sql(["SELECT SUM(hours * hourly_rate) AS subtotal 
+    grand_total = RequestedService.find_by_sql(["SELECT IFNULL(SUM(subtotal),0) AS total FROM (
+                                                   SELECT SUM(hours * hourly_rate) AS subtotal 
                                                      FROM requested_service_equipments 
                                                      WHERE requested_service_id = :requested_service
                                                      GROUP BY requested_service_id 

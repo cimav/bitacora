@@ -189,8 +189,7 @@ class ServiceRequestsController < ApplicationController
     # Publish recibir_costeo to Vinculacion system.
     request = ServiceRequest.find(params[:id])
     details = cost_details(request)
-    ResqueBus.redis = '127.0.0.1:6379' # TODO: Mover a config
-    ResqueBus.publish('recibir_costeo', cost_details(request))
+    QueueBus.publish('recibir_costeo', cost_details(request))
     request.system_status = ServiceRequest::SYSTEM_QUOTE_SENT
     request.save
     render :layout => false
@@ -237,8 +236,7 @@ class ServiceRequestsController < ApplicationController
     # Publish reporte to Vinculacion system.
     details = cost_details(request)
     details['participaciones'] = participations
-    ResqueBus.redis = '127.0.0.1:6379' # TODO: Mover a config
-    ResqueBus.publish('recibir_reporte', details)
+    QueueBus.publish('recibir_reporte', details)
     request.system_status = ServiceRequest::SYSTEM_REPORT_SENT
     request.save
     render :layout => false

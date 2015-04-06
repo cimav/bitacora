@@ -1,5 +1,5 @@
 class VinculacionSubscriptions
-  include ResqueBus::Subscriber
+  include QueueBus::Subscriber
 
   subscribe :solicitar_costeo 
   subscribe :notificar_arranque

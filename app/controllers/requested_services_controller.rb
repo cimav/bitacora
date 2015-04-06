@@ -361,8 +361,7 @@ class RequestedServicesController < ApplicationController
 
 
             details['participaciones'] = participations
-            ResqueBus.redis = '127.0.0.1:6379' # TODO: Mover a config
-            ResqueBus.publish('recibir_reporte', details)
+            QueueBus.publish('recibir_reporte', details)
             sr.system_status = ServiceRequest::SYSTEM_REPORT_SENT
             sr.save
           end

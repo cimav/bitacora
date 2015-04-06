@@ -9,7 +9,7 @@ gem 'protected_attributes'
 
 gem 'mysql2'
 
-gem 'json', '~> 1.7.7'
+gem 'json'
 
 gem 'haml'
 
@@ -37,7 +37,7 @@ gem "rubyzip", '>= 1.0.0'
 gem 'zip-zip'
 
 gem "resque"
-gem "resque-bus", :git => "https://github.com/taskrabbit/resque-bus.git"
+gem "resque-bus", :git => "https://github.com/queue-bus/resque-bus.git"
 
 gem "select2-rails"
 

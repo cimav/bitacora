@@ -54,6 +54,11 @@ class RequestedServicesController < ApplicationController
     render :layout => false
   end
 
+  def delete_dialog
+    @requested_service = RequestedService.find(params['id'])
+    render :layout => false
+  end
+
   def send_quote_dialog
     @requested_service = RequestedService.find(params['id'])
     render :layout => false
@@ -90,15 +95,19 @@ class RequestedServicesController < ApplicationController
 
   def show
     @requested_service = RequestedService.find(params['id'])
-    @activity_log = ActivityLog.where(" (service_request_id = :service_request AND sample_id = 0 AND requested_service_id = 0)
+    if (@requested_service.status.to_i != RequestedService::DELETED)
+      @activity_log = ActivityLog.where(" (service_request_id = :service_request AND sample_id = 0 AND requested_service_id = 0)
                                         OR (service_request_id = :service_request AND sample_id = :sample AND requested_service_id = 0)
                                         OR (service_request_id = :service_request AND sample_id = :sample AND requested_service_id = :requested_service)
                                     ", {:service_request => @requested_service.sample.service_request.id,
                                         :sample => @requested_service.sample_id,
                                         :requested_service => @requested_service.id
                                        }).order('id DESC')
-    @grand_total = get_grand_total(params['id'])
-    render :layout => false
+      @grand_total = get_grand_total(params['id'])
+      render :layout => false
+    else 
+      render :inline => 'Servicio Eliminado'
+    end
   end
 
   def create
@@ -254,6 +263,7 @@ class RequestedServicesController < ApplicationController
         msg = "El servicio #{@requested_service.number} ha iniciado" if @requested_service.status.to_i == RequestedService::IN_PROGRESS
         msg = "El servicio #{@requested_service.number} ha finalizado" if @requested_service.status.to_i == RequestedService::FINISHED
         msg = "El servicio #{@requested_service.number} ha sido cancelado" if @requested_service.status.to_i == RequestedService::CANCELED
+        msg = "El servicio #{@requested_service.number} ha sido eliminado" if @requested_service.status.to_i == RequestedService::DELETED
 
 
         @requested_service.activity_log.create(user_id: current_user.id,

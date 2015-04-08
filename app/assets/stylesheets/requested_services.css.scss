@@ -10,6 +10,7 @@
 .status-in-progress { color: $brand-primary; }
 .status-finished    { color: $brand-success }
 .status-canceled    { color: $brand-danger; }
+.status-deleted    { color: $brand-danger; }
 .status-auth        { color: $brand-warning; }
 .status-to-quote    { color: #a58ad5; }
 .status-send-quote    { color: darken(#a58ad5, 10%); }
@@ -30,6 +31,7 @@
 .bg-status-in-progress { background: $brand-primary; }
 .bg-status-finished    { background: $brand-success }
 .bg-status-canceled    { background: $brand-danger; }
+.bg-status-deleted    { background: $brand-danger; }
 .bg-status-auth        { background: $brand-warning; }
 .bg-status-to-quote    { background: #a58ad5; }
 .bg-status-send-quote  { background: darken(#a58ad5, 10%); }

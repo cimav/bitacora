@@ -377,6 +377,15 @@ $(document).on('click', '#change_status_canceled', () ->
   )
 )
 
+# DELETE
+$(document).on('click', '#change_status_deleted', () ->
+  $(this).prop('disabled', true)
+  url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/delete_dialog'
+  $.get(url, {}, (html) ->
+    $('#folder-work-panel').empty().html(html)
+  )
+)
+
 
 
 #-----------

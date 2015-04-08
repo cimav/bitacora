@@ -8,7 +8,7 @@ class LaboratoryController < ApplicationController
   end
   
   def live_search
-    @requested_services = RequestedService.joins(:sample).joins(:laboratory_service).joins('LEFT OUTER JOIN service_requests ON service_requests.id = samples.service_request_id').joins('LEFT OUTER JOIN users ON users.id = service_requests.user_id').where('laboratory_id = :lab',  {:lab => params[:id]})
+    @requested_services = RequestedService.where.not(status: RequestedService::DELETED).joins(:sample).joins(:laboratory_service).joins('LEFT OUTER JOIN service_requests ON service_requests.id = samples.service_request_id').joins('LEFT OUTER JOIN users ON users.id = service_requests.user_id').where('laboratory_id = :lab',  {:lab => params[:id]})
     if params[:lrs_status] != '0'
       if params[:lrs_status] == 'abiertos'
         abiertos = []

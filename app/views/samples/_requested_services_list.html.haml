@@ -2,7 +2,7 @@
   - if sample.requested_service.count == 0
     %tr
       %td{:colspan => 3, :class => 'empty'}= "No tiene servicios"
-  - sample.requested_service.each do |rs|
+  - sample.requested_service.where.not(status: RequestedService::DELETED).each do |rs|
     %tr{:class => 'requested-service-link', 'data-id' => rs.id, 'data-sample-id' => rs.sample_id, :id => "requested-service-link-#{rs.id}"}
       %td.icon{:class => rs.status_class}
         %span.glyphicon{:class => rs.icon_class}

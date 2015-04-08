@@ -19,6 +19,7 @@ class RequestedService < ActiveRecord::Base
   after_create :create_files_dir
   after_create :set_system_based_status
 
+  DELETED        = -2
   CANCELED       = -1
   INITIAL        = 1
   RECEIVED       = 2
@@ -41,6 +42,7 @@ class RequestedService < ActiveRecord::Base
     SUSPENDED      => 'Servicio Suspendido',
     REINIT         => 'Servicio Reiniciado',
     CANCELED       => 'Servicio Cancelado',
+    DELETED        => 'Servicio Eliminado',
     IN_PROGRESS    => 'En Progreso',
     REQ_SUP_AUTH   => 'Aut. de supervisor',
     REQ_OWNER_AUTH => 'Aut. de solicitante',

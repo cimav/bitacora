@@ -1,33 +1,47 @@
-%h3 Dueño de carpeta
-.row
-  .col-md-12
-    = image_tag (request.user.avatar_url), :class => 'img-circle folder-owner'
-    - if request.user.id == current_user.id
-      %strong= request.user.full_name
-    - else
-      = request.user.full_name
-- if request.supervisor
-  %h3 Supervisor
-  .row
-    .col-md-12
-      = image_tag (request.supervisor.avatar_url), :class => 'img-circle folder-supervisor'
-      - if request.supervisor_id == current_user.id
-        %strong= request.supervisor.full_name
-      - else
-        = request.supervisor.full_name
-
-%h3 Colaboradores
-- if request.collaborators.count <= 0
-  .no-collab= "Esta carpeta no tiene colaboradores"
-- request.collaborators.each do |collaborator|
-  .row
-    .col-md-12.collaborator-item{'id' => "collaborator-item#{collaborator.id}"}
-      = image_tag (collaborator.user.avatar_url), :class => 'img-circle folder-collaborator'
-      - if collaborator.user_id == current_user.id
-        %strong= collaborator.user.full_name
-      - else
-        = collaborator.user.full_name
+%table
+  %tr
+    %td{:colspan => 2}
+      %h3 Dueño de carpeta
+  %tr
+    %td
+      = image_tag (request.user.avatar_url), :class => 'img-circle folder-owner'
+    %td
       - if request.user.id == current_user.id
-        = link_to '×', {:controller => 'service_requests', :action => 'delete_collaborator', 'collaborator_id' => collaborator.id}, :method => :post, :remote => true, :class => 'close remove-collaborator', :'data-type' => 'html'
-- if request.user.id == current_user.id
-  %button#add-collaborator-button.btn.btn-success.btn-xs{'data-id' => request.id}= "Agregar colaborador"
+        %strong= request.user.full_name
+      - else
+        = request.user.full_name
+  - if request.supervisor
+    %tr
+      %td{:colspan => 2}
+        %h3 Supervisor
+    %tr
+      %td
+        = image_tag (request.supervisor.avatar_url), :class => 'img-circle folder-supervisor'
+      %td
+        - if request.supervisor_id == current_user.id
+          %strong= request.supervisor.full_name
+        - else
+          = request.supervisor.full_name
+
+  %tr
+    %td{:colspan => 2}
+      %h3 Colaboradores
+  - if request.collaborators.count <= 0
+    %tr
+      %td{:colspan => 2}
+        .no-collab= "Esta carpeta no tiene colaboradores"
+  - request.collaborators.each do |collaborator|
+    %tr.collaborator-item{'id' => "collaborator-item#{collaborator.id}"}
+      %td
+        = image_tag (collaborator.user.avatar_url), :class => 'img-circle folder-collaborator'
+      %td
+        - if collaborator.user_id == current_user.id
+          %strong= collaborator.user.full_name
+        - else
+          = collaborator.user.full_name
+        - if request.user.id == current_user.id
+          = link_to '×', {:controller => 'service_requests', :action => 'delete_collaborator', 'collaborator_id' => collaborator.id}, :method => :post, :remote => true, :class => 'close remove-collaborator', :'data-type' => 'html'
+  - if request.user.id == current_user.id
+    %tr
+      %td{:colspan => 2}
+        %button#add-collaborator-button.btn.btn-success.btn-xs{'data-id' => request.id}= "Agregar colaborador"

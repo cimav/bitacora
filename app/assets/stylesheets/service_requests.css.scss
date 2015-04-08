@@ -89,7 +89,7 @@
     line-height: 1em;
     .glyphicon {
       color: $folder-color;
-      font-size: 48px;
+      font-size: 190%;
     }
     .number {
       margin-top: 10px;
@@ -164,7 +164,7 @@
     padding: 0;
     font-weight: normal;
     padding: 12px 0 0 10px;
-    font-size: 16px;
+    font-size: 120%;
     text-transform: uppercase;
   }
 }
@@ -182,17 +182,18 @@
 
 
   .folder-icon {
-    height: 160px;
+    height: 120px;
     margin: 0;
     padding: 0;
     color: $folder-color;
     text-align: center;
-    font-size: 128px;
+    font-size: 96px;
     .folder-number {
       text-align: center;
-      font-size: 16px;
+      font-size: 12px;
+      font-weight: bold;
       position: relative;
-      top: -100px;
+      top: -90px;
       color: darken($folder-color, 50%);
     }
   }
@@ -210,7 +211,7 @@
   }
   .folder-collaborators {
     h3 {
-      font-size: 14px;
+      font-size: 110%;
     }
     img {
       width: 32px;
@@ -281,7 +282,7 @@
       color: $strong-color;
       font-weight: normal;
       padding: 12px 0 0 10px;
-      font-size: 16px;
+      font-size: 120%;
     }
     .actions {
       position: absolute;
@@ -319,7 +320,7 @@
 table.sample-services {
     margin: 0;
     padding: 0;
-    font-size: 14px;
+    font-size: 110%;
 
     tr {
       cursor: pointer;
@@ -330,14 +331,14 @@ table.sample-services {
 
     tr.add-service {
       .icon {
-        font-size: 16px;
+        font-size: 120%;
         color: $brand-success;
         padding: 7px 0 0 10px;
       }
     }
 
     .icon {
-      font-size: 14px;
+      font-size: 110%;
       width: 22px;
       text-align: center;
       padding: 10px 0 0 10px;
@@ -445,7 +446,7 @@ table.sample-services {
         font-weight: bold;
       }
       .lab-service-laboratory {
-        font-size: 11px;
+        font-size: 90%;
         color: $grey;
       }
       &.selected {
@@ -494,7 +495,7 @@ table.sample-services {
   h3 {
     background: #aaa; 
     color: #fff;
-    font-size: 14px;
+    font-size: 110%;
     padding: 10px;
   }
   .total { float: right; }
@@ -541,7 +542,7 @@ table.sample-services {
 
 #collaborator-panel {
   h3 {
-    font-size: 14px;
+    font-size: 110%;
   }
   button {
     margin-top: 0.5em;

@@ -414,7 +414,7 @@ $(document).on('click', '.lab-link', () ->
 updateGrandTotal = () ->
   url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/grand_total'
   $.get(url, {}, (html) ->
-    $('.grand_total_value').empty().html(html)
+    $('#grand_total').empty().html(html)
   )
 
 #

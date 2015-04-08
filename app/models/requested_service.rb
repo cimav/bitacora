@@ -139,6 +139,12 @@ class RequestedService < ActiveRecord::Base
   end
 
   def set_system_based_status
+    
+    template_service = RequestedService.where("(laboratory_service_id = :id AND sample_id = 0)", {:id => self.laboratory_service_id}).first
+    if template_service.blank? || self.sample_id == 0
+      return false
+    end
+
     st = self.sample.service_request.system_status
     if st == ServiceRequest::SYSTEM_TO_QUOTE ||
        st == ServiceRequest::SYSTEM_PARTIAL_QUOTED ||

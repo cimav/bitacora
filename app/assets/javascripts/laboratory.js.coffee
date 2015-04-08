@@ -58,7 +58,7 @@ $(document).on('ajax:beforeSend', '.admin-lab', (evt, xhr, settings) ->
     url = '/laboratory/' + lab_id + '/admin'
   )
 $(document).on('ajax:success', '.admin-lab', (evt, data, status, xhr) ->
-    $('#admin-area').empty().html(data)
+    $('#lab-work-panel').empty().html(data)
   )
 
 $(document).on('ajax:error', '.admin-lab', (evt, xhr, status, error) ->

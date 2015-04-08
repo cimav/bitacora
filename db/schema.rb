@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150306164946) do
+ActiveRecord::Schema.define(version: 20150408173533) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.integer  "user_id",                  limit: 4
@@ -29,6 +29,12 @@ ActiveRecord::Schema.define(version: 20150306164946) do
   add_index "activity_logs", ["sample_id"], name: "index_activity_logs_on_sample_id", using: :btree
   add_index "activity_logs", ["service_request_id"], name: "index_activity_logs_on_service_request_id", using: :btree
   add_index "activity_logs", ["user_id"], name: "index_activity_logs_on_user_id", using: :btree
+
+  create_table "borra", id: false, force: :cascade do |t|
+    t.integer "id",              limit: 4,  default: 0, null: false
+    t.string  "number",          limit: 20
+    t.integer "request_type_id", limit: 4
+  end
 
   create_table "business_units", force: :cascade do |t|
     t.string   "prefix",     limit: 5
@@ -186,6 +192,11 @@ ActiveRecord::Schema.define(version: 20150306164946) do
     t.integer  "material_type_id", limit: 4
   end
 
+  create_table "oldtype", id: false, force: :cascade do |t|
+    t.integer "id",  limit: 4, default: 0, null: false
+    t.integer "old", limit: 4
+  end
+
   create_table "other_types", force: :cascade do |t|
     t.string   "name",        limit: 255
     t.text     "description", limit: 65535
@@ -195,11 +206,12 @@ ActiveRecord::Schema.define(version: 20150306164946) do
   end
 
   create_table "request_types", force: :cascade do |t|
-    t.string   "short_name", limit: 20
-    t.string   "name",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.string   "prefix",     limit: 255
+    t.string   "short_name",    limit: 20
+    t.string   "name",          limit: 255
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.string   "prefix",        limit: 255
+    t.integer  "is_selectable", limit: 4,   default: 0
   end
 
   create_table "requested_service_equipments", force: :cascade do |t|
@@ -342,6 +354,18 @@ ActiveRecord::Schema.define(version: 20150306164946) do
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "sintipo", id: false, force: :cascade do |t|
+    t.integer "id", limit: 4, default: 0, null: false
+  end
+
+  create_table "sintipo2", id: false, force: :cascade do |t|
+    t.integer "id", limit: 4, default: 0
+  end
+
+  create_table "sintipo3", id: false, force: :cascade do |t|
+    t.integer "id", limit: 4, default: 0
   end
 
   create_table "states", force: :cascade do |t|

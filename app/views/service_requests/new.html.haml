@@ -6,8 +6,8 @@
     .control-group#cg_ServiceRequest_type_id
       = f.label :request_type_id, "Tipo", {:class => 'control-label'}
       .controls
-        - options = '<option value="-">Selecciona el tipo</option>'
-        - RequestType.order(:name).each do |request_type|
+        - options = ''
+        - RequestType.where(:is_selectable => RequestType::IS_SELECTABLE).order(:name).each do |request_type|
           - if request_type.short_name == 'SERVICIO'
             - if current_user.can_create_external_services? 
               - options += "<option value=\"#{request_type.id}\">#{request_type.name}</option>"

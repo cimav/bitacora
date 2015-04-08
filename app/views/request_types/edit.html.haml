@@ -9,6 +9,16 @@
   .field#field_request_type_prefix
     = f.label :prefix, 'Prefijo:'
     = f.text_field :prefix, {:class => 'form-control', :placeholder => 'Prefijo'}
+  .field#field_request_type_is_selectable
+    = f.label :is_selectable, 'Es elegible para carpetas:'
+    - st_options = ''
+    - sel0 = ''
+    - sel1 = ''
+    - sel0 = 'selected="selected"' if @request_type.is_selectable.to_i == 0
+    - sel1 = 'selected="selected"' if @request_type.is_selectable.to_i == 1 
+    - st_options += "<option value=\"0\" #{sel0}>No</option>"
+    - st_options += "<option value=\"1\" #{sel1}>Si</option>"
+    = f.select :is_selectable, st_options.html_safe, {}, {:class => 'form-control'}
  
       
   .submit-button

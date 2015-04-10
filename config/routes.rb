@@ -69,7 +69,9 @@ Bitacora::Application.routes.draw do
   post '/requested_services/delete_eq' => 'requested_services#delete_eq'
   post '/requested_services/delete_mat' => 'requested_services#delete_mat'
   post '/requested_services/delete_other' => 'requested_services#delete_other'
+  get  '/requested_services/:id' => 'requested_services#show'
   get  '/requested_services/:id/files_list' => 'requested_services#files_list'
+  get  '/laboratory/:lab_id/s/:id' => 'requested_services#lab_view'
 
 
 
@@ -136,6 +138,7 @@ Bitacora::Application.routes.draw do
       get 'new_equipment'
     end
   end
+  get  '/laboratory/:id/f/*filter' => 'laboratory#show'
 
   resources :activity_log, :as => :activity_logs
 

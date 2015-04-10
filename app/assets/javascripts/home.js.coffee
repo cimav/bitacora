@@ -80,8 +80,7 @@ $(document).on('click', '#add-new-folder-button', () ->
 
 $(document).on('click', '.requested-service-link', () ->
     id = $(this).data('id')
-    sample_id = $(this).data('sample-id')
-    getRequestedService(sample_id, id) 
+    getRequestedService(id) 
   )
 
 newSampleDialog = () ->
@@ -156,18 +155,18 @@ $(document).on('ajax:success', '#new-requested-service-form', (evt, data, status
     getSampleRequestedServices(res['sample_id'])
     getServiceRequestActions(res['service_request_id'])
     if (res['from_lab'])
-      getRequestedService(res['sample_id'], res['from_id'])
+      getRequestedService(res['from_id'])
     else
-      getRequestedService(res['sample_id'], res['id'])
+      getRequestedService(res['id'])
   )
 
 $(document).on('ajax:error', '#new-requested-service-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
-@getRequestedService = getRequestedService = (sample_id, id) ->
-  current_sample = sample_id
-  url = '/samples/' + sample_id + '/requested_services/' + id
+@getRequestedService = getRequestedService = (id) ->
+  #current_sample = sample_id
+  url = '/requested_services/' + id
   current_requested_service = id
   $.get(url, {}, (html) ->
     $('.requested-service-link').removeClass('active')
@@ -183,7 +182,7 @@ getSampleRequestedServices = (sample_id) ->
   )
 
 $(document).on('click', '.requested_service', () ->
-    getRequestedService($(this).attr('sample_id'), $(this).attr('requested_service_id'))
+    getRequestedService($(this).attr('requested_service_id'))
   )
 
 $(document).on('ajax:beforeSend', '#new-sample-form', (evt, xhr, settings) ->
@@ -269,7 +268,7 @@ $(document).on('ajax:success', '#status-form', (evt, data, status, xhr) ->
     $("#status-form").find('input, textarea, button, select').prop("disabled", false)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
-    getRequestedService(res['sample_id'], res['id'])
+    getRequestedService(res['id'])
     getServiceRequestActions(res['service_request_id'])
     updateIcon(res['id'], res['status_class'], res['icon_class'])
   )

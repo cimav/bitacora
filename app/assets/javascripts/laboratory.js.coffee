@@ -5,10 +5,38 @@
 @labReqServicesLiveSearch = labReqServicesLiveSearch = () ->
   form = $("#lab-req-serv-live-search")
   url = '/laboratory/' + form.data('laboratory-id')  + '/live_search'
+  setHashForLabLiveSearch(form.data('laboratory-id'))
   formData = form.serialize()
   $.get(url, formData, (html) ->
     $("#lab-req-serv-items").empty().html(html)
   )
+
+setHashForLabLiveSearch = (lab_id) ->
+  
+  filter = ''
+  
+  if $('#lrs_status').val() > 0 || $('#lrs_status').val() == '-abiertos' || $('#lrs_status').val() == '-todos'
+    filter = filter + "e" + $('#lrs_status').val() + "|" 
+
+  if $('#lrs_requestor').val() > 0
+    filter = filter + "s" + $('#lrs_requestor').val() + "|" 
+
+  if $('#lrs_assigned_to').val() > 0
+    filter = filter + "a" + $('#lrs_assigned_to').val() + "|" 
+
+  if $('#lrs_type').val() > 0
+    filter = filter + "t" + $('#lrs_type').val() + "|" 
+
+  if $('#lrs_client').val() > 0
+    filter = filter + "c" + $('#lrs_client').val() + "|" 
+  
+  if $('#q').val() != ''
+    filter = filter + "b" + $('#q').val() + "|" 
+
+  if filter != ''
+    setHash('#!/laboratory/' + lab_id + '/f/' + filter, false)
+  else
+    setHash('#!/laboratory/' + lab_id, false)
 
 $(document).on('change', '#lrs_status', () ->
     labReqServicesLiveSearch()
@@ -30,23 +58,21 @@ $(document).on('change', '#lrs_assigned_to', () ->
     labReqServicesLiveSearch()
   )
 
-$(document).on('keyup', '#req-serv-search-box', () ->
+$(document).on('keyup', '#q', () ->
     $('#req-serv-items').scroll()
     labReqServicesLiveSearch()
   )
 
 $(document).on('click', '.lab-req-serv-item', () ->
-  sample_id = $(this).data('sample-id')
-  id = $(this).data('requested-service-id')
-  getLabRequestedService(sample_id, id)
+  lab_id    = $(this).data('laboratory-id')
+  id        = $(this).data('requested-service-id')
+  number    = $(this).data('number')
+
+  getLabRequestedService(lab_id, id)
 )
 
-getLabRequestedService = (sample_id, id) ->
-  url = '/samples/' + sample_id + '/requested_services/' + id + '/lab_view'
-  $.get(url, {}, (html) ->
-    $('#lab-work-panel').empty().html(html)
-    getRequestedService(sample_id, id)
-  )  
+@getLabRequestedService = getLabRequestedService = (lab_id, id) ->
+  setHash('#!/laboratory/' + lab_id + '/s/' + id, true)
 
 
 #----------

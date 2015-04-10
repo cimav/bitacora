@@ -3,7 +3,13 @@
     %tr
       %td{:colspan => 3, :class => 'empty'}= "No tiene servicios"
   - sample.requested_service.where.not(status: RequestedService::DELETED).each do |rs|
-    %tr{:class => 'requested-service-link', 'data-id' => rs.id, 'data-sample-id' => rs.sample_id, :id => "requested-service-link-#{rs.id}"}
+    - if lab_view
+      - klass = 'lab-req-serv-item'
+    - else
+      - klass = 'requested-service-link'
+    %tr{:class => klass, 'data-id' => rs.id, 'data-requested-service-id' => rs.id, 'data-laboratory-id' => rs.laboratory_service.laboratory_id ,'data-sample-id' => rs.sample_id, :id => "requested-service-link-#{rs.id}"}
+
+
       %td.icon{:class => rs.status_class}
         %span.glyphicon{:class => rs.icon_class}
       %td.name= rs.laboratory_service.name

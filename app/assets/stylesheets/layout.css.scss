@@ -88,7 +88,6 @@ body {
   border-bottom: 1px solid $line-color;
   h2 {
     margin: 0;
-    padding: 0;
     color: $top-header-color;
     font-weight: normal;
     padding: 8px 0 0 20px;
@@ -96,6 +95,19 @@ body {
     height: 48px;
     float: left;
     overflow: hidden;
+  }
+  .lab-name {
+    float: left;
+    font-size: 24px;
+    color: $top-header-color;
+    font-weight: normal;
+    padding: 8px 0 0 20px;
+  }
+  .service-number {
+    float: left;
+    font-size: 24px;
+    color: $grey;
+    padding: 8px 0 0 20px;
   }
   .actions {
     position: absolute;

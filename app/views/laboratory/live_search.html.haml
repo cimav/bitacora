@@ -1,7 +1,7 @@
 - @requested_services.each do |rs|
   - next if !rs.sample.service_request
   - next if rs.sample.service_request.status == ServiceRequest::DELETED
-  .requested-service.lab-req-serv-item{'data-requested-service-id' => rs.id, 'data-sample-id' => rs.sample_id, :id => "requested_service_#{rs.id}"}
+  .requested-service.lab-req-serv-item{'data-number' => rs.number, 'data-requested-service-id' => rs.id, 'data-sample-id' => rs.sample_id, 'data-laboratory-id' => rs.laboratory_service.laboratory_id, :id => "requested_service_#{rs.id}"}
     .rs-header
       .rs-type{:class => "label_#{rs.sample.service_request.request_type.short_name}"}= rs.sample.service_request.request_type.name
       .rs-status{:class => "bg-#{rs.status_class}"}= rs.status_text

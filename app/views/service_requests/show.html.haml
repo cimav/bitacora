@@ -40,7 +40,7 @@
             .number= "ID: #{s.number}"
           .clearfix
         %div{:id => "sample-#{s.id}-services"}
-          = render :partial => 'samples/requested_services_list', :locals => {:sample => s, :request => @request}
+          = render :partial => 'samples/requested_services_list', :locals => {:sample => s, :request => @request, :lab_view => false}
 
   #folder-work-panel-wrapper
     #folder-work-panel

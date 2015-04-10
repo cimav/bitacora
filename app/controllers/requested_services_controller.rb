@@ -95,6 +95,7 @@ class RequestedServicesController < ApplicationController
 
   def show
     @requested_service = RequestedService.find(params['id'])
+
     if (@requested_service.status.to_i != RequestedService::DELETED)
       @activity_log = ActivityLog.where(" (service_request_id = :service_request AND sample_id = 0 AND requested_service_id = 0)
                                         OR (service_request_id = :service_request AND sample_id = :sample AND requested_service_id = 0)

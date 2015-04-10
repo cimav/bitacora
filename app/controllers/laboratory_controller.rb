@@ -4,13 +4,19 @@ class LaboratoryController < ApplicationController
 
   def show
     @laboratory = Laboratory.find(params[:id])
+    @filter = {}
+    if params[:filter]
+      params[:filter].each_line('|') do |s|
+        @filter[s[0]] = s.gsub('|','')[1..-1]
+      end
+    end
     render :layout => false
   end
   
   def live_search
     @requested_services = RequestedService.where.not(status: RequestedService::DELETED).joins(:sample).joins(:laboratory_service).joins('LEFT OUTER JOIN service_requests ON service_requests.id = samples.service_request_id').joins('LEFT OUTER JOIN users ON users.id = service_requests.user_id').where('laboratory_id = :lab',  {:lab => params[:id]})
-    if params[:lrs_status] != '0'
-      if params[:lrs_status] == 'abiertos'
+    if params[:lrs_status] != '-todos'
+      if params[:lrs_status] == '-abiertos'
         abiertos = []
         abiertos << RequestedService::INITIAL
         abiertos << RequestedService::RECEIVED

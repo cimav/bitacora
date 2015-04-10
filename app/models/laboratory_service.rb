@@ -1,5 +1,5 @@
 class LaboratoryService < ActiveRecord::Base
-  attr_accessible :name, :description, :service_type_id, :laboratory_id, :internal_cost, :is_catalog, :sale_price
+  attr_accessible :name, :description, :service_type_id, :laboratory_id, :internal_cost, :is_catalog, :sale_price, :is_exclusive_vinculacion
   belongs_to :laboratory
   has_many :requested_service
   has_many :users, :through => :requested_service
@@ -13,6 +13,9 @@ class LaboratoryService < ActiveRecord::Base
 
   SERVICE_FREE = 0
   SERVICE_CATALOG = 1
+
+  SERVICE_FOR_ALL = 0
+  SERVICE_EXCLUSIVE = 1
 
   def create_template
     template = self.requested_service.new

@@ -2,8 +2,9 @@
 class LaboratoryServicesController < ApplicationController
   before_filter :auth_required
   respond_to :html, :json
+
   def live_search
-    @laboratory_services = LaboratoryService.order('name')
+    @laboratory_services = LaboratoryService.where(:is_exclusive_vinculacion => 0).order('name')
 
     if params[:service_type] != '0'
       @laboratory_services = @laboratory_services.where(:service_type_id => params[:service_type])

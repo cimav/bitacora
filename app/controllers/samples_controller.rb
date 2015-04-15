@@ -13,6 +13,12 @@ class SamplesController < ApplicationController
     render :layout => false
   end
 
+  def lab_view_requested_services_list
+    @sample = Sample.find(params['id'])
+    @request = @sample.service_request
+    render :layout => false
+  end
+
   def new_dialog
     @request = ServiceRequest.find(params[:service_request_id])
     render :layout => false

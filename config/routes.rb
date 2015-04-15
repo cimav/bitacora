@@ -25,6 +25,7 @@ Bitacora::Application.routes.draw do
 
   resources :service_requests 
   get '/samples/:id/requested_services_list' => 'samples#requested_services_list'
+  get '/samples/:id/lab_view_requested_services_list' => 'samples#lab_view_requested_services_list'
   get '/samples/new_dialog/:service_request_id' => 'samples#new_dialog'
   resources :samples do
     resources :requested_services do

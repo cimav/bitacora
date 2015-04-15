@@ -44,7 +44,8 @@
       .clearfix
     .services
       %h3 Servicios 
-      = render :partial => 'samples/requested_services_list', :locals => {:sample => @requested_service.sample, :request => @requested_service.sample.service_request, :lab_view => true}
+      %div{:id => "sample-#{@requested_service.sample.id}-services"}
+        = render :partial => 'samples/requested_services_list', :locals => {:sample => @requested_service.sample, :request => @requested_service.sample.service_request, :lab_view => true}
       .clearfix
   #folder-work-panel
 

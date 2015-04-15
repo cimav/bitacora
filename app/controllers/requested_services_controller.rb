@@ -186,9 +186,11 @@ class RequestedServicesController < ApplicationController
             
             if (@requested_service.from_id.to_i > 0) 
               json[:from_lab] = true
+              json[:lab_view] = true
               json[:from_id] = @requested_service.from_id
             else
               json[:from_lab] = false
+              json[:lab_view] = false
             end
 
             render :json => json
@@ -301,8 +303,10 @@ class RequestedServicesController < ApplicationController
           qty = 0
           
           sr.sample.each do |s|
-            s.requested_service.each do |rs|
+            s.requested_service.where("status != ?", RequestedService::DELETED).each do |rs|
               qty += 1
+              puts rs.number
+              puts "-----------------"
               if rs.status.to_i == RequestedService::WAITING_START
                 quoted += 1
               end

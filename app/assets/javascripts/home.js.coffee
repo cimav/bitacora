@@ -95,8 +95,8 @@ $(document).on('click', '#add-new-sample-button', () ->
     newSampleDialog()
   )
 
-addServiceDialog = (from_id = false) ->
-  url = "/laboratory_services/add_service_dialog/?from_id=#{from_id}"
+addServiceDialog = (lab_view = false, from_id = false) ->
+  url = "/laboratory_services/add_service_dialog/?from_id=#{from_id}&lab_view=#{lab_view}"
   $.get(url, {}, (html) ->
     $('#folder-work-panel').empty().html(html)
     labServicesLiveSearch()
@@ -105,7 +105,13 @@ addServiceDialog = (from_id = false) ->
 $(document).on('click', '.add-service-link', () ->
     $(this).prop('disabled', true)
     current_sample = $(this).data('sample-id')
-    addServiceDialog()
+    addServiceDialog(false)
+  )
+
+$(document).on('click', '.lab-view-add-service-link', () ->
+    $(this).prop('disabled', true)
+    current_sample = $(this).data('sample-id')
+    addServiceDialog(true)
   )
 
 $(document).on('click', '#service_type', () ->
@@ -152,7 +158,7 @@ $(document).on('ajax:success', '#new-requested-service-form', (evt, data, status
     $form = $(this)
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
-    getSampleRequestedServices(res['sample_id'])
+    getSampleRequestedServices(res['sample_id'], res['lab_view'])
     getServiceRequestActions(res['service_request_id'])
     if (res['from_lab'])
       getRequestedService(res['from_id'])
@@ -175,8 +181,11 @@ $(document).on('ajax:error', '#new-requested-service-form', (evt, xhr, status, e
   )
 
 
-getSampleRequestedServices = (sample_id) ->
-  url = '/samples/' + sample_id + '/requested_services_list'
+getSampleRequestedServices = (sample_id, lab_view) ->
+  if (!lab_view)
+    url = '/samples/' + sample_id + "/requested_services_list"
+  else 
+    url = '/samples/' + sample_id + "/lab_view_requested_services_list"
   $.get(url, {}, (html) ->
     $('#sample-' + sample_id + '-services').empty().html(html) 
   )

@@ -2,9 +2,11 @@
   - if sample.requested_service.count == 0
     %tr
       %td{:colspan => 3, :class => 'empty'}= "No tiene servicios"
+  - klass_add = 'add-service-link'
   - sample.requested_service.where.not(status: RequestedService::DELETED).each do |rs|
     - if lab_view
       - klass = 'lab-req-serv-item'
+      - klass_add = 'lab-view-add-service-link'
     - else
       - klass = 'requested-service-link'
     %tr{:class => klass, 'data-id' => rs.id, 'data-requested-service-id' => rs.id, 'data-laboratory-id' => rs.laboratory_service.laboratory_id ,'data-sample-id' => rs.sample_id, :id => "requested-service-link-#{rs.id}"}
@@ -17,12 +19,12 @@
   - if request.request_type_id != ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
     - if request.request_type_id == ServiceRequest::SERVICIO_VINCULACION 
       - if sample.service_request.system_status < ServiceRequest::SYSTEM_QUOTE_SENT 
-        %tr.add-service
+        %tr
           %td.icon
             %span.glyphicon.glyphicon-plus-sign
-          %td.name.add-service-link{'data-sample-id' => sample.id ,:colspan => 2}= "Agregar Servicio"
+          %td.name{:class => klass_add, 'data-sample-id' => sample.id ,:colspan => 2}= "Agregar Servicio"
     - else 
-      %tr.add-service
+      %tr
         %td.icon
           %span.glyphicon.glyphicon-plus-sign
-        %td.name.add-service-link{'data-sample-id' => sample.id ,:colspan => 2}= "Agregar Servicio"
+        %td.name.add-service-link{:class => klass_add, 'data-sample-id' => sample.id ,:colspan => 2}= "Agregar Servicio"

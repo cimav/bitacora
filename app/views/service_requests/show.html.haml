@@ -21,8 +21,10 @@
     .header
       %h2 MUESTRAS
       .actions
-        - if @request.request_type_id != ServiceRequest::SERVICIO_VINCULACION &&
-        -    @request.request_type_id != ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
+        - if (@request.request_type_id == ServiceRequest::SERVICIO_VINCULACION && @request.number.to_s[0] == 'S') ||
+        -    (@request.request_type_id != ServiceRequest::SERVICIO_VINCULACION &&
+        -    @request.request_type_id != ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO)
+        
           %button#add-new-sample-button.btn.btn-success.btn-xs{'data-id' => @request.id}
             %span.glyphicon.glyphicon-plus
     - if @request.sample.count <= 0 

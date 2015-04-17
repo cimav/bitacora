@@ -296,8 +296,8 @@ class RequestedServicesController < ApplicationController
 
         sr = @requested_service.sample.service_request
 
-        # If status changed to WAITING_START then change service_request status
-        if @requested_service.status.to_i == RequestedService::WAITING_START
+        # If status changed to WAITING_START or DELETED then change service_request status
+        if @requested_service.status.to_i == RequestedService::WAITING_START || @requested_service.status.to_i == RequestedService::DELETED
     
           quoted = 0
           qty = 0
@@ -305,8 +305,6 @@ class RequestedServicesController < ApplicationController
           sr.sample.each do |s|
             s.requested_service.where("status != ?", RequestedService::DELETED).each do |rs|
               qty += 1
-              puts rs.number
-              puts "-----------------"
               if rs.status.to_i == RequestedService::WAITING_START
                 quoted += 1
               end

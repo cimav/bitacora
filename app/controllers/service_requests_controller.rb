@@ -304,7 +304,7 @@ class ServiceRequestsController < ApplicationController
     services_costs = []
 
     service_request.sample.each do |s|
-      s.requested_service.each do |rs|
+      s.requested_service.where("status != ?", RequestedService::DELETED).each do |rs|
         services_costs << cost_details_requested_service(rs)
       end
     end

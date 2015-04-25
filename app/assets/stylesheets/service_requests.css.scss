@@ -18,6 +18,7 @@
 
 .label_SERVICIO      { background-color: $servicio-color; }
 .label_SERVICIO2      { background-color: $servicio2-color; }
+.label_SERVICIO3      { background-color: $servicio3-color; }
 .label_ARTICULO      { background-color: $articulo-color; }
 .label_TESIS         { background-color: $tesis-color; }
 .label_TESIS_EXTERNA { background-color: $tesis-color; }
@@ -39,6 +40,7 @@
 .bg_MAQUINADO      { background-color: $maquinado-color; border-bottom: 1px solid darken($maquinado-color, 5%);}
 .bg_PROTOTIPO      { background-color: $prototipo-color; border-bottom: 1px solid darken($prototipo-color, 5%);}
 .bg_SERVICIO2      { background-color: $servicio2-color; border-bottom: 1px solid darken($servicio2-color, 5%);}
+.bg_SERVICIO3      { background-color: $servicio3-color; border-bottom: 1px solid darken($servicio3-color, 5%);}
 
 
 .item_SERVICIO      { border-top: 2px solid $servicio-color; }
@@ -52,6 +54,7 @@
 .item_MAQUINADO      { border-top: 2px solid $maquinado-color; }
 .item_PROTOTIPO      { border-top: 2px solid $prototipo-color; }
 .item_SERVICIO2      { border-top: 2px solid $servicio2-color; }
+.item_SERVICIO3      { border-top: 2px solid $servicio3-color; }
 
 
 #folders {

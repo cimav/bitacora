@@ -9,7 +9,7 @@
         .title
           = "#{r.request_link}" rescue "Sin tipo"
         .description= r.description
-        - if r.request_type_id == ServiceRequest::SERVICIO_VINCULACION || r.request_type_id == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
+        - if r.request_type_id == ServiceRequest::SERVICIO_VINCULACION || r.request_type_id == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO || r.request_type_id == ServiceRequest::SERVICIO_VINCULACION_TIPO_2
           .client= r.vinculacion_client_name
       %td.service-request-date
         = date_text(r.created_at)

@@ -16,7 +16,7 @@
         %span.glyphicon{:class => rs.icon_class}
       %td.name= rs.laboratory_service.name
       %td.date= date_text(rs.created_at)
-  - if request.request_type_id != ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
+  - if request.request_type_id != ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO && request.request_type_id != ServiceRequest::SERVICIO_VINCULACION_TIPO_2
     - if request.request_type_id == ServiceRequest::SERVICIO_VINCULACION 
       - if sample.service_request.system_status < ServiceRequest::SYSTEM_QUOTE_SENT 
         %tr

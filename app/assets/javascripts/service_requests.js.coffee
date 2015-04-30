@@ -55,6 +55,29 @@ $(document).on('click', '#send-report-to-vinculacion', () ->
 )
 
 
+$(document).on('click', '#send-report-tipo-2-button', () ->
+  id = $(this).data('id')
+  $(this).prop('disabled', true)
+  url = '/service_requests/' + id + '/view_report_tipo_2';
+  $.get(url, {}, (html) ->
+    $('#folder-work-panel').empty().html(html)
+  )
+)
+
+$(document).on('click', '#send-report-tipo-2-to-vinculacion', () ->
+  id = $(this).data('id')
+  $(this).prop('disabled', true)
+  form = $('#send-report-form')
+  formData = form.serialize()
+  url = '/service_requests/' + id + '/send_report_tipo_2';
+  $.post(url, formData, (html) ->
+    getServiceRequestActions(id)
+    $('#folder-work-panel').empty().html(html)
+  )
+  false
+)
+
+
 $(document).on('click', '#add-collaborator-button', () ->
   id = $(this).data('id')
   url = '/service_requests/' + id + '/add_collaborator_dialog';

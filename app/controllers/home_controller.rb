@@ -3,6 +3,11 @@ class HomeController < ApplicationController
 
   def index
     #Resque.workers.each {|w| w.unregister_worker}
+
+    #Resque.queues.each do |queue_name|
+    #  Resque.remove_queue("#{queue_name}")
+    #end
+
   end
 
   def redirect_requested_service

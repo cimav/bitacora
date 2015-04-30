@@ -214,6 +214,25 @@ class ServiceRequestsController < ApplicationController
     render :layout => false
   end
 
+  def view_report_tipo_2
+    @request = ServiceRequest.find(params[:id])
+    @details = cost_details(@request)
+    @participants = []
+
+    @participants << @request.user
+
+    @request.requested_services.each do |rs|
+      rs.requested_service_technicians.each do |t|
+        if !@participants.include? t.user
+          @participants << t.user
+        end
+      end
+    end
+    puts @participants
+    
+    render :layout => false
+  end
+
   def send_report
 
     request = ServiceRequest.find(params[:id])
@@ -237,6 +256,34 @@ class ServiceRequestsController < ApplicationController
     details = cost_details(request)
     details['participaciones'] = participations
     QueueBus.publish('recibir_reporte', details)
+    request.system_status = ServiceRequest::SYSTEM_REPORT_SENT
+    request.save
+    render :layout => false
+  end
+
+  def send_report_tipo_2
+
+    request = ServiceRequest.find(params[:id])
+
+    params['user'].each do |user_id,percentage|
+      participation = request.service_request_participations.new
+      participation.user_id = user_id
+      participation.percentage = percentage
+      participation.save
+    end  
+
+    participations = Array.new
+    request.service_request_participations.each do |p|
+      participations << {
+        "email" => p.user.email,
+        "porcentaje" => p.percentage,
+      }
+    end
+
+    # Publish reporte to Vinculacion system.
+    details = cost_details(request)
+    details['participaciones'] = participations
+    QueueBus.publish('recibir_reporte_tipo_2', details)
     request.system_status = ServiceRequest::SYSTEM_REPORT_SENT
     request.save
     render :layout => false
@@ -342,15 +389,6 @@ class ServiceRequestsController < ApplicationController
       }
     end
 
-    # Materials
-    # materials = Array.new
-    # requested_service.requested_service_materials.each do |mat|
-    #   materials << {
-    #     "detalle" => mat.material.name,
-    #     "cantidad" => mat.quantity,
-    #     "precio_unitario" => mat.unit_price
-    #   }
-    # end
 
     # Others
     others = Array.new

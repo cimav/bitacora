@@ -16,10 +16,12 @@ Bitacora::Application.routes.draw do
   get '/service_requests/:id/quotation' => 'service_requests#quotation'
   post '/service_requests/:id/send_quote' => 'service_requests#send_quote'
   get '/service_requests/:id/view_report' => 'service_requests#view_report'
+  get '/service_requests/:id/view_report_tipo_2' => 'service_requests#view_report_tipo_2'
   get '/service_requests/:id/add_collaborator_dialog' => 'service_requests#add_collaborator_dialog'
   post '/service_requests/:id/add_collaborator' => 'service_requests#add_collaborator'
   get '/service_requests/:id/get_collaborators' => 'service_requests#get_collaborators'
   post '/service_requests/:id/send_report' => 'service_requests#send_report'
+  post '/service_requests/:id/send_report_tipo_2' => 'service_requests#send_report_tipo_2'
   post '/service_requests/delete_collaborator' => 'service_requests#delete_collaborator'
 
 

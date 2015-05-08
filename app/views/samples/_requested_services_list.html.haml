@@ -16,7 +16,13 @@
         %span.glyphicon{:class => rs.icon_class}
       %td.name= rs.laboratory_service.name
       %td.date= date_text(rs.created_at)
-  - if request.request_type_id != ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO && request.request_type_id != ServiceRequest::SERVICIO_VINCULACION_TIPO_2
+
+  - if (@request.request_type_id == ServiceRequest::SERVICIO_VINCULACION && @request.number.to_s[0] == 'S')
+    %tr
+      %td.icon
+        %span.glyphicon.glyphicon-plus-sign
+      %td.name.add-service-link{:class => klass_add, 'data-sample-id' => sample.id ,:colspan => 2}= "Agregar Servicio"
+  - elsif request.request_type_id != ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO && request.request_type_id != ServiceRequest::SERVICIO_VINCULACION_TIPO_2
     - if request.request_type_id == ServiceRequest::SERVICIO_VINCULACION 
       - if sample.service_request.system_status < ServiceRequest::SYSTEM_QUOTE_SENT 
         %tr

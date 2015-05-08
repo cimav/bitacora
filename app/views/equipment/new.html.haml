@@ -10,6 +10,9 @@
   .field#field_equipment_name
     = f.label :name, 'Nombre:'
     = f.text_field :name, {:class => 'form-control', :placeholder => 'Nombre del equipo'}
+  .field#field_laboratory_equipment_item_number
+    = f.label :item_number, 'Número de Inventario:'
+    = f.text_field :item_number, :placeholder => 'CABMS', :class => 'form-control'
   .field#field_equipment_description
     = f.label :description, 'Descripción:'
     = f.text_area :description, {:class => 'form-control', :rows => 10}

@@ -17,7 +17,7 @@
       %td.name= rs.laboratory_service.name
       %td.date= date_text(rs.created_at)
 
-  - if (@request.request_type_id == ServiceRequest::SERVICIO_VINCULACION && @request.number.to_s[0] == 'S')
+  - if (request.request_type_id == ServiceRequest::SERVICIO_VINCULACION && request.number.to_s[0] == 'S')
     %tr
       %td.icon
         %span.glyphicon.glyphicon-plus-sign

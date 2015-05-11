@@ -14,7 +14,7 @@
       .field#field_laboratory_service_name
         = f.label :name, 'Nombre:'
         - if editable
-          = f.text_field :name, :placeholder => 'Nombre del servicio', :class => 'form-control'
+          = f.text_area :name, :class => 'form-control'
         - else 
           = @laboratory_service.name
       .field#field_laboratory_service_description

@@ -30,6 +30,7 @@
             - else
               %strong= "Cantidad: "
               .quantity= "#{rs.sample.quantity} muestra"
+          = render :partial => 'service_requests/vinculacion_dates', :locals => {:request => rs.sample.service_request}
       
     .clearfix
   

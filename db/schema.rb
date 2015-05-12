@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150430225648) do
+ActiveRecord::Schema.define(version: 20150512010151) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.integer  "user_id",                  limit: 4
@@ -349,6 +349,10 @@ ActiveRecord::Schema.define(version: 20150430225648) do
     t.integer  "system_request_id",       limit: 4
     t.integer  "vinculacion_client_id",   limit: 4
     t.string   "vinculacion_client_name", limit: 255
+    t.string   "vinculacion_delivery",    limit: 255
+    t.date     "vinculacion_start_date"
+    t.date     "vinculacion_end_date"
+    t.integer  "vinculacion_days",        limit: 4
   end
 
   add_index "service_requests", ["request_type_id"], name: "index_service_requests_on_request_type_id", using: :btree

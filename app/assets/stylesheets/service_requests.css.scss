@@ -126,7 +126,7 @@
 
   .service-request-date {
     padding-top: 20px !important;
-    font-size: 150%;
+    font-size: 105%;
   }
 
   .service-collaborators {
@@ -210,6 +210,7 @@
     .description {
       text-align: justify;
       color: $grey;
+      margin-bottom: 10px;
     }
   }
   .folder-collaborators {
@@ -556,4 +557,24 @@ table.sample-services {
 
 #cg_ServiceRequest_submit {
   margin-top: 1em;
+}
+
+.vinculacion-end-date {
+  color: $grey;
+  .percentage {
+  }
+  .delivery {
+    margin-bottom: 5px;
+  }
+}
+
+.pulsate_today {
+    -webkit-animation: pulsate 1s ease-out;
+    -webkit-animation-iteration-count: infinite; 
+    opacity: 0.0
+}
+@-webkit-keyframes pulsate {
+    0% {opacity: 0.5;}
+    50% {opacity: 1.0;}
+    100% {opacity: 0.5;}
 }

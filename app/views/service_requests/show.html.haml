@@ -8,6 +8,7 @@
     .title
       = "#{@request.request_link}" rescue "Sin tipo"
     .description= @request.description
+  = render :partial => 'vinculacion_dates', :locals => {:request => @request}
 
   #folder-actions
     = render :partial => 'actions', :locals => {:request => @request}

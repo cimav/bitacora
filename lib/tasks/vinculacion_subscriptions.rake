@@ -48,6 +48,10 @@ class VinculacionSubscriptions
       services.each do |s|    
         # TODO: validar agente
         s.system_status = ServiceRequest::SYSTEM_ACCEPTED
+        s.vinculacion_start_date  = attributes['fecha_inicio']
+        s.vinculacion_end_date    = attributes['fecha_termino']
+        s.vinculacion_days        = attributes['duracion']
+        s.vinculacion_delivery    = attributes['tiempo_entrega']
         if s.save
           puts "Iniciado el folder #{s.id}"
           s.requested_services.each do |rs|
@@ -79,6 +83,10 @@ class VinculacionSubscriptions
       folder.description             = attributes['nombre']          # Nombre del servicio solicitado
       folder.vinculacion_client_id   = attributes['cliente_id']
       folder.vinculacion_client_name = attributes['cliente_nombre']
+      folder.vinculacion_start_date  = attributes['fecha_inicio']
+      folder.vinculacion_end_date    = attributes['fecha_termino']
+      folder.vinculacion_days        = attributes['duracion']
+      folder.vinculacion_delivery    = attributes['tiempo_entrega']
       folder.system_status           = ServiceRequest::SYSTEM_FREE
       folder.save(:validate => false)
 
@@ -122,6 +130,10 @@ class VinculacionSubscriptions
       folder.description             = attributes['nombre']          # Nombre del servicio solicitado
       folder.vinculacion_client_id   = attributes['cliente_id']
       folder.vinculacion_client_name = attributes['cliente_nombre']
+      folder.vinculacion_start_date  = attributes['fecha_inicio']
+      folder.vinculacion_end_date    = attributes['fecha_termino']
+      folder.vinculacion_days        = attributes['duracion']
+      folder.vinculacion_delivery    = attributes['tiempo_entrega']
       folder.system_status           = ServiceRequest::SYSTEM_FREE
       if u_supervisor = User.where(:email => attributes['agente_email']).first
         folder.supervisor_id = u_supervisor.id

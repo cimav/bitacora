@@ -13,6 +13,7 @@
           .client= r.vinculacion_client_name
       %td.service-request-date
         = date_text(r.created_at)
+        = render :partial => 'vinculacion_dates', :locals => {:request => r}
       %td.service-collaborators
         = image_tag (r.user.avatar_url), :class => 'img-circle folder-owner'
         - if r.supervisor

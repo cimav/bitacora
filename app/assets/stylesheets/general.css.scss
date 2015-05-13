@@ -270,3 +270,9 @@ img.inactive {
   /* Should be unset in IE9+ I think. */
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 }
+
+.app-message {
+  text-align: center;
+  color: $grey;
+  margin-top: 48px;
+}

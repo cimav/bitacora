@@ -96,7 +96,7 @@ class RequestedService < ActiveRecord::Base
       new_tech = self.requested_service_technicians.new
       new_tech.user_id = tech.user_id
       user_tech = User.find(tech.user_id)
-      new_tech.hours = tech.hours
+      new_tech.hours = tech.hours * self.sample.quantity
       new_tech.hourly_wage = user_tech.hourly_wage
       new_tech.details = tech.details
       new_tech.participation = tech.participation
@@ -108,28 +108,17 @@ class RequestedService < ActiveRecord::Base
       new_eq = self.requested_service_equipments.new
       new_eq.equipment_id = eq.equipment_id
       the_eq = Equipment.find(eq.equipment_id)
-      new_eq.hours = eq.hours
+      new_eq.hours = eq.hours * self.sample.quantity
       new_eq.hourly_rate = the_eq.hourly_rate
       new_eq.details = eq.details
       new_eq.save
     end
 
-    # Material
-    # template_service.requested_service_materials.each do |mat|
-    #   new_mat = self.requested_service_materials.new
-    #   new_mat.material_id = mat.material_id
-    #   the_mat = Material.find(mat.material_id)
-    #   new_mat.quantity = mat.quantity
-    #   new_mat.unit_price = the_mat.unit_price
-    #   new_mat.details = mat.details
-    #   new_mat.save
-    # end
-
     # Other
     template_service.requested_service_others.each do |other|
       new_other = self.requested_service_others.new
       new_other.concept = other.concept
-      new_other.price = other.price
+      new_other.price = other.price * self.sample.quantity
       new_other.details = other.details
       new_other.other_type_id = other.other_type_id
       new_other.save

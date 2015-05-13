@@ -6,9 +6,12 @@
     .folder-number= @request.number
   .folder-data
     .title
+      - if @request.vinculacion_client_name
+        .client-name= @request.vinculacion_client_name
       = "#{@request.request_link}" rescue "Sin tipo"
     .description= @request.description
   = render :partial => 'vinculacion_dates', :locals => {:request => @request}
+  = render :partial => 'vinculacion_contact', :locals => {:request => @request}
 
   #folder-actions
     = render :partial => 'actions', :locals => {:request => @request}

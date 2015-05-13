@@ -70,6 +70,8 @@
             %strong= "Cliente: "
             = @requested_service.sample.service_request.vinculacion_client_name
         = render :partial => 'service_requests/vinculacion_dates', :locals => {:request => @requested_service.sample.service_request}
+        .requested-service-contact
+          = render :partial => 'service_requests/vinculacion_contact', :locals => {:request => @requested_service.sample.service_request}
       %td#requested-service-actions
         - if initial_action
           %button{:class => "btn btn-block btn-status bg-status-initial", :status_action => RequestedService::INITIAL, :id => 'change_status_initial'}

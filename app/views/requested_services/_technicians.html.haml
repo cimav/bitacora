@@ -50,9 +50,9 @@
         %tr.empty-cost
           %td{:colspan => 5}= "Sin personal"
       - @requested_service.requested_service_technicians.each do |tech|
-        - tech_cost = tech.hours * tech.hourly_wage
-        - tech_total = tech_total + tech_cost  
-        - part_total = part_total + tech.participation
+        - tech_cost = tech.hours * tech.hourly_wage rescue 0
+        - tech_total = tech_total + tech_cost rescue 0
+        - part_total = part_total + tech.participation rescue 0
         - techs << tech.user_id
         %tr.technician-row{'data-id' => tech.id, :id => "technician_row_#{tech.id}"}
           %td

@@ -1,0 +1,13 @@
+.vinculacion-contact
+  - if request.vinculacion_client_contact
+    .contact-item
+      %span.glyphicon.glyphicon-user
+      = request.vinculacion_client_contact
+  - if request.vinculacion_client_email
+    .contact-item
+      %span.glyphicon.glyphicon-envelope
+      = request.vinculacion_client_email
+  - if request.vinculacion_client_phone
+    .contact-item
+      %span.glyphicon.glyphicon-phone-alt
+      = request.vinculacion_client_phone

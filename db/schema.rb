@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150512010151) do
+ActiveRecord::Schema.define(version: 20150512225229) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.integer  "user_id",                  limit: 4
@@ -334,25 +334,28 @@ ActiveRecord::Schema.define(version: 20150512010151) do
   end
 
   create_table "service_requests", force: :cascade do |t|
-    t.integer  "user_id",                 limit: 4
-    t.string   "number",                  limit: 20
-    t.integer  "request_type_id",         limit: 4
-    t.string   "request_link",            limit: 255
-    t.text     "description",             limit: 16777215
-    t.integer  "status",                  limit: 4,        default: 1
-    t.datetime "created_at",                                           null: false
-    t.datetime "updated_at",                                           null: false
-    t.integer  "supervisor_id",           limit: 4
-    t.integer  "consecutive",             limit: 4
-    t.string   "system_id",               limit: 255
-    t.integer  "system_status",           limit: 4,        default: 1
-    t.integer  "system_request_id",       limit: 4
-    t.integer  "vinculacion_client_id",   limit: 4
-    t.string   "vinculacion_client_name", limit: 255
-    t.string   "vinculacion_delivery",    limit: 255
+    t.integer  "user_id",                    limit: 4
+    t.string   "number",                     limit: 20
+    t.integer  "request_type_id",            limit: 4
+    t.string   "request_link",               limit: 255
+    t.text     "description",                limit: 16777215
+    t.integer  "status",                     limit: 4,        default: 1
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
+    t.integer  "supervisor_id",              limit: 4
+    t.integer  "consecutive",                limit: 4
+    t.string   "system_id",                  limit: 255
+    t.integer  "system_status",              limit: 4,        default: 1
+    t.integer  "system_request_id",          limit: 4
+    t.integer  "vinculacion_client_id",      limit: 4
+    t.string   "vinculacion_client_name",    limit: 255
+    t.string   "vinculacion_delivery",       limit: 255
     t.date     "vinculacion_start_date"
     t.date     "vinculacion_end_date"
-    t.integer  "vinculacion_days",        limit: 4
+    t.integer  "vinculacion_days",           limit: 4
+    t.string   "vinculacion_client_contact", limit: 255
+    t.string   "vinculacion_client_email",   limit: 255
+    t.string   "vinculacion_client_phone",   limit: 255
   end
 
   add_index "service_requests", ["request_type_id"], name: "index_service_requests_on_request_type_id", using: :btree

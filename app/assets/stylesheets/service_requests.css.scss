@@ -201,11 +201,15 @@
     }
   }
   .folder-data {
-      .title {
+    .title {
       text-align: center;
       font-weight: bold;
       font-size: 120%;
       margin-bottom: 10px;
+      .client-name {
+        font-size: 90%;
+        color: $grey;
+      }
     }
     .description {
       text-align: justify;
@@ -566,6 +570,10 @@ table.sample-services {
   .delivery {
     margin-bottom: 5px;
   }
+}
+
+.vinculacion-contact {
+  color: $grey;
 }
 
 .pulsate_today {

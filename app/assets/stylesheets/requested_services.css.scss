@@ -151,3 +151,13 @@
   height: 20px;
   padding-left: 20px;
 }
+
+.requested-service-contact {
+  color: $grey;
+  .vinculacion-contact {
+    .contact-item {
+      float: left;
+      padding-right: 10px;
+    }
+  }
+}

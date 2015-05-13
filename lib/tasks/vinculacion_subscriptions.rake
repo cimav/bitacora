@@ -13,14 +13,17 @@ class VinculacionSubscriptions
     puts "Solicitar Costeo #{attributes['costeo_id']}: #{attributes['codigo']}"
     if u_requestor = User.where(:email => attributes['empleado_email']).first
       folder = u_requestor.service_request.new 
-      folder.system_id         = attributes['id']
-      folder.system_request_id = attributes['solicitud_id']
-      folder.request_type_id   = 1  # ID servicio vinculacion     
-      folder.request_link      = attributes['nombre']
-      folder.number            = attributes['codigo']
-      folder.description       = attributes['descripcion']
-      folder.vinculacion_client_id   = attributes['cliente_id']
-      folder.vinculacion_client_name = attributes['cliente_nombre']
+      folder.system_id                   = attributes['id']
+      folder.system_request_id           = attributes['solicitud_id']
+      folder.request_type_id             = ServiceRequest::SERVICIO_VINCULACION
+      folder.request_link                = attributes['nombre']
+      folder.number                      = attributes['codigo']
+      folder.description                 = attributes['descripcion']
+      folder.vinculacion_client_id       = attributes['cliente_id']
+      folder.vinculacion_client_name     = attributes['cliente_nombre']
+      folder.vinculacion_client_contact = attributes['cliente_contacto']
+      folder.vinculacion_client_email    = attributes['cliente_email']
+      folder.vinculacion_client_phone = attributes['cliente_telefono']
       folder.system_status     = ServiceRequest::SYSTEM_TO_QUOTE
       if u_supervisor = User.where(:email => attributes['agente_email']).first
         folder.supervisor_id = u_supervisor.id
@@ -75,19 +78,22 @@ class VinculacionSubscriptions
     puts "Crear carpeta #{attributes['codigo']}"
     if u_requestor = User.where(:email => attributes['agente_email']).first
       folder = u_requestor.service_request.new 
-      folder.system_id               = attributes['id']
-      folder.system_request_id       = attributes['solicitud_id']
-      folder.request_type_id         = ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
-      folder.request_link            = attributes['descripcion']     # Descripción de la solicitud
-      folder.number                  = attributes['carpeta_codigo']
-      folder.description             = attributes['nombre']          # Nombre del servicio solicitado
-      folder.vinculacion_client_id   = attributes['cliente_id']
-      folder.vinculacion_client_name = attributes['cliente_nombre']
-      folder.vinculacion_start_date  = attributes['fecha_inicio']
-      folder.vinculacion_end_date    = attributes['fecha_termino']
-      folder.vinculacion_days        = attributes['duracion']
-      folder.vinculacion_delivery    = attributes['tiempo_entrega']
-      folder.system_status           = ServiceRequest::SYSTEM_FREE
+      folder.system_id                   = attributes['id']
+      folder.system_request_id           = attributes['solicitud_id']
+      folder.request_type_id             = ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
+      folder.request_link                = attributes['descripcion']     # Descripción de la solicitud
+      folder.number                      = attributes['carpeta_codigo']
+      folder.description                 = attributes['nombre']          # Nombre del servicio solicitado
+      folder.vinculacion_client_id       = attributes['cliente_id']
+      folder.vinculacion_client_name     = attributes['cliente_nombre']
+      folder.vinculacion_client_contact  = attributes['cliente_contacto']
+      folder.vinculacion_client_email    = attributes['cliente_email']
+      folder.vinculacion_client_phone    = attributes['cliente_telefono']
+      folder.vinculacion_start_date      = attributes['fecha_inicio']
+      folder.vinculacion_end_date        = attributes['fecha_termino']
+      folder.vinculacion_days            = attributes['duracion']
+      folder.vinculacion_delivery        = attributes['tiempo_entrega']
+      folder.system_status               = ServiceRequest::SYSTEM_FREE
       folder.save(:validate => false)
 
       # Add samples to service_request  
@@ -122,19 +128,22 @@ class VinculacionSubscriptions
     puts "Crear carpeta #{attributes['codigo']}"
     if u_requestor = User.where(:email => attributes['responsable_email']).first
       folder = u_requestor.service_request.new 
-      folder.system_id               = attributes['id']
-      folder.system_request_id       = attributes['solicitud_id']
-      folder.request_type_id         = ServiceRequest::SERVICIO_VINCULACION_TIPO_2
-      folder.request_link            = attributes['descripcion']     # Descripción de la solicitud
-      folder.number                  = attributes['carpeta_codigo']
-      folder.description             = attributes['nombre']          # Nombre del servicio solicitado
-      folder.vinculacion_client_id   = attributes['cliente_id']
-      folder.vinculacion_client_name = attributes['cliente_nombre']
-      folder.vinculacion_start_date  = attributes['fecha_inicio']
-      folder.vinculacion_end_date    = attributes['fecha_termino']
-      folder.vinculacion_days        = attributes['duracion']
-      folder.vinculacion_delivery    = attributes['tiempo_entrega']
-      folder.system_status           = ServiceRequest::SYSTEM_FREE
+      folder.system_id                   = attributes['id']
+      folder.system_request_id           = attributes['solicitud_id']
+      folder.request_type_id             = ServiceRequest::SERVICIO_VINCULACION_TIPO_2
+      folder.request_link                = attributes['descripcion']     # Descripción de la solicitud
+      folder.number                      = attributes['carpeta_codigo']
+      folder.description                 = attributes['nombre']          # Nombre del servicio solicitado
+      folder.vinculacion_client_id       = attributes['cliente_id']
+      folder.vinculacion_client_name     = attributes['cliente_nombre']
+      folder.vinculacion_client_contact  = attributes['cliente_contacto']
+      folder.vinculacion_client_email    = attributes['cliente_email']
+      folder.vinculacion_client_phone    = attributes['cliente_telefono']
+      folder.vinculacion_start_date      = attributes['fecha_inicio']
+      folder.vinculacion_end_date        = attributes['fecha_termino']
+      folder.vinculacion_days            = attributes['duracion']
+      folder.vinculacion_delivery        = attributes['tiempo_entrega']
+      folder.system_status               = ServiceRequest::SYSTEM_FREE
       if u_supervisor = User.where(:email => attributes['agente_email']).first
         folder.supervisor_id = u_supervisor.id
       else
@@ -171,18 +180,6 @@ class VinculacionSubscriptions
         end
       end
 
-
-    #   if lab_service = LaboratoryService.find(attributes['servicio_bitacora_id'])
-    #     requested_service = RequestedService.new
-    #     requested_service.laboratory_service_id = lab_service.id
-    #     requested_service.sample_id = muestra.id
-    #     requested_service.details = attributes['descripcion']
-    #     # TODO:
-    #     # requested_service.suggested_user_id = lab_service.default_user_id
-    #     requested_service.status = RequestedService::INITIAL
-    #     requested_service.save(:validate => false) 
-    #   end
-      
     end
 
   end

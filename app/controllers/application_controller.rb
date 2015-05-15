@@ -22,6 +22,15 @@ class ApplicationController < ActionController::Base
     redirect_to '/login' unless authenticated?
   end
 
+
+  def set_current_user(email)
+    raise "No se permite esta operación" if !current_user.is_admin?
+    @current_user = User.where(:email => email).first
+    session[:user_email] = email
+    session[:user_auth]  = nil
+    puts "Ahora es: #{@current_user.full_name}"
+  end
+
   helper_method :current_user
 
   private

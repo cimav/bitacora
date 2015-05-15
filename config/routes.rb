@@ -5,6 +5,7 @@ Bitacora::Application.routes.draw do
   mount Resque::Server.new, :at => "/resque"  
 
   get '/login' => 'login#index'
+  get '/set_user/:email' => 'login#set_user', :constraints => { :email => /[^\/]+/  }
 
   get '/folders' => 'service_requests#index'
   get '/folders/new' => 'service_requests#new'

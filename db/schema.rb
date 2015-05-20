@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150512225229) do
+ActiveRecord::Schema.define(version: 20150520224745) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.integer  "user_id",                  limit: 4
@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(version: 20150512225229) do
     t.date     "purchase_date"
     t.decimal  "purchase_price",                        precision: 10, scale: 2
     t.decimal  "internal_hourly_rate",                  precision: 10, scale: 2
+    t.decimal  "suggested_price",                       precision: 10, scale: 2
   end
 
   add_index "equipment", ["laboratory_id"], name: "index_equipment_on_laboratory_id", using: :btree

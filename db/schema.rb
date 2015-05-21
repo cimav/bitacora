@@ -116,7 +116,6 @@ ActiveRecord::Schema.define(version: 20150520224745) do
     t.date     "purchase_date"
     t.decimal  "purchase_price",                        precision: 10, scale: 2
     t.decimal  "internal_hourly_rate",                  precision: 10, scale: 2
-    t.decimal  "suggested_price",                       precision: 10, scale: 2
   end
 
   add_index "equipment", ["laboratory_id"], name: "index_equipment_on_laboratory_id", using: :btree
@@ -340,13 +339,13 @@ ActiveRecord::Schema.define(version: 20150520224745) do
     t.integer  "request_type_id",            limit: 4
     t.string   "request_link",               limit: 255
     t.text     "description",                limit: 16777215
-    t.integer  "status",                     limit: 4,        default: 1
-    t.datetime "created_at",                                              null: false
-    t.datetime "updated_at",                                              null: false
+    t.integer  "status",                     limit: 4,                                 default: 1
+    t.datetime "created_at",                                                                       null: false
+    t.datetime "updated_at",                                                                       null: false
     t.integer  "supervisor_id",              limit: 4
     t.integer  "consecutive",                limit: 4
     t.string   "system_id",                  limit: 255
-    t.integer  "system_status",              limit: 4,        default: 1
+    t.integer  "system_status",              limit: 4,                                 default: 1
     t.integer  "system_request_id",          limit: 4
     t.integer  "vinculacion_client_id",      limit: 4
     t.string   "vinculacion_client_name",    limit: 255
@@ -357,6 +356,7 @@ ActiveRecord::Schema.define(version: 20150520224745) do
     t.string   "vinculacion_client_contact", limit: 255
     t.string   "vinculacion_client_email",   limit: 255
     t.string   "vinculacion_client_phone",   limit: 255
+    t.decimal  "suggested_price",                             precision: 10, scale: 2
   end
 
   add_index "service_requests", ["request_type_id"], name: "index_service_requests_on_request_type_id", using: :btree

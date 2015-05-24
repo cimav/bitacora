@@ -11,7 +11,7 @@
   - show_table = true
   - participation_edit = false
 
-- elsif @requested_service.sample.service_request.request_type_id.to_i == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
+- elsif @requested_service.sample.service_request.request_type_id.to_i == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO || @requested_service.sample.service_request.request_type_id.to_i == ServiceRequest::SERVICIO_VINCULACION_TIPO_2
   - editable = false
   - show_table = true 
   - participation_edit = @requested_service.status.to_i == RequestedService::ASSIGNED || @requested_service.status.to_i == RequestedService::SUSPENDED || @requested_service.status.to_i == RequestedService::REINIT || @requested_service.status.to_i == RequestedService::IN_PROGRESS

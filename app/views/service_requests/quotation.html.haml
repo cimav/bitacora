@@ -18,9 +18,24 @@
 
 .sheet
   #costeo-vista
-    %h2
-      = "Costeo #{@details['codigo']}"
-      %span.total= number_to_currency(global_total)
+    %h2= "Costeo #{@details['codigo']}"
+    %table.suggested-price
+      %tr
+        %td.sp-label
+          %strong= "Costo Interno:"
+        %td.sp-price
+          = number_to_currency(global_total)
+        %td.sp-actions{"rowspan" => 2}
+          %button#send-quote-to-vinculacion.btn.btn-primary.btn-lg{'data-id' => @request.id}= "Enviar costeo"
+      %tr
+        %td.sp-label
+          %strong= "Precio de venta sugerido:"
+        %td.sp-price
+          .input-group
+            .input-group-addon= "$"
+            %input{:type => 'number', :name => "suggested_price", :id => "suggested_price", :min => "0", :class => 'form-control'}
+            .input-group-addon= ".00"
+
     - rheader = {'personal' => ['Nombre', 'Horas', 'Costo x Hora'], 'equipos' => ['Equipo', 'Horas', 'Costo x Hora'], 'consumibles' => ['Nombre', 'Cantidad', 'Precio Unitario'], 'otros' => ['Concepto', 'Cantidad', 'Precio']}
     - @details['servicios'].each do |s|
       %h4
@@ -45,5 +60,4 @@
                 %td.text-right=i['cantidad']
                 %td.text-right=number_to_currency(i['precio_unitario'])
                 %td.text-right=number_to_currency(subtotal)      
-    .actions
-      %button#send-quote-to-vinculacion.btn.btn-primary.btn-lg{'data-id' => @request.id}= "Enviar costeo"
+    

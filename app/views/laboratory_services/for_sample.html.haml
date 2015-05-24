@@ -7,6 +7,20 @@
   .add-service-title
     %h3= @laboratory_service.name
   .add-service-description= @laboratory_service.description
+  - if @sample.service_request.request_type_id == ServiceRequest::SERVICIO_VINCULACION
+    - if @laboratory_service.is_catalog == LaboratoryService::SERVICE_CATALOG
+      .alert.alert-info{:role => 'alert'}
+        %strong= "Aviso: "
+        = "Este servicio pertenece al Catálogo de Servicios de Vinculación."
+        %br
+        %br
+        - options = "<option value=\"1\">Voy a solicitar el servicio de catálogo</option>"
+        - options += "<option value=\"2\">Necesito un servicio a la medida con costeo especial</option>"
+        = f.select :service_quote_type, options.html_safe, {}, :class => 'form-control'
+    - else
+      .alert.alert-warning{:role => 'alert'}
+        %strong= "Aviso: "
+        = "Este servicio no pertenece al Catálogo de Servicios de Vinculación y requiere costeo especial por parte del laboratorio"
   .add-service-field.field
     = f.label :suggested_user_id, "Técnico Sugerido: ", {:class => 'control-label'}
     .controls

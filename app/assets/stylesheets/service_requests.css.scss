@@ -586,3 +586,25 @@ table.sample-services {
     50% {opacity: 1.0;}
     100% {opacity: 0.5;}
 }
+
+table.suggested-price {
+  width: 100%;
+  font-size: 120%;
+  border: 1px solid $line-color;
+  background: $bg-color;
+  tr {
+    td {
+      padding: 10px;
+      &.sp-price {
+        width: 14em;
+        text-align: right;
+        input {
+          text-align: right;
+        }
+      }
+      &.sp-actions {
+        text-align: center;
+      }
+    }
+  }
+}

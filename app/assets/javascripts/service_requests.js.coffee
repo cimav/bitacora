@@ -25,7 +25,7 @@ $(document).on('click', '#send-quote-to-vinculacion', () ->
   id = $(this).data('id')
   $(this).prop('disabled', true)
   url = '/service_requests/' + id + '/send_quote';
-  $.post(url, {}, (html) ->
+  $.post(url, { suggested_price: $('#suggested_price').val() }, (html) ->
     getServiceRequestActions(id)
     $('#folder-work-panel').empty().html(html)
   )

@@ -1,6 +1,6 @@
 # coding: utf-8
 class RequestedService < ActiveRecord::Base
-  attr_accessible :laboratory_service_id, :sample_id, :details, :status, :suggested_user_id, :user_id, :from_id
+  attr_accessible :laboratory_service_id, :sample_id, :details, :status, :suggested_user_id, :user_id, :from_id, :service_quote_type
   belongs_to :user
   belongs_to :suggested_user, :class_name => 'User', :foreign_key => 'suggested_user_id'
   belongs_to :sample
@@ -52,6 +52,9 @@ class RequestedService < ActiveRecord::Base
 
     FINISHED       => 'Finalizado'
   }
+
+  QUOTE_USE_CATALOG = 1
+  QUOTE_ADHOC       = 2
 
   def status_text
     STATUS[status.to_i]
@@ -141,12 +144,23 @@ class RequestedService < ActiveRecord::Base
        st == ServiceRequest::SYSTEM_PARTIAL_QUOTED ||
        st == ServiceRequest::SYSTEM_QUOTED
 
-      self.status = TO_QUOTE
+      if self.service_quote_type == QUOTE_USE_CATALOG
+        self.status = WAITING_START
+      else
+        self.status = TO_QUOTE
+      end
+
       self.save(:validate => false)
 
-      if st == ServiceRequest::SYSTEM_QUOTED
+      if st == ServiceRequest::SYSTEM_QUOTED && self.status = TO_QUOTE
         sr = self.sample.service_request
         sr.system_status = ServiceRequest::SYSTEM_PARTIAL_QUOTED
+        sr.save(:validate => false)
+      end
+
+      if st == ServiceRequest::SYSTEM_TO_QUOTE && self.status = WAITING_START
+        sr = self.sample.service_request
+        sr.system_status = ServiceRequest::SYSTEM_QUOTED
         sr.save(:validate => false)
       end
 

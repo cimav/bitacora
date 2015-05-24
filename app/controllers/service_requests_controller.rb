@@ -188,6 +188,7 @@ class ServiceRequestsController < ApplicationController
   def send_quote
     # Publish recibir_costeo to Vinculacion system.
     request = ServiceRequest.find(params[:id])
+    request.suggested_price = params[:suggested_price]
     details = cost_details(request)
     QueueBus.publish('recibir_costeo', cost_details(request))
     request.system_status = ServiceRequest::SYSTEM_QUOTE_SENT
@@ -360,6 +361,7 @@ class ServiceRequestsController < ApplicationController
       "system_id" => service_request.system_id, 
       "system_request_id" => service_request.system_request_id, 
       "codigo" => service_request.number, 
+      "precio_sugerido" => service_request.suggested_price,
       "servicios" => services_costs
     }
     

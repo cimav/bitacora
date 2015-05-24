@@ -382,14 +382,22 @@ table.sample-services {
 }
 
 .sheet {
+  width: 100%;
   margin: 0;
   padding: 0;
   background: $white;
+  .app-message {
+    width: 100%;
+    text-align: center;
+    color: $grey !important;
+    font-size: 32px !important;
+    margin-top: 48px;
+  }
 }
 
 #folder-work-panel {
   background: #fff;
-  .sheet {
+  .xsheet {
     width: -moz-calc(100% - $folder-samples-width - $side-panel-width);
     width: -webkit-calc(100% - $folder-samples-width - $side-panel-width);
     width: calc(100% - $folder-samples-width - $side-panel-width);

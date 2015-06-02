@@ -75,7 +75,7 @@ class ServiceRequestsController < ApplicationController
                  (collaborators.include? current_user.id)
 
     if !authorized
-      render :inline => 'No Autorizado'                   
+      render :inline => '<div class="sheet"><div class="app-message">No Autorizado</div></div>'.html_safe                   
     elsif (@request.status == ServiceRequest::ACTIVE) 
       render :layout => false
     else

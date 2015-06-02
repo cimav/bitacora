@@ -204,6 +204,6 @@ Bitacora::Application.routes.draw do
   get '/auth/failure' => 'sessions#failure'
   get "/logout" => 'sessions#destroy'
 
-  # get ':number' => 'home#redirect_requested_service', :constraints => { :number => /[^\/]*/ }
+  get ':number' => 'home#redirect_requested_service', :constraints => {:number => /.*/} 
 
 end

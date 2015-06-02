@@ -52,7 +52,15 @@
   #folder-work-panel-wrapper
     #folder-work-panel
 
-:javascript
-  $(function() {
-    $('.requested-service-link').first().click();
-  });
+- if !params[:s].blank?
+  :javascript
+    el = "#requested-service-link-#{params[:s]}"
+    $(function() {
+      $(el).click();
+    });
+- else
+  :javascript
+    $(function() {
+      $('.requested-service-link').first().click();
+    });
+

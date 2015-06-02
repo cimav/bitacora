@@ -10,17 +10,9 @@
 
 #folders
 
-- if !params[:r].blank?
-  - requested_service = RequestedService.where(:number => params[:r]).first
-  :javascript
-    $(document).ready(function() {
-      $("#req-serv-search-box").val("#{params[:r]}");
-      folderGo("#{requested_service.sample.service_request.number}","#{requested_service.sample.number}","#{requested_service.id}")
-    })
-- else
-  :javascript
-    $(document).ready(function() {
-      foldersLiveSearch();
-    });
 :javascript
-  activeSideNav('#folders-link');
+  $(document).ready(function() {
+    foldersLiveSearch();
+    activeSideNav('#folders-link');
+  });
+  

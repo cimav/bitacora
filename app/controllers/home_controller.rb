@@ -11,19 +11,25 @@ class HomeController < ApplicationController
   end
 
   def redirect_requested_service
-    # requested_service = RequestedService.where("number = :number", {:number => params[:number]}).first
+    requested_service = RequestedService.where("number = :number", {:number => params[:number]}).first
 
-    # url = ''
+    url = ''
+    lab_access = requested_service.laboratory_service.laboratory.laboratory_members.where(:user_id => current_user.id).first.access rescue 0
+    if lab_access.to_i != 0
+      url = "/#!/laboratory/#{requested_service.laboratory_service.laboratory_id}/s/#{requested_service.id}"
+    else 
+      url = "/#!/service_requests/#{requested_service.sample.service_request_id}?s=#{requested_service.id}"
+    end
 
-    # if current_user.id == requested_service.laboratory_service.laboratory.user_id ||
-    #    current_user.id == requested_service.user_id
-    #   url = "/#!/laboratory/#{requested_service.laboratory_service.laboratory_id}?r=#{requested_service.number}"
-    # else 
-    #   url = "/#!/folders?r=#{requested_service.number}" 
-    # end
-
-    # redirect_to url
-    # return
+    redirect_to url
+    return
   end
 
 end
+
+
+# 15/0776-S001-001-01
+# service_requests/6382
+# requested-service-link-36292
+
+#   http://yoshimi.cimav.edu.mx:3000/E150082-001-01

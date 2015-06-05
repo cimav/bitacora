@@ -94,6 +94,10 @@ class RequestedService < ActiveRecord::Base
       return false
     end
 
+    is_vinculacion = self.sample.service_request.request_type_id.to_i == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO || 
+                     self.sample.service_request.request_type_id.to_i == ServiceRequest::SERVICIO_VINCULACION_TIPO_2 ||
+                     self.sample.service_request.request_type_id.to_i == ServiceRequest::SERVICIO_VINCULACION
+  
     # Technicians
     template_service.requested_service_technicians.each do |tech|
       new_tech = self.requested_service_technicians.new
@@ -112,7 +116,11 @@ class RequestedService < ActiveRecord::Base
       new_eq.equipment_id = eq.equipment_id
       the_eq = Equipment.find(eq.equipment_id)
       new_eq.hours = eq.hours * self.sample.quantity
-      new_eq.hourly_rate = the_eq.hourly_rate
+      if is_vinculacion
+        new_eq.hourly_rate = the_eq.hourly_rate
+      else
+        new_eq.hourly_rate = the_eq.internal_hourly_rate
+      end
       new_eq.details = eq.details
       new_eq.save
     end

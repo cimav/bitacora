@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150523233409) do
+ActiveRecord::Schema.define(version: 20150605160012) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.integer  "user_id",                  limit: 4
@@ -103,6 +103,23 @@ ActiveRecord::Schema.define(version: 20150523233409) do
     t.datetime "updated_at",             null: false
   end
 
+  create_table "eq2", id: false, force: :cascade do |t|
+    t.integer  "id",                   limit: 4,                                 default: 0,   null: false
+    t.integer  "laboratory_id",        limit: 4
+    t.string   "name",                 limit: 255
+    t.text     "description",          limit: 16777215
+    t.decimal  "hourly_rate",                           precision: 6,  scale: 2
+    t.string   "status",               limit: 255,                               default: "1"
+    t.datetime "created_at",                                                                   null: false
+    t.datetime "updated_at",                                                                   null: false
+    t.string   "item_number",          limit: 255
+    t.string   "budget_item",          limit: 255
+    t.date     "purchase_date"
+    t.decimal  "purchase_price",                        precision: 10, scale: 2
+    t.decimal  "internal_hourly_rate",                  precision: 10, scale: 2
+    t.decimal  "suggested_price",                       precision: 10, scale: 2
+  end
+
   create_table "equipment", force: :cascade do |t|
     t.integer  "laboratory_id",        limit: 4
     t.string   "name",                 limit: 255
@@ -116,6 +133,7 @@ ActiveRecord::Schema.define(version: 20150523233409) do
     t.date     "purchase_date"
     t.decimal  "purchase_price",                        precision: 10, scale: 2
     t.decimal  "internal_hourly_rate",                  precision: 10, scale: 2
+    t.decimal  "suggested_price",                       precision: 10, scale: 2
   end
 
   add_index "equipment", ["laboratory_id"], name: "index_equipment_on_laboratory_id", using: :btree
@@ -172,6 +190,7 @@ ActiveRecord::Schema.define(version: 20150523233409) do
     t.integer  "is_catalog",               limit: 4,                                 default: 0
     t.decimal  "sale_price",                                precision: 10, scale: 2
     t.integer  "is_exclusive_vinculacion", limit: 4,                                 default: 0
+    t.decimal  "evaluation_cost",                           precision: 10, scale: 2
   end
 
   add_index "laboratory_services", ["laboratory_id"], name: "index_laboratory_services_on_laboratory_id", using: :btree

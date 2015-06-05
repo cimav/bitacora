@@ -94,15 +94,40 @@ class LaboratoryServicesController < ApplicationController
                                                  ) subtotals", :requested_service => requested_service.id]).first.total
   end
 
+  def get_grand_total_internal(id)
+    requested_service = RequestedService.where("(laboratory_service_id = :id AND sample_id = 0)", {:id => id}).first 
+    grand_total = RequestedService.find_by_sql(["SELECT IFNULL(SUM(subtotal),0) AS total FROM (
+                                                   SELECT SUM(requested_service_equipments.hours * equipment.internal_hourly_rate) AS subtotal 
+                                                     FROM requested_service_equipments 
+                                                       INNER JOIN equipment ON equipment_id = equipment.id
+                                                     WHERE requested_service_id = :requested_service
+                                                     GROUP BY requested_service_id 
+                                                   UNION 
+                                                     SELECT SUM(requested_service_technicians.hours * users.hourly_wage) AS subtotal 
+                                                     FROM requested_service_technicians 
+                                                       INNER JOIN users ON user_id = users.id
+                                                     WHERE requested_service_id = :requested_service
+                                                     GROUP BY requested_service_id
+                                                   UNION
+                                                     SELECT SUM(price) AS subtotal 
+                                                     FROM requested_service_others 
+                                                     WHERE requested_service_id = :requested_service
+                                                     GROUP BY requested_service_id
+                                                 ) subtotals", :requested_service => requested_service.id]).first.total
+  end
+
   def grand_total
     @grand_total = get_grand_total(params[:id])
+    @grand_total_internal = get_grand_total_internal(params[:id])
     render :layout => false
   end
 
   def update_internal_cost(id)
     grand_total = get_grand_total(id)
+    grand_total_internal = get_grand_total_internal(id)
     lab_service = LaboratoryService.find(id)
     lab_service.internal_cost = grand_total
+    lab_service.evaluation_cost = grand_total_internal
     lab_service.save
   end
 
@@ -110,6 +135,7 @@ class LaboratoryServicesController < ApplicationController
     @laboratory_service = LaboratoryService.find(params[:id])
     @requested_service = RequestedService.where("(laboratory_service_id = :id AND sample_id = 0)", {:id => params[:id]}).first 
     @grand_total = get_grand_total(params[:id])
+    @grand_total_internal = get_grand_total_internal(params[:id])
     render :layout => false
   end
 

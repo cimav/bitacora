@@ -4,14 +4,17 @@
 - im_requestor = @requested_service.sample.service_request.user_id == current_user.id
 - show_table = true
 - editable = false
+- vinculacion = false
 
 - if @requested_service.status.to_i == RequestedService::CANCELED || @requested_service.status.to_i == RequestedService::FINISHED
   - editable = false
   - show_table = true
-- elsif @requested_service.sample.service_request.request_type_id.to_i == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
+- elsif @requested_service.sample.service_request.request_type_id.to_i == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO || @requested_service.sample.service_request.request_type_id.to_i == ServiceRequest::SERVICIO_VINCULACION_TIPO_2
+  - vinculacion = true
   - editable = false
   - show_table = true 
 - elsif @requested_service.sample.service_request.request_type_id.to_i == ServiceRequest::SERVICIO_VINCULACION
+  - vinculacion = true
   - editable = @requested_service.status.to_i == RequestedService::TO_QUOTE
   - show_table = true 
 - elsif @requested_service.status.to_i == RequestedService::ASSIGNED || @requested_service.status.to_i == RequestedService::SUSPENDED || @requested_service.status.to_i == RequestedService::REINIT || @requested_service.status.to_i == RequestedService::IN_PROGRESS || @requested_service.status.to_i == RequestedService::TO_QUOTE
@@ -27,7 +30,10 @@
         %tr
           %th= "Nombre"
           %th= "Horas"
-          %th= "Costo x Hora"
+          - if vinculacion
+            %th= "Costo x Hora"
+          - else
+            %th= "Costo x Hora (Interno)"
           %th= "Subtotal"
           %th
     %tbody

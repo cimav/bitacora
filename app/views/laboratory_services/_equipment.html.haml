@@ -3,7 +3,7 @@
 %table.table.table-striped.table-bordered.costeo_table
   %thead
     %tr
-      %th{:colspan => 5, :class => "th-header"}= "Equipos"
+      %th{:colspan => 7, :class => "th-header"}= "Equipos"
     - if @requested_service.requested_service_equipments.count > 0
       %tr
         %th= ""
@@ -11,16 +11,21 @@
         %th= "Horas"
         %th= "Costo x Hora"
         %th= "Subtotal"
+        %th= "Costo x Hora (Interno)"
+        %th= "Subtotal (Interno)"
   %tbody
     - eq_total = 0
+    - eq_internal_total = 0
     - eqs = []
     
     - if @requested_service.requested_service_equipments.count == 0
       %tr.empty-cost
-        %td{:colspan => 5}= "Sin equipos"
+        %td{:colspan => 7}= "Sin equipos"
     - @requested_service.requested_service_equipments.each do |eq|
       - eq_cost = eq.hours * eq.equipment.hourly_rate
+      - eq_internal_cost = eq.hours * eq.equipment.internal_hourly_rate
       - eq_total = eq_total + eq_cost  
+      - eq_internal_total = eq_total + eq_internal_cost  
       - eqs << eq.equipment_id
       %tr.equipment-row{'data-id' => eq.id, :id => "equipment_row_#{eq.id}"}
         %td
@@ -45,12 +50,18 @@
           .align-right= number_to_currency(eq.equipment.hourly_rate)
         %td
           .align-right= number_to_currency(eq_cost)
+        %td
+          .align-right= number_to_currency(eq.equipment.internal_hourly_rate)
+        %td
+          .align-right= number_to_currency(eq_internal_cost)
     - if @requested_service.requested_service_equipments.count > 0
       %tr.total-row
-        %td{:colspan => 4}
-          .align-right= "Subtotal Equipo"
-        %td
+        %td{:colspan => 3}
+          .align-right= "Subtotal "
+        %td{:colspan => 2}
           .align-right= number_to_currency(eq_total)
+        %td{:colspan => 2}
+          .align-right= number_to_currency(eq_internal_total)
 
     - if editable
       - if eqs.count > 0
@@ -63,7 +74,7 @@
         - u_options += "<option value=\"#{e.id}\">#{e.name}</option>"
       - if u_options != ''
         %tr.add-row
-          %td{:colspan => 5}
+          %td{:colspan => 7}
             %button#show_fields_eq.show_fields.btn.btn-info.btn-sm= "Agregar equipo…"
             #fields_eq.costeo_fields
               .field

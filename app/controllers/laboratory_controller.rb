@@ -25,6 +25,7 @@ class LaboratoryController < ApplicationController
         abiertos << RequestedService::REINIT
         abiertos << RequestedService::IN_PROGRESS
         abiertos << RequestedService::TO_QUOTE
+        abiertos << RequestedService::WAITING_START
         @requested_services = @requested_services.where("requested_services.status IN (#{abiertos.join(',')})")
       else
         @requested_services = @requested_services.where('requested_services.status' => params[:lrs_status])

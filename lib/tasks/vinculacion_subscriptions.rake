@@ -23,7 +23,13 @@ class VinculacionSubscriptions
       folder.vinculacion_client_name     = attributes['cliente_nombre']
       folder.vinculacion_client_contact  = attributes['cliente_contacto']
       folder.vinculacion_client_email    = attributes['cliente_email']
-      folder.vinculacion_client_phone    = attributes['cliente_telefono']
+      folder.vinculacion_client_address1 = attributes['cliente_calle']
+      folder.vinculacion_client_address2 = attributes['cliente_colonia']
+      folder.vinculacion_client_city     = attributes['cliente_ciudad']
+      folder.vinculacion_client_state    = attributes['cliente_estado']
+      folder.vinculacion_client_country  = attributes['cliente_pais']
+      folder.vinculacion_client_zip      = attributes['cliente_cp']
+
       folder.system_status     = ServiceRequest::SYSTEM_TO_QUOTE
       if u_supervisor = User.where(:email => attributes['agente_email']).first
         folder.supervisor_id = u_supervisor.id
@@ -89,6 +95,13 @@ class VinculacionSubscriptions
       folder.vinculacion_client_contact  = attributes['cliente_contacto']
       folder.vinculacion_client_email    = attributes['cliente_email']
       folder.vinculacion_client_phone    = attributes['cliente_telefono']
+      folder.vinculacion_client_address1 = attributes['cliente_calle']
+      folder.vinculacion_client_address2 = attributes['cliente_colonia']
+      folder.vinculacion_client_city     = attributes['cliente_ciudad']
+      folder.vinculacion_client_state    = attributes['cliente_estado']
+      folder.vinculacion_client_country  = attributes['cliente_pais']
+      folder.vinculacion_client_zip      = attributes['cliente_cp']
+
       folder.vinculacion_start_date      = attributes['fecha_inicio']
       folder.vinculacion_end_date        = attributes['fecha_termino']
       folder.vinculacion_days            = attributes['duracion']
@@ -139,6 +152,13 @@ class VinculacionSubscriptions
       folder.vinculacion_client_contact  = attributes['cliente_contacto']
       folder.vinculacion_client_email    = attributes['cliente_email']
       folder.vinculacion_client_phone    = attributes['cliente_telefono']
+      folder.vinculacion_client_address1 = attributes['cliente_calle']
+      folder.vinculacion_client_address2 = attributes['cliente_colonia']
+      folder.vinculacion_client_city     = attributes['cliente_ciudad']
+      folder.vinculacion_client_state    = attributes['cliente_estado']
+      folder.vinculacion_client_country  = attributes['cliente_pais']
+      folder.vinculacion_client_zip      = attributes['cliente_cp']
+      
       folder.vinculacion_start_date      = attributes['fecha_inicio']
       folder.vinculacion_end_date        = attributes['fecha_termino']
       folder.vinculacion_days            = attributes['duracion']

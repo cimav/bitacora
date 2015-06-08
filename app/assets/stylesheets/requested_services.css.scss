@@ -155,9 +155,33 @@
 .requested-service-contact {
   color: $grey;
   .vinculacion-contact {
-    .contact-item {
+    .contact-data {
       float: left;
       padding-right: 10px;
     }
+    .client-address {
+      float: left;
+    }
+    .contact-item {
+      span.spaced {
+        padding-left: 2em;
+        font-size: 95%;
+      }
+    }
   }
 }
+
+#folder-info {
+  .vinculacion-contact {
+    font-size: 95%;
+  }
+}
+
+
+.contact-item {
+  span.spaced {
+    padding-left: 2em;
+    font-size: 95%;
+  }
+}
+

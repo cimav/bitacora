@@ -1,13 +1,32 @@
 .vinculacion-contact
-  - if request.vinculacion_client_contact
-    .contact-item
-      %span.glyphicon.glyphicon-user
-      = request.vinculacion_client_contact
-  - if request.vinculacion_client_email
-    .contact-item
-      %span.glyphicon.glyphicon-envelope
-      = request.vinculacion_client_email
-  - if request.vinculacion_client_phone
-    .contact-item
-      %span.glyphicon.glyphicon-phone-alt
-      = request.vinculacion_client_phone
+  .contact-data
+    - if request.vinculacion_client_contact
+      .contact-item
+        %span.glyphicon.glyphicon-user
+        = request.vinculacion_client_contact
+    - if request.vinculacion_client_email
+      .contact-item
+        %span.glyphicon.glyphicon-envelope
+        = request.vinculacion_client_email
+    - if request.vinculacion_client_phone
+      .contact-item
+        %span.glyphicon.glyphicon-phone-alt
+        = request.vinculacion_client_phone
+  .client-address
+    - if request.vinculacion_client_zip
+      .contact-item
+        %span.glyphicon.glyphicon-home
+          = "Dirección"
+          %br
+          %span.spaced= request.vinculacion_client_address1
+          %br
+          %span.spaced= request.vinculacion_client_address2
+          %br
+          %span.spaced= request.vinculacion_client_city
+          %br
+          %span.spaced= request.vinculacion_client_state
+          %br
+          %span.spaced= request.vinculacion_client_country
+          %br
+          %span.spaced= request.vinculacion_client_zip
+          %br

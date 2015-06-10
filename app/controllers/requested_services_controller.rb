@@ -107,7 +107,7 @@ class RequestedServicesController < ApplicationController
       @grand_total = get_grand_total(params['id'])
       render :layout => false
     else 
-      render :inline => 'Servicio Eliminado'
+      render :inline => '<div class="sheet"><div class="app-message">Servicio Eliminado</div></div>'.html_safe  
     end
   end
 
@@ -383,13 +383,17 @@ class RequestedServicesController < ApplicationController
 
       respond_with do |format|
         format.html do
-          puts "RESPOND"
           if request.xhr?
             json = {}
             json[:flash] = flash
             json[:service_request_id] = @requested_service.sample.service_request_id
             json[:sample_id] = @requested_service.sample_id
             json[:id] = @requested_service.id
+            if @requested_service.status.to_i == RequestedService::DELETED
+              json[:deleted] = 'yes'
+            else
+              json[:deleted] = 'no'
+            end
             json[:status_class] = @requested_service.status_class
             json[:icon_class] = @requested_service.icon_class
             render :json => json

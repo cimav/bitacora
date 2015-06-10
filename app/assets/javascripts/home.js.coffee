@@ -278,8 +278,11 @@ $(document).on('ajax:success', '#status-form', (evt, data, status, xhr) ->
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['notice'], 'success')
     getRequestedService(res['id'])
-    getServiceRequestActions(res['service_request_id'])
-    updateIcon(res['id'], res['status_class'], res['icon_class'])
+    getServiceRequestActions(res['service_request_id']) 
+    if res['deleted'] == 'yes'
+      $item = $('#requested-service-link-' + res['id']).fadeOut()
+    else
+      updateIcon(res['id'], res['status_class'], res['icon_class'])
   )
 $(document).on('ajax:error', '#status-form', (evt, xhr, status, error) ->
     $("#status-form").find('input, textarea, button, select').prop("disabled", false)

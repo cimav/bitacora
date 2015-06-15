@@ -34,7 +34,12 @@
 -                   (  (  @requested_service.status.to_i == RequestedService::INITIAL || 
 -                         @requested_service.status.to_i == RequestedService::SUSPENDED) &&
 -                      im_requestor ) ||
--                   ((@requested_service.status.to_i == RequestedService::REQ_OWNER_AUTH) && im_requestor) ||
+-                   ((@requested_service.status.to_i == RequestedService::REQ_OWNER_AUTH) && im_requestor)
+
+- if @requested_service.sample.service_request.request_type_id == ServiceRequest::SERVICIO_VINCULACION_TIPO_2 || @requested_service.sample.service_request.request_type_id == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
+  - canceled_action = false
+
+
 
 - sup_auth_action = @requested_service.status.to_i == RequestedService::REQ_SUP_AUTH && im_req_supervisor
 

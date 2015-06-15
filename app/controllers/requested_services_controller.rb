@@ -173,7 +173,8 @@ class RequestedServicesController < ApplicationController
         Resque.enqueue(NewServiceMailer, @requested_service.id)
       end
 
-      
+      # FOLDER STATUS
+      set_folder_status(@requested_service.sample.service_request)
 
       respond_with do |format|
         format.html do
@@ -294,54 +295,12 @@ class RequestedServicesController < ApplicationController
           Resque.enqueue(StatusChangeMailer, @requested_service.id, current_user.id, prv_msg)
         end
 
-        sr = @requested_service.sample.service_request
 
-        # If status changed to WAITING_START or DELETED then change service_request status
-        if @requested_service.status.to_i == RequestedService::WAITING_START || @requested_service.status.to_i == RequestedService::DELETED
-    
-          quoted = 0
-          qty = 0
-          
-          sr.sample.each do |s|
-            s.requested_service.where("status != ?", RequestedService::DELETED).each do |rs|
-              qty += 1
-              if rs.status.to_i == RequestedService::WAITING_START
-                quoted += 1
-              end
-            end
-          end
-
-          if quoted == qty
-            sr.system_status = ServiceRequest::SYSTEM_QUOTED
-          elsif quoted == 0 
-            sr.system_status = ServiceRequest::SYSTEM_TO_QUOTE
-          else
-            sr.system_status = ServiceRequest::SYSTEM_PARTIAL_QUOTED
-          end
-          sr.save
-        end
+        # FOLDER STATUS
+        set_folder_status(@requested_service.sample.service_request)
 
         # If status changed to FINISHED then change service_request status
         if @requested_service.status.to_i == RequestedService::FINISHED
-          finished = 0
-          qty = 0
-          
-          sr.sample.each do |s|
-            s.requested_service.each do |rs|
-              qty += 1
-              if rs.status.to_i == RequestedService::FINISHED
-                finished += 1
-              end
-            end
-          end
-
-          if finished == qty
-            sr.system_status = ServiceRequest::SYSTEM_ALL_FINISHED
-          elsif finished > 0
-            sr.system_status = ServiceRequest::SYSTEM_PARTIAL_FINISHED
-          end
-          sr.save
-
 
           # Enviar mensaje a Vinculación a traves del bus. 
           if (sr.request_type_id == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO)
@@ -417,6 +376,48 @@ class RequestedServicesController < ApplicationController
         end
       end
     end
+  end
+
+  def set_folder_status(sr)
+    # FOLDER STATUS
+    quoted = 0
+    finished = 0
+    canceled = 0
+    qty = 0
+    sr.sample.each do |s|
+      s.requested_service.where("status != ?", RequestedService::DELETED).each do |rs|
+        if rs.status.to_i == RequestedService::CANCELED 
+          canceled += 1
+        else
+          qty += 1
+        end
+
+        if rs.status.to_i == RequestedService::WAITING_START || rs.status.to_i == RequestedService::INITIAL
+          quoted += 1
+        end
+
+        if rs.status.to_i == RequestedService::FINISHED
+            finished += 1
+        end
+
+      end
+    end
+
+    puts "-------------------------------"
+    puts qty, finished, canceled, quoted
+
+    if finished == qty
+      sr.system_status = ServiceRequest::SYSTEM_ALL_FINISHED
+    elsif finished > 0
+      sr.system_status = ServiceRequest::SYSTEM_PARTIAL_FINISHED
+    elsif quoted == qty
+      sr.system_status = ServiceRequest::SYSTEM_QUOTED
+    elsif quoted == 0 
+      sr.system_status = ServiceRequest::SYSTEM_TO_QUOTE
+    else
+      sr.system_status = ServiceRequest::SYSTEM_PARTIAL_QUOTED
+    end
+    sr.save
   end
 
   def new_technician

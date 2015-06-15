@@ -35,6 +35,12 @@
             .input-group-addon= "$"
             %input{:type => 'number', :name => "suggested_price", :id => "suggested_price", :min => "0", :class => 'form-control'}
             .input-group-addon= ".00"
+      %tr
+        %td.sp-label
+          %strong= "Tiempo estimado (días hábiles):"
+        %td.sp-days
+          %input{:type => 'number', :name => "estimated_time", :id => "estimated_time", :min => "1", :class => 'form-control'}
+
 
     - rheader = {'personal' => ['Nombre', 'Horas', 'Costo x Hora'], 'equipos' => ['Equipo', 'Horas', 'Costo x Hora'], 'consumibles' => ['Nombre', 'Cantidad', 'Precio Unitario'], 'otros' => ['Concepto', 'Cantidad', 'Precio']}
     - @details['servicios'].each do |s|

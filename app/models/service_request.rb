@@ -41,6 +41,7 @@ class ServiceRequest < ActiveRecord::Base
   SYSTEM_PARTIAL_FINISHED  = 8
   SYSTEM_ALL_FINISHED      = 9
   SYSTEM_REPORT_SENT       = 10
+  SYSTEM_IN_PROGRESS       = 11
   SYSTEM_NOT_ACCEPTED      = 98
   SYSTEM_CANCELED          = 99
 
@@ -56,7 +57,8 @@ class ServiceRequest < ActiveRecord::Base
     SYSTEM_ALL_FINISHED      => 'Servicios finalizados',
     SYSTEM_REPORT_SENT       => 'Reporte enviado',
     SYSTEM_NOT_ACCEPTED      => 'No aceptado por cliente',
-    SYSTEM_CANCELED          => 'Cancelado'
+    SYSTEM_CANCELED          => 'Cancelado',
+    SYSTEM_IN_PROGRESS       => 'En progreso'
   }
 
   def system_status_text

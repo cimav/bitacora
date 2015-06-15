@@ -298,6 +298,7 @@ class RequestedServicesController < ApplicationController
 
         # FOLDER STATUS
         set_folder_status(@requested_service.sample.service_request)
+        sr = @requested_service.sample.service_request
 
         # If status changed to FINISHED then change service_request status
         if @requested_service.status.to_i == RequestedService::FINISHED
@@ -383,6 +384,7 @@ class RequestedServicesController < ApplicationController
     quoted = 0
     finished = 0
     canceled = 0
+    progress = 0
     qty = 0
     sr.sample.each do |s|
       s.requested_service.where("status != ?", RequestedService::DELETED).each do |rs|
@@ -392,9 +394,21 @@ class RequestedServicesController < ApplicationController
           qty += 1
         end
 
-        if rs.status.to_i == RequestedService::WAITING_START || rs.status.to_i == RequestedService::INITIAL
+        if rs.status.to_i == RequestedService::WAITING_START ||
+           rs.status.to_i == RequestedService::INITIAL 
           quoted += 1
         end
+
+        if rs.status.to_i == RequestedService::RECEIVED ||
+           rs.status.to_i == RequestedService::ASSIGNED ||
+           rs.status.to_i == RequestedService::SUSPENDED ||
+           rs.status.to_i == RequestedService::REINIT ||
+           rs.status.to_i == RequestedService::IN_PROGRESS ||
+           rs.status.to_i == RequestedService::REQ_SUP_AUTH ||
+           rs.status.to_i == RequestedService::REQ_OWNER_AUTH
+          progress += 1
+        end
+
 
         if rs.status.to_i == RequestedService::FINISHED
             finished += 1
@@ -410,6 +424,8 @@ class RequestedServicesController < ApplicationController
       sr.system_status = ServiceRequest::SYSTEM_ALL_FINISHED
     elsif finished > 0
       sr.system_status = ServiceRequest::SYSTEM_PARTIAL_FINISHED
+    elsif progress > 0
+      sr.system_status = ServiceRequest::SYSTEM_IN_PROGRESS
     elsif quoted == qty
       sr.system_status = ServiceRequest::SYSTEM_QUOTED
     elsif quoted == 0 

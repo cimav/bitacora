@@ -176,7 +176,7 @@ class VinculacionSubscriptions
       folder.vinculacion_end_date        = attributes['fecha_termino']
       folder.vinculacion_days            = attributes['duracion']
       folder.vinculacion_delivery        = attributes['tiempo_entrega']
-      folder.system_status               = ServiceRequest::SYSTEM_FREE
+      folder.system_status               = ServiceRequest::SYSTEM_ACCEPTED
       if u_supervisor = User.where(:email => attributes['agente_email']).first
         folder.supervisor_id = u_supervisor.id
       else

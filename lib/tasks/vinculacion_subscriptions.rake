@@ -7,6 +7,7 @@ class VinculacionSubscriptions
   subscribe :notificar_arranque_tipo_2
   subscribe :notificar_cancelacion
   
+  # COSTEO TIPO 3
   def solicitar_costeo(attributes)
 
     # Create service_request
@@ -48,9 +49,14 @@ class VinculacionSubscriptions
         muestra.quantity       = m['cantidad']
         muestra.save
       end
+
+      Resque.enqueue(NewTipo3Mailer, folder.id)
+
     end
   end
 
+
+  # ARRANQUE TIPO 3
   def notificar_arranque(attributes)
     puts "Arranque de la solicitud coordinada #{attributes['solicitud_id']}"
     if services = ServiceRequest.where(:system_request_id => attributes['solicitud_id'])
@@ -77,6 +83,8 @@ class VinculacionSubscriptions
     end
   end
 
+
+  # ARRANQUE TIPO 1
   def notificar_arranque_no_coordinado(attributes)
     puts "Arranque de la solicitud #{attributes['solicitud_id']}"
 
@@ -128,14 +136,19 @@ class VinculacionSubscriptions
         # requested_service.suggested_user_id = lab_service.default_user_id
         requested_service.status = RequestedService::INITIAL
         requested_service.save(:validate => false) 
+        Resque.enqueue(NewTipo1Mailer, requested_service.id)
       end
       
     end
 
   end
 
+
+  # ARRANQUE TIPO 2
   def notificar_arranque_tipo_2(attributes)
     puts "Arranque Tipo 2 de la solicitud #{attributes['solicitud_id']}"
+
+    puts attributes
 
     # Create service_request
     puts "Crear carpeta #{attributes['codigo']}"
@@ -196,6 +209,7 @@ class VinculacionSubscriptions
             # requested_service.suggested_user_id = lab_service.default_user_id
             requested_service.status = RequestedService::INITIAL
             requested_service.save(:validate => false) 
+            Resque.enqueue(NewTipo2Mailer, requested_service.id)
           end
         end
       end

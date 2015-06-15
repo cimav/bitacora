@@ -19,11 +19,6 @@ class BitacoraMailer < ActionMailer::Base
       @to << requested_service.suggested_user.email
     end
 
-    # Folder supervisor
-    # if !requested_service.sample.service_request.supervisor.blank?
-    #  @to << requested_service.sample.service_request.supervisor.email
-    # end
-
     @requested_service = requested_service
 
     subject = "Nueva Solicitud #{requested_service.number}: #{requested_service.laboratory_service.name}"
@@ -31,6 +26,76 @@ class BitacoraMailer < ActionMailer::Base
     reply_to = requested_service.sample.service_request.user.email
 
     mail(:to => @to, :from => @from, :reply_to => reply_to, :subject => subject)
+  
+  end
+
+  def new_tipo1(requested_service)
+    @from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"
+    @to = []
+
+     # Requestor  
+    @to << requested_service.sample.service_request.user.email
+      
+    # Lab admin
+    if !requested_service.laboratory_service.laboratory.user.blank?
+      @to << requested_service.laboratory_service.laboratory.user.email
+    end
+  
+    # Suggested 
+    if !requested_service.suggested_user.blank?
+      @to << requested_service.suggested_user.email
+    end
+
+    @requested_service = requested_service
+
+    subject = "Nuevo Servicio T1 #{requested_service.number}: #{requested_service.laboratory_service.name}"
+
+    reply_to = requested_service.sample.service_request.user.email
+
+    mail(:to => @to, :from => @from, :reply_to => reply_to, :subject => subject)
+  
+  end
+
+  def new_tipo2(requested_service)
+    @from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"
+    @to = []
+
+     # Requestor  
+    @to << requested_service.sample.service_request.user.email
+      
+    # Lab admin
+    if !requested_service.laboratory_service.laboratory.user.blank?
+      @to << requested_service.laboratory_service.laboratory.user.email
+    end
+  
+    # Suggested 
+    if !requested_service.suggested_user.blank?
+      @to << requested_service.suggested_user.email
+    end
+
+    @requested_service = requested_service
+
+    subject = "Nuevo Servicio T2 #{requested_service.number}: #{requested_service.laboratory_service.name}"
+
+    reply_to = requested_service.sample.service_request.user.email
+
+    mail(:to => @to, :from => @from, :reply_to => reply_to, :subject => subject)
+  
+  end
+
+  def new_tipo3(service_request)
+    @from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"
+    @to = []
+
+     # Coordinator
+    @to << service_request.user.email
+
+    @service_request = service_request
+    @reply_to = service_request.supervisor.email
+
+    subject = "Solicitud de Costeo #{service_request.number}: #{service_request.vinculacion_client_name}"
+
+    mail(:to => @to, :from => @from, :reply_to => @reply_to, :subject => subject)
   
   end
 

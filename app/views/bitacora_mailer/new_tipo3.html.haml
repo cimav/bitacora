@@ -1,0 +1,44 @@
+!!!
+%html
+  %head
+    %meta{"content" => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
+  %body
+    %div{:style => "background-color: #ccc; padding: 20px;"}
+      %div{:style => "background-color: #eee; padding: 20px; border-bottom: 1px solid #ddd;"}
+        %table 
+          %tbody 
+            %tr
+              %td{:style => "width: 120px; text-align: center;"}
+                = image_tag ("http://cimav.edu.mx/foto/#{@service_request.supervisor.email.split('@')[0]}/100"), :style => "border-radius: 50em; -webkit-border-radius: 50em; -moz-border-radius: 50em;"
+              %td
+                %h2{:style => "margin-bottom: 2px;"}= @service_request.supervisor.full_name
+                = mail_to @service_request.supervisor.email, @service_request.supervisor.email, :subject =>  "[R] Solicitud #{@service_request.number}"
+
+      %div{:style => "background-color: #ffffff; padding: 20px; padding-bottom: 60px;"}
+        %table
+          %tr
+            %td{:style => "min-width: 400px;"}
+              %h2{:style => "font-size: 18px;"}= "#{@service_request.number}: #{@service_request.request_link}"
+              %table
+                %tbody
+                  %tr
+                    %th{:style => "vertical-align: top; text-align: left;"}= "Fecha de solicitud:"
+                    %td= l @service_request.created_at, :format => :long
+                  %tr
+                    %th{:style => "vertical-align: top; text-align: left;"}= "Cliente:"
+                    %td= @service_request.vinculacion_client_name
+      
+                  - if !@service_request.supervisor_id.blank?
+                    %tr
+                      %th{:style => "vertical-align: top; text-align: left;"}= "Supervisor: "
+                      %td= @service_request.supervisor.full_name
+                  %tr
+                    %th{:style => "vertical-align: top; text-align: left;"}= "Detalles:"
+                    %td{:style => "vertical-align: top; text-align: left;"}= simple_format(@service_request.description)
+                  
+      %div{:style => "background-color: #888; padding: 20px; color: #eee;"}
+        %strong{:style => "margin-top: 8px; margin-left: 10px; color: #eee; font-size: 11px;"}
+        = "Mensaje enviado automáticamente desde "
+        %strong= "Bitácora Electrónica"
+           
+        

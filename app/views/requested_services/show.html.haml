@@ -117,7 +117,7 @@
         - if send_quote_action
           %button{:class => "btn btn-block btn-status bg-status-send-quote", :status_action => RequestedService::TO_QUOTE, :id => 'change_status_send_quote'}
             %span.glyphicon.glyphicon-usd
-            = "Enviar costeo"
+            = "Enviar costeo a Responsable"
         - if canceled_action
           %button{:class => "btn btn-block btn-status bg-status-canceled", :status_action => RequestedService::CANCELED, :id => 'change_status_canceled'}
             %span.glyphicon.glyphicon-remove

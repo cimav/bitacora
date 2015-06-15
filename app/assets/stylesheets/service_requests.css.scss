@@ -231,8 +231,22 @@
 
   #folder-actions {
     margin-top: 20px;
+
+    .btn-vinculacion {
+      height: 4em;
+      -webkit-animation: pulsateslow 2s ease-out;
+      -webkit-animation-iteration-count: infinite; 
+      opacity: 0.0;
+    }
   }
 }
+
+@-webkit-keyframes pulsateslow {
+    0% {opacity: 0.8;}
+    50% {opacity: 1.0;}
+    100% {opacity: 0.8;}
+}
+
 
 .no-collab {
   color: #999;

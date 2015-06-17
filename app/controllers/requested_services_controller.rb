@@ -417,21 +417,22 @@ class RequestedServicesController < ApplicationController
       end
     end
 
-    puts "-------------------------------"
-    puts qty, finished, canceled, quoted
-
-    if finished == qty
-      sr.system_status = ServiceRequest::SYSTEM_ALL_FINISHED
-    elsif finished > 0
-      sr.system_status = ServiceRequest::SYSTEM_PARTIAL_FINISHED
-    elsif progress > 0
-      sr.system_status = ServiceRequest::SYSTEM_IN_PROGRESS
-    elsif quoted == qty
-      sr.system_status = ServiceRequest::SYSTEM_QUOTED
-    elsif quoted == 0 
-      sr.system_status = ServiceRequest::SYSTEM_TO_QUOTE
+    if qty > 0
+      if finished == qty
+        sr.system_status = ServiceRequest::SYSTEM_ALL_FINISHED
+      elsif finished > 0
+        sr.system_status = ServiceRequest::SYSTEM_PARTIAL_FINISHED
+      elsif progress > 0
+        sr.system_status = ServiceRequest::SYSTEM_IN_PROGRESS
+      elsif quoted == qty
+        sr.system_status = ServiceRequest::SYSTEM_QUOTED
+      elsif quoted == 0 
+        sr.system_status = ServiceRequest::SYSTEM_TO_QUOTE
+      else
+        sr.system_status = ServiceRequest::SYSTEM_PARTIAL_QUOTED
+      end
     else
-      sr.system_status = ServiceRequest::SYSTEM_PARTIAL_QUOTED
+      sr.system_status = ServiceRequest::SYSTEM_TO_QUOTE
     end
     sr.save
   end

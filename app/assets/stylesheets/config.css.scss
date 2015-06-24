@@ -42,6 +42,7 @@ $owner-color: #64a673;
 $supervisor-color: #e6b45e;
 $collaborator-color: $red;
 $rs-color: #ddd;
+$folder-status-bg: lighten($folder-color, 5%);
 
 $sidenav-bg: darken($bitacora-brand, 1%);
 $sidenav-color: lighten($bitacora-brand, 40%);

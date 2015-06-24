@@ -1,52 +1,67 @@
-- if request.vinculacion_end_date
-  .vinculacion-end-date
+- if request.system_status == ServiceRequest::SYSTEM_ACCEPTED || request.system_status == ServiceRequest::SYSTEM_SAMPLES_DELIVERED || request.system_status == ServiceRequest::SYSTEM_PARTIAL_FINISHED
+  - if request.vinculacion_end_date
+    .vinculacion-end-date
+      - days = (request.vinculacion_end_date - request.vinculacion_start_date).to_i
+      - days = 1 if days <= 0
+      - current_days = (request.vinculacion_end_date - Time.now.to_date).to_i
+      - percentage = (days - current_days) * 100 / days
+      - percentage = 100 if percentage >= 100
+      - if current_days == 0
+        - klass = 'progress-bar-danger pulsate_today'
+        - faltan = "Debe entregarse hoy"
+        - percentage_msg = "HOY"
+      - elsif current_days < 0
+        - klass = 'progress-bar-danger'
+        - faltan = "Retraso de #{(current_days * -1)} días"
+        - percentage_msg = "RETRASO"
+      - elsif percentage > 80
+        - klass = 'progress-bar-warning'
+        - faltan = "Faltan #{current_days} días"
+        - percentage_msg = "#{percentage}%"
+      - else
+        - klass = 'progress-bar-success'
+        - faltan = "Faltan #{current_days} días"
+        - percentage_msg = "#{percentage}%"
+      
+      - if request.system_status == ServiceRequest::SYSTEM_REPORT_SENT
+        - klass = 'progress-bar-success'
+        - faltan = 'Reporte entregado'
+        - percentage = 100
+        - percentage_msg = "ENTREGADO"
+      
+      - if request.system_status == ServiceRequest::SYSTEM_NOT_ACCEPTED
+        - klass = 'progress-bar-warning'
+        - faltan = 'No acepto cliente'
+        - percentage = 100
+        - percentage_msg = "NO ACEPTADO"
+
+      - if request.system_status == ServiceRequest::SYSTEM_CANCELED
+        - klass = 'progress-bar-danger'
+        - faltan = 'Cancelado'
+        - percentage = 100
+        - percentage_msg = "CANCELADO" 
+
+
+      %span.glyphicon.glyphicon-calendar
+      = "Entregar:"
+      = l request.vinculacion_end_date, format: :short
+      .delivery
+        %span.glyphicon.glyphicon-time
+        = faltan
+      .progress
+        .progress-bar{'class' => klass,:role => 'progressbar', 'aria-valuenow' => percentage, 'aria-valuemin' => "0", 'aria-valuemax' => "100", :style => "width:#{percentage}%"}
+          = "#{percentage_msg}"
+
+- if request.system_status == ServiceRequest::SYSTEM_ALL_FINISHED
+  - if request.vinculacion_end_date
     - days = (request.vinculacion_end_date - request.vinculacion_start_date).to_i
     - days = 1 if days <= 0
-    - current_days = (request.vinculacion_end_date - Time.now.to_date).to_i
-    - percentage = (days - current_days) * 100 / days
-    - percentage = 100 if percentage >= 100
-    - if current_days == 0
-      - klass = 'progress-bar-danger pulsate_today'
-      - faltan = "Debe entregarse hoy"
-      - percentage_msg = "HOY"
+    - current_days = (request.vinculacion_end_date - request.vinculacion_updated_at).to_i
+    - if current_days >= 0
+      - finishmsg = "Se entrego a tiempo"
     - elsif current_days < 0
-      - klass = 'progress-bar-danger'
-      - faltan = "Retraso de #{(current_days * -1)} días"
-      - percentage_msg = "RETRASO"
-    - elsif percentage > 80
-      - klass = 'progress-bar-warning'
-      - faltan = "Faltan #{current_days} días"
-      - percentage_msg = "#{percentage}%"
-    - else
-      - klass = 'progress-bar-success'
-      - faltan = "Faltan #{current_days} días"
-      - percentage_msg = "#{percentage}%"
-    
-    - if request.system_status == ServiceRequest::SYSTEM_REPORT_SENT
-      - klass = 'progress-bar-success'
-      - faltan = 'Reporte entregado'
-      - percentage = 100
-      - percentage_msg = "ENTREGADO"
-    
-    - if request.system_status == ServiceRequest::SYSTEM_NOT_ACCEPTED
-      - klass = 'progress-bar-warning'
-      - faltan = 'No acepto cliente'
-      - percentage = 100
-      - percentage_msg = "NO ACEPTADO"
+      - finishmsg = "Se entrego retrasado"
 
-    - if request.system_status == ServiceRequest::SYSTEM_CANCELED
-      - klass = 'progress-bar-danger'
-      - faltan = 'Cancelado'
-      - percentage = 100
-      - percentage_msg = "CANCELADO" 
-
-
-    %span.glyphicon.glyphicon-calendar
-    = "Entregar:"
-    = l request.vinculacion_end_date, format: :short
-    .delivery
-      %span.glyphicon.glyphicon-time
-      = faltan
     .progress
-      .progress-bar{'class' => klass,:role => 'progressbar', 'aria-valuenow' => percentage, 'aria-valuemin' => "0", 'aria-valuemax' => "100", :style => "width:#{percentage}%"}
-        = "#{percentage_msg}"
+      .progress-bar{'class' => 'progress-bar-info',:role => 'progressbar', 'aria-valuenow' => percentage, 'aria-valuemin' => "0", 'aria-valuemax' => "100", :style => "width:100%"}
+        = "#{finishmsg}"

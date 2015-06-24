@@ -26,6 +26,10 @@
           = image_tag (@requested_service.sample.service_request.user.avatar_url), :class => 'img-circle folder-owner'
           - if @requested_service.sample.service_request.supervisor
             = image_tag (@requested_service.sample.service_request.supervisor.avatar_url), :class => 'img-circle folder-supervisor'
+
+        - if @requested_service.sample.service_request.system_status != ServiceRequest::SYSTEM_FREE
+          #folder-status-message
+            = @requested_service.sample.service_request.system_status_text
       .clearfix
             
 

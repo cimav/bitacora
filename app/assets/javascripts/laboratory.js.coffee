@@ -146,13 +146,14 @@ $(document).on('keyup', '#admin-lab-services-search-box', () ->
 $(document).on('click', '.admin-lab-service-item', () ->
     $('.admin-lab-service-item').removeClass('selected')
     $(this).addClass('selected')
+    lab_id =  $(this).attr('laboratory_service_id')
     url = '/laboratory_services/' + $(this).attr('laboratory_service_id') + '/edit'
     $.get(url, {}, (html) ->
       $('#admin-service-workarea').html(html)
-    )
-    url = '/laboratory_services/' + $(this).attr('laboratory_service_id') + '/edit_cost'
-    $.get(url, {}, (html) ->
-      $('#admin-service-costs').html(html)
+      url = '/laboratory_services/' + lab_id + '/edit_cost'
+      $.get(url, {}, (html) ->
+        $('#admin-service-costs').html(html)
+      )
     )
   )
 

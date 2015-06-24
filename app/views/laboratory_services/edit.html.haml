@@ -1,11 +1,10 @@
 - editable = @laboratory_service.is_catalog == LaboratoryService::SERVICE_FREE || (@laboratory_service.is_catalog == LaboratoryService::SERVICE_CATALOG && current_user.is_customer_service?)
 
-%ul.nav.nav-pills#admin-service-tabs
+%ul.nav.nav-tabs#admin-service-tabs
   %li.active#tab-service-details
-    %a{:href => "#admin-service-details", "data-toggle" => "tab", "id" => "service_details_tab"}= "Editar"
+    %a{:href => "#admin-service-details", "data-toggle" => "tab", "id" => "service_details_tab"}= "Datos Generales"
   %li#tab-service-costs
     %a{:href => "#admin-service-costs", "data-toggle" => "tab", "id" => "service_costs_tab"}= "Costeo"
-.clearfix
 
 
 .tab-content

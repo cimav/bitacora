@@ -51,7 +51,7 @@ class ServiceRequest < ActiveRecord::Base
     SYSTEM_PARTIAL_QUOTED    => 'Algunos servicios costeados',
     SYSTEM_QUOTED            => 'Costeado, listo para enviar costeo a Vinculación',
     SYSTEM_QUOTE_SENT        => 'Costeo enviado a Vinculación, en espera de aceptación del cliente',
-    SYSTEM_ACCEPTED          => 'Costeo aceptado por el cliente',
+    SYSTEM_ACCEPTED          => 'Servicio aceptado y en proceso',
     SYSTEM_SAMPLES_DELIVERED => 'Muestras entregadas',
     SYSTEM_PARTIAL_FINISHED  => 'Algunos servicios finalizados',
     SYSTEM_ALL_FINISHED      => 'Servicios finalizados, falta enviar reporte',

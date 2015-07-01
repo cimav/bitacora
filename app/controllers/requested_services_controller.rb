@@ -380,6 +380,7 @@ class RequestedServicesController < ApplicationController
   end
 
   def set_folder_status(sr)
+    return if sr.system_status.to_s == '' ||  sr.system_status == ServiceRequest::SYSTEM_FREE
     # FOLDER STATUS
     quoted = 0
     finished = 0

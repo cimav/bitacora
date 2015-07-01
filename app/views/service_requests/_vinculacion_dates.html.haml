@@ -1,4 +1,4 @@
-- if request.system_status == ServiceRequest::SYSTEM_ACCEPTED || request.system_status == ServiceRequest::SYSTEM_SAMPLES_DELIVERED || request.system_status == ServiceRequest::SYSTEM_PARTIAL_FINISHED
+- if request.system_status == ServiceRequest::SYSTEM_ACCEPTED || request.system_status == ServiceRequest::SYSTEM_SAMPLES_DELIVERED || request.system_status == ServiceRequest::SYSTEM_PARTIAL_FINISHED ||  request.system_status == ServiceRequest::SYSTEM_ALL_FINISHED || request.system_status == ServiceRequest::SYSTEM_REPORT_SENT
   - if request.vinculacion_end_date
     .vinculacion-end-date
       - days = (request.vinculacion_end_date - request.vinculacion_start_date).to_i
@@ -52,16 +52,3 @@
         .progress-bar{'class' => klass,:role => 'progressbar', 'aria-valuenow' => percentage, 'aria-valuemin' => "0", 'aria-valuemax' => "100", :style => "width:#{percentage}%"}
           = "#{percentage_msg}"
 
-- if request.system_status == ServiceRequest::SYSTEM_ALL_FINISHED
-  - if request.vinculacion_end_date
-    - days = (request.vinculacion_end_date - request.vinculacion_start_date).to_i
-    - days = 1 if days <= 0
-    - current_days = (request.vinculacion_end_date - request.vinculacion_updated_at).to_i
-    - if current_days >= 0
-      - finishmsg = "Se entrego a tiempo"
-    - elsif current_days < 0
-      - finishmsg = "Se entrego retrasado"
-
-    .progress
-      .progress-bar{'class' => 'progress-bar-info',:role => 'progressbar', 'aria-valuenow' => percentage, 'aria-valuemin' => "0", 'aria-valuemax' => "100", :style => "width:100%"}
-        = "#{finishmsg}"

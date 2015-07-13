@@ -1,4 +1,4 @@
-- if request.system_status == ServiceRequest::SYSTEM_ACCEPTED || request.system_status == ServiceRequest::SYSTEM_SAMPLES_DELIVERED || request.system_status == ServiceRequest::SYSTEM_PARTIAL_FINISHED ||  request.system_status == ServiceRequest::SYSTEM_ALL_FINISHED || request.system_status == ServiceRequest::SYSTEM_REPORT_SENT
+- if request.system_status == ServiceRequest::SYSTEM_ACCEPTED || request.system_status == ServiceRequest::SYSTEM_SAMPLES_DELIVERED || request.system_status == ServiceRequest::SYSTEM_PARTIAL_FINISHED ||  request.system_status == ServiceRequest::SYSTEM_ALL_FINISHED || request.system_status == ServiceRequest::SYSTEM_REPORT_SENT || request.system_status == ServiceRequest::SYSTEM_IN_PROGRESS
   - if request.vinculacion_end_date
     .vinculacion-end-date
       - days = (request.vinculacion_end_date - request.vinculacion_start_date).to_i

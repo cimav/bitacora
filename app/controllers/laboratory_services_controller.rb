@@ -4,7 +4,7 @@ class LaboratoryServicesController < ApplicationController
   respond_to :html, :json
 
   def live_search
-    @laboratory_services = LaboratoryService.where(:is_exclusive_vinculacion => 0).order('name')
+    @laboratory_services = LaboratoryService.where(:is_exclusive_vinculacion => 0, :status => 0).order('name')
 
     if params[:service_type] != '0'
       @laboratory_services = @laboratory_services.where(:service_type_id => params[:service_type])

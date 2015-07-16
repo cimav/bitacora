@@ -67,6 +67,17 @@
         - st_options += "<option value=\"1\" #{sel1}>Si</option>"
         = f.select :is_exclusive_vinculacion, st_options.html_safe, {}, {:class => 'form-control'}
 
+      .field#field_laboratory_service_status
+        = f.label :status, 'Estado'
+        - st_options = ''
+        - sel0 = ''
+        - sel1 = ''
+        - sel0 = 'selected="selected"' if @laboratory_service.status.to_i == 0
+        - sel1 = 'selected="selected"' if @laboratory_service.status.to_i == 1
+        - st_options += "<option value=\"0\" #{sel0}>Activo</option>"
+        - st_options += "<option value=\"1\" #{sel1}>Inactivo</option>"
+        = f.select :status, st_options.html_safe, {}, {:class => 'form-control'}
+
       - if editable
         .submit-button
           = f.submit "Actualizar servicio", {:class => "btn btn-primary"}

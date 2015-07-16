@@ -3,6 +3,7 @@ class GenerateSampleZip
 
   def self.perform(sample_id)
     sample = Sample.find(sample_id)
+    sample_number = sample.number.gsub("/","_")
     req_services = RequestedService.where(:sample_id => sample_id)
     temp = Tempfile.new("zip-file-#{Time.now}")
     Zip::ZipOutputStream.open(temp.path) do |z|
@@ -14,7 +15,7 @@ class GenerateSampleZip
       end
     end
     FileUtils.mkdir_p "#{Rails.root}/public/zip/#{sample.code}"
-    FileUtils.cp(temp.path, "#{Rails.root}/public/zip/#{sample.code}/#{sample.number}.zip")
+    FileUtils.cp(temp.path, "#{Rails.root}/public/zip/#{sample.code}/#{sample_number}.zip")
     temp.delete()
   end
 

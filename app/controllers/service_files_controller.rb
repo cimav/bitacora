@@ -160,11 +160,11 @@ class ServiceFilesController < ApplicationController
 
   def download_zip 
     sample = Sample.find(params[:sample_id])
-    path = "#{Rails.root}/private/zip/#{sample.number}.zip"
-    path = "#{Rails.root}/public/zip/#{sample.code}/#{sample.number}.zip"
+    sample_number = sample.number.gsub("/","_")
+    path = "#{Rails.root}/public/zip/#{sample.code}/#{sample_number}.zip"
     if File.exist?(path)
       # send_file path, :type => 'application/zip', :disposition => 'attachment', :x_sendfile => true, :filename => "#{sample.number}.zip"
-      redirect_to "/zip/#{sample.code}/#{sample.number}.zip"
+      redirect_to "/zip/#{sample.code}/#{sample_number}.zip"
     else
       # Generate zip version
       Resque.enqueue(GenerateSampleZip, params[:sample_id])
@@ -173,8 +173,8 @@ class ServiceFilesController < ApplicationController
 
   def zip_ready 
     sample = Sample.find(params[:sample_id])
-    path = "#{Rails.root}/private/zip/#{sample.number}.zip"
-    path = "#{Rails.root}/public/zip/#{sample.code}/#{sample.number}.zip"
+    sample_number = sample.number.gsub("/","_")
+    path = "#{Rails.root}/public/zip/#{sample.code}/#{sample_number}.zip"
     json = {}
     if File.exist?(path)
       json[:ready] = true

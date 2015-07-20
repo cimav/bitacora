@@ -2,6 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 #add-service-dialog-content {
+  top: 38px;
+  width: 100%;
+  bottom: 0;
+  position: absolute;
 }
 
 #add-service {
@@ -16,12 +20,15 @@
     select {
       margin-bottom: 5px;
     }
+    height: 90px;
   }
 
   #laboratory-services-list {
     width: 200px;
     border-right: 1px solid $line-color;
-    height: 300px;
+    bottom: 0;
+    top: 90px;
+    position: absolute;
     overflow: auto;
     background: #fff;
     .lab-service-item {

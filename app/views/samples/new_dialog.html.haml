@@ -1,7 +1,6 @@
 .sheet
   .header-status{:class => "bg-dialog"}
     %span.status= "Nueva muestra"
-    %a.close{:class => 'requested-service-link', 'data-id' => @request.id}="×"
   .dialog-content.padded
     = form_for Sample.new, :remote => true, :html => {:'data-type' => 'html', :id => 'new-sample-form', :class => 'form-horizontal'} do |f|
       .dialog-title
@@ -9,7 +8,7 @@
       .dialog-body
         = f.hidden_field :service_request_id, {:value => @request.id}
         .control-group#cg_Sample_identification
-          = f.label :identification, 'Identificación de muestra:', {:class => 'control-label'}
+          = f.label :identification, 'Nombre de muestra(s):', {:class => 'control-label'}
           .controls
             = f.text_field :identification, {:class => 'form-control', :placeholder => 'Identificación de muestra'}
         .control-group#cg_Sample_description

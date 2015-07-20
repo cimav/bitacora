@@ -35,19 +35,53 @@
     - if @request.sample.count <= 0 
       .no-samples 
         = "La carpeta no tiene muestras"
-    - @request.sample.each do |s|
-      .sample-item
-        .sample-item-info
-          .data
-            .identification
-              = s.identification
-              - if s.quantity > 1
-                %span.badge= s.quantity
-            .description= s.description
-            .number= "ID: #{s.number}"
+    - first = true
+    .sample-items
+      - @request.sample.each do |s|
+        - if first 
+          - is_opened = "opened"
+          - first = false
+        - else
+          - is_opened = ""
+
+        .sample-item{'id' => "sample-item-#{s.id}", "class" => is_opened}
+          .sample-header{'data-sample-id' => s.id}
+            .indicator
+              %span.sample-closed.glyphicon.glyphicon-chevron-right
+              %span.sample-open.glyphicon.glyphicon-chevron-down
+            .identification{'data-sample-id' => s.id}= s.identification
+            .quantity
+              %span= "CANTIDAD"
+              = s.quantity
+            - if (@request.request_type_id != ServiceRequest::SERVICIO_VINCULACION &&
+            -    @request.request_type_id != ServiceRequest::SERVICIO_VINCULACION_TIPO_2 &&
+            -    @request.request_type_id != ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO)
+              .edit-sample
+                .btn.btn-xs.btn-info.edit-sample-btn{'data-sample-id' => s.id}
+                  %span.glyphicon.glyphicon-edit
           .clearfix
-        %div{:id => "sample-#{s.id}-services"}
-          = render :partial => 'samples/requested_services_list', :locals => {:sample => s, :request => @request, :lab_view => false}
+          .sample-contents{'id' => "sample-contents-#{s.id}"}
+            .description= s.description
+            .sample-ids{'id' => "sample-ids-#{s.id}"}
+              .list-header{'data-sample-id' => s.id}
+                %span.ids-closed.glyphicon.glyphicon-chevron-right
+                %span.ids-open.glyphicon.glyphicon-chevron-down
+                = "CANTIDAD DE MUESTRAS: #{s.quantity}"
+              .sample-ids-list
+                %table.table.table-striped
+                  %thead
+                    %tr
+                      %th= "ID"
+                      %th= "IDENTIFICACIÓN"
+                  %tbody
+                    - s.sample_details.each do |sd|
+                      %tr
+                        %td.consecutive= sd.consecutive
+                        %td.client-id
+                          = sd.client_identification
+                          - if sd.notes != ''
+                            .notes= sd.notes
+            = render :partial => 'samples/requested_services_list', :locals => {:sample => s, :request => @request, :lab_view => false}
 
   #folder-work-panel-wrapper
     #folder-work-panel

@@ -1,0 +1,34 @@
+.sheet
+  .header-status{:class => "bg-dialog"}
+    %span.status= "Editar muestra"
+  .dialog-content.padded
+    = form_for @sample, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-sample-form', :class => 'form-horizontal'} do |f|
+      .dialog-title
+        %h3= "Editar muestra"
+      .dialog-body
+        .control-group#cg_Sample_identification
+          = f.label :identification, 'Identificación de muestra:', {:class => 'control-label'}
+          .controls
+            = f.text_field :identification, {:class => 'form-control', :placeholder => 'Identificación de muestra'}
+        .control-group#cg_Sample_description
+          = f.label :description, 'Descripción:', {:class => 'control-label'}
+          .controls
+            = f.text_area :description, {:class => 'form-control', :rows => 4, :placeholder => 'Descripción de la muestra'}
+      
+      %h4{:style => 'margin-top: 40px;'}= "#{@sample.quantity} Muestras"
+      %table.table.table-striped
+        %thead
+          %tr
+            %th= "ID"
+            %th= "IDENTIFICACIÓN"
+        %tbody
+          = f.fields_for :sample_details do |ff|
+            %tr
+              %td.consecutive= ff.object.consecutive
+              %td.client-id
+                = ff.text_field :client_identification, {:class => 'form-control', :placeholder => 'Identificación precisa'}
+                - if ff.object.notes != ''
+                  .notes= ff.object.notes
+      .dialog-footer
+        = button_tag "Guardar", {:class => "btn btn-primary", :type => "submit"}
+      .clearfix

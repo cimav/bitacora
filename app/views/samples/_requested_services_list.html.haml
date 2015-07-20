@@ -1,36 +1,42 @@
-%table.table.table-hover.sample-services
-  - if sample.requested_service.count == 0
-    %tr
-      %td{:colspan => 3, :class => 'empty'}= "No tiene servicios"
-  - klass_add = 'add-service-link'
-  - sample.requested_service.where.not(status: RequestedService::DELETED).each do |rs|
-    - if lab_view
-      - klass = 'lab-req-serv-item'
-      - klass_add = 'lab-view-add-service-link'
-    - else
-      - klass = 'requested-service-link'
-    %tr{:class => klass, 'data-id' => rs.id, 'data-requested-service-id' => rs.id, 'data-laboratory-id' => rs.laboratory_service.laboratory_id ,'data-sample-id' => rs.sample_id, :id => "requested-service-link-#{rs.id}"}
+.sample-services{:id => "sample-#{sample.id}-services"}
+  .list-header
+    %span.glyphicon.glyphicon-list-alt
+    = "SERVICIOS"
 
-
-      %td.icon{:class => rs.status_class}
-        %span.glyphicon{:class => rs.icon_class}
-      %td.name= rs.laboratory_service.name
-      %td.date= date_text(rs.created_at)
-
-  - if (request.request_type_id == ServiceRequest::SERVICIO_VINCULACION && request.number.to_s[0] == 'S')
-    %tr
-      %td.icon
-        %span.glyphicon.glyphicon-plus-sign
-      %td.name.add-service-link{:class => klass_add, 'data-sample-id' => sample.id ,:colspan => 2}= "Agregar Servicio"
-  - elsif request.request_type_id != ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO && request.request_type_id != ServiceRequest::SERVICIO_VINCULACION_TIPO_2
-    - if request.request_type_id == ServiceRequest::SERVICIO_VINCULACION 
-      - if sample.service_request.system_status < ServiceRequest::SYSTEM_QUOTE_SENT 
-        %tr
-          %td.icon
-            %span.glyphicon.glyphicon-plus-sign
-          %td.name{:class => klass_add, 'data-sample-id' => sample.id ,:colspan => 2}= "Agregar Servicio"
-    - else 
+  %table.table.table-hover.services-list
+    - if sample.requested_service.count == 0
       %tr
-        %td.icon
-          %span.glyphicon.glyphicon-plus-sign
-        %td.name.add-service-link{:class => klass_add, 'data-sample-id' => sample.id ,:colspan => 2}= "Agregar Servicio"
+        %td{:colspan => 2, :class => 'empty'}= "No tiene servicios"
+    - klass_add = 'add-service-link'
+    - sample.requested_service.where.not(status: RequestedService::DELETED).each do |rs|
+      - if lab_view
+        - klass = 'lab-req-serv-item'
+        - klass_add = 'lab-view-add-service-link'
+      - else
+        - klass = 'requested-service-link'
+      %tr{:class => klass, 'data-id' => rs.id, 'data-requested-service-id' => rs.id, 'data-laboratory-id' => rs.laboratory_service.laboratory_id ,'data-sample-id' => rs.sample_id, :id => "requested-service-link-#{rs.id}"}
+
+
+        %td.icon{:class => rs.status_class}
+          %span.glyphicon{:class => rs.icon_class}
+        %td.name
+          %span.date= date_text(rs.created_at)
+          %br
+          = rs.laboratory_service.name
+
+    - show_add_button = false
+    - if (request.request_type_id == ServiceRequest::SERVICIO_VINCULACION && request.number.to_s[0] == 'S')
+      - show_add_button = true      
+    - elsif request.request_type_id != ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO && request.request_type_id != ServiceRequest::SERVICIO_VINCULACION_TIPO_2
+      - if request.request_type_id == ServiceRequest::SERVICIO_VINCULACION 
+        - if sample.service_request.system_status < ServiceRequest::SYSTEM_QUOTE_SENT 
+          - show_add_button = true
+      - else 
+        - show_add_button = true
+
+    - if show_add_button
+      %tr
+        %td.text-center{:colspan => 2}
+          .btn.btn-success.btn-xs.add-service-link{:class => klass_add, 'data-sample-id' => sample.id ,:colspan => 2}
+            %span.glyphicon.glyphicon-plus
+            = "Agregar Servicio"

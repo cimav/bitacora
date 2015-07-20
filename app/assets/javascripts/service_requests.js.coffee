@@ -2,6 +2,39 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+$(document).on('click', '.sample-header .identification', () ->
+  sample_id = $(this).data('sample-id')
+  $("#sample-item-#{sample_id}").toggleClass('opened')
+)
+
+$(document).on('click', '.edit-sample-btn', () ->
+  sample_id = $(this).data('sample-id')
+  url = '/samples/edit_dialog/' + sample_id
+  $.get(url, {}, (html) ->
+    $('#folder-work-panel').empty().html(html)
+  )
+)
+
+$(document).on('ajax:beforeSend', '#edit-sample-form', (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.has-errors').removeClass('has-errors')
+  )
+$(document).on('ajax:success', '#edit-sample-form', (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    getServiceRequest(res['service_request_id'])
+  )
+$(document).on('ajax:error', '#edit-sample-form', (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+
+$(document).on('click', '.sample-ids .list-header', () ->
+  sample_id = $(this).data('sample-id')
+  $("#sample-ids-#{sample_id}").toggleClass('opened')
+)
+
 $(document).on('change', '#service_request_request_type_id', () ->
   $('#cg_ServiceRequest_link').hide();
   $('#cg_ServiceRequest_description').hide();

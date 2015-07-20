@@ -64,6 +64,9 @@
           = @requested_service.laboratory_service.name
         - if !@requested_service.details.blank?
           %p= @requested_service.details
+        %strong= "Laboratorio: "
+        = @requested_service.laboratory_service.laboratory.name
+        %br
         %strong= "Técnico Sugerido: "
         = "#{(@requested_service.suggested_user.full_name rescue 'Cualquier Técnico')}"
         - if !@requested_service.user_id.blank?

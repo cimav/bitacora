@@ -371,33 +371,147 @@
     }
   }
 
+  .sample-items {
+    padding: 5px;
+  }
   .sample-item {
-    margin: 5px 5px 10px 5px;
+    margin: 5px;
+    padding: 0;   
     @include shadow(2px, 2px, 0px, #ddd);
-
     background: #fff;
     border: 1px solid $line-color;
-    .sample-item-info {
-      background: $light-bg;
-      border-bottom: 1px solid $line-color;
-      .data {
-        padding: 10px;
+    
+    .sample-header {
+      color: $grey;
+      padding: 0;
+      cursor: pointer;
+
+      .indicator {
+        float: left;
+        width: 5%;
+        padding: 8px 0 0 4px;
         color: $grey;
-        .identification {
-          font-weight: normal;
-          color: $strong-color;
-          font-size: 20px;
+        .sample-open {
+          display: none;
         }
-        .number {
+      }
+      
+      .identification {
+        padding: 5px;
+        padding-left: 10px;
+        margin: 0;
+        width: 75%;
+        float: left;
+        font-weight: bold;
+        color: $strong-color;
+        font-size: 16px;
+        
+      }
+
+      .quantity {
+        span { font-size: 8px; }
+        height: 40px;
+        width: 20%;
+        float: left;
+        padding: 0px 5px 5px 5px;
+        margin: 0;
+        text-align: center;
+        font-weight: normal;
+        background-color: #fafafa;
+        color: $grey;
+        font-size: 14px; 
+      }
+      .edit-sample {
+        float: right;
+        margin: 5px;
+        display: none;
+      }
+    }
+
+    .sample-contents {
+      padding: 10px;
+      display: none;
+
+      .description {
+        padding: 10px;
+        border-top: 1px solid $line-color;
+      }
+
+      .sample-ids {
+
+        .list-header {
+          cursor: pointer;
+          padding: 5px;
+          border-top: 1px solid $line-color;
+          font-size: 10px;
+          font-weight: bold;
+        
+          .ids-open {
+            display: none;
+          }
         }
-        .description {
+        .sample-ids-list {
+          display: none;
+          max-height: 400px;
+          overflow: auto;
+          table { margin-bottom: 0px !important; border-top: 1px solid $line-color; }
+          th { font-size: 10px !important; }
+          td { font-size: 11px !important; }
+          .notes {
+            font-size: 10px !important;
+            color: $grey;
+          }
+        }
+
+        &.opened {
+          .ids-open {
+            display: inline !important;
+          }
+          .ids-closed {
+            display: none  !important;
+          }
+          .sample-ids-list {
+            display: block !important;
+          }
+        }
+
+      }
+
+      .sample-services {
+        .list-header {
+          padding: 5px;
+          border-top: 1px solid $line-color;
+          border-bottom: 1px solid $line-color;
+          font-size: 10px;
+          font-weight: bold;
         }
       }
     }
+
+    &.opened {
+      .sample-contents {
+        margin: 0;
+        padding: 0;
+        display: block;
+      }
+      .sample-open {
+        display: inline !important;
+      }
+      .sample-closed {
+        display: none  !important;
+      }
+      .quantity {
+        display: none !important;
+      }
+      .edit-sample {
+        display: inline !important;
+      }
+    }
+    
   }
 }
 
-table.sample-services {
+table.services-list {
     margin: 0;
     padding: 0;
     font-size: 110%;
@@ -433,8 +547,6 @@ table.sample-services {
 
     .date {
       color: $grey;
-      width: 90px;
-      text-align: right;
       font-size: 80%;
     }
 

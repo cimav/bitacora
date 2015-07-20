@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150615215949) do
+ActiveRecord::Schema.define(version: 20150716234114) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.integer  "user_id",                  limit: 4
@@ -191,6 +191,7 @@ ActiveRecord::Schema.define(version: 20150615215949) do
     t.decimal  "sale_price",                                precision: 10, scale: 2
     t.integer  "is_exclusive_vinculacion", limit: 4,                                 default: 0
     t.decimal  "evaluation_cost",                           precision: 10, scale: 2
+    t.integer  "status",                   limit: 4,                                 default: 0
   end
 
   add_index "laboratory_services", ["laboratory_id"], name: "index_laboratory_services_on_laboratory_id", using: :btree
@@ -242,7 +243,7 @@ ActiveRecord::Schema.define(version: 20150615215949) do
   create_table "requested_service_equipments", force: :cascade do |t|
     t.integer  "requested_service_id", limit: 4
     t.integer  "equipment_id",         limit: 4
-    t.decimal  "hours",                                 precision: 4, scale: 2
+    t.decimal  "hours",                                 precision: 6, scale: 2
     t.decimal  "hourly_rate",                           precision: 6, scale: 2
     t.text     "details",              limit: 16777215
     t.datetime "created_at",                                                    null: false
@@ -280,7 +281,7 @@ ActiveRecord::Schema.define(version: 20150615215949) do
   create_table "requested_service_technicians", force: :cascade do |t|
     t.integer  "requested_service_id", limit: 4
     t.integer  "user_id",              limit: 4
-    t.decimal  "hours",                                 precision: 4, scale: 2
+    t.decimal  "hours",                                 precision: 6, scale: 2
     t.decimal  "hourly_wage",                           precision: 6, scale: 2
     t.text     "details",              limit: 16777215
     t.datetime "created_at",                                                    null: false
@@ -310,6 +311,16 @@ ActiveRecord::Schema.define(version: 20150615215949) do
   add_index "requested_services", ["sample_id"], name: "index_requested_services_on_sample_id", using: :btree
   add_index "requested_services", ["suggested_user_id"], name: "index_requested_services_on_suggested_user_id", using: :btree
   add_index "requested_services", ["user_id"], name: "index_requested_services_on_user_id", using: :btree
+
+  create_table "sample_details", force: :cascade do |t|
+    t.integer  "sample_id",             limit: 4
+    t.integer  "consecutive",           limit: 4
+    t.string   "client_identification", limit: 255
+    t.text     "notes",                 limit: 65535
+    t.string   "status",                limit: 255,   default: "1"
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
+  end
 
   create_table "samples", force: :cascade do |t|
     t.integer  "service_request_id", limit: 4
@@ -357,7 +368,7 @@ ActiveRecord::Schema.define(version: 20150615215949) do
     t.integer  "user_id",                     limit: 4
     t.string   "number",                      limit: 20
     t.integer  "request_type_id",             limit: 4
-    t.string   "request_link",                limit: 255
+    t.text     "request_link",                limit: 65535
     t.text     "description",                 limit: 16777215
     t.integer  "status",                      limit: 4,                                 default: 1
     t.datetime "created_at",                                                                        null: false
@@ -407,6 +418,40 @@ ActiveRecord::Schema.define(version: 20150615215949) do
 
   create_table "sintipo3", id: false, force: :cascade do |t|
     t.integer "id", limit: 4, default: 0
+  end
+
+  create_table "srbak", id: false, force: :cascade do |t|
+    t.integer  "id",                          limit: 4,                                 default: 0, null: false
+    t.integer  "user_id",                     limit: 4
+    t.string   "number",                      limit: 20
+    t.integer  "request_type_id",             limit: 4
+    t.string   "request_link",                limit: 255
+    t.text     "description",                 limit: 16777215
+    t.integer  "status",                      limit: 4,                                 default: 1
+    t.datetime "created_at",                                                                        null: false
+    t.datetime "updated_at",                                                                        null: false
+    t.integer  "supervisor_id",               limit: 4
+    t.integer  "consecutive",                 limit: 4
+    t.string   "system_id",                   limit: 255
+    t.integer  "system_status",               limit: 4,                                 default: 1
+    t.integer  "system_request_id",           limit: 4
+    t.integer  "vinculacion_client_id",       limit: 4
+    t.string   "vinculacion_client_name",     limit: 255
+    t.string   "vinculacion_delivery",        limit: 255
+    t.date     "vinculacion_start_date"
+    t.date     "vinculacion_end_date"
+    t.integer  "vinculacion_days",            limit: 4
+    t.string   "vinculacion_client_contact",  limit: 255
+    t.string   "vinculacion_client_email",    limit: 255
+    t.string   "vinculacion_client_phone",    limit: 255
+    t.decimal  "suggested_price",                              precision: 10, scale: 2
+    t.string   "vinculacion_client_address1", limit: 255
+    t.string   "vinculacion_client_address2", limit: 255
+    t.string   "vinculacion_client_city",     limit: 255
+    t.string   "vinculacion_client_state",    limit: 255
+    t.string   "vinculacion_client_country",  limit: 255
+    t.string   "vinculacion_client_zip",      limit: 255
+    t.integer  "estimated_time",              limit: 4,                                 default: 0
   end
 
   create_table "states", force: :cascade do |t|
@@ -467,6 +512,17 @@ ActiveRecord::Schema.define(version: 20150615215949) do
 
   add_index "users", ["supervisor1_id"], name: "index_users_on_supervisor1_id", using: :btree
   add_index "users", ["supervisor2_id"], name: "index_users_on_supervisor2_id", using: :btree
+
+  create_table "xrse", id: false, force: :cascade do |t|
+    t.integer  "id",                   limit: 4,                                default: 0, null: false
+    t.integer  "requested_service_id", limit: 4
+    t.integer  "equipment_id",         limit: 4
+    t.decimal  "hours",                                 precision: 4, scale: 2
+    t.decimal  "hourly_rate",                           precision: 6, scale: 2
+    t.text     "details",              limit: 16777215
+    t.datetime "created_at",                                                                null: false
+    t.datetime "updated_at",                                                                null: false
+  end
 
   create_table "xxx", id: false, force: :cascade do |t|
     t.integer  "id",                    limit: 4,        default: 0,   null: false

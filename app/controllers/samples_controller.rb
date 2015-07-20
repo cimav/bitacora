@@ -24,6 +24,11 @@ class SamplesController < ApplicationController
     render :layout => false
   end
 
+  def edit_dialog
+    @sample = Sample.find(params[:id])
+    render :layout => false
+  end
+
   def create
     @sample = Sample.new(params[:sample])
 
@@ -71,6 +76,8 @@ class SamplesController < ApplicationController
   def update 
     @sample = Sample.find(params[:id])
 
+    puts params[:sample]
+
     flash = {}
     if @sample.update_attributes(params[:sample])
       flash[:notice] = "Muestra actualizada."
@@ -79,6 +86,7 @@ class SamplesController < ApplicationController
           if request.xhr?
             json = {}
             json[:flash] = flash
+            json[:service_request_id] = @sample.service_request_id
             render :json => json
           else 
             redirect_to @sample
@@ -93,6 +101,7 @@ class SamplesController < ApplicationController
             json = {}
             json[:flash] = flash
             json[:errors] = @sample.errors
+            json[:service_request_id] = @sample.service_request_id
             render :json => json, :status => :unprocessable_entity
           else 
             redirect_to @sample

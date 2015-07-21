@@ -1,8 +1,4 @@
 .sample-services{:id => "sample-#{sample.id}-services"}
-  .list-header
-    %span.glyphicon.glyphicon-list-alt
-    = "SERVICIOS"
-
   %table.table.table-hover.services-list
     - if sample.requested_service.count == 0
       %tr

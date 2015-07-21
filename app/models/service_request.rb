@@ -83,4 +83,10 @@ class ServiceRequest < ActiveRecord::Base
     end
   end
 
+  def is_vinculacion?
+    self.request_type_id == ServiceRequest::SERVICIO_VINCULACION || 
+    self.request_type_id == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO ||
+    self.request_type_id == ServiceRequest::SERVICIO_VINCULACION_TIPO_2
+  end
+
 end

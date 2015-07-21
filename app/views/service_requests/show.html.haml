@@ -81,7 +81,11 @@
                           = sd.client_identification
                           - if sd.notes != ''
                             .notes= sd.notes
-            = render :partial => 'samples/requested_services_list', :locals => {:sample => s, :request => @request, :lab_view => false}
+            .services-container
+              .list-header
+                %span.glyphicon.glyphicon-list-alt
+                = "SERVICIOS"
+              = render :partial => 'samples/requested_services_list', :locals => {:sample => s, :request => @request, :lab_view => false}
 
   #folder-work-panel-wrapper
     #folder-work-panel

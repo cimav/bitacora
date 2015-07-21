@@ -1,19 +1,14 @@
 #header-bar
   .lab-name= @requested_service.laboratory_service.laboratory.name
-  .service-number= @requested_service.number
+  .service-number
+    %span.glyphicon.glyphicon-file
+    = @requested_service.number
 #lab-work-panel
   #rs-info
-    .rs-icon
-      %span.glyphicon.glyphicon-file
-      .rs-number= @requested_service.number
-    .rs-status
-      %span.label.label-default{:class => "bg-#{@requested_service.status_class}"}
-        = @requested_service.status_text
-    .rs-data
-      .title
-        = @requested_service.laboratory_service.name
-      .description= @requested_service.details
-
+    - if @requested_service.sample.service_request.system_status != ServiceRequest::SYSTEM_FREE
+      #folder-status-message
+        = @requested_service.sample.service_request.system_status_text
+      .clearfix
     .folder
       %h3 Carpeta
       .folder-icon 
@@ -26,26 +21,48 @@
           = image_tag (@requested_service.sample.service_request.user.avatar_url), :class => 'img-circle folder-owner'
           - if @requested_service.sample.service_request.supervisor
             = image_tag (@requested_service.sample.service_request.supervisor.avatar_url), :class => 'img-circle folder-supervisor'
-
-        - if @requested_service.sample.service_request.system_status != ServiceRequest::SYSTEM_FREE
-          #folder-status-message
-            = @requested_service.sample.service_request.system_status_text
       .clearfix
-            
+    
+    - if @requested_service.sample.service_request.is_vinculacion?
+      .client
+        %h3= "Cliente"
+        %h4= @requested_service.sample.service_request.vinculacion_client_name
+        .contact
+          = render :partial => 'service_requests/vinculacion_contact', :locals => {:request => @requested_service.sample.service_request}
+        .clearfix
+      .dates
+        %h3= "Fechas"
+        = render :partial => 'service_requests/vinculacion_dates', :locals => {:request => @requested_service.sample.service_request}
+        .clearfix
 
     .sample 
       %h3 Muestra
       .sample-icon 
-        - if @requested_service.sample.quantity > 1
-          %span.glyphicon.glyphicon-tags
-        - else 
-          %span.glyphicon.glyphicon-tag
-        %br
-        %span.badge= @requested_service.sample.quantity 
+        %span.label.label-info= @requested_service.sample.quantity 
       .sample-data
         %h4= @requested_service.sample.identification
         .description= @requested_service.sample.description
       .clearfix
+      - show_details = false
+      - @requested_service.sample.sample_details.each do |sd|
+        - if !sd.client_identification.blank? 
+          - show_details = true
+          - break
+      - if show_details
+        .table-container
+        %table.table.table-striped
+          %thead
+            %tr
+              %th= "ID"
+              %th= "IDENTIFICACIÓN"
+          %tbody
+            - @requested_service.sample.sample_details.each do |sd|
+              %tr
+                %td.consecutive= sd.consecutive
+                %td.client-id
+                  = sd.client_identification
+                  - if sd.notes != ''
+                    .notes= sd.notes
     .services
       %h3 Servicios 
       %div{:id => "sample-#{@requested_service.sample.id}-services"}

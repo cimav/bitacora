@@ -133,7 +133,7 @@
   overflow: auto;
   top: 55px;
   bottom: 0;
-  padding: 20px;
+  padding: 10px;
 
   .rs-icon {
     height: 160px;
@@ -182,20 +182,32 @@
     }
     .sample-icon {
       color: $sample-color;
-      font-size: 22px;
-      width: 28px;
       float: left;
       text-align: center;
-      .glyphicon { margin: 0; padding: 0;}
-      .badge { margin: 0; }
+      padding-top: 6px;
+      width: 24px;
+      .label { width: 23px; margin: 0; font-size: 16px; }
     }
     .sample-data {
-      float: right;
+      float: left;
       padding-left: 10px;
-      width: $lab-req-serv-panel-width - 86;
+      width: $lab-req-serv-panel-width - 60;
+      margin: 0;
       h4 {
-        margin: 2px 0;
+        margin: 0;
+
       }
+    }
+    .table-container {
+      max-height: 300px;
+      overflow: auto;
+      margin-top: 10px;
+      border: 1px solid $line-color;
+      background: $white;
+    }
+    .table {
+      margin: 0;
+      background: $white;
     }
   }
   .services {
@@ -219,7 +231,6 @@
   
   .folder {
     padding-bottom : 20px;
-    border-top: 1px solid #fff;
     border-bottom: 1px solid darken($bg-color, 5%);
     h3 {
       font-size: 13px;
@@ -232,16 +243,18 @@
     
     .folder-icon {
       color: $folder-color;
-      width: 28px;
-      font-size: 28px;
+      width: 24px;
+      font-size: 24px;
       float: left;
     }
     .folder-data {
-      float: right;
+      float: left;
       padding-left: 10px;
-      width: $lab-req-serv-panel-width - 86;
+      width: $lab-req-serv-panel-width - 60;
       h4 {
         margin: 2px 0;
+        font-size: 15px;
+        font-weight: normal;
       }
       
     }
@@ -254,6 +267,35 @@
         height: 32px;
         padding: 1px;
       }
+    }
+  }
+
+  .client {
+    padding-bottom : 20px;
+    border-bottom: 1px solid darken($bg-color, 5%);
+    h3 {
+      font-size: 13px;
+      color: $grey;
+      text-transform: uppercase;   
+      margin: 10px 0;
+      padding: 0;
+    }
+
+    h4 {
+      color: $black;
+      font-size: 15px;
+    }
+  }
+
+  .dates {
+    padding-bottom : 20px;
+    border-bottom: 1px solid darken($bg-color, 5%);
+    h3 {
+      font-size: 13px;
+      color: $grey;
+      text-transform: uppercase;   
+      margin: 10px 0;
+      padding: 0;
     }
   }
 
@@ -444,3 +486,5 @@
   font-size: 14px;
   text-align: center; 
 }
+
+

@@ -31,12 +31,14 @@ class Sample < ActiveRecord::Base
   end
 
   def set_sample_details
-    for i in 1..self.quantity
-      sd = self.sample_details.new
-      sd.consecutive = i
-      sd.client_identification = ''
-      sd.notes = ''
-      sd.save
+    if self.service_request.request_type_id != ServiceRequest::SERVICIO_VINCULACION && self.service_request.request_type_id != ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO && self.service_request.request_type_id != ServiceRequest::SERVICIO_VINCULACION_TIPO_2
+      for i in 1..self.quantity
+        sd = self.sample_details.new
+        sd.consecutive = i
+        sd.client_identification = ''
+        sd.notes = ''
+        sd.save
+      end
     end
   end
 

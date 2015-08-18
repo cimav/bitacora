@@ -39,15 +39,24 @@ class VinculacionSubscriptions
       end
       folder.save(:validate => false)
 
-      # Add samples to service_request   
-      attributes['muestras'].each do |m|
-        puts "Agregar muestra #{m['identificacion']} (costeo #{attributes['costeo_id']})"
+      # Add samples to service_request
+      attributes['muestras'].each do |m|  
+        puts "Agregar muestra #{m['muestra']['identificacion']} (costeo #{attributes['costeo_id']})"
         muestra = folder.sample.new
-        muestra.system_id      = m['id']
-        muestra.identification = m['identificacion']
-        muestra.description    = m['descripcion']
-        muestra.quantity       = m['cantidad']
+        muestra.system_id      = m['muestra']['id']
+        muestra.number         = m['muestra']['codigo']
+        muestra.identification = m['muestra']['identificacion']
+        muestra.description    = m['muestra']['descripcion']
+        muestra.quantity       = m['muestra']['cantidad']
         muestra.save
+        m['detalles'].each do |md|
+          puts "Agregar detalles de muestra #{md['consecutivo']}"
+          sd = muestra.sample_details.new
+          sd.consecutive = md['consecutivo']
+          sd.client_identification = md['cliente_identificacion']
+          sd.notes = md['notas']
+          sd.save
+        end
       end
 
       Resque.enqueue(NewTipo3Mailer, folder.id)
@@ -59,14 +68,43 @@ class VinculacionSubscriptions
   # ARRANQUE TIPO 3
   def notificar_arranque(attributes)
     puts "Arranque de la solicitud coordinada #{attributes['solicitud_id']}"
+    puts attributes
     if services = ServiceRequest.where(:system_request_id => attributes['solicitud_id'])
       services.each do |s|    
         # TODO: validar agente
+        puts "DURACION: #{attributes['duracion']}"
         s.system_status = ServiceRequest::SYSTEM_ACCEPTED
         s.vinculacion_start_date  = attributes['fecha_inicio']
         s.vinculacion_end_date    = attributes['fecha_termino']
         s.vinculacion_days        = attributes['duracion']
         s.vinculacion_delivery    = attributes['tiempo_entrega']
+        
+        # Update sample details
+        puts "Actualiza muestras"
+        attributes['muestras'].each do |m|
+          puts "Actualizando muestra #{m['muestra']['id']}"
+          puts m
+          if muestra = s.sample.find_by(:system_id => m['muestra']['id'])
+            muestra.number         = m['muestra']['codigo']
+            muestra.identification = m['muestra']['identificacion']
+            muestra.description    = m['muestra']['descripcion']
+            muestra.quantity       = m['muestra']['cantidad']
+            muestra.save
+            puts "Borrar detalles anteriores"
+            muestra.sample_details.destroy_all
+            puts "Poner nuevos detalles"
+            m['detalles'].each do |md|
+              puts "Actualizar detalles de muestra #{md['consecutivo']}"
+              puts md
+              sd = muestra.sample_details.new
+              sd.consecutive = md['consecutivo']
+              sd.client_identification = md['cliente_identificacion']
+              sd.notes = md['notas']
+              sd.save
+            end
+          end
+        end
+
         if s.save
           puts "Iniciado el folder #{s.id}"
           s.requested_services.each do |rs|
@@ -127,6 +165,16 @@ class VinculacionSubscriptions
       muestra.quantity       = m['cantidad']
       muestra.save
 
+      # Add details to sample
+      attributes['muestra_detalles'].each do |md|
+        puts "Agregar detalles de muestra #{md['consecutivo']}"
+        sd = muestra.sample_details.new
+        sd.consecutive = md['consecutivo']
+        sd.client_identification = md['cliente_identificacion']
+        sd.notes = md['notas']
+        sd.save
+      end
+
       if lab_service = LaboratoryService.find(attributes['servicio_bitacora_id'])
         requested_service = RequestedService.new
         requested_service.laboratory_service_id = lab_service.id
@@ -148,10 +196,8 @@ class VinculacionSubscriptions
   def notificar_arranque_tipo_2(attributes)
     puts "Arranque Tipo 2 de la solicitud #{attributes['solicitud_id']}"
 
-    puts attributes
-
     # Create service_request
-    puts "Crear carpeta #{attributes['codigo']}"
+    puts "Crear carpeta #{attributes['carpeta_codigo']}"
     if u_requestor = User.where(:email => attributes['responsable_email']).first
       folder = u_requestor.service_request.new 
       folder.system_id                   = attributes['id']
@@ -186,14 +232,22 @@ class VinculacionSubscriptions
 
       # Add samples to service_request
       attributes['muestras'].each do |m|  
-        puts "Agregar muestra #{m['identificacion']}"
+        puts "Agregar muestra #{m['muestra']['identificacion']}"
         muestra = folder.sample.new
-        muestra.system_id      = m['id']
-        muestra.number         = m['codigo']
-        muestra.identification = m['identificacion']
-        muestra.description    = m['descripcion']
-        muestra.quantity       = m['cantidad']
+        muestra.system_id      = m['muestra']['id']
+        muestra.number         = m['muestra']['codigo']
+        muestra.identification = m['muestra']['identificacion']
+        muestra.description    = m['muestra']['descripcion']
+        muestra.quantity       = m['muestra']['cantidad']
         muestra.save
+        m['detalles'].each do |md|
+          puts "Agregar detalles de muestra #{md['consecutivo']}"
+          sd = muestra.sample_details.new
+          sd.consecutive = md['consecutivo']
+          sd.client_identification = md['cliente_identificacion']
+          sd.notes = md['notas']
+          sd.save
+        end
       end
 
       # Add services 

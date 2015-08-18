@@ -53,12 +53,12 @@
         %table.table.table-striped
           %thead
             %tr
-              %th= "ID"
-              %th= "IDENTIFICACIÓN"
+              %th= "ID CIMAV"
+              %th= "ID CLIENTE"
           %tbody
             - @requested_service.sample.sample_details.each do |sd|
               %tr
-                %td.consecutive= sd.consecutive
+                %td.consecutive= "#{@requested_service.sample.service_request.number}-M#{sd.consecutive}"
                 %td.client-id
                   = sd.client_identification
                   - if sd.notes != ''

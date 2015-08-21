@@ -30,6 +30,7 @@ class VinculacionSubscriptions
       folder.vinculacion_client_state    = attributes['cliente_estado']
       folder.vinculacion_client_country  = attributes['cliente_pais']
       folder.vinculacion_client_zip      = attributes['cliente_cp']
+      folder.vinculacion_hash            = attributes['vinculacion_hash']
 
       folder.system_status     = ServiceRequest::SYSTEM_TO_QUOTE
       if u_supervisor = User.where(:email => attributes['agente_email']).first
@@ -147,6 +148,7 @@ class VinculacionSubscriptions
       folder.vinculacion_client_state    = attributes['cliente_estado']
       folder.vinculacion_client_country  = attributes['cliente_pais']
       folder.vinculacion_client_zip      = attributes['cliente_cp']
+      folder.vinculacion_hash            = attributes['vinculacion_hash']
 
       folder.vinculacion_start_date      = attributes['fecha_inicio']
       folder.vinculacion_end_date        = attributes['fecha_termino']
@@ -217,6 +219,7 @@ class VinculacionSubscriptions
       folder.vinculacion_client_state    = attributes['cliente_estado']
       folder.vinculacion_client_country  = attributes['cliente_pais']
       folder.vinculacion_client_zip      = attributes['cliente_cp']
+      folder.vinculacion_hash            = attributes['vinculacion_hash']
       
       folder.vinculacion_start_date      = attributes['fecha_inicio']
       folder.vinculacion_end_date        = attributes['fecha_termino']

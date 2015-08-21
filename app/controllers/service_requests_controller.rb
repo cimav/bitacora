@@ -418,5 +418,4 @@ class ServiceRequestsController < ApplicationController
     return details
   end
 
-
 end

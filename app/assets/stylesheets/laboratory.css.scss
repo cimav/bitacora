@@ -270,6 +270,26 @@
     }
   }
 
+  .cotizacion {
+    padding-bottom : 20px;
+    border-bottom: 1px solid darken($bg-color, 5%);
+    h3 {
+      font-size: 13px;
+      color: $grey;
+      text-transform: uppercase;   
+      margin: 10px 0;
+      padding: 0;
+    }
+
+    .archivo {
+      font-size: 12px;
+      
+      .glyphicon {
+        color: #000;
+      }
+    }
+  }
+
   .client {
     padding-bottom : 20px;
     border-bottom: 1px solid darken($bg-color, 5%);

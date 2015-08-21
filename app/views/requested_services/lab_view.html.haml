@@ -24,12 +24,24 @@
       .clearfix
     
     - if @requested_service.sample.service_request.is_vinculacion?
+      
       .client
         %h3= "Cliente"
         %h4= @requested_service.sample.service_request.vinculacion_client_name
         .contact
           = render :partial => 'service_requests/vinculacion_contact', :locals => {:request => @requested_service.sample.service_request}
         .clearfix
+
+      .cotizacion
+        - if @requested_service.sample.service_request.request_type_id == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO || (@requested_service.sample.service_request.request_type_id == ServiceRequest::SERVICIO_VINCULACION && @requested_service.sample.service_request.system_status > SYSTEM_ACCEPTED) || (@requested_service.sample.service_request.request_type_id == ServiceRequest::SERVICIO_VINCULACION_TIPO_2 && @requested_service.sample.service_request.system_status > SYSTEM_ACCEPTED)
+        
+          %h3= "Cotizacion"
+          .archivo
+            %a{:href => "http://yoshimi.cimav.edu.mx:3001/vinculacion/descargar/cotizacion/#{@requested_service.sample.service_request.vinculacion_hash}"}
+              %span.glyphicon.glyphicon-file
+              = "Descargar cotización"
+
+              
       .dates
         %h3= "Fechas"
         = render :partial => 'service_requests/vinculacion_dates', :locals => {:request => @requested_service.sample.service_request}

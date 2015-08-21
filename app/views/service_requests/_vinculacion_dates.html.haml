@@ -42,9 +42,14 @@
         - percentage_msg = "CANCELADO" 
 
 
-      %span.glyphicon.glyphicon-calendar
-      = "Entregar:"
-      = l request.vinculacion_end_date, format: :short
+      .vin_start
+        %span.glyphicon.glyphicon-calendar
+        = "Inicio:"
+        = l request.vinculacion_start_date, format: :short
+      .vin_end
+        %span.glyphicon.glyphicon-calendar
+        = "Entregar:"
+        = l request.vinculacion_end_date, format: :short
       .delivery
         %span.glyphicon.glyphicon-time
         = faltan

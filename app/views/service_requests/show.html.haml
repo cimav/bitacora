@@ -11,7 +11,7 @@
       = "#{@request.request_link}" rescue "Sin tipo"
     .description= @request.description
   .cotizacion
-    - if @request.request_type_id == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO || (@request.request_type_id == ServiceRequest::SERVICIO_VINCULACION && @request.system_status > SYSTEM_ACCEPTED) || (@request.request_type_id == ServiceRequest::SERVICIO_VINCULACION_TIPO_2 && @request.system_status > SYSTEM_ACCEPTED)
+    - if @request.request_type_id == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO || (@request.request_type_id == ServiceRequest::SERVICIO_VINCULACION && @request.system_status >= ServiceRequest::SYSTEM_ACCEPTED) || (@request.request_type_id == ServiceRequest::SERVICIO_VINCULACION_TIPO_2 && @request.system_status >= ServiceRequest::SYSTEM_ACCEPTED)
       .archivo
         %a{:href => "http://yoshimi.cimav.edu.mx:3001/vinculacion/descargar/cotizacion/#{@request.vinculacion_hash}"}
           %span.glyphicon.glyphicon-file

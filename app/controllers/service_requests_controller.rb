@@ -31,7 +31,9 @@ class ServiceRequestsController < ApplicationController
   end
 
   def live_search
-    customer_service = 1
+    cs1 = ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
+    cs2 = ServiceRequest::SERVICIO_VINCULACION_TIPO_2
+    cs3 = ServiceRequest::SERVICIO_VINCULACION
     
     if current_user.access.to_i == User::ACCESS_CUSTOMER_SERVICE
       extra_sql = "OR (request_type_id = :cs AND users.access = :cs_a)"
@@ -46,7 +48,7 @@ class ServiceRequestsController < ApplicationController
                                                       OR (users.require_auth = 1 AND 
                                                             (users.supervisor1_id = :u OR users.supervisor2_id = :u)
                                                           )" + extra_sql + "
-                                                      )", {:s => ServiceRequest::ACTIVE, :u => current_user.id, :cs => customer_service, :cs_a => User::ACCESS_CUSTOMER_SERVICE}).order('service_requests.created_at DESC')
+                                                      )", {:s => ServiceRequest::ACTIVE, :u => current_user.id, :cs1 => cs1, :cs2 => cs2, :cs3 => cs3, :cs_a => User::ACCESS_CUSTOMER_SERVICE}).order('service_requests.created_at DESC')
 
 
 

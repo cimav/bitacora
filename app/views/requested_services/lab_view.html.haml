@@ -33,7 +33,7 @@
         .clearfix
 
       .cotizacion
-        - if @requested_service.sample.service_request.request_type_id == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO || (@requested_service.sample.service_request.request_type_id == ServiceRequest::SERVICIO_VINCULACION && @requested_service.sample.service_request.system_status > SYSTEM_ACCEPTED) || (@requested_service.sample.service_request.request_type_id == ServiceRequest::SERVICIO_VINCULACION_TIPO_2 && @requested_service.sample.service_request.system_status > SYSTEM_ACCEPTED)
+        - if @requested_service.sample.service_request.request_type_id == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO || (@requested_service.sample.service_request.request_type_id == ServiceRequest::SERVICIO_VINCULACION && @requested_service.sample.service_request.system_status >= ServiceRequest::SYSTEM_ACCEPTED) || (@requested_service.sample.service_request.request_type_id == ServiceRequest::SERVICIO_VINCULACION_TIPO_2 && @requested_service.sample.service_request.system_status >= ServiceRequest::SYSTEM_ACCEPTED)
         
           %h3= "Cotizacion"
           .archivo
@@ -41,7 +41,7 @@
               %span.glyphicon.glyphicon-file
               = "Descargar cotización"
 
-              
+
       .dates
         %h3= "Fechas"
         = render :partial => 'service_requests/vinculacion_dates', :locals => {:request => @requested_service.sample.service_request}

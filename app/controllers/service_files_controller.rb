@@ -8,45 +8,45 @@ class ServiceFilesController < ApplicationController
     @sample_id = params[:sample_id] 
     @requested_service_id = params[:requested_service_id]
     
-    # Hack to load files directly uploaded via shared folder
-    req_service = RequestedService.find(@requested_service_id)
-    files = ServiceFile.where(:service_request_id => params[:service_request_id], :sample_id => params[:sample_id], :requested_service_id => params[:requested_service_id])
-    files_array = files.pluck(:file)
-    path = "#{Rails.root}/private/laboratories/#{req_service.laboratory_service.laboratory_id}/servicios/#{req_service.number}"
-    recreate_zip = false
-    # Remove files...
-    files.each do |f|
-      if !File.file?(f.file.to_s)
-        f.delete
-        recreate_zip = true
-      end 
-    end
-    # Add files...
-    Dir.entries(path).each do |f|
-      unless files_array.include?(sanitize(f)) 
-        if File.file?("#{path}/#{f}")
-          if sanitize(f) != f
-            FileUtils.mv("#{path}/#{f}", "#{path}/#{sanitize(f)}")
-            f = sanitize(f)
-          end
-          service_file = ServiceFile.new
-          service_file.user_id = req_service.laboratory_service.laboratory.user_id
-          service_file.service_request_id = @service_request_id
-          service_file.sample_id = @sample_id
-          service_file.requested_service_id = @requested_service_id
-          #service_file.file = File.open("#{path}/#{f}")
-          service_file.raw_write_attribute(:file, f) 
-          service_file.description = f
-          service_file.file_type = ServiceFile::FILE
-          service_file.save!
-          recreate_zip = true
-        end
-      end
-    end
-    # Regenerate zip
-    if recreate_zip 
-      Resque.enqueue(GenerateSampleZip, @sample_id)
-    end
+    # DISABLED: Hack to load files directly uploaded via shared folder
+    # req_service = RequestedService.find(@requested_service_id)
+    # files = ServiceFile.where(:service_request_id => params[:service_request_id], :sample_id => params[:sample_id], :requested_service_id => params[:requested_service_id])
+    # files_array = files.pluck(:file)
+    # path = "#{Rails.root}/private/laboratories/#{req_service.laboratory_service.laboratory_id}/servicios/#{req_service.number}"
+    # recreate_zip = false
+    # # Remove files...
+    # files.each do |f|
+    #   if !File.file?(f.file.to_s)
+    #     f.delete
+    #     recreate_zip = true
+    #   end 
+    # end
+    # # Add files...
+    # Dir.entries(path).each do |f|
+    #   unless files_array.include?(sanitize(f)) 
+    #     if File.file?("#{path}/#{f}")
+    #       if sanitize(f) != f
+    #         FileUtils.mv("#{path}/#{f}", "#{path}/#{sanitize(f)}")
+    #         f = sanitize(f)
+    #       end
+    #       service_file = ServiceFile.new
+    #       service_file.user_id = req_service.laboratory_service.laboratory.user_id
+    #       service_file.service_request_id = @service_request_id
+    #       service_file.sample_id = @sample_id
+    #       service_file.requested_service_id = @requested_service_id
+    #       #service_file.file = File.open("#{path}/#{f}")
+    #       service_file.raw_write_attribute(:file, f) 
+    #       service_file.description = f
+    #       service_file.file_type = ServiceFile::FILE
+    #       service_file.save!
+    #       recreate_zip = true
+    #     end
+    #   end
+    # end
+    # # Regenerate zip
+    # if recreate_zip 
+    #   Resque.enqueue(GenerateSampleZip, @sample_id)
+    # end
 
     render :layout => 'standalone'
   end

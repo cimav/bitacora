@@ -14,7 +14,8 @@
       %tr
         %td.empty-cell= "No hay archivos"
     - the_files.each do |service_file|
-      - next if !File.file?(service_file.file.to_s)
+      - file_path = "#{Rails.root}/public#{service_file.file.to_s}"
+      - next if !File.file?(file_path)
       %tr{'id' => "file-#{service_file.id}"}
         - if File.extname(service_file.file.to_s) == ''
           - ext = 'unknown'
@@ -28,9 +29,9 @@
             = ff.text_field :description, :class => 'description_field', :id => "description_#{service_file.id}"
           %span.file-desc{:title => service_file.type_text}
             %i{:class => "file-icon #{service_file.file_type_icon}"}
-            %a{'href' => "/service_files/#{service_file.id}/file"}
+            %a{'href' => service_file.file.to_s}
               = service_file.description
           %br
-          %span.file-details= ext.upcase + ", " + number_to_human_size(File.size(service_file.file.to_s)) + ". Subido por #{service_file.user.full_name}"
+          %span.file-details= ext.upcase + ", " + number_to_human_size(File.size(file_path)) + ". Subido por #{service_file.user.full_name}"
           - if service_file.user_id == current_user.id
             = link_to "×", {:controller => "service_files", :action => "remove_file", :id => service_file.id, :remote => true}, :class => 'close delete-file', data: { confirm: "¿Estas seguro?" }

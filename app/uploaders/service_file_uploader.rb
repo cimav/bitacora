@@ -4,6 +4,6 @@ class ServiceFileUploader < CarrierWave::Uploader::Base
  storage :file
 
   def store_dir
-    "#{Rails.root}/private/laboratories/#{model.requested_service.laboratory_service.laboratory_id}/servicios/#{model.requested_service.number}"
+    "#{Rails.root}/public/laboratories/#{model.requested_service.laboratory_service.laboratory_id}/servicios/#{model.requested_service.number}"
   end
 end

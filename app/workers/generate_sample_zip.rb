@@ -9,8 +9,9 @@ class GenerateSampleZip
     Zip::ZipOutputStream.open(temp.path) do |z|
       req_services.each do |rs|
         rs.service_files.where(:status => ServiceFile::ACTIVE).each do |service_file|
-          z.put_next_entry(File.basename(service_file.file.to_s))
-          z.print File.open(service_file.file.to_s, "rb"){ |f| f.read }
+          file_path = "#{Rails.root}/public#{service_file.file.to_s}"
+          z.put_next_entry(File.basename(file_path))
+          z.print File.open(file_path, "rb"){ |f| f.read }
         end
       end
     end

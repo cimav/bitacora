@@ -86,7 +86,7 @@
                   %tbody
                     - s.sample_details.each do |sd|
                       %tr
-                        %td.consecutive= "#{s.service_request.number}-M#{sd.consecutive}"
+                        %td.consecutive= "#{s.service_request.number.to_s[0..6]}-#{sd.consecutive.to_s.rjust(3, '0')}"
                         %td.client-id
                           = sd.client_identification
                           - if sd.notes != ''

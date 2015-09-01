@@ -70,7 +70,7 @@
           %tbody
             - @requested_service.sample.sample_details.each do |sd|
               %tr
-                %td.consecutive= "#{@requested_service.sample.service_request.number}-M#{sd.consecutive}"
+                %td.consecutive= "#{@requested_service.sample.service_request.number.to_s[0..6]}-#{sd.consecutive.to_s.rjust(3, '0')}"
                 %td.client-id
                   = sd.client_identification
                   - if sd.notes != ''

@@ -36,18 +36,18 @@ class ServiceRequestsController < ApplicationController
     cs3 = ServiceRequest::SERVICIO_VINCULACION
     
     if current_user.access.to_i == User::ACCESS_CUSTOMER_SERVICE
-      extra_sql = "OR (request_type_id = :cs AND users.access = :cs_a)"
+      extra_sql = "OR ( request_type_id = :cs1 OR request_type_id = :cs2 OR request_type_id = :cs3 )"
     else
       extra_sql = ""
     end
     
     @requests = ServiceRequest.joins(:user).where("service_requests.status = :s AND 
-                                                     (service_requests.user_id = :u 
+                                                     (service_requests.user_id = :u " + extra_sql + "
                                                       OR service_requests.supervisor_id = :u 
                                                       OR (:u IN (SELECT user_id FROM collaborators WHERE service_request_id = service_requests.id))
                                                       OR (users.require_auth = 1 AND 
                                                             (users.supervisor1_id = :u OR users.supervisor2_id = :u)
-                                                          )" + extra_sql + "
+                                                          )
                                                       )", {:s => ServiceRequest::ACTIVE, :u => current_user.id, :cs1 => cs1, :cs2 => cs2, :cs3 => cs3, :cs_a => User::ACCESS_CUSTOMER_SERVICE}).order('service_requests.created_at DESC')
 
 
@@ -69,12 +69,18 @@ class ServiceRequestsController < ApplicationController
 
   def show
     @request = ServiceRequest.find(params[:id])
+    
+    cs1 = ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
+    cs2 = ServiceRequest::SERVICIO_VINCULACION_TIPO_2
+    cs3 = ServiceRequest::SERVICIO_VINCULACION
+
     collaborators = @request.collaborators.map { |c| c.user_id }
     authorized = @request.user_id == current_user.id ||
                  @request.supervisor_id == current_user.id ||
                  @request.user.supervisor1_id == current_user.id ||
                  @request.user.supervisor2_id == current_user.id ||
-                 (collaborators.include? current_user.id)
+                 (collaborators.include? current_user.id) ||
+                 ( (@request.request_type_id == cs1 || @request.request_type_id == cs2 || @request.request_type_id == cs3) && current_user.access.to_i == User::ACCESS_CUSTOMER_SERVICE)         
 
     if !authorized
       render :inline => '<div class="sheet"><div class="app-message">No Autorizado</div></div>'.html_safe                   

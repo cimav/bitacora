@@ -137,7 +137,7 @@ class RequestedService < ActiveRecord::Base
   end
 
   def create_files_dir
-    FileUtils.mkdir_p "#{Rails.root}/private/laboratories/#{self.laboratory_service.laboratory_id}/servicios/#{self.number}"
+    FileUtils.mkdir_p "#{Rails.root}/public/laboratories/#{self.laboratory_service.laboratory_id}/servicios/#{self.number}"
   end
 
   def set_system_based_status

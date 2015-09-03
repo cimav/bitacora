@@ -140,13 +140,22 @@
 }
 
 .folder-owner {
-  border: 2px solid $owner-color;
+  border: 3px solid $owner-color;
 }
 .folder-supervisor {
   border: 2px solid $supervisor-color;
 }
 .folder-collaborator {
   border: 2px solid $collaborator-color;
+}
+
+.folder-owner-data {
+  .folder-owner {
+    float: left;
+  }
+  .folder-owner-name {
+    font-weight: bold;
+  } 
 }
 
 #folder-status-message {

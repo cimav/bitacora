@@ -16,11 +16,14 @@
         = render :partial => 'vinculacion_dates', :locals => {:request => r}
 
       %td.service-collaborators
-        = image_tag (r.user.avatar_url), :class => 'img-circle folder-owner'
-        - if r.supervisor
-          = image_tag (r.supervisor.avatar_url), :class => 'img-circle folder-supervisor'
-        - r.collaborators.each do |collaborator|
-          = image_tag (collaborator.user.avatar_url), :class => 'img-circle folder-collaborator'
+        .folder-owner-data
+          = image_tag (r.user.avatar_url), :class => 'img-circle folder-owner'
+          .folder-owner-name= r.user.full_name
+        .folder-collaborators-data
+          - if r.supervisor
+            = image_tag (r.supervisor.avatar_url), :class => 'img-circle folder-supervisor'
+          - r.collaborators.each do |collaborator|
+            = image_tag (collaborator.user.avatar_url), :class => 'img-circle folder-collaborator'
       %td.service-request-status
         - if r.system_status != ServiceRequest::SYSTEM_FREE
           .search-folder-status-message

@@ -75,7 +75,8 @@ class ServiceRequestsController < ApplicationController
     cs3 = ServiceRequest::SERVICIO_VINCULACION
 
     collaborators = @request.collaborators.map { |c| c.user_id }
-    authorized = @request.user_id == current_user.id ||
+    authorized = current_user.is_admin? ||
+                 @request.user_id == current_user.id ||
                  @request.supervisor_id == current_user.id ||
                  @request.user.supervisor1_id == current_user.id ||
                  @request.user.supervisor2_id == current_user.id ||

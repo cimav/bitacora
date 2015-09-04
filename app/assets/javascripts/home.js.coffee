@@ -34,7 +34,6 @@ hash = false
 my_request_search_results = false
 
 @foldersLiveSearch = foldersLiveSearch = () ->
-  #return false if $("#search-box").val().length < 3
   form = $('#folder-live-search')
   url = '/service_requests/live_search'
   formData = form.serialize()
@@ -44,11 +43,9 @@ my_request_search_results = false
 $(document).on('change', '#folder_filter', () ->
   foldersLiveSearch()
 )
-$(document).on('keyup', '#search-box', () ->
-  foldersLiveSearch()
-)
-$(document).on('click', '#search-box', () ->
-  foldersLiveSearch()
+$(document).on('keyup', '#search-box', () -> 
+  window.clearTimeout(window.foldertimeout)
+  window.foldertimeout = window.setTimeout (-> foldersLiveSearch() ), 500
 )
 
 $(document).on('click', '.service-request-item', () ->

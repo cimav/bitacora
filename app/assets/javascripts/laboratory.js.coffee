@@ -60,7 +60,8 @@ $(document).on('change', '#lrs_assigned_to', () ->
 
 $(document).on('keyup', '#q', () ->
     $('#req-serv-items').scroll()
-    labReqServicesLiveSearch()
+    window.clearTimeout(window.inlabtimeout)
+    window.inlabtimeout = window.setTimeout (-> labReqServicesLiveSearch() ), 500
   )
 
 $(document).on('click', '.lab-req-serv-item', () ->

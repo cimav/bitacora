@@ -1,15 +1,47 @@
 - cur_serv = ''
 - others_header = false;
+
+- client_files = the_requested_service.sample.service_request.service_files.where(:status => ServiceFile::ACTIVE, :file_type => ServiceFile::CLIENT) 
+- if client_files.count > 0
+  %h4= "Documentos del cliente"
+  %table.table.table-striped.table-bordered
+    - client_files.each do |service_file|
+      - file_path = "#{Rails.root}/public#{service_file.file.to_s}"
+      - next if !File.file?(file_path)
+      %tr{'id' => "file-#{service_file.id}"}
+        - if File.extname(service_file.file.to_s) == ''
+          - ext = 'unknown'
+        - else 
+          - ext = File.extname(service_file.file.to_s)[1..-1]
+        %td{"class" => "file-entry type-unknown type-" + ext, "title" => File.basename(service_file.file.to_s)}
+          = form_for(service_file, :remote => true, :html => {:'data-type' => 'html', :class => 'file-desc-form'}) do |ff|
+            - t_options = "<option value=\"#{ServiceFile::FILE}\">Documento</option>"
+            - t_options += "<option value=\"#{ServiceFile::FINAL_REPORT}\">Reporte Final</option>"
+            = ff.select :file_type, t_options.html_safe, {}, {:class => 'file_type_combo', :id => "file_type_id_#{service_file.id}"}
+            = ff.text_field :description, :class => 'description_field', :id => "description_#{service_file.id}"
+          %span.file-desc{:title => service_file.type_text}
+            %i{:class => "file-icon #{service_file.file_type_icon}"}
+            %a{'href' => service_file.file.to_s}
+              = service_file.description
+          %br
+          %span.file-details= ext.upcase + ", " + number_to_human_size(File.size(file_path)) + ". Subido por #{service_file.user.full_name}"
+          - if service_file.user_id == current_user.id
+            = link_to "×", {:controller => "service_files", :action => "remove_file", :id => service_file.id, :remote => true}, :class => 'close delete-file', data: { confirm: "¿Estas seguro?" }
+
+
+
 - req_services.each do |rs|
   - if rs.id.to_i != requested_service_id.to_i && !others_header
     - others_header = true
     %h4= "Archivos en otros servicios"
+  - else 
+    %h4= "Archivos del servicio"
   %table.table.table-striped.table-bordered
     %tr
       %th{:colspan => 3}
         %span.service-bullet{:class => "status_#{rs.status}"}= "%02d" %  rs.consecutive
         = rs.laboratory_service.name
-    - the_files = rs.service_files.where(:status => ServiceFile::ACTIVE)
+    - the_files = rs.service_files.where(:status => ServiceFile::ACTIVE).where.not(:file_type => ServiceFile::CLIENT)
     - if the_files.count == 0
       %tr
         %td.empty-cell= "No hay archivos"

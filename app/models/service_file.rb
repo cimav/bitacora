@@ -4,6 +4,7 @@ class ServiceFile < ActiveRecord::Base
   belongs_to :sample
   belongs_to :user
   belongs_to :requested_service 
+  belongs_to :service_request
 
   mount_uploader :file, ServiceFileUploader
   validates :description, :presence => true
@@ -15,15 +16,18 @@ class ServiceFile < ActiveRecord::Base
 
   FILE         = 99
   FINAL_REPORT = 1
+  CLIENT       = 2
 
   TYPES = {
     FILE         => 'Documento', 
-    FINAL_REPORT => 'Reporte Final'
+    FINAL_REPORT => 'Reporte Final',
+    CLIENT => 'Documento del Cliente'
   }
 
   ICONS = {
     FILE         => 'icon-file', 
-    FINAL_REPORT => 'icon-ok'
+    FINAL_REPORT => 'icon-ok',
+    CLIENT       => 'icon-ok'
   }
 
 

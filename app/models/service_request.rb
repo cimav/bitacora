@@ -13,6 +13,7 @@ class ServiceRequest < ActiveRecord::Base
   has_many :requested_services, through: :sample
 
   has_many :service_request_participations
+  has_many :service_files
 
   belongs_to :request_type
   belongs_to :user

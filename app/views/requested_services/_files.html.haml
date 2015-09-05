@@ -12,6 +12,6 @@
   %tr
     %td#files-area
       - req_services = RequestedService.where(:sample_id => requested_service.sample_id).order("FIELD(id,#{requested_service.id}) DESC, id")
-      = render :partial => 'files_list', :locals => {:requested_service_id => requested_service.id,:req_services => req_services }
+      = render :partial => 'files_list', :locals => {:the_requested_service => requested_service, :requested_service_id => requested_service.id,:req_services => req_services }
     %td#td-upload-area
       %iframe{"name" => "submit_iframe", "id" => "files_iframe", "src" => "/service_files/ui/#{@requested_service.sample.service_request_id}/#{@requested_service.sample_id}/#{@requested_service.id}", "width" => "350"}

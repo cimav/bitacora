@@ -51,8 +51,24 @@
     font-size: 11px;
     color: $grey;
   }
+
+
+  .customer-service-msg {
+    background-color: #fefff0;
+    .media-body {
+      font-size: 130%;    
+    }
+  }
+
+  .normal-msg {
+    
+  }
+
+
 }
 
 #lab-main-panel #activity_log {
   left: $sample-list-width + 14;
 }
+
+

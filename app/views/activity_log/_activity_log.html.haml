@@ -13,11 +13,18 @@
       = f.submit "Enviar", :class => "btn btn-info"
 %ul.media-list
   - activity_log.each do |activity|
-    %li.media.activity-message
+    - if activity.user.is_customer_service?
+      - item_class = 'customer-service-msg'
+    - else 
+      - item_class = 'normal-msg'
+    %li.media.activity-message{:class => item_class}
       %a.pull-left{:href => '#'}
         = image_tag ("http://cimav.edu.mx/foto/#{activity.user.email.split('@')[0]}/48"), :class => "media-object img-circle"
       .media-body
         %h4.media-heading
           = activity.user.full_name 
           %span.timestamp= date_text(activity.created_at)
-        = activity.message
+        - if activity.message_type == 'CLIENT_FILE'
+          = activity.message.html_safe
+        - else
+          = activity.message

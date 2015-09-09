@@ -59,7 +59,6 @@
       } else {
         url = "/service_requests/#{@service_request_id}/files_list"; 
       }
-      alert(url);
       $.get(url, {}, function (html) {
         $('#files-area', parent.document).empty().html(html);
       });

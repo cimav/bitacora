@@ -1,0 +1,22 @@
+.sheet
+  .header-status{:class => "bg-status-initial"}
+    %span.status= @service_request.request_link
+    %span.number= @service_request.number
+  #requested-service-tabs
+    %ul.nav.nav-tabs
+      %li.active
+        %a{:href => "#bitacora", "data-toggle" => "tab"}= "Bitácora"
+      %li
+        %a{:href => "#archivos", "data-toggle" => "tab", :id => "active-archivos-link"}= "Archivos"
+    .tab-content
+
+      #bitacora.tab-pane.active
+        #activity_log
+          = render :partial => 'activity_log/activity_log', :locals => {:activity_log => @activity_log, 
+                                                                        :service_request_id => @service_request.id, 
+                                                                        :sample_id => 0, 
+                                                                        :requested_service_id => 0}
+
+      #archivos.tab-pane
+        = render :partial => 'files', :locals => {:service_request => @service_request }
+        .clearfix

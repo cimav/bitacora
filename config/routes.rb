@@ -24,6 +24,8 @@ Bitacora::Application.routes.draw do
   post '/service_requests/:id/send_report' => 'service_requests#send_report'
   post '/service_requests/:id/send_report_tipo_2' => 'service_requests#send_report_tipo_2'
   post '/service_requests/delete_collaborator' => 'service_requests#delete_collaborator'
+  get '/service_requests/:id/folder_without_services' => 'service_requests#folder_without_services'
+  get '/service_requests/:id/files_list' => 'service_requests#files_list'
 
 
   resources :service_requests 

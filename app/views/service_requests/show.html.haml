@@ -110,6 +110,14 @@
 - else
   :javascript
     $(function() {
-      $('.requested-service-link').first().click();
+      if ($('.requested-service-link').length) {
+        $('.requested-service-link').first().click();
+      } else {
+        // Activity log and files
+        url = "/service_requests/#{@request.id}/folder_without_services";
+        $.get(url, {}, function (html) {
+          $('#folder-work-panel').empty().html(html);
+        });
+      }  
     });
 

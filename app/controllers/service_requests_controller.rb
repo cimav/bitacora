@@ -356,6 +356,18 @@ class ServiceRequestsController < ApplicationController
     end
   end
 
+  def folder_without_services
+    puts "FOLDER WO SERVICES"
+    @service_request = ServiceRequest.find(params[:id])
+    @activity_log = ActivityLog.where("service_request_id = :service_request", {:service_request => @service_request.id}).order('id DESC')
+    render :layout => false
+  end
+
+  def files_list
+     @service_request = ServiceRequest.find(params[:id])
+     render :layout => false
+  end
+
   private
   def cost_details(service_request)
     
@@ -426,5 +438,9 @@ class ServiceRequestsController < ApplicationController
 
     return details
   end
+
+
+
+
 
 end

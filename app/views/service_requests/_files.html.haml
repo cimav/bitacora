@@ -1,0 +1,16 @@
+:javascript
+  $(document).on('ajax:success', '.delete-file', function(data, status, xhr) {
+    $(this).closest('tr').hide("slow", function() { $(this).remove(); });
+    $('#content-panel').html(status);
+  });
+
+  $(document).on('ajax:beforeSend', '.delete-file', function(ev, xhr, settings) {
+     $(this).closest('tr').addClass("loading");
+  });
+
+%table#files-table
+  %tr
+    %td#files-area
+      = render :partial => 'files_list', :locals => {:service_request => @service_request }
+    %td#td-upload-area
+      %iframe{"name" => "submit_iframe", "id" => "files_iframe", "src" => "/service_files/ui/#{@service_request.id}/0/0", "width" => "350"}

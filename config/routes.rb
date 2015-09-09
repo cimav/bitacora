@@ -205,6 +205,7 @@ Bitacora::Application.routes.draw do
   get '/auth/failure' => 'sessions#failure'
   get "/logout" => 'sessions#destroy'
 
+  get '/go-folder/:number' => 'home#redirect_service_request', :constraints => {:number => /.*/} 
   get ':number' => 'home#redirect_requested_service', :constraints => {:number => /.*/} 
 
 end

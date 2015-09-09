@@ -25,6 +25,12 @@ class HomeController < ApplicationController
     return
   end
 
+   def redirect_service_request
+    service_request = ServiceRequest.where("number = :number", {:number => params[:number]}).first 
+    url = "/#!/service_requests/#{service_request.id}"
+    redirect_to url
+   end
+
 end
 
 

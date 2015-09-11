@@ -54,6 +54,7 @@ class ServiceFilesController < ApplicationController
   def create
     flash = {}
     file_list = []
+    is_client_file = false
     params[:service_file]['file'].each do |f|
       @service_file = ServiceFile.new
       @service_file.user_id = current_user.id
@@ -64,6 +65,7 @@ class ServiceFilesController < ApplicationController
       @service_file.description = f.original_filename
       if (current_user.is_customer_service?)
         @service_file.file_type = ServiceFile::CLIENT
+        is_client_file = true
       else
         @service_file.file_type = ServiceFile::FILE
       end
@@ -83,11 +85,14 @@ class ServiceFilesController < ApplicationController
       puts i
       file_list_li = file_list_li + '<li><a href="' + i[:url] + '">' + i[:name] + '</a></li>'
     end
-    @service_file.service_request.activity_log.create(user_id: current_user.id, 
-                                           message_type: 'CLIENT_FILE', 
-                                           sample_id: 0,
-                                           requested_service_id: 0,
-                                           message: "Se subieron los documentos del cliente: <ul>#{file_list_li}</ul>".html_safe)
+
+    if is_client_file
+      @service_file.service_request.activity_log.create(user_id: current_user.id, 
+                                             message_type: 'CLIENT_FILE', 
+                                             sample_id: 0,
+                                             requested_service_id: 0,
+                                             message: "Se subieron los documentos del cliente: <ul>#{file_list_li}</ul>".html_safe)
+    end
     # Generate zip version
     Resque.enqueue(GenerateSampleZip, params[:service_file]['sample_id'])
     session[:has_upload] = true

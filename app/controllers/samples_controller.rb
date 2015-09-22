@@ -76,7 +76,26 @@ class SamplesController < ApplicationController
   def update 
     @sample = Sample.find(params[:id])
 
-    puts params[:sample]
+    changes = '<ul>'
+
+    
+    if @sample.identification != params[:sample][:identification]
+      changes = changes + "<li>Identificación de muestra: De <em>'#{@sample.identification}'</em> cambio a <em>'#{params[:sample][:identification]}'</em></li>"
+    end
+
+    if @sample.description != params[:sample][:description]
+      changes = changes + "<li>Descripción de muestra: De <em>'#{@sample.description}'</em> cambio a <em>'#{params[:sample][:description]}'</em></li>"
+    end
+
+    params[:sample][:sample_details_attributes].each do |i,sd|
+      sd_item = @sample.sample_details.find(sd[:id])
+      if sd_item.client_identification != sd[:client_identification]
+        sd_id = "#{@sample.service_request.number.to_s[0..6]}-#{sd_item.consecutive.to_s.rjust(3, '0')}"
+        changes = changes + "<li>Identificación #{sd_id}: De <em>'#{sd_item.client_identification}'</em> cambio a <em>'#{sd[:client_identification]}'</em></li>"
+      end
+    end
+
+    changes = changes + '</ul>'
 
     flash = {}
     if @sample.update_attributes(params[:sample])
@@ -84,6 +103,12 @@ class SamplesController < ApplicationController
       respond_with do |format|
         format.html do
           if request.xhr?
+            @sample.activity_log.create(user_id: current_user.id, 
+                                         service_request_id: @sample.service_request_id, 
+                                         requested_service_id: 0, 
+                                         message_type: 'SAMPLE_UPDATE', 
+                                         message: "Muestra #{@sample.number} actualizada: #{changes}".html_safe)
+
             json = {}
             json[:flash] = flash
             json[:service_request_id] = @sample.service_request_id

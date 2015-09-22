@@ -24,7 +24,7 @@
         %h4.media-heading
           = activity.user.full_name 
           %span.timestamp= date_text(activity.created_at)
-        - if activity.message_type == 'CLIENT_FILE'
+        - if activity.message_type == 'CLIENT_FILE' || activity.message_type == 'SAMPLE_UPDATE'
           = activity.message.html_safe
         - else
           = activity.message

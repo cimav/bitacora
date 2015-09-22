@@ -30,6 +30,10 @@
   #collaborator-panel
 
 
+- samples_editable = true
+
+
+
 #folder-workarea
   #folder-samples
     .header
@@ -66,6 +70,7 @@
             - if ((@request.request_type_id != ServiceRequest::SERVICIO_VINCULACION &&
             -    @request.request_type_id != ServiceRequest::SERVICIO_VINCULACION_TIPO_2 &&
             -    @request.request_type_id != ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO)) ||
+            -    samples_editable ||
             -    current_user.is_admin?
               .edit-sample
                 .btn.btn-xs.btn-info.edit-sample-btn{'data-sample-id' => s.id}

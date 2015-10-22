@@ -52,6 +52,24 @@
                   %tr
                     %th{:style => "vertical-align: top; text-align: left;"}= "Detalles:"
                     %td{:style => "vertical-align: top; text-align: left;"}= simple_format(@service_request.description)
+
+                  %tr
+                    %th{:style => "vertical-align: top; text-align: left;"}= "Participación:"
+                    %td{:style => "vertical-align: top; text-align: left;"}
+
+                      %table{:style => 'border: 1px solid #ddd; border-collapse: collapse;'}
+                        %thead
+                          %tr
+                            %th{:style => 'border: 1px solid #ddd; border-collapse: collapse;padding: 4px;'} Participante
+                            %th{:style => 'border: 1px solid #ddd; border-collapse: collapse;padding: 4px;'} Participación
+                        %tbody
+                          - @participations.each do |p|
+                            %tr
+                              %td{:style => 'border: 1px solid #ddd; border-collapse: collapse;padding: 4px;'}= p['nombre']
+                              %td{:style => 'border: 1px solid #ddd; border-collapse: collapse; text-align: right;padding: 4px;'}= "#{p['porcentaje']}%"
+
+
+
                   %tr
                     %th{:style => "vertical-align: top; text-align: left;"}= "Costeo:"
                     %td{:style => "vertical-align: top; text-align: left;"}
@@ -87,17 +105,17 @@
                                   = r
                                   %span.total= number_to_currency(totals[s['bitacora_id']][r])
                               %tr
-                                %th{:style => 'border: 1px solid #ddd; border-collapse: collapse;'}=rheader[r][0]
-                                %th{:style => 'border: 1px solid #ddd; border-collapse: collapse;'}=rheader[r][1]
-                                %th{:style => 'border: 1px solid #ddd; border-collapse: collapse;'}=rheader[r][2]
-                                %th{:style => 'border: 1px solid #ddd; border-collapse: collapse;'}="Subtotal"
+                                %th{:style => 'border: 1px solid #ddd; border-collapse: collapse;padding: 4px;'}=rheader[r][0]
+                                %th{:style => 'border: 1px solid #ddd; border-collapse: collapse;padding: 4px;'}=rheader[r][1]
+                                %th{:style => 'border: 1px solid #ddd; border-collapse: collapse;padding: 4px;'}=rheader[r][2]
+                                %th{:style => 'border: 1px solid #ddd; border-collapse: collapse;padding: 4px;'}="Subtotal"
                               - s[r].each do |i|
                                 - subtotal = i['cantidad'] * i['precio_unitario']
                                 %tr
-                                  %td{:style => 'border: 1px solid #ddd; border-collapse: collapse; text-align: right;'}=i['detalle']
-                                  %td{:style => 'border: 1px solid #ddd; border-collapse: collapse; text-align: right;'}=i['cantidad']
-                                  %td{:style => 'border: 1px solid #ddd; border-collapse: collapse; text-align: right;'}=number_to_currency(i['precio_unitario'])
-                                  %td{:style => 'border: 1px solid #ddd; border-collapse: collapse; text-align: right;'}=number_to_currency(subtotal)      
+                                  %td{:style => 'border: 1px solid #ddd; border-collapse: collapse; padding: 4px;'}=i['detalle']
+                                  %td{:style => 'border: 1px solid #ddd; border-collapse: collapse; text-align: right;padding: 4px;'}=i['cantidad']
+                                  %td{:style => 'border: 1px solid #ddd; border-collapse: collapse; text-align: right;padding: 4px;'}=number_to_currency(i['precio_unitario'])
+                                  %td{:style => 'border: 1px solid #ddd; border-collapse: collapse; text-align: right;padding: 4px;'}=number_to_currency(subtotal)      
 
 
       %div{:style => "background-color: #888; padding: 20px; color: #eee;"}

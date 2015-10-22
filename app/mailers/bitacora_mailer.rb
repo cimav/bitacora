@@ -119,6 +119,41 @@ class BitacoraMailer < ActionMailer::Base
   
   end
 
+  def reporte_enviado(service_request)
+    @from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"
+    @to = []
+
+    # Coordinator
+    @to << service_request.user.email
+
+    # Vinculacion
+    @to << service_request.supervisor.email
+
+    @service_request = service_request
+
+
+    @participations = Array.new
+    @service_request.service_request_participations.each do |p|
+
+      @participations << {
+        "nombre" => p.user.full_name,
+        "email" => p.user.email,
+        "porcentaje" => p.percentage
+      }
+      @to << p.user.email
+    end
+
+    @details = cost_details(@service_request)
+
+
+    @reply_to = service_request.supervisor.email
+
+    subject = "Reporte Enviado #{service_request.number}: #{service_request.vinculacion_client_name}"
+
+    mail(:to => @to, :from => @from, :reply_to => @reply_to, :subject => subject)
+
+  end
+
 
   def new_service_owner_auth(requested_service)
     @from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"

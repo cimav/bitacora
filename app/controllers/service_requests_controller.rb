@@ -274,6 +274,11 @@ class ServiceRequestsController < ApplicationController
     QueueBus.publish('recibir_reporte', details)
     request.system_status = ServiceRequest::SYSTEM_REPORT_SENT
     request.save
+
+
+    # Send mail to Vinculacion
+    Resque.enqueue(ReporteEnviadoMailer, request.id)
+
     render :layout => false
   end
 

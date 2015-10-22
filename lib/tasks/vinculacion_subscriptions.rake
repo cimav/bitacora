@@ -6,6 +6,7 @@ class VinculacionSubscriptions
   subscribe :notificar_arranque_no_coordinado
   subscribe :notificar_arranque_tipo_2
   subscribe :notificar_cancelacion
+  subscribe :cancelar_servicio_solicitado
   
   # COSTEO TIPO 3
   def solicitar_costeo(attributes)
@@ -280,6 +281,28 @@ class VinculacionSubscriptions
   def notificar_cancelacion(attributes)
     puts "Cancelar solicitud #{attributes['solicitud_id']}"
     if services = ServiceRequest.where(:system_request_id => attributes['solicitud_id'])
+      services.each do |s|    
+        # TODO: validar agente
+        s.system_status = ServiceRequest::SYSTEM_CANCELED
+        if s.save
+          puts "Cancelado el folder #{s.id}"
+          s.requested_services.each do |rs|
+            puts "Cancelando el servicio #{rs.id}"
+            rs.status = RequestedService::CANCELED
+            rs.save
+          end
+        else 
+          puts "Error al guardar service_request"
+        end
+      end
+    else
+      puts "Servicio no encontrado"
+    end
+  end
+
+  def cancelar_servicio_solicitado(attributes)
+    puts "Cancelar servicio #{attributes['servicio_id']} de la solicitud #{attributes['solicitud_id']}"
+    if services = ServiceRequest.where(:system_id => attributes['id'])
       services.each do |s|    
         # TODO: validar agente
         s.system_status = ServiceRequest::SYSTEM_CANCELED

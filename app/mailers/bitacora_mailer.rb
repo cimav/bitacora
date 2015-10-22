@@ -99,6 +99,26 @@ class BitacoraMailer < ActionMailer::Base
   
   end
 
+  def costeo_enviado(service_request)
+    @from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"
+    @to = []
+
+    # Coordinator
+    @to << service_request.user.email
+
+    # Vinculacion
+    @to << service_request.supervisor.email
+
+    @service_request = service_request
+    @details = cost_details(@service_request)
+    @reply_to = service_request.supervisor.email
+
+    subject = "Costeo Enviado #{service_request.number}: #{service_request.vinculacion_client_name}"
+
+    mail(:to => @to, :from => @from, :reply_to => @reply_to, :subject => subject)
+  
+  end
+
 
   def new_service_owner_auth(requested_service)
     @from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"
@@ -213,6 +233,79 @@ class BitacoraMailer < ActionMailer::Base
     reply_to = user.email
     
     mail(:to => @to, :from => @from, :reply_to => reply_to, :subject => subject)
+  end
+
+
+  # Si se actualiza el del controller se debe de actualizar aquí también. 
+  private
+  def cost_details(service_request)
+    
+    services_costs = []
+
+    service_request.sample.each do |s|
+      s.requested_service.where("status != ?", RequestedService::DELETED).each do |rs|
+        services_costs << cost_details_requested_service(rs)
+      end
+    end
+    
+    details = {
+      "system_id" => service_request.system_id, 
+      "system_request_id" => service_request.system_request_id, 
+      "codigo" => service_request.number, 
+      "precio_sugerido" => service_request.suggested_price,
+      "tiempo_estimado" => service_request.estimated_time,
+      "servicios" => services_costs
+    }
+    
+    return details
+  
+  end
+
+  def cost_details_requested_service(requested_service)
+
+    # Technicians
+    technicians = Array.new
+    requested_service.requested_service_technicians.each do |tech|
+      technicians << {
+        "detalle" => tech.user.full_name,
+        "cantidad" => tech.hours,
+        "precio_unitario" => tech.hourly_wage 
+      }
+    end
+
+    # Equipment
+    equipment = Array.new
+    requested_service.requested_service_equipments.each do |eq|
+      equipment << {
+        "detalle" => eq.equipment.name,
+        "cantidad" => eq.hours,
+        "precio_unitario" => eq.hourly_rate
+      }
+    end
+
+
+    # Others
+    others = Array.new
+    requested_service.requested_service_others.each do |ot|
+      others << {
+        "detalle" => "#{ot.other_type.name}: #{ot.concept}",
+        "cantidad" => 1,
+        "precio_unitario" => ot.price
+      }
+    end
+
+    # Details
+    details = {
+      "bitacora_id"           => requested_service.id,
+      "muestra_system_id"     => requested_service.sample.system_id,
+      "muestra_identificador" => requested_service.sample.identification,
+      "nombre_servicio"       => requested_service.laboratory_service.name,
+      "personal"              => technicians,
+      "equipos"               => equipment,
+      "otros"                 => others
+    }
+
+    return details
   end
 
 end

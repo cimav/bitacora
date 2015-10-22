@@ -1,0 +1,108 @@
+!!!
+- totals = []
+- global_total = 0
+
+- @details['servicios'].each do |s|
+  
+  - totals[s['bitacora_id']] = {}
+  - totals[s['bitacora_id']]['total'] = 0
+  
+  - ['personal', 'equipos', 'otros'].each do |r|
+    - totals[s['bitacora_id']][r] = 0
+  
+    - s[r].each do |i|
+      - totals[s['bitacora_id']][r] = i['cantidad'] * i['precio_unitario']
+      - totals[s['bitacora_id']]['total'] += totals[s['bitacora_id']][r] 
+  
+  - global_total += totals[s['bitacora_id']]['total']
+
+%html
+  %head
+    %meta{"content" => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
+  %body
+    %div{:style => "background-color: #ccc; padding: 20px;"}
+      %div{:style => "background-color: #eee; padding: 20px; border-bottom: 1px solid #ddd;"}
+        %table 
+          %tbody 
+            %tr
+              %td{:style => "width: 120px; text-align: center;"}
+                = image_tag ("http://cimav.edu.mx/foto/#{@service_request.supervisor.email.split('@')[0]}/100"), :style => "border-radius: 50em; -webkit-border-radius: 50em; -moz-border-radius: 50em;"
+              %td
+                %h2{:style => "margin-bottom: 2px;"}= @service_request.supervisor.full_name
+                = mail_to @service_request.supervisor.email, @service_request.supervisor.email, :subject =>  "[R] Solicitud #{@service_request.number}"
+
+      %div{:style => "background-color: #ffffff; padding: 20px; padding-bottom: 60px;"}
+        %table
+          %tr
+            %td{:style => "min-width: 400px;"}
+              %h2{:style => "font-size: 18px;"}= "#{@service_request.number}: #{@service_request.request_link}"
+              %table
+                %tbody
+                  %tr
+                    %th{:style => "vertical-align: top; text-align: left;"}= "Fecha de solicitud:"
+                    %td= l @service_request.created_at, :format => :long
+                  %tr
+                    %th{:style => "vertical-align: top; text-align: left;"}= "Cliente:"
+                    %td= @service_request.vinculacion_client_name
+      
+                  - if !@service_request.supervisor_id.blank?
+                    %tr
+                      %th{:style => "vertical-align: top; text-align: left;"}= "Supervisor: "
+                      %td= @service_request.supervisor.full_name
+                  %tr
+                    %th{:style => "vertical-align: top; text-align: left;"}= "Detalles:"
+                    %td{:style => "vertical-align: top; text-align: left;"}= simple_format(@service_request.description)
+                  %tr
+                    %th{:style => "vertical-align: top; text-align: left;"}= "Costeo:"
+                    %td{:style => "vertical-align: top; text-align: left;"}
+
+                      %table.suggested-price
+                        %tr
+                          %td.sp-label
+                            %strong= "Costo Interno:"
+                          %td.sp-price
+                            = number_to_currency(global_total)
+                        %tr
+                          %td.sp-label
+                            %strong= "Precio de venta sugerido:"
+                          %td.sp-price
+                            = number_to_currency(@service_request.suggested_price)
+                        %tr
+                          %td.sp-label
+                            %strong= "Tiempo estimado (días hábiles):"
+                          %td.sp-days
+                            = (@service_request.estimated_time)
+
+
+                      - rheader = {'personal' => ['Nombre', 'Horas', 'Costo x Hora'], 'equipos' => ['Equipo', 'Horas', 'Costo x Hora'], 'consumibles' => ['Nombre', 'Cantidad', 'Precio Unitario'], 'otros' => ['Concepto', 'Cantidad', 'Precio']}
+                      - @details['servicios'].each do |s|
+                        %h4
+                          = "#{s['muestra_identificador']}: #{s['nombre_servicio']}"
+                          %span.total= number_to_currency(totals[s['bitacora_id']]['total'])
+                        %table.table.table-bordered
+                          - ['personal', 'equipos', 'otros'].each do |r|
+                            - if s[r].count > 0
+                              %tr
+                                %th.rubro-header{:colspan=>4}
+                                  = r
+                                  %span.total= number_to_currency(totals[s['bitacora_id']][r])
+                              %tr
+                                %th=rheader[r][0]
+                                %th=rheader[r][1]
+                                %th=rheader[r][2]
+                                %th="Subtotal"
+                              - s[r].each do |i|
+                                - subtotal = i['cantidad'] * i['precio_unitario']
+                                %tr
+                                  %td=i['detalle']
+                                  %td.text-right=i['cantidad']
+                                  %td.text-right=number_to_currency(i['precio_unitario'])
+                                  %td.text-right=number_to_currency(subtotal)      
+
+
+      %div{:style => "background-color: #888; padding: 20px; color: #eee;"}
+        %strong{:style => "margin-top: 8px; margin-left: 10px; color: #eee; font-size: 11px;"}
+        = "Mensaje enviado automáticamente desde "
+        %strong= "Bitácora Electrónica"
+           
+        

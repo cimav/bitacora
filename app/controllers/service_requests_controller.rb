@@ -203,6 +203,11 @@ class ServiceRequestsController < ApplicationController
     QueueBus.publish('recibir_costeo', cost_details(request))
     request.system_status = ServiceRequest::SYSTEM_QUOTE_SENT
     request.save
+
+    # Send mail to Vinculacion
+    Resque.enqueue(CosteoEnviadoMailer, request.id)
+
+
     render :layout => false
   end
 

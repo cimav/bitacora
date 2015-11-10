@@ -2,11 +2,10 @@
   .header-status{:class => "bg-status-initial"}
     %span.status= "Regresar a inicio"
     %a.close{:class => 'requested-service-link', 'data-id' => @requested_service.id, 'data-sample-id' => @requested_service.sample_id}="×"
-    %span.number= @requested_service.number
   .dialog-content.padded
     = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'status-form'} do |f|
       .dialog-title
-        %h3= "Regresar muestra #{@requested_service.sample.number} a inicio"
+        %h3= "Regresar muestra a inicio"
       .dialog-body
         = f.hidden_field :status, {:value => RequestedService::INITIAL}
         .notes.field

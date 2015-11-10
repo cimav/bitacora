@@ -103,7 +103,7 @@ class RequestedServicesController < ApplicationController
                                     ", {:service_request => @requested_service.sample.service_request.id,
                                         :sample => @requested_service.sample_id,
                                         :requested_service => @requested_service.id
-                                       }).order('id DESC')
+                                       }).order('created_at DESC')
       @grand_total = get_grand_total(params['id'])
       render :layout => false
     else 

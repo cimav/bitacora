@@ -5,7 +5,7 @@
     .rs-header
       .rs-type{:class => "label_#{rs.sample.service_request.request_type.short_name}"}= rs.sample.service_request.request_type.name
       .rs-status{:class => "bg-#{rs.status_class}"}= rs.status_text
-      .rs-number= rs.number  
+      .rs-number= rs.sample.service_request.number  
       .rs-date= date_text(rs.created_at)
     %table.rs-area
       %tr

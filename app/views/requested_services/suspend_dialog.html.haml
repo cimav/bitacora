@@ -2,7 +2,6 @@
   .header-status{:class => "bg-status-suspended"}
     %span.status= "Suspender servicio"
     %a.close{:class => 'requested-service-link', 'data-id' => @requested_service.id, 'data-sample-id' => @requested_service.sample_id}="×"
-    %span.number= @requested_service.number
   .dialog-content.padded
     = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'status-form'} do |f|
       .dialog-title

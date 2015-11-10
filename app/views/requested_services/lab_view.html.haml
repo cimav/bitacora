@@ -2,7 +2,7 @@
   .lab-name= @requested_service.laboratory_service.laboratory.name
   .service-number
     %span.glyphicon.glyphicon-file
-    = @requested_service.number
+    = @requested_service.sample.service_request.number
 #lab-work-panel
   #rs-info
     - if @requested_service.sample.service_request.system_status != ServiceRequest::SYSTEM_FREE

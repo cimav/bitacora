@@ -56,7 +56,7 @@
 .sheet
   .header-status{:class => "bg-#{@requested_service.status_class}"}
     %span.status= @requested_service.status_text
-    %span.number= @requested_service.number
+    %span.number= @requested_service.sample.service_request.number
   %table#rs-header
     %tr
       %td#requested-service-data
@@ -73,6 +73,9 @@
           %br
           %strong=  "Técnico Asignado: "
           = "#{(@requested_service.user.full_name)}"
+        %br
+          .numero-interno{:style => 'font-size: 95%; color: #888;'}
+            = "Número Interno: #{@requested_service.number}"
         
       %td#requested-service-actions
         - if initial_action

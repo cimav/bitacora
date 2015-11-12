@@ -427,13 +427,15 @@ class RequestedServicesController < ApplicationController
         sr.system_status = ServiceRequest::SYSTEM_IN_PROGRESS
       elsif quoted == qty
         sr.system_status = ServiceRequest::SYSTEM_QUOTED
-      elsif quoted == 0 
+      elsif quoted == 0 && canceled == 0
         sr.system_status = ServiceRequest::SYSTEM_TO_QUOTE
-      else
+      elsif canceled == 0
         sr.system_status = ServiceRequest::SYSTEM_PARTIAL_QUOTED
       end
     else
-      sr.system_status = ServiceRequest::SYSTEM_TO_QUOTE
+      if canceled == 0
+        sr.system_status = ServiceRequest::SYSTEM_TO_QUOTE
+      end
     end
     sr.save
   end

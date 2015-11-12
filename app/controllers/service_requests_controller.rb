@@ -220,9 +220,11 @@ class ServiceRequestsController < ApplicationController
     @participants << @request.user
 
     @request.requested_services.each do |rs|
-      rs.requested_service_technicians.each do |t|
-        if !@participants.include? t.user
-          @participants << t.user
+      if rs.status.to_i != RequestedService::CANCELED  && rs.status.to_i != RequestedService::DELETED  
+        rs.requested_service_technicians.each do |t|
+          if !@participants.include? t.user
+            @participants << t.user
+          end
         end
       end
     end
@@ -239,9 +241,11 @@ class ServiceRequestsController < ApplicationController
     @participants << @request.user
 
     @request.requested_services.each do |rs|
-      rs.requested_service_technicians.each do |t|
-        if !@participants.include? t.user
-          @participants << t.user
+      if rs.status.to_i != RequestedService::CANCELED  && rs.status.to_i != RequestedService::DELETED  
+        rs.requested_service_technicians.each do |t|
+          if !@participants.include? t.user
+            @participants << t.user
+          end
         end
       end
     end
@@ -385,7 +389,7 @@ class ServiceRequestsController < ApplicationController
     services_costs = []
 
     service_request.sample.each do |s|
-      s.requested_service.where("status != ?", RequestedService::DELETED).each do |rs|
+      s.requested_service.where("status != ? AND status != ?", RequestedService::DELETED, RequestedService::CANCELED).each do |rs|
         services_costs << cost_details_requested_service(rs)
       end
     end

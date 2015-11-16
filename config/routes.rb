@@ -150,6 +150,11 @@ Bitacora::Application.routes.draw do
   get  '/laboratory/:id/f/*filter' => 'laboratory#show'
 
   resources :activity_log, :as => :activity_logs
+  resources :alerts
+  get '/alerts/laboratory_service/:id' => 'alerts#get_from_laboratory_service'
+  get '/alerts/technician/:id' => 'alerts#get_from_technician'
+  get '/alerts/equipment/:id' => 'alerts#get_from_equipment'
+  post '/alerts/resolve/:id/:from/:from_id' => 'alerts#resolve'
 
   get '/service_files/ui/:service_request_id' => 'service_files#ui'
   get '/service_files/ui/:service_request_id/:sample_id' => 'service_files#ui'

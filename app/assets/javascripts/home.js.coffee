@@ -251,6 +251,37 @@ $(document).on('ajax:error', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
 
+
+#-------------
+# ALERTS
+#-------------
+getAlerts = (from, id) ->
+  url = '/alerts/' + from + '/' + id
+  $.get(url, {}, (html) ->
+    $('#alertas_' + from).empty().html(html)
+  )
+
+$(document).on('ajax:beforeSend', '#new-alert-form', (evt, xhr, settings) ->
+    $("#new-alert-form").find('input, textarea, button, select').prop("disabled", true)
+    $('.error-message').remove()
+    $('.has-errors').removeClass('has-errors')
+
+  )
+
+$(document).on('ajax:success', '#new-alert-form', (evt, data, status, xhr) ->
+    $form = $(this)
+    $("#new-alert-form").find('input, textarea, button, select').prop("disabled", false)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    getAlerts(res['from'], res['from_id'])
+  )
+
+$(document).on('ajax:error', (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+
+
 #--------
 # ACTIONS
 #--------

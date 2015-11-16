@@ -6,16 +6,26 @@ class Alert < ActiveRecord::Base
   belongs_to :equipment
   belongs_to :technician, :class_name => 'User', :foreign_key => 'technician' 
 
+  after_create :add_extra
+
 
   OPEN = 1
-  RESOLVED = 99
+  SOLVED = 99
 
   STATUS = {
     OPEN      => 'Abierta',
-    RESOLVED  => 'Resuelta'
+    SOLVED  => 'Resuelta'
   }
 
   def status_text
     STATUS[status.to_i]
   end
+
+  def add_extra
+    if self.start_date.blank?
+      self.start_date = self.created_at
+    end
+    self.save
+  end
+
 end

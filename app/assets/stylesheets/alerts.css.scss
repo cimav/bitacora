@@ -1,3 +1,27 @@
 // Place all the styles related to the Alerts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+#alert-form {
+  position: relative;
+  table {
+    position: absolute;
+    max-width: 800px;
+  }
+  margin-bottom: 2em;
+  textarea {
+    width: 100%;
+    height: 100px;
+  }
+  .dates {
+    width: 8em;
+  }
+  input {
+    width: 8em;
+  }
+  .meta {
+    color: #777;
+    font-size: 90%;
+  }
+}

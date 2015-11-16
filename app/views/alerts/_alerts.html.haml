@@ -1,0 +1,35 @@
+= form_for Alert.new, :remote => true, :html => {:'data-type' => 'html', :id => 'new-alert-form'} do |f|
+  = f.hidden_field :laboratory_service_id, {:value => laboratory_service_id}
+  = f.hidden_field :equipment_id, {:value => equipment_id}
+  = f.hidden_field :technician, {:value => technician}
+  = f.hidden_field :message_type, {:value => 'USER'}
+  #alert-form
+    %table.table.table-bordered
+      %tr
+        %th= "Alerta"
+        %th= "Estado"
+        %th.dates= "Inicio"
+        %th.dates= "Fin"
+        %th= "Reporta"
+      %tr
+        %td= f.text_area :message, :placeholder => 'Escribe aquí tu alerta', :class => 'form-control'
+        %td= ""
+        %td= f.text_field :start_date, :class => 'form-control', :type => "date"
+        %td= f.text_field :end_date, :class => 'form-control', :type => "date"
+        %td= f.submit "Agregar alerta", :class => "btn btn-info"
+      - alerts.each do |k,alert|
+        %tr
+          %td
+            %span.glyphicon.glyphicon-warning-sign{:style => 'color: #fb0;'}
+            = alert.message
+          %td
+            = alert.status_text
+            - if alert.status == Alert::OPEN
+              .resolve-area
+                = link_to "Marcar como resuelta", {:controller => "alerts", :action => "resolve", :id => alert.id, :from_id => from_id, :from => from, :remote => true}, :method => 'post', :class => 'resolve-link', data: { confirm: "¿Estas seguro de marcar como resuelta esta alerta?" }
+
+          %td= date_text(alert.start_date)
+          %td= date_text(alert.end_date)
+          %td
+            = alert.user.full_name
+            .meta= date_text(alert.created_at)

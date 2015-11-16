@@ -9,7 +9,7 @@ class LaboratoryServicesController < ApplicationController
 
     @alerts = {}
 
-    @laboratory_service.alerts.each do |alert|
+    @laboratory_service.alerts.where(:status => Alert::OPEN).each do |alert|
       @alerts[alert.start_date] = alert
     end
     render :layout => 'standalone'
@@ -21,7 +21,7 @@ class LaboratoryServicesController < ApplicationController
 
     @alerts = {}
 
-    @laboratory_service.alerts.each do |alert|
+    @laboratory_service.alerts.where(:status => Alert::OPEN).each do |alert|
       @alerts[alert.start_date] = alert
     end
     render "status", :layout => 'standalone'
@@ -93,6 +93,11 @@ class LaboratoryServicesController < ApplicationController
 
   def edit
     @laboratory_service = LaboratoryService.find(params[:id])
+    @alerts = {}
+
+    @laboratory_service.alerts.order('created_at DESC').each do |alert|
+      @alerts[alert.created_at] = alert
+    end
     render :layout => false
   end
 

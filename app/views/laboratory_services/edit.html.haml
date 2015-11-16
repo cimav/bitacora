@@ -5,6 +5,8 @@
     %a{:href => "#admin-service-details", "data-toggle" => "tab", "id" => "service_details_tab"}= "Datos Generales"
   %li#tab-service-costs
     %a{:href => "#admin-service-costs", "data-toggle" => "tab", "id" => "service_costs_tab"}= "Costeo"
+  %li#tab-alertas
+    %a{:href => "#admin-service-alertas", "data-toggle" => "tab", "id" => "service_costs_tab"}= "Alertas"
 
 
 .tab-content
@@ -87,4 +89,12 @@
       .clearfix
   #admin-service-costs.tab-pane
   .clearfix
+  #admin-service-alertas.tab-pane
+    #alertas_laboratory_service
+      = render :partial => 'alerts/alerts', :locals => {:alerts => @alerts, 
+                                                        :from => 'laboratory_service',
+                                                        :from_id => @laboratory_service.id,
+                                                        :laboratory_service_id => @laboratory_service.id, 
+                                                        :technician => 0, 
+                                                        :equipment_id => 0}
 

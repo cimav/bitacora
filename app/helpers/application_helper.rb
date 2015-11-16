@@ -4,9 +4,17 @@ module ApplicationHelper
       r_date = '-'
     else
       if "#{date.year}#{date.month}#{date.day}" == "#{Time.now.year}#{Time.now.month}#{Time.now.day}"
-        r_date = "Hoy #{date.strftime "%l:%M %p"}"
+        if date.strftime("%l%M%p") == "1200AM"
+          r_date = "Hoy"
+        else
+          r_date = "Hoy #{date.strftime "%l:%M %p"}"
+        end
       elsif "#{date.year}#{date.month}#{date.day}" == "#{Time.now.year}#{Time.now.month}#{Time.now.day - 1}"
-        r_date = "Ayer #{date.strftime "%l:%M %p"}"
+        if date.strftime("%l%M%p") == "1200AM"
+          r_date = "Ayer"
+        else
+          r_date = "Ayer #{date.strftime "%l:%M %p"}"
+        end
       elsif date.year == Time.now.year
         r_date = date.strftime "%e de %b."
       else

@@ -1,6 +1,7 @@
 # coding: utf-8
 class LaboratoryServicesController < ApplicationController
-  before_filter :auth_required, :except => [:status]
+  before_filter :auth_required, :except => [:status, :status_by_rs]
+  after_action :allow_iframe, :only => [:status, :status_by_rs]
   respond_to :html, :json
 
   def status
@@ -12,6 +13,18 @@ class LaboratoryServicesController < ApplicationController
       @alerts[alert.start_date] = alert
     end
     render :layout => 'standalone'
+  end
+
+  def status_by_rs
+    @rs = RequestedService.find(params[:id])
+    @laboratory_service = @rs.laboratory_service
+
+    @alerts = {}
+
+    @laboratory_service.alerts.each do |alert|
+      @alerts[alert.start_date] = alert
+    end
+    render "status", :layout => 'standalone'
   end
 
   def live_search
@@ -784,6 +797,12 @@ class LaboratoryServicesController < ApplicationController
       end
     end
     
+  end
+
+private
+
+  def allow_iframe
+    response.headers.except! 'X-Frame-Options'
   end
 
 end

@@ -89,6 +89,7 @@ Bitacora::Application.routes.draw do
   resources :laboratory_services do
     member do
       get 'status'
+      get 'status_by_rs'
       get 'edit'
       get 'edit_cost'
 

@@ -34,6 +34,7 @@ class User < ActiveRecord::Base
   has_many :laboratory_services, :through => :requested_service
   has_many :activity_log
   has_many :collaborations
+  has_many :alerts
   belongs_to :supervisor1, :class_name => 'User', :foreign_key => 'supervisor1_id'
   belongs_to :supervisor2, :class_name => 'User', :foreign_key => 'supervisor2_id'
 

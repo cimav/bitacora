@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150819005608) do
+ActiveRecord::Schema.define(version: 20151116140648) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.integer  "user_id",                  limit: 4
@@ -29,6 +29,25 @@ ActiveRecord::Schema.define(version: 20150819005608) do
   add_index "activity_logs", ["sample_id"], name: "index_activity_logs_on_sample_id", using: :btree
   add_index "activity_logs", ["service_request_id"], name: "index_activity_logs_on_service_request_id", using: :btree
   add_index "activity_logs", ["user_id"], name: "index_activity_logs_on_user_id", using: :btree
+
+  create_table "alerts", force: :cascade do |t|
+    t.integer  "user_id",               limit: 4
+    t.integer  "laboratory_service_id", limit: 4
+    t.integer  "technician",            limit: 4
+    t.integer  "equipment_id",          limit: 4
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.string   "message_type",          limit: 255
+    t.text     "message",               limit: 65535
+    t.integer  "status",                limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "alerts", ["equipment_id"], name: "index_alerts_on_equipment_id", using: :btree
+  add_index "alerts", ["laboratory_service_id"], name: "index_alerts_on_laboratory_service_id", using: :btree
+  add_index "alerts", ["technician"], name: "index_alerts_on_technician", using: :btree
+  add_index "alerts", ["user_id"], name: "index_alerts_on_user_id", using: :btree
 
   create_table "borra", id: false, force: :cascade do |t|
     t.integer "id",              limit: 4,  default: 0, null: false
@@ -120,7 +139,8 @@ ActiveRecord::Schema.define(version: 20150819005608) do
     t.decimal  "suggested_price",                       precision: 10, scale: 2
   end
 
-  create_table "equipment", force: :cascade do |t|
+  create_table "eq_bak", id: false, force: :cascade do |t|
+    t.integer  "id",                   limit: 4,                                 default: 0,   null: false
     t.integer  "laboratory_id",        limit: 4
     t.string   "name",                 limit: 255
     t.text     "description",          limit: 16777215
@@ -136,7 +156,38 @@ ActiveRecord::Schema.define(version: 20150819005608) do
     t.decimal  "suggested_price",                       precision: 10, scale: 2
   end
 
-  add_index "equipment", ["laboratory_id"], name: "index_equipment_on_laboratory_id", using: :btree
+  create_table "eq_bak2", id: false, force: :cascade do |t|
+    t.integer  "id",                   limit: 4,                                 default: 0,   null: false
+    t.integer  "laboratory_id",        limit: 4
+    t.string   "name",                 limit: 255
+    t.text     "description",          limit: 16777215
+    t.decimal  "hourly_rate",                           precision: 6,  scale: 2
+    t.string   "status",               limit: 255,                               default: "1"
+    t.datetime "created_at",                                                                   null: false
+    t.datetime "updated_at",                                                                   null: false
+    t.string   "item_number",          limit: 255
+    t.string   "budget_item",          limit: 255
+    t.date     "purchase_date"
+    t.decimal  "purchase_price",                        precision: 10, scale: 2
+    t.decimal  "internal_hourly_rate",                  precision: 10, scale: 2
+    t.decimal  "suggested_price",                       precision: 10, scale: 2
+  end
+
+  create_table "equipment", force: :cascade do |t|
+    t.integer  "laboratory_id",        limit: 4
+    t.string   "name",                 limit: 255
+    t.text     "description",          limit: 16777215
+    t.decimal  "hourly_rate",                           precision: 6,  scale: 2
+    t.string   "status",               limit: 255,                               default: "1"
+    t.datetime "created_at",                                                                   null: false
+    t.datetime "updated_at",                                                                   null: false
+    t.string   "item_number",          limit: 255
+    t.string   "budget_item",          limit: 255
+    t.date     "purchase_date"
+    t.decimal  "purchase_price",                        precision: 10, scale: 2
+    t.decimal  "internal_hourly_rate",                  precision: 10, scale: 2
+    t.decimal  "suggested_price",                       precision: 10, scale: 2
+  end
 
   create_table "external_requests", force: :cascade do |t|
     t.integer  "service_request_id", limit: 4

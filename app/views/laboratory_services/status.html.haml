@@ -1,0 +1,22 @@
+- if @alerts.count > 0
+  %table.table.table-bordered
+    %tr
+      %th= "Alerta"
+      %th= "Estado"
+      %th= "Inicio"
+      %th= "Fin"
+      %th= "Reporta"
+
+    - @alerts.each do |k,alert|
+      %tr
+        %td
+          %span.glyphicon.glyphicon-warning-sign{:style => 'color: #fb0;'}
+          = alert.message
+        %td= alert.status_text
+        %td= date_text(alert.start_date)
+        %td= date_text(alert.end_date)
+        %td= alert.user.full_name
+- else
+  .alert-message
+    %span.glyphicon.glyphicon-ok{:style => 'color: #0b0;'}
+    Servicio disponible

@@ -1,7 +1,18 @@
 # coding: utf-8
 class LaboratoryServicesController < ApplicationController
-  before_filter :auth_required
+  before_filter :auth_required, :except => [:status]
   respond_to :html, :json
+
+  def status
+    @laboratory_service = LaboratoryService.find(params[:id])
+
+    @alerts = {}
+
+    @laboratory_service.alerts.each do |alert|
+      @alerts[alert.start_date] = alert
+    end
+    render :layout => 'standalone'
+  end
 
   def live_search
     @laboratory_services = LaboratoryService.where(:is_exclusive_vinculacion => 0, :status => 0).order('name')

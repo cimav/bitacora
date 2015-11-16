@@ -88,6 +88,7 @@ Bitacora::Application.routes.draw do
   get '/laboratory_services/:id/for_sample/:sample_id' => 'laboratory_services#for_sample'
   resources :laboratory_services do
     member do
+      get 'status'
       get 'edit'
       get 'edit_cost'
 

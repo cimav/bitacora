@@ -139,6 +139,9 @@
         %a{:href => "#costeo", "data-toggle" => "tab", "id" => "costeo_tab"}= "Costeo"
       %li
         %a{:href => "#archivos", "data-toggle" => "tab", :id => "active-archivos-link"}= "Archivos"
+      - unless @requested_service.sample.service_request.is_vinculacion?
+        %li
+          %a{:href => "#pts", "data-toggle" => "tab", :id => "active-pts-link"}= "Puntos Estímulos"
     
 
   .tab-content
@@ -157,4 +160,76 @@
     #archivos.tab-pane
       = render :partial => 'files', :locals => {:requested_service => @requested_service }
       .clearfix
-        
+    
+    - unless @requested_service.sample.service_request.is_vinculacion?
+      - if part = @requested_service.requested_service_technicians.where(:user_id => current_user.id).first
+        - current_user_participation = part.participation
+      - else 
+        - current_user_participation = 0
+      #pts.tab-pane
+        - if @requested_service.laboratory_service.is_catalog?
+          - total_serv = @requested_service.laboratory_service.sale_price / 2
+          - if current_user_participation > 0
+            - total_user = total_serv / (current_user_participation / 100)
+          - else
+            - total_user = 0
+          %table.table
+            %tr
+              %th.text-center= "Precio Venta Vinculación"
+              %th.text-center
+                = "Costo para Estímulos"
+                %br
+                = "(Precio Venta / 2)"
+              %th.text-center
+                = "Porcentaje Participación"
+                %br
+                = "#{current_user_participation}%"
+              %th.text-center= "Total"
+              %th.text-center= "Puntos"
+            %tr
+              %td.text-center= number_to_currency(@requested_service.laboratory_service.sale_price)
+              %td.text-center= number_to_currency(total_serv)
+              %td.text-center= "#{current_user_participation}%"
+              %td.text-center= number_to_currency(total_user) 
+              %td.text-center= total_user / RequestedService::UN_PUNTO 
+            %tr
+              %td.text-center{:colspan => 5}= "Servicio evaluado con regla costo vinculación"
+        - else
+          - total_serv = @grand_total * (1 + RequestedService::INDIRECTOS / 100) * (1 + RequestedService::MARGEN / 100)
+          - if current_user_participation > 0
+            - total_user = total_serv / (current_user_participation / 100)
+          - else
+            - total_user = 0
+          %table.table
+            %tr
+              %th.text-center= "Costo Interno"
+              %th.text-center= "+"
+              %th.text-center
+                = "Indirectos"
+                %br
+                = "#{RequestedService::INDIRECTOS}%"
+              %th.text-center= "+"
+              %th.text-center
+                = "Margen"
+                %br
+                = "#{RequestedService::MARGEN}%"
+              %th.text-center= "Costo para Estímulos"
+              %th.text-center
+                = "Porcentaje Participación"
+                %br
+                = "#{current_user_participation}%"
+              %th.text-center= "Total"
+              %th.text-center= "Puntos"
+            %tr
+              %td.text-center= number_to_currency(@grand_total)
+              %td.text-center= "+"
+              %td.text-center= number_to_currency(@grand_total * (RequestedService::INDIRECTOS / 100))
+              %td.text-center= "+"
+              %td.text-center= number_to_currency(@grand_total * (RequestedService::MARGEN / 100))
+              %td.text-center= number_to_currency(total_serv)
+              %td.text-center= "#{current_user_participation}%"
+              %td.text-center= number_to_currency(total_user) 
+              %td.text-center= total_user / RequestedService::UN_PUNTO 
+            %tr
+              %td.text-center{:colspan => 9}= "Servicio evaluado con regla costo interno"
+       

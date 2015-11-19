@@ -56,6 +56,10 @@ class RequestedService < ActiveRecord::Base
   QUOTE_USE_CATALOG = 1
   QUOTE_ADHOC       = 2
 
+  INDIRECTOS = 17.26 # 17.26%
+  MARGEN = 40.00 # 40%
+  UN_PUNTO = 10000.00 # 10,000 por cada punto
+
   def status_text
     STATUS[status.to_i]
   end

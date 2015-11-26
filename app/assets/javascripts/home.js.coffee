@@ -100,7 +100,6 @@ addServiceDialog = (lab_view = false, from_id = false) ->
   )
 
 $(document).on('click', '.add-service-link', () ->
-    $(this).prop('disabled', true)
     current_sample = $(this).data('sample-id')
     addServiceDialog(false)
   )

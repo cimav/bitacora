@@ -55,9 +55,10 @@
           - st_options += "<option value=\"1\" #{sel1}>Si</option>"
           = f.select :is_catalog, st_options.html_safe, {}, {:class => 'form-control'}
       - else
-        .field#field_laboratory_service_sale_price
-          = f.label :sale_price, 'Precio de Venta:'
-          %span= number_to_currency(@laboratory_service.sale_price)
+        - if @laboratory_service.is_catalog?
+          .field#field_laboratory_service_sale_price
+            = f.label :sale_price, 'Precio de Venta:'
+            %span= number_to_currency(@laboratory_service.sale_price)
       .field#field_laboratory_service_service_type_id
         = f.label :is_exclusive_vinculacion, 'Servicio Exclusivo para Vinculación'
         - st_options = ''

@@ -25,7 +25,7 @@
       - eq_cost = eq.hours * eq.equipment.hourly_rate
       - eq_internal_cost = eq.hours * eq.equipment.internal_hourly_rate
       - eq_total = eq_total + eq_cost  
-      - eq_internal_total = eq_total + eq_internal_cost  
+      - eq_internal_total = eq_internal_total + eq_internal_cost  
       - eqs << eq.equipment_id
       %tr.equipment-row{'data-id' => eq.id, :id => "equipment_row_#{eq.id}"}
         %td
@@ -43,7 +43,7 @@
                 - u_options += "<option value=\"#{i}\" selected=\"selected\">#{i} horas</option>"
               - else 
                 - u_options += "<option value=\"#{i}\">#{i} horas</option>"
-            = select_tag "eq_hours_#{eq.id}", u_options.html_safe, {:style => "width: 100%;", "data-id" => eq.id, :class => "eq_hours_template form-control"}
+            = select_tag "eq_hours_#{eq.id}", u_options.html_safe, {:style => "width: 100%; min-width: 120px;", "data-id" => eq.id, :class => "eq_hours_template form-control"}
           - else 
             = "#{eq.hours} horas"
         %td

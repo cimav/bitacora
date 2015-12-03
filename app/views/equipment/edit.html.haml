@@ -1,54 +1,65 @@
 %h1= @equipment.name
-= form_for @equipment, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-equipment-form'} do |f|
-  - if current_user.is_admin? 
-    .field#field_equipment_laboratory_id
-      = f.label :laboratory_id, 'Laboratorio:'
-    - lab_options = ''
-    - Laboratory.order('name').each do |lab|
-      - if @equipment.laboratory_id == lab.id
-        - lab_options += "<option value=\"#{lab.id}\" selected=\"selected\">#{lab.name}</option>"
-      - else
-        - lab_options += "<option value=\"#{lab.id}\">#{lab.name}</option>"
-    = f.select :laboratory_id, lab_options.html_safe, {}, {:class => 'form-control'}
-  .field#field_equipment_name
-    = f.label :name, 'Nombre:'
-    = f.text_field :name, {:class => 'form-control', :placeholder => 'Nombre del equipo'}
-  .field#field_laboratory_equipment_item_number
-    = f.label :item_number, 'Número de Inventario:'
-    = f.text_field :item_number, :placeholder => 'CABMS', :class => 'form-control'
-  .field#field_equipment_description
-    = f.label :description, 'Descripción:'
-    = f.text_area :description, {:class => 'form-control', :rows => 10}
-  .field#field_equipment_budget_item
-    = f.label :budget_item, 'Partida presupuestal:'
-    - if current_user.is_admin? 
-      = f.text_field :budget_item, {:class => 'form-control'}
-    - else  
-      %strong= number_to_currency(@equipment.budget_item)
-  .field#field_equipment_purchase_date
-    = f.label :purchase_date, 'Fecha de compra:'
-    - if current_user.is_admin? 
-      = f.text_field :purchase_date, {:class => 'form-control'}
-    - else  
-      %strong= number_to_currency(@equipment.purchase_date)
-  .field#field_equipment_purchase_price
-    = f.label :purchase_price, 'Precio de compra:'
-    - if current_user.is_admin? 
-      = f.text_field :purchase_price, {:class => 'form-control'}
-    - else  
-      %strong= number_to_currency(@equipment.purchase_price)
-  .field#field_equipment_hourly_rate
-    = f.label :hourly_rate, 'Costo por hora:'
-    - if current_user.is_admin? 
-      = f.text_field :hourly_rate, {:class => 'form-control'}
-    - else  
-      %strong= number_to_currency(@equipment.hourly_rate)
-  .field#field_equipment_internal_hourly_rate
-    = f.label :hourly_rate, 'Costo por hora (Interno):'
-    - if current_user.is_admin? 
-      = f.text_field :internal_hourly_rate, {:class => 'form-control'}
-    - else  
-      %strong= number_to_currency(@equipment.internal_hourly_rate)
-      
-  .submit-button
-    = f.submit "Actualizar equipo", {:class => "btn btn-primary"}
+%ul.nav.nav-tabs#admin-eq-tabs
+  %li.active#tab-service-details
+    %a{:href => "#admin-eq-details", "data-toggle" => "tab", "id" => "eq_details_tab"}= "Datos Generales"
+  %li#tab-alertas
+    %a{:href => "#admin-eq-alertas", "data-toggle" => "tab", "id" => "eq_alerts_tab"}= "Alertas"
+
+.tab-content
+  #admin-eq-details.tab-pane.active
+    = form_for @equipment, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-equipment-form'} do |f|
+      - if current_user.is_admin? 
+        .field#field_equipment_laboratory_id
+          = f.label :laboratory_id, 'Laboratorio:'
+        - lab_options = ''
+        - Laboratory.order('name').each do |lab|
+          - if @equipment.laboratory_id == lab.id
+            - lab_options += "<option value=\"#{lab.id}\" selected=\"selected\">#{lab.name}</option>"
+          - else
+            - lab_options += "<option value=\"#{lab.id}\">#{lab.name}</option>"
+        = f.select :laboratory_id, lab_options.html_safe, {}, {:class => 'form-control'}
+      .field#field_equipment_name
+        = f.label :name, 'Nombre:'
+        = f.text_field :name, {:class => 'form-control', :placeholder => 'Nombre del equipo'}
+      .field#field_laboratory_equipment_item_number
+        = f.label :item_number, 'Número de Inventario:'
+        = f.text_field :item_number, :placeholder => 'CABMS', :class => 'form-control'
+      .field#field_equipment_description
+        = f.label :description, 'Descripción:'
+        = f.text_area :description, {:class => 'form-control', :rows => 10}
+      .field#field_equipment_purchase_date
+        = f.label :purchase_date, 'Fecha de compra:'
+        - if current_user.is_admin? 
+          = f.text_field :purchase_date, {:class => 'form-control'}
+        - else  
+          %strong= @equipment.purchase_date
+      .field#field_equipment_purchase_price
+        = f.label :purchase_price, 'Precio de compra:'
+        - if current_user.is_admin? 
+          = f.text_field :purchase_price, {:class => 'form-control'}
+        - else  
+          %strong= number_to_currency(@equipment.purchase_price)
+      .field#field_equipment_hourly_rate
+        = f.label :hourly_rate, 'Costo por hora:'
+        - if current_user.is_admin? 
+          = f.text_field :hourly_rate, {:class => 'form-control'}
+        - else  
+          %strong= number_to_currency(@equipment.hourly_rate)
+      .field#field_equipment_internal_hourly_rate
+        = f.label :hourly_rate, 'Costo por hora (Interno):'
+        - if current_user.is_admin? 
+          = f.text_field :internal_hourly_rate, {:class => 'form-control'}
+        - else  
+          %strong= number_to_currency(@equipment.internal_hourly_rate)
+          
+      .submit-button
+        = f.submit "Actualizar equipo", {:class => "btn btn-primary"}
+
+  #admin-eq-alertas.tab-pane
+    #alertas_laboratory_service
+      / = render :partial => 'alerts/alerts', :locals => {:alerts => @alerts, 
+      /                                                   :from => 'equipment',
+      /                                                   :from_id => @equipment.id,
+      /                                                   :laboratory_service_id => 0, 
+      /                                                   :technician => 0, 
+      /                                                   :equipment_id => @equipment.id}

@@ -6,9 +6,12 @@
       %th{:colspan => 7, :class => "th-header"}= "Equipos"
     - if @requested_service.requested_service_equipments.count > 0
       %tr
-        %th= ""
-        %th= "Nombre"
-        %th= "Horas"
+        %th{:rowspan => 2}= ""
+        %th{:rowspan => 2}= "Nombre"
+        %th{:rowspan => 2}= "Horas"
+        %th{:colspan => 2}= "Para Vinculación"
+        %th{:colspan => 2}= "Para Interno"
+      %tr
         %th= "Costo x Hora"
         %th= "Subtotal"
         %th= "Costo x Hora (Interno)"

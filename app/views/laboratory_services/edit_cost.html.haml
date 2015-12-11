@@ -15,6 +15,50 @@
 
   #grand_total
     %span.grand_total_value
-      = "Total: #{number_to_currency(@grand_total)}"
-      %br
-      %div{style: "font-size: 14px;"}= "(Costo interno para evaluación: #{number_to_currency(@grand_total_internal)})"
+      = "Costo Interno para Vinculación: #{number_to_currency(@grand_total)}"
+    %br
+    %h4= "Puntos de estimulos que genera este servicio"
+    - if @laboratory_service.is_catalog?
+      - total_serv = @laboratory_service.sale_price / 2
+      %table.table{:style => 'font-size: 12px !important; width: 400px !important; font-weight: normal !important;'}
+        %tr
+          %th.text-center= "Precio Venta Vinculación"
+          %th.text-center
+            = "Costo para Estímulos"
+            %br
+            = "(Precio Venta / 2)"
+          %th.text-center= "Puntos"
+        %tr
+          %td.text-center= number_to_currency(@laboratory_service.sale_price)
+          %td.text-center= number_to_currency(total_serv)
+          %td.text-center= total_serv / RequestedService::UN_PUNTO 
+        %tr
+          %td.text-center{:colspan => 5}= "Servicio evaluado con regla costo vinculación"
+    - else
+      - total_serv = @grand_total_internal * (1 + RequestedService::INDIRECTOS / 100) * (1 + RequestedService::MARGEN / 100)
+      %table.table{:style => 'font-size: 12px !important; width: 400px !important;  font-weight: normal !important;'}
+        %tr
+          %th.text-center= "Costo Interno"
+          %th.text-center= "+"
+          %th.text-center
+            = "Indirectos"
+            %br
+            = "#{RequestedService::INDIRECTOS}%"
+          %th.text-center= "+"
+          %th.text-center
+            = "Margen"
+            %br
+            = "#{RequestedService::MARGEN}%"
+          %th.text-center= "Costo para Estímulos"
+          %th.text-center= "Puntos"
+        %tr
+          %td.text-center
+            %strong= number_to_currency(@grand_total_internal)
+          %td.text-center= "+"
+          %td.text-center= number_to_currency(@grand_total_internal * (RequestedService::INDIRECTOS / 100))
+          %td.text-center= "+"
+          %td.text-center= number_to_currency(@grand_total_internal * (RequestedService::MARGEN / 100))
+          %td.text-center= number_to_currency(total_serv)
+          %td.text-center= total_serv / RequestedService::UN_PUNTO 
+        %tr
+          %td.text-center{:colspan => 9}= "Servicio evaluado con regla costo interno"

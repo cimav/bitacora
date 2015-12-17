@@ -169,10 +169,7 @@
       #pts.tab-pane
         - if @requested_service.laboratory_service.is_catalog?
           - total_serv = @requested_service.laboratory_service.sale_price / 2
-          - if current_user_participation > 0
-            - total_user = total_serv / (current_user_participation / 100)
-          - else
-            - total_user = 0
+          %h4= "Costo para estímulos (evaluado por regla de Costo Vinculación)"
           %table.table
             %tr
               %th.text-center= "Precio Venta Vinculación"
@@ -180,26 +177,32 @@
                 = "Costo para Estímulos"
                 %br
                 = "(Precio Venta / 2)"
-              %th.text-center
-                = "Porcentaje Participación"
-                %br
-                = "#{current_user_participation}%"
-              %th.text-center= "Total"
-              %th.text-center= "Puntos"
             %tr
               %td.text-center= number_to_currency(@requested_service.laboratory_service.sale_price)
               %td.text-center= number_to_currency(total_serv)
-              %td.text-center= "#{current_user_participation}%"
-              %td.text-center= number_to_currency(total_user) 
-              %td.text-center= total_user / RequestedService::UN_PUNTO 
+
+          %h4= "Repartición"
+          %table.table
             %tr
-              %td.text-center{:colspan => 5}= "Servicio evaluado con regla costo vinculación"
+              %th= "Nombre"
+              %th.text-center= "Porcentaje Participación"
+              %th.text-center= "Total"
+              %th.text-center= "Puntos"
+            - @requested_service.requested_service_technicians.each do |p| 
+              - total_user = total_serv / (p.participation / 100)
+              - if current_user.id == p.user.id
+                - klass = 'success'
+              - else
+                - klass = 'participante'
+              %tr{:class => klass}
+                %td.text-center= p.user.full_name
+                %td.text-center= "#{p.participation}%"
+                %td.text-center= number_to_currency(total_user) 
+                %td.text-center= total_user / RequestedService::UN_PUNTO 
+
         - else
           - total_serv = @grand_total * (1 + RequestedService::INDIRECTOS / 100) * (1 + RequestedService::MARGEN / 100)
-          - if current_user_participation > 0
-            - total_user = total_serv / (current_user_participation / 100)
-          - else
-            - total_user = 0
+          %h4= "Costo para estímulos (evaluado por regla de Costo Interno)"
           %table.table
             %tr
               %th.text-center= "Costo Interno"
@@ -214,12 +217,6 @@
                 %br
                 = "#{RequestedService::MARGEN}%"
               %th.text-center= "Costo para Estímulos"
-              %th.text-center
-                = "Porcentaje Participación"
-                %br
-                = "#{current_user_participation}%"
-              %th.text-center= "Total"
-              %th.text-center= "Puntos"
             %tr
               %td.text-center= number_to_currency(@grand_total)
               %td.text-center= "+"
@@ -227,9 +224,25 @@
               %td.text-center= "+"
               %td.text-center= number_to_currency(@grand_total * (RequestedService::MARGEN / 100))
               %td.text-center= number_to_currency(total_serv)
-              %td.text-center= "#{current_user_participation}%"
-              %td.text-center= number_to_currency(total_user) 
-              %td.text-center= total_user / RequestedService::UN_PUNTO 
+          
+          %h4= "Repartición"
+          %table.table
             %tr
-              %td.text-center{:colspan => 9}= "Servicio evaluado con regla costo interno"
+              %th= "Nombre"
+              %th.text-center
+                = "Porcentaje Participación"
+              %th.text-center= "Total"
+              %th.text-center= "Puntos"
+            - @requested_service.requested_service_technicians.each do |p| 
+              - total_user = total_serv / (p.participation / 100)
+              - if current_user.id == p.user.id
+                - klass = 'success'
+              - else
+                - klass = 'participante'
+              %tr{:class => klass}
+                %td.text-center= p.user.full_name
+                %td.text-center= "#{p.participation}%"
+                %td.text-center= number_to_currency(total_user) 
+                %td.text-center= total_user / RequestedService::UN_PUNTO 
+            
        

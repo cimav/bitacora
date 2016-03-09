@@ -1,3 +1,9 @@
+// TEMPORAL PARA ESTIMULOS
+- lab_access = @requested_service.laboratory_service.laboratory.laboratory_members.where(:user_id => current_user.id).first.access rescue 0
+- im_lab_admin = lab_access.to_i == LaboratoryMember::ACCESS_ADMIN
+- im_service_tech = @requested_service.user_id == current_user.id
+- if !(@requested_service.sample.service_request.is_vinculacion?) && (im_lab_admin || im_service_tech)
+  #edicion_temporal{:style => 'border: 1px solid #dcc; background-color: #fee; padding: 1em; margin:1em 0;'}= "Por Evaluación de Estímulos, todos los servicios finalizados pueden ser editados (excepto servicios Vinculación)"
 #costeo 
   #technicians
     = render :partial => 'technicians', :locals => {:requested_service => @requested_service }

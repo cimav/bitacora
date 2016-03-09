@@ -12,7 +12,7 @@ class VinculacionSubscriptions
   def solicitar_costeo(attributes)
 
     # Create service_request
-    puts "Solicitar Costeo #{attributes['costeo_id']}: #{attributes['codigo']}"
+    Rails.logger.debug "Solicitar Costeo #{attributes['costeo_id']}: #{attributes['codigo']}"
     if u_requestor = User.where(:email => attributes['empleado_email']).first
       folder = u_requestor.service_request.new 
       folder.system_id                   = attributes['id']
@@ -43,7 +43,7 @@ class VinculacionSubscriptions
 
       # Add samples to service_request
       attributes['muestras'].each do |m|  
-        puts "Agregar muestra #{m['muestra']['identificacion']} (costeo #{attributes['costeo_id']})"
+        Rails.logger.debug "Agregar muestra #{m['muestra']['identificacion']} (costeo #{attributes['costeo_id']})"
         muestra = folder.sample.new
         muestra.system_id      = m['muestra']['id']
         muestra.number         = m['muestra']['codigo']
@@ -52,7 +52,7 @@ class VinculacionSubscriptions
         muestra.quantity       = m['muestra']['cantidad']
         muestra.save
         m['detalles'].each do |md|
-          puts "Agregar detalles de muestra #{md['consecutivo']}"
+          Rails.logger.debug "Agregar detalles de muestra #{md['consecutivo']}"
           sd = muestra.sample_details.new
           sd.consecutive = md['consecutivo']
           sd.client_identification = md['cliente_identificacion']
@@ -69,12 +69,12 @@ class VinculacionSubscriptions
 
   # ARRANQUE TIPO 3
   def notificar_arranque(attributes)
-    puts "Arranque de la solicitud coordinada #{attributes['solicitud_id']}"
-    puts attributes
+    Rails.logger.debug "Arranque de la solicitud coordinada #{attributes['solicitud_id']}"
+    Rails.logger.debug attributes
     if services = ServiceRequest.where(:system_request_id => attributes['solicitud_id'])
       services.each do |s|    
         # TODO: validar agente
-        puts "DURACION: #{attributes['duracion']}"
+        Rails.logger.debug "DURACION: #{attributes['duracion']}"
         s.system_status = ServiceRequest::SYSTEM_ACCEPTED
         s.vinculacion_start_date  = attributes['fecha_inicio']
         s.vinculacion_end_date    = attributes['fecha_termino']
@@ -82,22 +82,22 @@ class VinculacionSubscriptions
         s.vinculacion_delivery    = attributes['tiempo_entrega']
         
         # Update sample details
-        puts "Actualiza muestras"
+        Rails.logger.debug "Actualiza muestras"
         attributes['muestras'].each do |m|
-          puts "Actualizando muestra #{m['muestra']['id']}"
-          puts m
+          Rails.logger.debug "Actualizando muestra #{m['muestra']['id']}"
+          Rails.logger.debug m
           if muestra = s.sample.find_by(:system_id => m['muestra']['id'])
             muestra.number         = m['muestra']['codigo']
             muestra.identification = m['muestra']['identificacion']
             muestra.description    = m['muestra']['descripcion']
             muestra.quantity       = m['muestra']['cantidad']
             muestra.save
-            puts "Borrar detalles anteriores"
+            Rails.logger.debug "Borrar detalles anteriores"
             muestra.sample_details.destroy_all
-            puts "Poner nuevos detalles"
+            Rails.logger.debug "Poner nuevos detalles"
             m['detalles'].each do |md|
-              puts "Actualizar detalles de muestra #{md['consecutivo']}"
-              puts md
+              Rails.logger.debug "Actualizar detalles de muestra #{md['consecutivo']}"
+              Rails.logger.debug md
               sd = muestra.sample_details.new
               sd.consecutive = md['consecutivo']
               sd.client_identification = md['cliente_identificacion']
@@ -108,28 +108,28 @@ class VinculacionSubscriptions
         end
 
         if s.save
-          puts "Iniciado el folder #{s.id}"
+          Rails.logger.debug "Iniciado el folder #{s.id}"
           s.requested_services.each do |rs|
-            puts "Iniciado el servicio #{rs.id}"
+            Rails.logger.debug "Iniciado el servicio #{rs.id}"
             rs.status = RequestedService::INITIAL
             rs.save
           end
         else 
-          puts "Error al guardar service_request"
+          Rails.logger.debug "Error al guardar service_request"
         end
       end
     else
-      puts "Servicio no encontrado"
+      Rails.logger.debug "Servicio no encontrado"
     end
   end
 
 
   # ARRANQUE TIPO 1
   def notificar_arranque_no_coordinado(attributes)
-    puts "Arranque de la solicitud #{attributes['solicitud_id']}"
+    Rails.logger.debug "Arranque de la solicitud #{attributes['solicitud_id']}"
 
     # Create service_request
-    puts "Crear carpeta #{attributes['codigo']}"
+    Rails.logger.debug "Crear carpeta #{attributes['codigo']}"
     if u_requestor = User.where(:email => attributes['agente_email']).first
       folder = u_requestor.service_request.new 
       folder.system_id                   = attributes['id']
@@ -160,7 +160,7 @@ class VinculacionSubscriptions
 
       # Add samples to service_request  
       m = attributes['muestra'] 
-      puts "Agregar muestra #{m['identificacion']}"
+      Rails.logger.debug "Agregar muestra #{m['identificacion']}"
       muestra = folder.sample.new
       muestra.system_id      = m['id']
       muestra.identification = m['identificacion']
@@ -170,7 +170,7 @@ class VinculacionSubscriptions
 
       # Add details to sample
       attributes['muestra_detalles'].each do |md|
-        puts "Agregar detalles de muestra #{md['consecutivo']}"
+        Rails.logger.debug "Agregar detalles de muestra #{md['consecutivo']}"
         sd = muestra.sample_details.new
         sd.consecutive = md['consecutivo']
         sd.client_identification = md['cliente_identificacion']
@@ -197,10 +197,10 @@ class VinculacionSubscriptions
 
   # ARRANQUE TIPO 2
   def notificar_arranque_tipo_2(attributes)
-    puts "Arranque Tipo 2 de la solicitud #{attributes['solicitud_id']}"
+    Rails.logger.debug "Arranque Tipo 2 de la solicitud #{attributes['solicitud_id']}"
 
     # Create service_request
-    puts "Crear carpeta #{attributes['carpeta_codigo']}"
+    Rails.logger.debug "Crear carpeta #{attributes['carpeta_codigo']}"
     if u_requestor = User.where(:email => attributes['responsable_email']).first
       folder = u_requestor.service_request.new 
       folder.system_id                   = attributes['id']
@@ -236,7 +236,7 @@ class VinculacionSubscriptions
 
       # Add samples to service_request
       attributes['muestras'].each do |m|  
-        puts "Agregar muestra #{m['muestra']['identificacion']}"
+        Rails.logger.debug "Agregar muestra #{m['muestra']['identificacion']}"
         muestra = folder.sample.new
         muestra.system_id      = m['muestra']['id']
         muestra.number         = m['muestra']['codigo']
@@ -245,7 +245,7 @@ class VinculacionSubscriptions
         muestra.quantity       = m['muestra']['cantidad']
         muestra.save
         m['detalles'].each do |md|
-          puts "Agregar detalles de muestra #{md['consecutivo']}"
+          Rails.logger.debug "Agregar detalles de muestra #{md['consecutivo']}"
           sd = muestra.sample_details.new
           sd.consecutive = md['consecutivo']
           sd.client_identification = md['cliente_identificacion']
@@ -256,7 +256,7 @@ class VinculacionSubscriptions
 
       # Add services 
       attributes['servicios'].each do |s|
-        puts "Agregar servicio #{s['nombre']} a #{s['muestra_codigo']}"
+        Rails.logger.debug "Agregar servicio #{s['nombre']} a #{s['muestra_codigo']}"
         if muestra = Sample.where(:number => s['muestra_codigo']).first
           if lab_service = LaboratoryService.find(s['servicio_bitacora_id'])
             requested_service = RequestedService.new
@@ -279,46 +279,46 @@ class VinculacionSubscriptions
 
 
   def notificar_cancelacion(attributes)
-    puts "Cancelar solicitud #{attributes['solicitud_id']}"
+    Rails.logger.debug "Cancelar solicitud #{attributes['solicitud_id']}"
     if services = ServiceRequest.where(:system_request_id => attributes['solicitud_id'])
       services.each do |s|    
         # TODO: validar agente
         s.system_status = ServiceRequest::SYSTEM_CANCELED
         if s.save
-          puts "Cancelado el folder #{s.id}"
+          Rails.logger.debug "Cancelado el folder #{s.id}"
           s.requested_services.each do |rs|
-            puts "Cancelando el servicio #{rs.id}"
+            Rails.logger.debug "Cancelando el servicio #{rs.id}"
             rs.status = RequestedService::CANCELED
             rs.save
           end
         else 
-          puts "Error al guardar service_request"
+          Rails.logger.debug "Error al guardar service_request"
         end
       end
     else
-      puts "Servicio no encontrado"
+      Rails.logger.debug "Servicio no encontrado"
     end
   end
 
   def cancelar_servicio_solicitado(attributes)
-    puts "Cancelar servicio #{attributes['servicio_id']} de la solicitud #{attributes['solicitud_id']}"
+    Rails.logger.debug "Cancelar servicio #{attributes['servicio_id']} de la solicitud #{attributes['solicitud_id']}"
     if services = ServiceRequest.where(:system_id => attributes['id'])
       services.each do |s|    
         # TODO: validar agente
         s.system_status = ServiceRequest::SYSTEM_CANCELED
         if s.save
-          puts "Cancelado el folder #{s.id}"
+          Rails.logger.debug "Cancelado el folder #{s.id}"
           s.requested_services.each do |rs|
-            puts "Cancelando el servicio #{rs.id}"
+            Rails.logger.debug "Cancelando el servicio #{rs.id}"
             rs.status = RequestedService::CANCELED
             rs.save
           end
         else 
-          puts "Error al guardar service_request"
+          Rails.logger.debug "Error al guardar service_request"
         end
       end
     else
-      puts "Servicio no encontrado"
+      Rails.logger.debug "Servicio no encontrado"
     end
   end
 

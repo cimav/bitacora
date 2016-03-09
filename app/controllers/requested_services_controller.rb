@@ -628,7 +628,11 @@ class RequestedServicesController < ApplicationController
     the_eq = Equipment.find(params[:eq_id])
     eq.equipment_id = params[:eq_id]
     eq.hours = params[:hours]
-    eq.hourly_rate = the_eq.hourly_rate
+    if @requested_service.service_request.is_vinculacion?
+      eq.hourly_rate = the_eq.hourly_rate
+    else
+      eq.hourly_rate = the_eq.internal_hourly_rate
+    end
 
     if eq.save
       flash[:notice] = "Equipo agregado"

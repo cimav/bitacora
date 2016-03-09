@@ -24,6 +24,12 @@
 - if !(im_lab_admin || im_service_tech)
   - editable = false
 
+// TEMPORAL PARA ESTIMULOS
+- if !(@requested_service.sample.service_request.is_vinculacion?) && (im_lab_admin || im_service_tech)
+  - editable = true
+  - participation_edit = true
+  - show_table = true
+
 - if show_table
   %table.table.table-striped
     %thead

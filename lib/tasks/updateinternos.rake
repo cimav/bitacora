@@ -7,10 +7,11 @@ end
 
 task :updateinternos => :environment do |t, args|
   puts "Actualizar servicios internos con plantilla"
-  rs = RequestedService.joins(:sample,:service_request).where('request_type_id NOT IN (1,12,14) AND YEAR(requested_services.created_at) = 2015');
+  rs = RequestedService.joins(:sample,:service_request).where('request_type_id NOT IN (1,12,14) AND YEAR(requested_services.created_at) >= 2015');
   c = 0
   puts "-----------------------------------------------------------------------"
   rs.each do |r|
+    puts "PROCESANDO #{r.id}"
     c = c + 1
     tech_cost = 0
     eq_cost = 0
@@ -31,6 +32,7 @@ task :updateinternos => :environment do |t, args|
         end
       else
         template_service.requested_service_technicians.each do |tech|
+          puts "TEC"
           tiene_datos_tech = 'TPL'
           user_tech = User.find(tech.user_id)
           tech_cost = tech_cost + (tech.hours * r.sample.quantity) * user_tech.hourly_wage
@@ -49,10 +51,12 @@ task :updateinternos => :environment do |t, args|
       if r.requested_service_equipments.count > 0 
         tiene_datos_eq = 'SI'
         r.requested_service_equipments.each do |eq|
-          eq_cost = eq_cost + (eq.hours * r.sample.quantity) * eq.hourly_rate
+          the_eq = Equipment.find(eq.equipment_id)
+          eq_cost = eq_cost + (eq.hours * r.sample.quantity) * the_eq.internal_hourly_rate
         end
       else
         template_service.requested_service_equipments.each do |eq| 
+          puts "EQ"
           tiene_datos_eq = 'TPL'
           the_eq = Equipment.find(eq.equipment_id)
           eq_cost = eq_cost + (eq.hours * r.sample.quantity) * the_eq.internal_hourly_rate
@@ -75,6 +79,7 @@ task :updateinternos => :environment do |t, args|
         end
       else
         template_service.requested_service_others.each do |other| 
+          puts "OTHER"
           tiene_datos_other = 'TPL'
           other_cost = other_cost + (other.price * r.sample.quantity)
 

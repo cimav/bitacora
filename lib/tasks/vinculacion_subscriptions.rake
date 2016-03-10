@@ -71,7 +71,7 @@ class VinculacionSubscriptions
   def notificar_arranque(attributes)
     Rails.logger.debug "Arranque de la solicitud coordinada #{attributes['solicitud_id']}"
     Rails.logger.debug attributes
-    if services = ServiceRequest.where(:system_request_id => attributes['solicitud_id'])
+    if services = ServiceRequest.where(:system_request_id => attributes['solicitud_id']).where.not(:system_status => ServiceRequest::SYSTEM_CANCELED)
       services.each do |s|    
         # TODO: validar agente
         Rails.logger.debug "DURACION: #{attributes['duracion']}"
@@ -290,6 +290,14 @@ class VinculacionSubscriptions
             Rails.logger.debug "Cancelando el servicio #{rs.id}"
             rs.status = RequestedService::CANCELED
             rs.save
+            if u_agente = User.where(:email => attributes['agente_email']).first
+              rs.activity_log.create(user_id: u_agente.id,
+                                     service_request_id: rs.sample.service_request_id,
+                                     sample_id: rs.sample_id,
+                                     message_type: 'CANCELED',
+                                     requested_service_status: RequestedService::CANCELED,
+                                     message: "Se ha cancelado el servicio")
+            end
           end
         else 
           Rails.logger.debug "Error al guardar service_request"
@@ -312,6 +320,14 @@ class VinculacionSubscriptions
             Rails.logger.debug "Cancelando el servicio #{rs.id}"
             rs.status = RequestedService::CANCELED
             rs.save
+            if u_agente = User.where(:email => attributes['agente_email']).first
+              rs.activity_log.create(user_id: u_agente.id,
+                                     service_request_id: rs.sample.service_request_id,
+                                     sample_id: rs.sample_id,
+                                     message_type: 'CANCELED',
+                                     requested_service_status: RequestedService::CANCELED,
+                                     message: "Se ha cancelado el servicio")
+            end
           end
         else 
           Rails.logger.debug "Error al guardar service_request"

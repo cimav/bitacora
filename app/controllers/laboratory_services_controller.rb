@@ -10,8 +10,19 @@ class LaboratoryServicesController < ApplicationController
     @alerts = {}
 
     @laboratory_service.alerts.where(:status => Alert::OPEN).each do |alert|
-      @alerts[alert.start_date] = alert
+      @alerts["#{alert.start_date}-#{alert.id}"] = alert
     end
+
+    @laboratory_service.service_template.requested_service_equipments.each do |e|
+      puts e.equipment.name
+      e.equipment.alerts.where(:status => Alert::OPEN).each do |alert|
+        @alerts["#{alert.start_date}-#{alert.id}"] = alert
+      end
+    end
+
+
+    @alerts = @alerts.sort.to_h
+
     render :layout => 'standalone'
   end
 

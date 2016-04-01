@@ -2,21 +2,31 @@
   = f.hidden_field :laboratory_service_id, {:value => laboratory_service_id}
   = f.hidden_field :equipment_id, {:value => equipment_id}
   = f.hidden_field :technician, {:value => technician}
-  = f.hidden_field :message_type, {:value => 'USER'}
-  #alert-form
-    %table.table.table-bordered
+  = f.hidden_field :message_type, {:value => message_type}
+  #alert-form{:style => 'padding-right: 20px; padding-top: 20px;'}
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title= "Nueva alerta"
+      .panel-body
+        .row
+          .col-sm-6
+            =f.text_area :message, :rows=>2, :placeholder => 'Escribe aquí tu alerta', :class => 'form-control'
+          .col-sm-6
+            %strong= "Fecha de Inicio"
+            =f.text_field :start_date, :class => 'form-control', :type => "date"
+            %br
+            %strong= "Fecha de Termino"
+            =f.text_field :end_date, :class => 'form-control', :type => "date"
+            %br
+            =f.submit "Agregar alerta", :class => "btn btn-info"
+
+    %table.table.table-bordered{:style => 'width: 100%;'}
       %tr
         %th= "Alerta"
         %th= "Estado"
         %th.dates= "Inicio"
         %th.dates= "Fin"
         %th= "Reporta"
-      %tr
-        %td= f.text_area :message, :placeholder => 'Escribe aquí tu alerta', :class => 'form-control'
-        %td= ""
-        %td= f.text_field :start_date, :class => 'form-control', :type => "date"
-        %td= f.text_field :end_date, :class => 'form-control', :type => "date"
-        %td= f.submit "Agregar alerta", :class => "btn btn-info"
       - alerts.each do |k,alert|
         %tr
           %td
@@ -33,3 +43,4 @@
           %td
             = alert.user.full_name
             .meta= date_text(alert.created_at)
+    

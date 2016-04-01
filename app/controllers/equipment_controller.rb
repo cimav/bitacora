@@ -64,6 +64,11 @@ class EquipmentController < ApplicationController
 
   def edit
     @equipment = Equipment.find(params[:id])
+    @alerts = {}
+
+    @equipment.alerts.order('created_at DESC').each do |alert|
+      @alerts[alert.created_at] = alert
+    end
     render :layout => false
   end
 

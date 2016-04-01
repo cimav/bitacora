@@ -30,5 +30,9 @@ class LaboratoryService < ActiveRecord::Base
     template.user_id = self.laboratory.user_id
     template.save(:validate => false)
   end
-  
+
+  def service_template
+    RequestedService.where(:number => 'TEMPLATE', :laboratory_service_id => self.id).first
+  end
+    
 end

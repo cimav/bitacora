@@ -5,6 +5,7 @@
 - if @alerts.count > 0
   %table.table.table-bordered
     %tr
+      %th= "Tipo"
       %th= "Alerta"
       %th= "Estado"
       %th= "Inicio"
@@ -15,6 +16,8 @@
       %tr
         %td
           %span.glyphicon.glyphicon-warning-sign{:style => 'color: #fb0;'}
+          = alert.message_type
+        %td  
           = alert.message
         %td= alert.status_text
         %td= date_text(alert.start_date)

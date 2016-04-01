@@ -56,10 +56,11 @@
         = f.submit "Actualizar equipo", {:class => "btn btn-primary"}
 
   #admin-eq-alertas.tab-pane
-    #alertas_laboratory_service
-      / = render :partial => 'alerts/alerts', :locals => {:alerts => @alerts, 
-      /                                                   :from => 'equipment',
-      /                                                   :from_id => @equipment.id,
-      /                                                   :laboratory_service_id => 0, 
-      /                                                   :technician => 0, 
-      /                                                   :equipment_id => @equipment.id}
+    #alertas_equipment
+      = render :partial => 'alerts/alerts', :locals => {:alerts => @alerts, 
+                                                        :from => 'equipment',
+                                                        :from_id => @equipment.id,
+                                                        :laboratory_service_id => 0, 
+                                                        :technician => 0, 
+                                                        :equipment_id => @equipment.id,
+                                                        :message_type => 'EQUIPO'}

@@ -18,6 +18,22 @@ class AlertsController < ApplicationController
     render 'show', :layout => false
   end
 
+  def get_from_equipment
+    @equipment = Equipment.find(params[:id])
+    
+    @alerts = {}
+    @technician = 0
+    @equipment_id = params[:id]
+    @laboratory_service_id = 0
+    @from = "equipment"
+    @from_id = params[:id]
+
+    @equipment.alerts.order('created_at DESC').each do |alert|
+      @alerts[alert.created_at] = alert
+    end
+    render 'show', :layout => false
+  end
+
   def resolve 
     @alert = Alert.find(params[:id])
     @alert.end_date = DateTime.now

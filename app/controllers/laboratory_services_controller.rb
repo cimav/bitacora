@@ -14,7 +14,6 @@ class LaboratoryServicesController < ApplicationController
     end
 
     @laboratory_service.service_template.requested_service_equipments.each do |e|
-      puts e.equipment.name
       e.equipment.alerts.where(:status => Alert::OPEN).each do |alert|
         @alerts["#{alert.start_date}-#{alert.id}"] = alert
       end

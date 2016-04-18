@@ -9,14 +9,8 @@
         %h3.panel-title= "Nueva alerta"
       .panel-body
         .row
-          .col-sm-6
+          .col-sm-12
             =f.text_area :message, :rows=>2, :placeholder => 'Escribe aquí tu alerta', :class => 'form-control'
-          .col-sm-6
-            %strong= "Fecha de Inicio"
-            =f.text_field :start_date, :class => 'form-control', :type => "date"
-            %br
-            %strong= "Fecha de Termino"
-            =f.text_field :end_date, :class => 'form-control', :type => "date"
             %br
             =f.submit "Agregar alerta", :class => "btn btn-info"
 

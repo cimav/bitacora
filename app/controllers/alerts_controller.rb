@@ -63,6 +63,8 @@ class AlertsController < ApplicationController
   def create
     params[:alert][:user_id] = current_user.id
     params[:alert][:status] = Alert::OPEN
+    params[:alert][:start_date] = DateTime.now
+
     flash = {}
     mensaje_enviar = ''
     if params[:alert][:laboratory_service_id] == "0"

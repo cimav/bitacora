@@ -42,6 +42,8 @@ class AlertsController < ApplicationController
     if @alert.save
       flash[:notice] = "Alerta resuelta."
 
+      QueueBus.publish('resolver_alerta', {:alerta_id => @alert.id, :fecha_cierre => @alert.end_date, :email => current_user.email, :lista => alerted_services(@alert)})
+      
       respond_with do |format|
         format.html do
           if request.xhr?
@@ -97,7 +99,7 @@ class AlertsController < ApplicationController
     if @alert.save
       flash[:notice] = "Alerta creada."
 
-      QueueBus.publish('recibir_alerta', {:alerta_id => @alert.id, :email => current_user.email, :mensaje => mensaje_enviar, :lista => alerted_services(@alert)})
+      QueueBus.publish('recibir_alerta', {:alerta_id => @alert.id, :fecha_apertura => @alert.start_date, :email => current_user.email, :mensaje => mensaje_enviar, :lista => alerted_services(@alert)})
 
       respond_with do |format|
         format.html do

@@ -21,7 +21,9 @@
       %h2
         = "Reporte del servicio #{@details['codigo']}"
 
-      %h3= "Participación"
+      %h3{:id => 'participacion'}
+        = "Participación"
+        %span.total{:id => 'sumatoria'}= ''
       %table.table.table-bordered
         %thead
           %tr
@@ -31,7 +33,7 @@
           - @participants.each do |p|
             %tr
               %td= p.full_name
-              %td= number_field_tag "user[#{p.id}]", nil, {:class => 'form-control'}
+              %td= number_field_tag "user[#{p.id}]", nil, {:class => 'form-control pvalor', :onkeyup => "this.value = this.value.split('.').join(''); if (this.value > 100) { this.value = 100; }; doSumatoria();",  :min => 0, :max => 100, :step => 1}
       
       %h3
         = "Costeo final" 
@@ -62,4 +64,28 @@
                   %td.text-right=number_to_currency(i['precio_unitario'])
                   %td.text-right=number_to_currency(subtotal)      
       .actions
-        %button#send-report-to-vinculacion.btn.btn-primary.btn-lg{'data-id' => @request.id}= "Enviar reporte"
+        %button#send-report-to-vinculacion.btn.btn-primary.btn-lg{'disabled' => 'disabled', 'data-id' => @request.id}= "Enviar reporte"
+:javascript
+  function doSumatoria() {
+    var sum = 0;
+    $('.pvalor').each(function(){
+        if (isNaN(parseFloat(this.value))) {
+          sum += 0;
+          alert('aqui');
+        } else {
+          sum += parseFloat(this.value);
+        }
+    });
+    if (sum > 100) {
+      $('#participacion').addClass('pasado');
+    } else {
+      $('#participacion').removeClass('pasado');
+    }
+    $('#sumatoria').html(sum + '%');
+    if ($('#sumatoria').html() == '100%') {
+      $('#send-report-to-vinculacion').prop( "disabled", false );
+    } else {
+      $('#send-report-to-vinculacion').prop( "disabled", true );
+    }
+  }
+

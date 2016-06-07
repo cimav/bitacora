@@ -14,6 +14,7 @@ class ServiceRequest < ActiveRecord::Base
 
   has_many :service_request_participations
   has_many :service_files
+  #has_many :vinculacion_files, :foreign_key => 'system_request_id'
 
   belongs_to :request_type
   belongs_to :user
@@ -61,6 +62,10 @@ class ServiceRequest < ActiveRecord::Base
     SYSTEM_CANCELED          => 'Cancelado',
     SYSTEM_IN_PROGRESS       => 'En progreso'
   }
+
+  def vinculacion_files
+    VinculacionFile.where("solicitud_id = ?", self.system_request_id)
+  end
 
   def system_status_text
     SYSTEM_STATUS[system_status.to_i]

@@ -26,6 +26,7 @@ Bitacora::Application.routes.draw do
   post '/service_requests/delete_collaborator' => 'service_requests#delete_collaborator'
   get '/service_requests/:id/folder_without_services' => 'service_requests#folder_without_services'
   get '/service_requests/:id/files_list' => 'service_requests#files_list'
+  get '/vinculacion_files/get/:id', to: 'vinculacion_files#file'
 
 
   resources :service_requests 
@@ -194,6 +195,7 @@ Bitacora::Application.routes.draw do
 
   get '/other_types/live_search' => 'other_types#live_search'
   resources :other_types
+
 
   get '/admin' => 'admin#index'
   get '/admin/clients' => 'admin#clients'

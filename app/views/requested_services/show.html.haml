@@ -139,6 +139,9 @@
         %a{:href => "#costeo", "data-toggle" => "tab", "id" => "costeo_tab"}= "Costeo"
       %li
         %a{:href => "#archivos", "data-toggle" => "tab", :id => "active-archivos-link"}= "Archivos"
+      - if @requested_service.sample.service_request.is_vinculacion?
+        %li 
+          %a{:href => "#archivosvinculacion", "data-toggle" => "tab", :id => "active-archivosvinculacion-link"}= "Archivos Vinculación"
       - unless @requested_service.sample.service_request.is_vinculacion?
         %li
           %a{:href => "#pts", "data-toggle" => "tab", :id => "active-pts-link"}= "Puntos Estímulos"
@@ -160,7 +163,9 @@
     #archivos.tab-pane
       = render :partial => 'files', :locals => {:requested_service => @requested_service }
       .clearfix
-    
+    - if @requested_service.sample.service_request.is_vinculacion?
+      #archivosvinculacion.tab-pane
+        = render :partial => 'files_vinculacion', :locals => {:requested_service => @requested_service }
     - unless @requested_service.sample.service_request.is_vinculacion?
       - if part = @requested_service.requested_service_technicians.where(:user_id => current_user.id).first
         - current_user_participation = part.participation

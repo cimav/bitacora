@@ -603,6 +603,94 @@ $(document).on('ajax:error', '#new-laboratory-equipment-form', (evt, xhr, status
     showFormErrors(xhr, status, error)
   )
 
+#----------------------------
+# LAB ADMIN CLASSIFICATIONS
+#----------------------------
+$(document).on('ajax:beforeSend', '.admin-classifications', (evt, xhr, settings) ->
+    lab_id = $(this).attr('data-laboratory-id')
+    url = '/laboratory/' + lab_id + '/admin_classifications'
+  )
+$(document).on('ajax:success', '.admin-classifications', (evt, data, status, xhr) ->
+    $('#admin-area').empty().html(data)
+  )
+
+$(document).on('ajax:error', '.admin-classifications', (evt, xhr, status, error) ->
+    alert('Error')
+  )
+
+$(document).on('keyup', '#admin-lab-classification-search-box', () ->
+    adminLabClassificationLiveSearch()
+  )
+
+
+@adminLabClassificationLiveSearch = adminLabClassificationLiveSearch = () ->
+  $("#admin-lab-classification-search-box").addClass("loading")
+  form = $("#admin-lab-classification-live-search")
+  lab_id = form.attr('data-laboratory-id')
+  url = "/laboratory/#{lab_id}/admin_lab_classification_live_search"
+  formData = form.serialize()
+  $.get(url, formData, (html) ->
+    $("#admin-lab-classification-search-box").removeClass("loading")
+    $("#admin-lab-classifications-list").empty().html(html)
+    $("#admin-lab-classifications-list .admin-lab-classification-item:first").click()
+  )
+
+$(document).on('click', '.admin-lab-classification-item', () ->
+    $('.admin-lab-classification-item').removeClass('selected')
+    $(this).addClass('selected')
+    url = '/laboratory_service_classifications/' + $(this).attr('data-classification-id') + '/edit'
+
+
+    $.get(url, {}, (html) ->
+      $('#admin-classification-details').html(html)
+    )
+  )
+
+$(document).on('ajax:beforeSend', '#edit-classification-form', (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.has-errors').removeClass('has-errors')
+  )
+$(document).on('ajax:success', '#edit-classification-form', (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    id = res['id']
+    $('#classification_name_' + id).html(res['name'])
+    showFlash(res['flash']['notice'], 'success')
+  )
+
+$(document).on('ajax:error', '#edit-classification-form', (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+$(document).on('click', '#add-new-classification-button', () ->
+    url = '/laboratory/' + $(this).attr('data-laboratory-id') + '/new_classification'
+    $.get(url, {}, (html) ->
+      $('#admin-classification-details').empty().html(html)
+    )
+  )
+
+$(document).on('ajax:beforeSend', '#new-lab-service-classification-form', (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.has-errors').removeClass('has-errors')
+  )
+$(document).on('ajax:success', '#new-lab-service-classification-form', (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    $('#admin-lab-classification-search-box').val(res['name'])
+    adminLabClassificationLiveSearch()
+  )
+
+$(document).on('ajax:error', '#new-lab-service-classification-form', (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+
+#--------
+# OTHER
+#--------
+
+
 
 $(document).on('click', '.show_fields', () ->
   the_id = $(this).attr('id')

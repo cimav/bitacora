@@ -1,0 +1,17 @@
+#admin-area 
+  = render :partial => 'tabs', :locals => {:laboratory => @laboratory, :option_selected => 'classification'}
+  #lab-classifications-panel
+    #classification-search-panel
+      = form_tag laboratory_services_path, :id => 'admin-lab-classification-live-search', :method => 'get', :remote => true, 'data-laboratory-id' => @laboratory.id do
+        = text_field_tag :q, nil, :id => 'admin-lab-classification-search-box', :placeholder => 'Busqueda', :class => 'form-control'
+    #admin-lab-classifications-list
+    #admin-lab-classifications-buttons
+      = button_tag "Agregar nueva clasificación", {:class => 'btn btn-info', :id => 'add-new-classification-button', 'data-laboratory-id' => @laboratory.id}
+
+  #admin-classification-details
+
+  
+:javascript 
+  $(function() {
+    adminLabClassificationLiveSearch()
+  })

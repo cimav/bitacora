@@ -584,6 +584,7 @@ table.services-list {
 
 #services-panel,
 #members-panel,
+#lab-classifications-panel,
 #lab-equipment-panel {
   width: $lab-services-list-width;
   border-right: 1px solid $line-color;
@@ -593,7 +594,8 @@ table.services-list {
   bottom: 16px;
   #members-search-panel,
   #lab-equipment-search-panel,
-  #services-search-panel {
+  #services-search-panel,
+  #classification-search-panel {
     padding-top: 10px;
     margin-bottom: 10px;
     select {
@@ -615,7 +617,8 @@ table.services-list {
   }
   #laboratory-services-list,
   #admin-lab-members-list,
-  #admin-lab-services-list {
+  #admin-lab-services-list,
+  #admin-lab-classifications-list {
     border-top: 1px solid $line-color;
     overflow: auto;
     position: absolute;
@@ -624,6 +627,7 @@ table.services-list {
     background: $white;
     .lab-service-item,
     .admin-lab-service-item,
+    .admin-lab-classification-item,
     .admin-lab-member-item {
       cursor: pointer;
       padding: 5px;
@@ -646,7 +650,9 @@ table.services-list {
       }
     }
   }
-  #admin-lab-equipment-list {
+  
+  #admin-lab-equipment-list, 
+  #admin-lab-classifications-list {
     top: 70px !important;
     border-top: 1px solid $line-color;
     overflow: auto;

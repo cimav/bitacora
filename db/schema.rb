@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151116140648) do
+ActiveRecord::Schema.define(version: 20160621165712) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.integer  "user_id",                  limit: 4
@@ -48,6 +48,22 @@ ActiveRecord::Schema.define(version: 20151116140648) do
   add_index "alerts", ["laboratory_service_id"], name: "index_alerts_on_laboratory_service_id", using: :btree
   add_index "alerts", ["technician"], name: "index_alerts_on_technician", using: :btree
   add_index "alerts", ["user_id"], name: "index_alerts_on_user_id", using: :btree
+
+  create_table "asignacionusuario", id: false, force: :cascade do |t|
+    t.integer "requested_service_id", limit: 4
+    t.integer "reguser",              limit: 4
+    t.decimal "regh",                           precision: 6, scale: 2
+    t.integer "assuser",              limit: 4
+    t.decimal "assh",                           precision: 6, scale: 2
+    t.integer "user_id",              limit: 4
+  end
+
+  create_table "asignacionusuario100", id: false, force: :cascade do |t|
+    t.integer "requested_service_id", limit: 4
+    t.integer "reguser",              limit: 4
+    t.integer "assuser",              limit: 4
+    t.integer "user_id",              limit: 4
+  end
 
   create_table "borra", id: false, force: :cascade do |t|
     t.integer "id",              limit: 4,  default: 0, null: false
@@ -114,6 +130,14 @@ ActiveRecord::Schema.define(version: 20151116140648) do
 
   add_index "collaborators", ["service_request_id"], name: "index_collaborators_on_service_request_id", using: :btree
   add_index "collaborators", ["user_id"], name: "index_collaborators_on_user_id", using: :btree
+
+  create_table "correccion", id: false, force: :cascade do |t|
+    t.integer "id",        limit: 4,  default: 0, null: false
+    t.integer "rit",       limit: 4,  default: 0, null: false
+    t.string  "number",    limit: 20
+    t.integer "asignado",  limit: 4
+    t.integer "plantilla", limit: 4
+  end
 
   create_table "countries", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -205,6 +229,14 @@ ActiveRecord::Schema.define(version: 20151116140648) do
   add_index "external_requests", ["client_contact_id"], name: "index_external_requests_on_client_contact_id", using: :btree
   add_index "external_requests", ["client_id"], name: "index_external_requests_on_client_id", using: :btree
 
+  create_table "ids_con", id: false, force: :cascade do |t|
+    t.integer "requested_service_id", limit: 4
+  end
+
+  create_table "ids_metro", id: false, force: :cascade do |t|
+    t.integer "id", limit: 4, default: 0, null: false
+  end
+
   create_table "laboratories", force: :cascade do |t|
     t.string   "name",             limit: 255
     t.string   "prefix",           limit: 5
@@ -230,19 +262,29 @@ ActiveRecord::Schema.define(version: 20151116140648) do
   add_index "laboratory_members", ["laboratory_id"], name: "index_laboratory_members_on_laboratory_id", using: :btree
   add_index "laboratory_members", ["user_id"], name: "index_laboratory_members_on_user_id", using: :btree
 
+  create_table "laboratory_service_classifications", force: :cascade do |t|
+    t.integer  "laboratory_id", limit: 4
+    t.string   "name",          limit: 255
+    t.text     "description",   limit: 65535
+    t.integer  "status",        limit: 4
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
   create_table "laboratory_services", force: :cascade do |t|
-    t.integer  "laboratory_id",            limit: 4
-    t.integer  "service_type_id",          limit: 4
-    t.text     "name",                     limit: 16777215
-    t.text     "description",              limit: 16777215
-    t.datetime "created_at",                                                                     null: false
-    t.datetime "updated_at",                                                                     null: false
-    t.decimal  "internal_cost",                             precision: 10, scale: 2
-    t.integer  "is_catalog",               limit: 4,                                 default: 0
-    t.decimal  "sale_price",                                precision: 10, scale: 2
-    t.integer  "is_exclusive_vinculacion", limit: 4,                                 default: 0
-    t.decimal  "evaluation_cost",                           precision: 10, scale: 2
-    t.integer  "status",                   limit: 4,                                 default: 0
+    t.integer  "laboratory_id",                        limit: 4
+    t.integer  "service_type_id",                      limit: 4
+    t.text     "name",                                 limit: 16777215
+    t.text     "description",                          limit: 16777215
+    t.datetime "created_at",                                                                                 null: false
+    t.datetime "updated_at",                                                                                 null: false
+    t.decimal  "internal_cost",                                         precision: 10, scale: 2
+    t.integer  "is_catalog",                           limit: 4,                                 default: 0
+    t.decimal  "sale_price",                                            precision: 10, scale: 2
+    t.integer  "is_exclusive_vinculacion",             limit: 4,                                 default: 0
+    t.decimal  "evaluation_cost",                                       precision: 10, scale: 2
+    t.integer  "status",                               limit: 4,                                 default: 0
+    t.integer  "laboratory_service_classification_id", limit: 4,                                 default: 0
   end
 
   add_index "laboratory_services", ["laboratory_id"], name: "index_laboratory_services_on_laboratory_id", using: :btree
@@ -280,6 +322,14 @@ ActiveRecord::Schema.define(version: 20151116140648) do
     t.string   "status",      limit: 255,      default: "1"
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
+  end
+
+  create_table "precios_servicios", id: false, force: :cascade do |t|
+    t.integer "id",             limit: 4,                                 default: 0,   null: false
+    t.text    "servicio",       limit: 16777215
+    t.integer "es_vinculacion", limit: 4,                                 default: 0
+    t.decimal "precio_venta",                    precision: 10, scale: 2, default: 0.0, null: false
+    t.decimal "precio_interno",                  precision: 36, scale: 4, default: 0.0, null: false
   end
 
   create_table "request_types", force: :cascade do |t|
@@ -589,6 +639,15 @@ ActiveRecord::Schema.define(version: 20151116140648) do
     t.datetime "created_at",                                           null: false
     t.datetime "updated_at",                                           null: false
     t.integer  "from_id",               limit: 4
+  end
+
+  create_table "xxyyzz", id: false, force: :cascade do |t|
+    t.integer "requested_service_id", limit: 4
+    t.string  "email",                limit: 255
+    t.integer "reguser",              limit: 4
+    t.integer "assuser",              limit: 4
+    t.decimal "regh",                             precision: 6, scale: 2
+    t.decimal "assh",                             precision: 6, scale: 2
   end
 
 end

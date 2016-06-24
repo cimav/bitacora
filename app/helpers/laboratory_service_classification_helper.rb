@@ -1,0 +1,2 @@
+module LaboratoryServiceClassificationHelper
+end

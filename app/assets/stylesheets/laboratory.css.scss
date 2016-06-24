@@ -377,6 +377,7 @@
 
   #services-panel,
   #lab-equipment-panel,
+  #lab-classifications-panel,
   #members-panel {
     top: 72px !important;
     border: 1px solid $line-color;
@@ -388,7 +389,8 @@
       width: $side-panel-width - 10;
     }
     #services-search-panel,
-    #members-search-panel {
+    #members-search-panel,
+    #classification-search-panel {
       
     }
     #admin-lab-services-list { 
@@ -426,7 +428,8 @@
       }
     }
 
-    #admin-lab-equipment-list {
+    #admin-lab-equipment-list,
+    #admin-lab-classifications-list {
       top: 70px !important;
       bottom: 45px !important;
       width: $side-panel-width;
@@ -435,7 +438,8 @@
 
     #admin-lab-services-buttons,
     #admin-lab-members-buttons,
-    #admin-lab-equipment-buttons {
+    #admin-lab-equipment-buttons,
+    #admin-lab-classifications-buttons {
       width: $side-panel-width;
       position: absolute;
       text-align: center;
@@ -459,7 +463,8 @@
 #admin-service-workarea,
 #admin-service-costs, 
 #admin-equipment-details,
-#admin-member-details {
+#admin-member-details,
+#admin-classification-details {
   margin-left: $side-panel-width + 40;
 }
 

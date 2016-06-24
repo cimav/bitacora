@@ -1,0 +1,4 @@
+- @laboratory_service_classifications.each do |classification|
+  - cid = "#classification_name_#{classification.id}"
+  .admin-lab-classification-item{'data-classification-id' => classification.id}
+    .lab-classification-name{:id => cid}= classification.name

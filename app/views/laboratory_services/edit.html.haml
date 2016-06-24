@@ -70,6 +70,21 @@
         - st_options += "<option value=\"1\" #{sel1}>Si</option>"
         = f.select :is_exclusive_vinculacion, st_options.html_safe, {}, {:class => 'form-control'}
 
+
+      .field#field_laboratory_service_classification_id
+        = f.label :service_type_id, 'Clasificación del Servicio:'
+        - if editable
+          - st_options = ''
+          - @laboratory_service.laboratory.laboratory_service_classifications.order(:name).each do |item|
+            - if item.id == @laboratory_service.laboratory_service_classification_id
+              - sel = 'selected = "selected"'
+            - else
+              - sel = ''
+            - st_options += "<option value=\"#{item.id}\" #{sel}>#{item.name}</option>"
+          = f.select :laboratory_service_classification_id, st_options.html_safe, {}, {:class => 'form-control'}
+        - else
+          = @laboratory_service.laboratory_service_classification.name
+
       .field#field_laboratory_service_status
         = f.label :status, 'Estado'
         - st_options = ''

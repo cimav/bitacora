@@ -26,7 +26,7 @@
         %td{:colspan => 7}= "Sin equipos"
     - @requested_service.requested_service_equipments.each do |eq|
       - eq_cost = eq.hours * eq.equipment.hourly_rate
-      - eq_internal_cost = eq.hours * eq.equipment.internal_hourly_rate
+      - eq_internal_cost = eq.hours * eq.equipment.internal_hourly_rate rescue 0
       - eq_total = eq_total + eq_cost  
       - eq_internal_total = eq_internal_total + eq_internal_cost  
       - eqs << eq.equipment_id

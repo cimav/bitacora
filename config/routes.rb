@@ -146,6 +146,10 @@ Bitacora::Application.routes.draw do
       get 'admin_equipment'
       get 'admin_lab_equipment_live_search'
       get 'new_equipment'
+
+      get 'admin_classifications'
+      get 'admin_lab_classification_live_search'
+      get 'new_classification'
     end
   end
   get  '/laboratory/:id/f/*filter' => 'laboratory#show'
@@ -195,6 +199,8 @@ Bitacora::Application.routes.draw do
 
   get '/other_types/live_search' => 'other_types#live_search'
   resources :other_types
+
+  resources :laboratory_service_classifications
 
 
   get '/admin' => 'admin#index'

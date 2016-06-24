@@ -21,6 +21,11 @@
           = image_tag (@requested_service.sample.service_request.user.avatar_url), :class => 'img-circle folder-owner'
           - if @requested_service.sample.service_request.supervisor
             = image_tag (@requested_service.sample.service_request.supervisor.avatar_url), :class => 'img-circle folder-supervisor'
+
+        
+          - @requested_service.sample.service_request.collaborators.each do |collaborator|
+            = image_tag (collaborator.user.avatar_url), :class => 'img-circle folder-collaborator', :title => collaborator.user.full_name
+
       .clearfix
     
     - if @requested_service.sample.service_request.is_vinculacion?

@@ -8,6 +8,9 @@
         %a{:href => "#bitacora", "data-toggle" => "tab"}= "Bitácora"
       %li
         %a{:href => "#archivos", "data-toggle" => "tab", :id => "active-archivos-link"}= "Archivos"
+      - if @service_request.is_vinculacion?
+        %li 
+          %a{:href => "#archivosvinculacion", "data-toggle" => "tab", :id => "active-archivosvinculacion-link"}= "Archivos Vinculación"
     .tab-content
 
       #bitacora.tab-pane.active
@@ -20,3 +23,6 @@
       #archivos.tab-pane
         = render :partial => 'files', :locals => {:service_request => @service_request }
         .clearfix
+      - if @service_request.is_vinculacion?
+        #archivosvinculacion.tab-pane
+          = render :partial => 'files_vinculacion', :locals => {:service_request => @service_request }

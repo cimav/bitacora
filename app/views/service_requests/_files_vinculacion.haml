@@ -1,0 +1,19 @@
+%table.table.table-striped
+  %tr
+    %th= "Archivo"
+    %th= "Tipo"
+  - vinculacion_files = service_request.vinculacion_files
+  - if vinculacion_files.count > 0
+    - vinculacion_files.each do |archivo|
+      %tr
+        %td 
+          %a{:href => "/vinculacion_files/get/#{archivo.id}" }= File.basename(archivo.archivo.to_s)
+        %td= archivo.tipo_text
+  - else
+    %tr
+      %td{:colspan => 2, :style => 'text-align: center;'}
+        %br
+        %br
+        = "No existen archivos"
+        %br
+        %br

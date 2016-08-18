@@ -110,9 +110,11 @@ class VinculacionSubscriptions
         if s.save
           Rails.logger.debug "Iniciado el folder #{s.id}"
           s.requested_services.each do |rs|
-            Rails.logger.debug "Iniciado el servicio #{rs.id}"
-            rs.status = RequestedService::INITIAL
-            rs.save
+            if rs.status.to_i != RequestedService::CANCELED  && rs.status.to_i != RequestedService::DELETED 
+              Rails.logger.debug "Iniciado el servicio #{rs.id}"
+              rs.status = RequestedService::INITIAL
+              rs.save
+            end
           end
         else 
           Rails.logger.debug "Error al guardar service_request"

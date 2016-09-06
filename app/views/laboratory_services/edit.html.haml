@@ -94,9 +94,8 @@
         - st_options += "<option value=\"1\" #{sel1}>Inactivo</option>"
         = f.select :status, st_options.html_safe, {}, {:class => 'form-control'}
 
-      - if editable
-        .submit-button
-          = f.submit "Actualizar servicio", {:class => "btn btn-primary"}
+      .submit-button
+        = f.submit "Actualizar servicio", {:class => "btn btn-primary"}
     - if !editable 
       .alert.alert-info
         = "Servicio de Catálogo de Vinculación"

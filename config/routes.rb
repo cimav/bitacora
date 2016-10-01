@@ -93,6 +93,7 @@ Bitacora::Application.routes.draw do
       get 'status_by_rs'
       get 'edit'
       get 'edit_cost'
+      get 'edit_additionals'
 
       get 'grand_total'
 
@@ -133,6 +134,8 @@ Bitacora::Application.routes.draw do
 
       get 'live_search'
       get 'admin'
+      get 'reports'
+      get 'reports_general'
       
       get 'admin_services'
       get 'admin_lab_services_live_search'

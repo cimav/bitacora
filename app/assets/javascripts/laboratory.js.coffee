@@ -76,6 +76,49 @@ $(document).on('click', '.lab-req-serv-item', () ->
   setHash('#!/laboratory/' + lab_id + '/s/' + id, true)
 
 
+#--------------
+# LAB REPORTS
+#--------------
+$(document).on('ajax:beforeSend', '.reports-lab', (evt, xhr, settings) ->
+    lab_id = $(this).data('laboratory-id')
+    url = '/laboratory/' + lab_id + '/reports'
+    setHash('#!/laboratory/' + lab_id + '/reports', false)
+  )
+$(document).on('ajax:success', '.reports-lab', (evt, data, status, xhr) ->
+    $('#lab-work-panel').empty().html(data)
+  )
+
+$(document).on('ajax:error', '.reports-lab', (evt, xhr, status, error) ->
+    alert('Error')
+  )
+
+
+# General report
+
+$(document).on('ajax:beforeSend', '.reports-general-lab', (evt, xhr, settings) ->
+    lab_id = $(this).data('laboratory-id')
+    url = '/laboratory/' + lab_id + '/reports_general'
+    setHash('#!/laboratory/' + lab_id + '/reports_general', false)
+  )
+$(document).on('ajax:success', '.reports-general-lab', (evt, data, status, xhr) ->
+    $('#lab-report-area').empty().html(data)
+  )
+
+$(document).on('ajax:error', '.reports-general-lab', (evt, xhr, status, error) ->
+    alert('Error')
+  )
+
+$(document).on('click', '#report_general_generate', () ->
+    lab_id =  $(this).attr('laboratory_id')
+    start_date = $('#start-date').val()
+    end_date = $('#end-date').val()
+    url = '/laboratory/' + lab_id + '/reports_general?start_date=' + start_date + '&end_date=' + end_date 
+    $.get(url, {}, (html) ->
+      $('#lab-report-area').empty().html(html)
+    )
+  )
+
+
 #----------
 # LAB ADMIN
 #----------
@@ -154,6 +197,10 @@ $(document).on('click', '.admin-lab-service-item', () ->
       url = '/laboratory_services/' + lab_id + '/edit_cost'
       $.get(url, {}, (html) ->
         $('#admin-service-costs').html(html)
+      )
+      url = '/laboratory_services/' + lab_id + '/edit_additionals'
+      $.get(url, {}, (html) ->
+        $('#admin-service-additionals').html(html)
       )
     )
   )

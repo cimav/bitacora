@@ -1,0 +1,6 @@
+#reports-area 
+  #lab-report-list
+    %ul.nav.nav-pills.nav-stacked
+      %li{:class => 'presentation'}= link_to "Reporte General", {:controller => 'laboratory', :action => 'reports_general', :id => @laboratory.id}, :method => :get, :remote => true, :class => 'reports-general-lab', :'data-type' => 'html', :id => "reports-general-lab-#{@laboratory.id}", 'data-laboratory-id' => @laboratory.id
+  #lab-report-area
+  

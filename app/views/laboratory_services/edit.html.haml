@@ -3,6 +3,8 @@
 %ul.nav.nav-tabs#admin-service-tabs
   %li.active#tab-service-details
     %a{:href => "#admin-service-details", "data-toggle" => "tab", "id" => "service_details_tab"}= "Datos Generales"
+  %li#tab-additionals
+    %a{:href => "#admin-service-additionals", "data-toggle" => "tab", "id" => "service_additionals_tab"}= "Caracteristicas Adicionales"
   %li#tab-service-costs
     %a{:href => "#admin-service-costs", "data-toggle" => "tab", "id" => "service_costs_tab"}= "Costeo"
   %li#tab-alertas
@@ -101,6 +103,8 @@
         = "Servicio de Catálogo de Vinculación"
       .clearfix
   #admin-service-costs.tab-pane
+  .clearfix
+  #admin-service-additionals.tab-pane
   .clearfix
   #admin-service-alertas.tab-pane
     #alertas_laboratory_service

@@ -18,6 +18,7 @@
         %th= "Fecha"
         %th= "Código"
         %th= "Servicio"
+        %th= "Clasificador"
         %th= "Tipo"
         %th= "Carpeta"
         %th= "Solicitante"
@@ -31,12 +32,13 @@
           %td= rs.created_at
           %td= rs.number
           %td= rs.laboratory_service.name
-          %td= rs.service_request.request_type.name rescue 'Sin tipo'
-          %td= "#{rs.service_request.number}: #{rs.service_request.request_link}" rescue 'Sin carpeta'
-          %td= rs.service_request.user.full_name rescue 'Sin solicitante'
-          %td= rs.sample.identification rescue 'Sin muestra'
-          %td= rs.sample.quantity rescue ''
-          %td= rs.user.full_name rescue 'No asignado'
+          %td= rs.laboratory_service.laboratory_service_classification.name rescue '-'
+          %td= rs.service_request.request_type.name rescue '-'
+          %td= "#{rs.service_request.number}: #{rs.service_request.request_link}" rescue '-'
+          %td= rs.service_request.user.full_name rescue '-'
+          %td= rs.sample.identification rescue '-'
+          %td= rs.sample.quantity rescue '-'
+          %td= rs.user.full_name rescue '-'
           %td= rs.status_text
       %tr
         %th{:colspan => 9}= "#{@requested_services.count} registros"

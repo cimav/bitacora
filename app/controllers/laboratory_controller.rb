@@ -81,7 +81,31 @@ class LaboratoryController < ApplicationController
     @requested_services = @requested_services.where("requested_services.created_at BETWEEN :start AND :end", {:start => @start_date, :end => @end_date})
     @requested_services = @requested_services.order('requested_services.created_at ASC')
 
-    render :layout => false
+    respond_with do |format|
+      format.html do
+        render :layout => false
+      end
+      format.xls do
+        rows = Array.new
+
+        @requested_services.collect do |rs|
+          rows << {'Fecha' => rs.created_at,
+                   'Código' => rs.number,
+                   'Servicio' => rs.laboratory_service.name,
+                   'Clasificador' => (rs.laboratory_service.laboratory_service_classification.name rescue '-'),
+                   'Tipo' => (rs.service_request.request_type.name rescue '-'),
+                   'Carpeta' => ("#{rs.service_request.number}: #{rs.service_request.request_link}" rescue '-'),
+                   'Solicitante' => (rs.service_request.user.full_name rescue '-'),
+                   'Muestra' => (rs.sample.identification rescue '-'),
+                   'Cantidad' => (rs.sample.quantity rescue '-'),
+                   'Tecnico_Asignado' => (rs.user.full_name rescue '-'),
+                   'Estado' => rs.status_text,
+                 }
+        end
+        column_order = ["Fecha","Código","Servicio","Clasificador","Tipo","Carpeta","Solicitante","Muestra","Cantidad","Tecnico_Asignado","Estado"]
+        to_excel(rows,column_order,"Servicios","Reporte_General")
+      end
+    end
   end
 
   def admin_members

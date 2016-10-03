@@ -118,6 +118,14 @@ $(document).on('click', '#report_general_generate', () ->
     )
   )
 
+$(document).on('click', '#report_general_generate_excel', () ->
+    lab_id =  $(this).attr('laboratory_id')
+    start_date = $('#start-date').val()
+    end_date = $('#end-date').val()
+    url = '/laboratory/' + lab_id + '/reports_general.xls?start_date=' + start_date + '&end_date=' + end_date 
+    window.open(url,"_excel")
+  )
+
 
 #----------
 # LAB ADMIN

@@ -741,6 +741,36 @@ $(document).on('ajax:error', '#new-lab-service-classification-form', (evt, xhr, 
   )
 
 
+#----------------------------
+# LAB ADMIN IMAGES
+#----------------------------
+$(document).on('ajax:beforeSend', '.admin-images', (evt, xhr, settings) ->
+    lab_id = $(this).attr('data-laboratory-id')
+    url = '/laboratory/' + lab_id + '/admin_images'
+  )
+$(document).on('ajax:success', '.admin-images', (evt, data, status, xhr) ->
+    $('#admin-area').empty().html(data)
+  )
+
+$(document).on('ajax:error', '.admin-images', (evt, xhr, status, error) ->
+    alert('Error')
+  )
+
+$(document).on('ajax:beforeSend', '#new-image-classification-form', (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.has-errors').removeClass('has-errors')
+  )
+$(document).on('ajax:success', '#new-image-form', (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+  )
+
+$(document).on('ajax:error', '#new-lab-service-classification-form', (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+
 #--------
 # OTHER
 #--------

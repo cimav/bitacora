@@ -1,0 +1,119 @@
+#folder-type{:class => "bg_#{@request.request_type.short_name}"}
+  %h2= @request.request_type.name
+#folder-info
+  .folder-icon
+    %span.glyphicon.glyphicon-folder-close
+    .folder-number= @request.number
+  .folder-data
+    .title
+      - if @request.vinculacion_client_name
+        .client-name= @request.vinculacion_client_name
+      = "#{@request.request_link}" rescue "Sin tipo"
+    .description= @request.description
+  .cotizacion
+    - if @request.request_type_id == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO || (@request.request_type_id == ServiceRequest::SERVICIO_VINCULACION && @request.system_status >= ServiceRequest::SYSTEM_ACCEPTED) || (@request.request_type_id == ServiceRequest::SERVICIO_VINCULACION_TIPO_2 && @request.system_status >= ServiceRequest::SYSTEM_ACCEPTED) || (@request.request_type_id == ServiceRequest::PROYECTO_VINCULACION && @request.system_status >= ServiceRequest::SYSTEM_ACCEPTED)
+      .archivo
+        %a{:href => "http://sigre.cimav.edu.mx/vinculacion/descargar/cotizacion/#{@request.vinculacion_hash}"}
+          %span.glyphicon.glyphicon-file
+          = "Descargar cotización"
+  %br
+  %br
+  = render :partial => 'vinculacion_contact', :locals => {:request => @request}
+  %br
+  %br
+  = render :partial => 'vinculacion_dates', :locals => {:request => @request}
+
+  #folder-actions
+    = render :partial => 'actions', :locals => {:request => @request}
+  #collaborator-panel
+
+
+#folder-workarea
+  #folder-work-panel-wrapper-project-quote
+    %h1= "Costear proyecto"
+    %h3= "Personal Involucrado"
+    %table.table.table-striped
+      %thead
+        %tr
+          %th= "Nombre"
+          %th= "Participación"
+          %th= "Horas"
+          %th= "Costo x Hora"
+          %th= "Subtotal"
+          %th
+      %tbody  
+        %tr
+          %td= ""
+          %td= ""
+          %td= ""
+          %td= ""
+          %td= ""
+          %td= ". "
+        %tr
+          %td= ""
+          %td= ""
+          %td= ""
+          %td= ""
+          %td= ""
+          %td= ". "
+        %tr
+          %td= ""
+          %td= ""
+          %td= ""
+          %td= ""
+          %td= ""
+          %td= ". "
+    %h3= "Equipos"
+    %table.table.table-striped
+      %thead
+        %tr
+          %th= "Equipo"
+          %th= "Horas"
+          %th= "Costo x Hora"
+          %th= "Subtotal"
+          %th
+      %tbody  
+        %tr
+          %td= ""
+          %td= ""
+          %td= ""
+          %td= ""
+          %td= ". "
+        %tr
+          %td= ""
+          %td= ""
+          %td= ""
+          %td= ""
+          %td= " ."
+        %tr
+          %td= ""
+          %td= ""
+          %td= ""
+          %td= ""
+          %td= ". "
+    %h3= "Otros costos"
+    %table.table.table-striped
+      %thead
+        %tr
+          %th= "Descripcion"
+          %th= "Costo"
+          %th
+      %tbody  
+        %tr
+          %td= ""
+          %td= ""
+          %td= ". "
+        %tr
+          %td= ""
+          %td= ""
+          %td= ". "
+        %tr
+          %td= ""
+          %td= ""
+          %td= " ."
+
+
+    #send-project-quote-button
+      %button.btn.btn-primary= "Enviar costeo de proyecto"
+
+

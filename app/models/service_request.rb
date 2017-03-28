@@ -32,6 +32,7 @@ class ServiceRequest < ActiveRecord::Base
   SERVICIO_VINCULACION = 1
   SERVICIO_VINCULACION_NO_COORDINADO = 12
   SERVICIO_VINCULACION_TIPO_2 = 14
+  PROYECTO_VINCULACION = 16
 
   SYSTEM_FREE              = 1
   SYSTEM_TO_QUOTE          = 2
@@ -73,7 +74,7 @@ class ServiceRequest < ActiveRecord::Base
 
   def add_extra
     # If is not Servicio Vinculacion then create number
-    if (self.request_type_id != SERVICIO_VINCULACION && self.request_type_id != SERVICIO_VINCULACION_NO_COORDINADO && self.request_type_id != SERVICIO_VINCULACION_TIPO_2) || self.number.nil?
+    if (self.request_type_id != SERVICIO_VINCULACION && self.request_type_id != SERVICIO_VINCULACION_NO_COORDINADO && self.request_type_id != SERVICIO_VINCULACION_TIPO_2 && self.request_type_id != PROYECTO_VINCULACION) || self.number.nil?
       con = ServiceRequest.where("number LIKE :prefix AND YEAR(created_at) = :year", {:prefix => "#{self.request_type.prefix}%", :year => Date.today.year}).maximum('consecutive')
       if con.nil?
         con = 1
@@ -92,7 +93,8 @@ class ServiceRequest < ActiveRecord::Base
   def is_vinculacion?
     self.request_type_id == ServiceRequest::SERVICIO_VINCULACION || 
     self.request_type_id == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO ||
-    self.request_type_id == ServiceRequest::SERVICIO_VINCULACION_TIPO_2
+    self.request_type_id == ServiceRequest::SERVICIO_VINCULACION_TIPO_2 ||
+    self.request_type_id == ServiceRequest::PROYECTO_VINCULACION
   end
 
 end

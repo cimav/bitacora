@@ -160,3 +160,29 @@
 .laboratories-item-name {
   font-weight: bold;
 }
+
+
+.lab-image-item {
+  border: 1px solid $med-grey;
+  background: $light-grey;
+  padding: 10px;
+  width: 270px; 
+  height: 350px;
+  max-height: 350px;
+  float: left;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  font-size: 90%;
+  img {
+    width: 250px;
+    height: 250px;
+    margin-bottom: 10px;
+  }
+}
+
+.lab-image-item #upload-box {
+  float: left !important;
+  text-align: center;
+  position: relative;
+  width: 250px !important;
+}

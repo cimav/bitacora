@@ -16,6 +16,12 @@
   }
 }
 
+
+#send-project-quote-button {
+  margin-top: 48px;
+  text-align: center;
+}
+
 .label_SERVICIO      { background-color: $servicio-color; }
 .label_SERVICIO2      { background-color: $servicio2-color; }
 .label_SERVICIO3      { background-color: $servicio3-color; }
@@ -28,6 +34,7 @@
 .label_ESTANCIAS     { background-color: $estancias-color; }
 .label_MAQUINADO     { background-color: $maquinado-color; }
 .label_PROTOTIPO     { background-color: $prototipo-color; }
+.label_PROYECTO_VINCULACION { background-color: $proyecto-vinculacion-color; }
 
 .bg_SERVICIO      { background-color: $servicio-color; border-bottom: 1px solid darken($servicio-color, 5%);}
 .bg_ARTICULO      { background-color: $articulo-color; border-bottom: 1px solid darken($articulo-color, 5%);}
@@ -41,6 +48,7 @@
 .bg_PROTOTIPO      { background-color: $prototipo-color; border-bottom: 1px solid darken($prototipo-color, 5%);}
 .bg_SERVICIO2      { background-color: $servicio2-color; border-bottom: 1px solid darken($servicio2-color, 5%);}
 .bg_SERVICIO3      { background-color: $servicio3-color; border-bottom: 1px solid darken($servicio3-color, 5%);}
+.bg_PROYECTO_VINCULACION { background-color: $proyecto-vinculacion-color; border-bottom: 1px solid darken($proyecto-vinculacion-color, 5%);}
 
 
 .item_SERVICIO      { border-top: 2px solid $servicio-color; }
@@ -55,6 +63,7 @@
 .item_PROTOTIPO      { border-top: 2px solid $prototipo-color; }
 .item_SERVICIO2      { border-top: 2px solid $servicio2-color; }
 .item_SERVICIO3      { border-top: 2px solid $servicio3-color; }
+.item_PROYECTO_VINCULACION  { border-top: 2px solid $proyecto-vinculacion-color; }
 
 
 #folders {
@@ -551,6 +560,20 @@ table.services-list {
   bottom: 0;
   right: 0;
   overflow: auto;
+}
+
+#folder-work-panel-wrapper-project-quote {
+  background: #fff;
+  width: -moz-calc(100% - $side-panel-width);
+  width: -webkit-calc(100% - $side-panel-width);
+  width: calc(100% - $side-panel-width);
+  position: absolute;
+  left: $side-panel-width;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+  padding: 0 20px 20px 20px;
 }
 
 .sheet {

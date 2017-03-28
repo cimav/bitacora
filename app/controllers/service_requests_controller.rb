@@ -74,6 +74,7 @@ class ServiceRequestsController < ApplicationController
     cs1 = ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
     cs2 = ServiceRequest::SERVICIO_VINCULACION_TIPO_2
     cs3 = ServiceRequest::SERVICIO_VINCULACION
+    cs4 = ServiceRequest::PROYECTO_VINCULACION
 
     collaborators = @request.collaborators.map { |c| c.user_id }
     authorized = current_user.is_admin? ||
@@ -82,12 +83,16 @@ class ServiceRequestsController < ApplicationController
                  @request.user.supervisor1_id == current_user.id ||
                  @request.user.supervisor2_id == current_user.id ||
                  (collaborators.include? current_user.id) ||
-                 ( (@request.request_type_id == cs1 || @request.request_type_id == cs2 || @request.request_type_id == cs3) && current_user.access.to_i == User::ACCESS_CUSTOMER_SERVICE)         
+                 ( (@request.request_type_id == cs1 || @request.request_type_id == cs2 || @request.request_type_id == cs3 || @request.request_type_id == cs4) && current_user.access.to_i == User::ACCESS_CUSTOMER_SERVICE)         
 
     if !authorized
       render :inline => '<div class="sheet"><div class="app-message">No Autorizado</div></div>'.html_safe                   
     elsif (@request.status == ServiceRequest::ACTIVE) 
-      render :layout => false
+      if @request.request_type_id == ServiceRequest::PROYECTO_VINCULACION && @request.system_status == ServiceRequest::SYSTEM_TO_QUOTE 
+        render "quote_project", :layout => false
+      else
+        render :layout => false
+      end
     else
       render :inline => 'Carpeta Eliminada'
     end

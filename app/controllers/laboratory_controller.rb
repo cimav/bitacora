@@ -125,6 +125,12 @@ class LaboratoryController < ApplicationController
 
   def admin_classifications
     @laboratory = Laboratory.find(params[:id])
+    @laboratory_image = @laboratory.laboratory_image.new
+    render :layout => false
+  end
+
+  def admin_images
+    @laboratory = Laboratory.find(params[:id])
     render :layout => false
   end
 

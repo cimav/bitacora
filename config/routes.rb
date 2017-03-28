@@ -153,6 +153,8 @@ Bitacora::Application.routes.draw do
       get 'admin_classifications'
       get 'admin_lab_classification_live_search'
       get 'new_classification'
+
+      get 'admin_images'
     end
   end
   get  '/laboratory/:id/f/*filter' => 'laboratory#show'
@@ -173,6 +175,11 @@ Bitacora::Application.routes.draw do
   resources :service_files do
     member do
       get 'file'
+      get 'remove_file'
+    end
+  end
+  resources :laboratory_images do
+    member do
       get 'remove_file'
     end
   end

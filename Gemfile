@@ -7,7 +7,7 @@ gem 'protected_attributes'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'mysql2'
+gem 'mysql2', '~> 0.3.18'
 
 gem 'json'
 
@@ -30,7 +30,7 @@ gem 'jquery-ui-rails'
 gem 'omniauth-google-oauth2'
 
 gem 'carrierwave'
-#gem 'rmagick'
+gem 'rmagick'
 gem 'mini_magick'
 
 gem "rubyzip", '>= 1.0.0'

@@ -1,0 +1,20 @@
+= form_for @laboratory_service_classification, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-classification-form'} do |f|
+  %h3= "Editar Clasificación de Servicio"
+  .field#field_laboratory_service_classification_name
+    %label= "Nombre:"
+    = f.text_field :name, {:class => 'form-control', :placeholder => 'Nombre del equipo'}
+  .field#field_equipment_description
+    = f.label :description, 'Descripción:'
+    = f.text_area :description, {:class => 'form-control', :rows => 10}
+  .field#field_laboratory_service_classification_status
+    = f.label :status, 'Estado:'
+    - sel_active = sel_inactive = ''
+    - sel_active = 'selected="selected"' if @laboratory_service_classification.status.to_i == LaboratoryServiceClassification::ACTIVE
+    - sel_inactive = 'selected="selected"' if @laboratory_service_classification.status.to_i == LaboratoryServiceClassification::INACTIVE
+    - st_options = ''
+    - st_options += "<option #{sel_active} value=\"#{LaboratoryServiceClassification::ACTIVE}\">Activo</option>"
+    - st_options += "<option #{sel_inactive} value=\"#{LaboratoryServiceClassification::INACTIVE}\">Inactivo</option>"
+    = f.select :status, st_options.html_safe, {}, {:class => 'form-control'}
+
+  .submit-button
+    = f.submit "Actualizar clasificación", {:class => "btn btn-primary"}

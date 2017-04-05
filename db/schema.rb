@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170301004200) do
+ActiveRecord::Schema.define(version: 20170405013634) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.integer  "user_id",                  limit: 4
@@ -450,6 +450,54 @@ ActiveRecord::Schema.define(version: 20170301004200) do
     t.integer "es_vinculacion", limit: 4,                                 default: 0
     t.decimal "precio_venta",                    precision: 10, scale: 2, default: 0.0, null: false
     t.decimal "precio_interno",                  precision: 36, scale: 4, default: 0.0, null: false
+  end
+
+  create_table "project_quote_equipments", force: :cascade do |t|
+    t.integer  "project_quote_id", limit: 4
+    t.integer  "equipment_id",     limit: 4
+    t.decimal  "hours",                          precision: 4, scale: 2
+    t.decimal  "hourly_rate",                    precision: 6, scale: 2
+    t.text     "details",          limit: 65535
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
+  end
+
+  create_table "project_quote_others", force: :cascade do |t|
+    t.integer  "project_quote_id", limit: 4
+    t.integer  "other_type",       limit: 4
+    t.string   "concept",          limit: 255
+    t.text     "details",          limit: 65535
+    t.decimal  "quantity",                       precision: 4, scale: 2
+    t.decimal  "price",                          precision: 6, scale: 2
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
+  end
+
+  create_table "project_quote_services", force: :cascade do |t|
+    t.integer  "project_quote_id",      limit: 4
+    t.integer  "laboratory_service_id", limit: 4
+    t.integer  "quantity",              limit: 4
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  create_table "project_quote_technicians", force: :cascade do |t|
+    t.integer  "project_quote_id", limit: 4
+    t.integer  "user_id",          limit: 4
+    t.decimal  "hours",                          precision: 4, scale: 2
+    t.decimal  "hourly_wage",                    precision: 6, scale: 2
+    t.text     "details",          limit: 65535
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
+  end
+
+  create_table "project_quotes", force: :cascade do |t|
+    t.integer  "service_request_id", limit: 4
+    t.integer  "consecutive",        limit: 4
+    t.string   "number",             limit: 20
+    t.text     "details",            limit: 65535
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   create_table "repduarte", id: false, force: :cascade do |t|

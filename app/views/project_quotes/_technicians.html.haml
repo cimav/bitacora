@@ -1,0 +1,73 @@
+- editable = true
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th{:colspan => 5, :class => "th-header"}= "Personal Involucrado"
+    - if project_quote.project_quote_technicians.count > 0
+      %tr
+        %th= "Nombre"
+        %th= "Horas"
+        %th= "Costo x Hora"
+        %th= "Subtotal"
+        %th
+  %tbody
+    - tech_total = 0
+    - techs = []
+    - if project_quote.project_quote_technicians.count == 0
+      %tr.empty-cost
+        %td{:colspan => 5}= "Sin personal"
+    - project_quote.project_quote_technicians.each do |tech|
+      - tech_cost = tech.hours * tech.hourly_wage rescue 0
+      - tech_total = tech_total + tech_cost rescue 0
+      - techs << tech.user_id
+      %tr.technician-row{'data-id' => tech.id, :id => "technician_row_#{tech.id}"}
+        %td
+          = tech.user.full_name
+          - if !tech.details.blank?
+            .tech-details= tech.details
+        %td
+          - if editable
+            - u_options = ''
+            - for i in 0.step(100, 0.5)
+              - if tech.hours == i
+                - u_options += "<option value=\"#{i}\" selected=\"selected\">#{i} horas</option>"
+              - else 
+                - u_options += "<option value=\"#{i}\">#{i} horas</option>"
+            = select_tag "tech_hours_#{tech.id}", u_options.html_safe, {"data-id" => tech.id, 'data-pq_id' => project_quote.id, :class => "pq_tech_hours form-control input-sm"}
+          - else
+            .align-right= "#{tech.hours} horas" 
+        %td
+          .align-right= number_to_currency(tech.hourly_wage)
+        %td
+          .align-right= number_to_currency(tech_cost)
+        %td
+          - if editable
+            = link_to '×', {:controller => 'project_quotes', :action => 'delete_tech', :tech_id => tech.id}, :method => :post, :remote => true, :class => 'close', :'data-type' => 'html', 'data-id' => tech.id
+    %tr.total-row
+      %td{:colspan => 3}
+        .align-right= "Subtotal Personal Involucrado"
+      %td
+        .align-right= number_to_currency(tech_total)
+      %td
+    - if editable
+      - if (techs.count > 0)
+        - not_in =  "AND user_id NOT IN (#{(techs.join(','))})"
+      - else
+        - not_in = ""
+      - not_in = ""
+      - users = User.where("(access = #{User::ACCESS_EMPLOYEE} OR access = #{User::ACCESS_ADMIN}) AND id IN (SELECT DISTINCT user_id FROM  laboratory_members WHERE status = 1) #{not_in}").order(:first_name, :last_name)
+      - u_options = ''
+      - users.each do |u|
+        - u_options += "<option value=\"#{u.id}\">#{u.full_name}</option>"
+    - if u_options != '' && editable
+      %tr.add-row
+        %td
+          = select_tag :new_tech_user_id, u_options.html_safe, {:class => 'form-control input-sm'}
+        %td
+          - u_options = ''
+          - for i in 0.step(200, 1)
+            - u_options += "<option value=\"#{i}\">#{i} horas</option>"
+          = select_tag :new_tech_hours, u_options.html_safe, {:class => 'form-control input-sm'}
+        %td{:colspan => 3}
+          %button.btn.btn-primary.btn-sm.btn-block#add-project-quote-technician{'data-pq_id' => project_quote.id }= "Agregar"

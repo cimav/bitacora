@@ -30,90 +30,35 @@
 
 #folder-workarea
   #folder-work-panel-wrapper-project-quote
-    %h1= "Costear proyecto"
-    %h3= "Personal Involucrado"
-    %table.table.table-striped
-      %thead
-        %tr
-          %th= "Nombre"
-          %th= "Participación"
-          %th= "Horas"
-          %th= "Costo x Hora"
-          %th= "Subtotal"
-          %th
-      %tbody  
-        %tr
-          %td= ""
-          %td= ""
-          %td= ""
-          %td= ""
-          %td= ""
-          %td= ". "
-        %tr
-          %td= ""
-          %td= ""
-          %td= ""
-          %td= ""
-          %td= ""
-          %td= ". "
-        %tr
-          %td= ""
-          %td= ""
-          %td= ""
-          %td= ""
-          %td= ""
-          %td= ". "
-    %h3= "Equipos"
-    %table.table.table-striped
-      %thead
-        %tr
-          %th= "Equipo"
-          %th= "Horas"
-          %th= "Costo x Hora"
-          %th= "Subtotal"
-          %th
-      %tbody  
-        %tr
-          %td= ""
-          %td= ""
-          %td= ""
-          %td= ""
-          %td= ". "
-        %tr
-          %td= ""
-          %td= ""
-          %td= ""
-          %td= ""
-          %td= " ."
-        %tr
-          %td= ""
-          %td= ""
-          %td= ""
-          %td= ""
-          %td= ". "
-    %h3= "Otros costos"
-    %table.table.table-striped
-      %thead
-        %tr
-          %th= "Descripcion"
-          %th= "Costo"
-          %th
-      %tbody  
-        %tr
-          %td= ""
-          %td= ""
-          %td= ". "
-        %tr
-          %td= ""
-          %td= ""
-          %td= ". "
-        %tr
-          %td= ""
-          %td= ""
-          %td= " ."
+    .header
+      %h2= "Costeo de proyecto"
+    %ul#nav-quotes.nav.nav-pills{:role => "tablist"}
+      - q_active = "active"
+      - @request.project_quotes.each do |quote| 
+        %li{:role => "presentation", :class => q_active}
+          - code = quote.number.gsub("#{@request.number}-","")
+          %a{:href => "#", "aria-controls" => code, :role => "tab", "data-toggle" => "tab"}= code
+        - q_active = ""
+
+    #quote-area
+      .tab-content
+        - q_active = "active"
+        - @request.project_quotes.each do |quote| 
+          - code = quote.number.gsub("#{@request.number}-","")
+          .tab-pane{:role => "tabpanel", :id => code, :class => q_active}
+            .pq_technicians{:id => "pq#{quote.id}_technicians"} 
+              = render :partial => 'project_quotes/technicians', :locals => {:project_quote => quote }
+            
+            .pq_equipment{:id => "pq#{quote.id}_equipment"} 
+              = render :partial => 'project_quotes/equipment', :locals => {:request => quote }
+
+            .pq_others{:id => "pq#{quote.id}_others"} 
+              = render :partial => 'project_quotes/others', :locals => {:request => quote }
+            #send-project-quote-button
+              %button.btn.btn-primary= "Enviar costeo de proyecto"
+          - q_active = false
 
 
-    #send-project-quote-button
-      %button.btn.btn-primary= "Enviar costeo de proyecto"
+            
 
 

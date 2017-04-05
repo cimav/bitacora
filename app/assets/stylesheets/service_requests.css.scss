@@ -572,8 +572,46 @@ table.services-list {
   top: 0;
   bottom: 0;
   right: 0;
-  overflow: auto;
-  padding: 0 20px 20px 20px;
+  padding: 0;
+
+  .header {
+    margin: 0;
+    padding: 0;
+    height: 39px;
+    background: lighten($proyecto-vinculacion-color,10%);
+    border-bottom: 1px solid darken($proyecto-vinculacion-color, 5%);
+    color: $white;
+    h2 {
+      margin: 0;
+      padding: 0;
+      color: $white;
+      font-weight: normal;
+      padding: 12px 0 0 10px;
+      font-size: 120%;
+    }
+
+  }
+
+  #nav-quotes {
+    padding: 10px;
+    border-bottom: 1px solid $light-grey;
+    height: 58px;
+    overflow-x: auto;
+  }
+
+  #quote-area {
+    position: absolute;
+    top: 98px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    padding: 0;
+    overflow: auto;
+    overflow-x: scroll;
+    padding: 20px;
+  }
+
+  
 }
 
 .sheet {

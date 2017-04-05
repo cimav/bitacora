@@ -1,0 +1,2 @@
+module ProjectQuotesHelper
+end

@@ -14,6 +14,7 @@ class VinculacionSubscriptions
     # Create service_request
     Rails.logger.debug "Solicitar Costeo #{attributes['costeo_id']}: #{attributes['codigo']}"
     if u_requestor = User.where(:email => attributes['empleado_email']).first
+
       folder = u_requestor.service_request.new 
       folder.system_id                   = attributes['id']
       folder.system_request_id           = attributes['solicitud_id']
@@ -47,6 +48,7 @@ class VinculacionSubscriptions
         folder.supervisor_id = u_requestor.id
       end
       folder.save(:validate => false)
+
 
       # Add samples to service_request
       attributes['muestras'].each do |m|  

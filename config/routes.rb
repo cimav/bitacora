@@ -213,6 +213,33 @@ Bitacora::Application.routes.draw do
   resources :laboratory_service_classifications
 
 
+
+  resources :project_quotes do
+    member do
+              
+      post 'new_technician'
+      post 'update_hours'
+      get 'technicians_table'
+
+      post 'new_equipment'
+      post 'update_eq_hours'
+      get 'equipment_table'
+
+      post 'new_material'
+      post 'update_mat_qty'
+      get 'materials_table'
+      
+      post 'new_other'
+      post 'update_other_price'
+      get 'others_table'
+
+    end
+  end
+  post '/project_quotes/delete_tech' => 'project_quotes#delete_tech'
+  post '/project_quotes/delete_eq' => 'project_quotes#delete_eq'
+  post '/project_quotes/delete_mat' => 'project_quotes#delete_mat'
+  post '/project_quotes/delete_other' => 'project_quotes#delete_other'
+
   get '/admin' => 'admin#index'
   get '/admin/clients' => 'admin#clients'
   get '/admin/client_types' => 'admin#client_types'

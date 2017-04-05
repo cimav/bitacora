@@ -1072,6 +1072,71 @@ $(document).on('ajax:error', '#edit-service-request-form', (evt, xhr, status, er
 
 
 
+#---------------------
+# Project Quote 
+#---------------------
+
+#
+# Technicians
+#
+
+$(document).on('click', '#add-project-quote-technician', () ->
+    $(this).prop('disabled', true)
+    pq_id = $(this).data('pq_id')
+    url = '/project_quotes/' + pq_id + '/new_technician'
+    $.post(url,
+           { user_id: $('#new_tech_user_id').val(), hours: $('#new_tech_hours').val() },
+           (xhr) ->
+             res = $.parseJSON(xhr)
+             showFlash(res['flash']['notice'], 'success')
+             reloadProjectQuoteTechniciansTable(pq_id)
+     )
+     .fail( (data) ->
+       res = $.parseJSON(data.responseText)
+       showFlash(res['flash']['error'], 'alert-error')
+     )
+   )
+
+reloadProjectQuoteTechniciansTable = (pq_id) ->
+  url = '/project_quotes/' + pq_id + '/technicians_table'
+  $.get(url, {}, (html) ->
+    $('#pq' + pq_id + '_technicians').empty().html(html)
+    updateGrandTotal()
+  )
+
+
+$(document).on('ajax:beforeSend', '.pq_technicians .close', (evt, xhr, settings) ->
+    $(".technician-row").removeClass('error')
+  )
+$(document).on('ajax:success', '.pq_technicians .close', (evt, data, status, xhr) ->
+    res = $.parseJSON(xhr.responseText)
+    tech_id = res['id']
+    pq_id = res['project_quote_id']
+    showFlash(res['flash']['notice'], 'alert-success')
+    $("#technician_row_#{tech_id}").remove()
+    reloadProjectQuoteTechniciansTable(pq_id)
+  )
+
+$(document).on('ajax:error', '.pq_technicians .close', (evt, xhr, status, error) ->
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['error'], 'alert-error')
+  )
+
+$(document).on('change', '.pq_tech_hours', () ->
+    pq_id = $(this).data('pq_id')
+    url = '/project_quotes/' + pq_id + '/update_hours'
+    $.post(url,
+           { tech_id: $(this).attr('data-id'), hours: $(this).val() },
+           (xhr) ->
+             res = $.parseJSON(xhr)
+             pq_id = res['project_quote_id']
+             showFlash(res['flash']['notice'], 'success')
+             reloadProjectQuoteTechniciansTable(pq_id)
+     )
+  )
+
+
+
 #-------
 # ERRORS
 #-------

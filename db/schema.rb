@@ -365,6 +365,16 @@ ActiveRecord::Schema.define(version: 20170405013634) do
   add_index "laboratory_members", ["laboratory_id"], name: "index_laboratory_members_on_laboratory_id", using: :btree
   add_index "laboratory_members", ["user_id"], name: "index_laboratory_members_on_user_id", using: :btree
 
+  create_table "laboratory_service_additionals", force: :cascade do |t|
+    t.integer  "laboratory_service_id", limit: 4
+    t.string   "name",                  limit: 255
+    t.integer  "type",                  limit: 4
+    t.text     "value",                 limit: 65535
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.integer  "position",              limit: 4,     default: 0
+  end
+
   create_table "laboratory_service_classifications", force: :cascade do |t|
     t.integer  "laboratory_id", limit: 4
     t.string   "name",          limit: 255
@@ -520,6 +530,16 @@ ActiveRecord::Schema.define(version: 20170405013634) do
     t.datetime "updated_at",                            null: false
     t.string   "prefix",        limit: 255
     t.integer  "is_selectable", limit: 4,   default: 0
+  end
+
+  create_table "requested_service_additionals", force: :cascade do |t|
+    t.integer  "requested_service_id_id",          limit: 4
+    t.integer  "laboratory_service_additional_id", limit: 4
+    t.string   "name",                             limit: 255
+    t.text     "value",                            limit: 65535
+    t.datetime "created_at",                                                 null: false
+    t.datetime "updated_at",                                                 null: false
+    t.integer  "position",                         limit: 4,     default: 0
   end
 
   create_table "requested_service_equipments", force: :cascade do |t|

@@ -1,0 +1,18 @@
+#departments-panel
+  #departments-search-panel.search-box
+    = form_tag 'xxx', :id => 'departments-live-search', :method => 'get', :remote => true do
+      - department_type_options = "<option value=\"0\">Todas las unidades</option>"
+      - BusinessUnit.order('id').each do |ct|
+        - department_type_options += "<option value=\"#{ct.id}\">#{ct.name}</option>"
+      = select_tag "department_type", department_type_options.html_safe, :class => 'form-control'
+      = text_field_tag :q, nil, :id => 'departments-search-box', :placeholder => 'Busqueda', :class => 'form-control'
+  #departments-list.items-placeholder 
+  #departments-buttons.bottom-box
+    = button_tag "Agregar departamento", {:class => 'btn btn-info', :id => 'add-new-admin-department-button'}
+    
+
+#department-details
+:javascript
+  $( document ).ready(function() {
+    AdminDepartmentsLiveSearch()
+  });

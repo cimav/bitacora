@@ -1,0 +1,35 @@
+%h1= @department.name
+= form_for @department, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-department-form'} do |f|
+  .field#field_department_name
+    = f.label :name, 'Nombre:'
+    = f.text_field :name, {:class => 'form-control', :placeholder => 'Nombre'}
+  .field#field_department_prefix
+    = f.label :prefix, 'Prefijo:'
+    = f.text_field :prefix, {:class => 'form-control', :placeholder => '3 o 4 letras'}
+  .field#field_department_description
+    = f.label :description, 'Descripción:'
+    = f.text_area :description, {:class => 'form-control', :rows => 8}
+  .field#field_department_business_unit_id
+    = f.label :business_unit_id, 'Sede:'
+    - bu_options = ''
+    - BusinessUnit.order(:name).each do |item|
+      - if item.id == @department.business_unit_id
+        - sel = 'selected = "selected"'
+      - else
+        - sel = ''
+      - bu_options += "<option value=\"#{item.id}\" #{sel}>#{item.name}</option>"
+    = f.select :business_unit_id, bu_options.html_safe, {}, {:class => 'form-control'}
+  .field#field_department_user_id
+    = f.label :user_id, 'Responsable:'
+    - resp_options = ''
+    - User.where("access = :a OR access = :b", {:a => User::ACCESS_EMPLOYEE, :b => User::ACCESS_ADMIN}).order('first_name, last_name').each do |item|
+      - if item.id == @department.user_id
+        - sel = 'selected = "selected"'
+      - else
+        - sel = ''
+      - resp_options += "<option value=\"#{item.id}\" #{sel}>#{item.full_name}</option>"
+
+    = f.select :user_id, resp_options.html_safe, {}, {:class => 'form-control'}
+      
+  .submit-button
+    = f.submit "Actualizar departamento", {:class => "btn btn-primary"}

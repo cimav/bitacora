@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170405013634) do
+ActiveRecord::Schema.define(version: 20170522175207) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.integer  "user_id",                  limit: 4
@@ -189,6 +189,17 @@ ActiveRecord::Schema.define(version: 20170405013634) do
     t.string   "code",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "departments", force: :cascade do |t|
+    t.string   "name",             limit: 255
+    t.string   "prefix",           limit: 5
+    t.text     "description",      limit: 65535
+    t.integer  "business_unit_id", limit: 4
+    t.integer  "user_id",          limit: 4
+    t.integer  "status",           limit: 4,     default: 1
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
   end
 
   create_table "eq2", id: false, force: :cascade do |t|
@@ -474,7 +485,7 @@ ActiveRecord::Schema.define(version: 20170405013634) do
 
   create_table "project_quote_others", force: :cascade do |t|
     t.integer  "project_quote_id", limit: 4
-    t.integer  "other_type",       limit: 4
+    t.integer  "other_type_id",    limit: 4
     t.string   "concept",          limit: 255
     t.text     "details",          limit: 65535
     t.decimal  "quantity",                       precision: 4, scale: 2

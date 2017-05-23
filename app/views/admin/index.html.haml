@@ -4,6 +4,7 @@
     %ul#admin-nav.nav.nav-pills
       - if current_user.is_admin? 
         %li{"data-link" => "/admin/users"}= link_to "Usuarios", "#"
+        %li{"data-link" => "/admin/departments"}= link_to "Departamentos", "#"
         %li{"data-link" => "/admin/service_types"}= link_to "Tipos de servicios", "#"
         %li{"data-link" => "/admin/request_types"}= link_to "Tipos de peticiones", "#"
         %li{"data-link" => "/admin/other_types"}= link_to "Tipos de otros conceptos", "#"

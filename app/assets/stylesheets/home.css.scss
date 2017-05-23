@@ -14,3 +14,30 @@
 .consecutive {
   white-space: pre;
 }
+
+.input-number {
+  height: 33px !important; 
+}
+
+.quote-totals {
+  font-size: 180%;
+  border: 1px solid $line-color;
+  .quote-desc {
+
+  }
+  .quote-cost {
+    text-align: right;
+    padding-left: 2em;
+  }
+  .quote-total-desc {
+    border-top: 2px solid #000;
+    text-align: left;
+    font-weight: bold;
+  }
+  .quote-total {
+    border-top: 2px solid #000;
+    text-align: right;
+    padding-left: 2em;
+    font-weight: bold;
+  }
+}

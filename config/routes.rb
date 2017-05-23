@@ -125,6 +125,9 @@ Bitacora::Application.routes.draw do
   get '/users/live_search' => 'users#live_search'
   resources :users
 
+  get '/departments/live_search' => 'departments#live_search'
+  resources :departments
+
   get '/laboratories/live_search' => 'laboratories#live_search'
   resources :laboratories
 
@@ -233,6 +236,8 @@ Bitacora::Application.routes.draw do
       post 'update_other_price'
       get 'others_table'
 
+      get 'grand_total'
+
     end
   end
   post '/project_quotes/delete_tech' => 'project_quotes#delete_tech'
@@ -247,6 +252,7 @@ Bitacora::Application.routes.draw do
   get '/admin/materials' => 'admin#materials'
   get '/admin/laboratories' => 'admin#laboratories'
   get '/admin/users' => 'admin#users'
+  get '/admin/departments' => 'admin#departments'
   get '/admin/request_types' => 'admin#request_types'
   get '/admin/service_types' => 'admin#service_types'
   get '/admin/other_types' => 'admin#other_types'

@@ -1,3 +1,18 @@
 // Place all the styles related to the ProjectQuotes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#send-project-quote-area {
+  text-align: center;
+  .send-project-quote-note {
+    font-size: 90%;
+    color: $grey;
+    padding: 10px; 
+  }  
+}
+#send-project-quote-button {
+  font-size: 150%;
+}
+.quote-totals-area {
+  position: fixed;
+}

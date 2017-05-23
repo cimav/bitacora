@@ -9,6 +9,10 @@ class AdminController < ApplicationController
   def users
     render :layout => false
   end
+  
+  def departments
+    render :layout => false
+  end
 
   def laboratories
     render :layout => false

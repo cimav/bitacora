@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170522175207) do
+ActiveRecord::Schema.define(version: 20170524222057) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.integer  "user_id",                  limit: 4
@@ -888,6 +888,7 @@ ActiveRecord::Schema.define(version: 20170522175207) do
     t.integer  "supervisor2_id",   limit: 4
     t.boolean  "require_auth",     limit: 1,                           default: false
     t.integer  "business_unit_id", limit: 4,                           default: 1
+    t.integer  "department_id",    limit: 4,                           default: 0
   end
 
   add_index "users", ["supervisor1_id"], name: "index_users_on_supervisor1_id", using: :btree

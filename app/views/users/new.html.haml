@@ -18,8 +18,5 @@
       - else
         - access_options += "<option value=\"#{k}\">#{v}</option>"
     = f.select :access, access_options.html_safe, {}, :class => 'form-control'
-  .field#field_employee_number
-    = f.label :employee_number, 'Identificador de empleado:'
-    = f.text_field :employee_number, {:class => 'form-control'}
   .submit-button
     = f.submit "Agregar usuario", {:class => "btn btn-primary"}

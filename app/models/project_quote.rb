@@ -8,16 +8,14 @@ class ProjectQuote < ActiveRecord::Base
   after_create :set_consecutive
 
   def set_consecutive
-    puts "SET CONSECUTIVE"
     con = ProjectQuote.where(:service_request => self.service_request_id).maximum('consecutive')
     if con.nil?
-      puts "NO ENCONTRO 1"
       con = 1
     else
       con += 1
-      puts "SI ENCONTRO #{con}"
+
       prev = ProjectQuote.where(:service_request => self.service_request_id, :consecutive => con - 1)
-      puts "PREV"
+
       # Services
       prev.project_quote_services.each do |serv|
         new_serv = self.project_quote_services.new
@@ -25,7 +23,7 @@ class ProjectQuote < ActiveRecord::Base
         new_serv.quantity = serv.quantity
         new_serv.save
       end
-      puts "SERV"
+
       # Technicians
       prev.project_quote_technicians.each do |tech|
         new_tech = self.project_quote_technicians.new
@@ -36,7 +34,6 @@ class ProjectQuote < ActiveRecord::Base
         new_tech.details = tech.details
         new_tech.save
       end
-      puts "TECH"
 
       # Equipment
       prev.project_quote_equipments.each do |eq|
@@ -48,7 +45,6 @@ class ProjectQuote < ActiveRecord::Base
         new_eq.details = eq.details
         new_eq.save
       end
-      puts "EQ"
 
       # Other
       prev.project_quote_others.each do |other|
@@ -60,15 +56,12 @@ class ProjectQuote < ActiveRecord::Base
         new_other.other_type_id = other.other_type_id
         new_other.save
       end
-      puts "OTHER"
       
     end
     consecutive = "%02d" % con
     self.consecutive = con
     self.number = "#{self.service_request.number}-C#{consecutive}"
-    puts "SALVAR CONX"
     self.save(:validate => false)
-    puts "SI SALVO CONX"
   end
 
 end

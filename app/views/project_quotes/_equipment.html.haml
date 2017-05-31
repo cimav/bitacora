@@ -1,1 +1,79 @@
-= "EQ"
+- editable = true
+
+%table.table.table-striped
+  %thead
+    - if project_quote.project_quote_equipment.count > 0
+      %tr
+        %th= "Equipo"
+        %th= "Horas"
+        %th= "Costo x Hora"
+        %th= "Subtotal"
+        %th
+  %tbody
+    - eq_total = 0
+    - eqs = []
+    - if project_quote.project_quote_equipment.count == 0
+      %tr.empty-cost
+        %td{:colspan => 5}= "Sin equipos"
+    - project_quote.project_quote_equipment.each do |eq|
+      - eq_cost = eq.hours * eq.hourly_rate rescue 0
+      - eq_total = eq_total + eq_cost rescue 0
+      - eqs << eq.equipment_id
+      %tr.equipment-row{'data-id' => eq.id, :id => "equipment_row_#{eq.id}"}
+        %td
+          = eq.equipment.name
+          - if !eq.details.blank?
+            .eq-details= eq.details
+        %td
+          - if editable
+            .input-group
+              %span.input-group-btn
+                %button{:type => "button", :class => "btn btn-default btn-number", "data-type" => "minus", "data-field" => "eq_hours_#{eq.id}"}
+                  %span{:class => "glyphicon glyphicon-minus"}
+              %input{:type => "text", :id => "eq_hours_#{eq.id}", :name => "eq_hours_#{eq.id}", :class => "pq_eq_hours form-control input-number", :value => "#{eq.hours}", "data-id" => eq.id, 'data-pq_id' => project_quote.id}
+              %span{:class => "input-group-btn"}
+                %button{:type => "button", :class => "btn btn-default btn-number", "data-type" => "plus", "data-field" => "eq_hours_#{eq.id}"}
+                  %span{:class => "glyphicon glyphicon-plus"}
+          - else
+            .align-right= "#{eq.hours} horas" 
+        %td
+          .align-right= number_to_currency(eq.hourly_rate)
+        %td
+          .align-right= number_to_currency(eq_cost)
+        %td
+          - if editable
+            = link_to '×', {:controller => 'project_quotes', :action => 'delete_eq', :eq_id => eq.id}, :method => :post, :remote => true, :class => 'close', :'data-type' => 'html', 'data-id' => eq.id
+    - if editable
+      - if (eqs.count > 0)
+        - not_in =  "AND id NOT IN (#{(eqs.join(','))})"
+      - else
+        - not_in = ""
+
+      - eq_rows = Equipment.where("status = #{Equipment::ACTIVE} #{not_in}").order(:name)
+      - eq_options = ''
+      - eq_rows.each do |eq_item|
+        - eq_options += "<option value=\"#{eq_item.id}\">#{eq_item.name}</option>"
+    - if eq_options != '' && editable
+      %tr.add-row
+        %td
+          = select_tag :new_eq_id, eq_options.html_safe, {:class => 'pq_eq_id form-control input-sm'}
+        %td
+          .input-group
+            %span.input-group-btn
+              %button{:type => "button", :class => "btn btn-default btn-number", :disabled =>"disabled", "data-type" => "minus", "data-field" => "eq_hours"}
+                %span{:class => "glyphicon glyphicon-minus"}
+            %input{:type => "text", :id => "eq_hours", :name => "eq_hours", :class => "form-control input-number", :value => "1"}
+            %span{:class => "input-group-btn"}
+              %button{:type => "button", :class => "btn btn-default btn-number", "data-type" => "plus", "data-field" => "eq_hours"}
+                %span{:class => "glyphicon glyphicon-plus"}
+              
+        %td{:colspan => 3}
+          %button.btn.btn-primary.btn-sm.btn-block#add-project-quote-equipment{'data-pq_id' => project_quote.id }= "Agregar"
+
+
+:javascript
+  $(document).ready(function(){
+    $('.pq_eq_id').select2();
+  });
+  $("#eq_total").html("#{number_to_currency(eq_total)}");
+

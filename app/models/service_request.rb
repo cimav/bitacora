@@ -108,4 +108,9 @@ class ServiceRequest < ActiveRecord::Base
     self.request_type_id == ServiceRequest::PROYECTO_VINCULACION
   end
 
+  def active_quote
+    # TODO: Revisar por el estado del costeo
+    self.project_quotes.order('created_at').last
+  end
+
 end

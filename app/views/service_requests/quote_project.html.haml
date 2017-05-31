@@ -42,21 +42,72 @@
 
     #quote-area
       .tab-content
-        - q_active = "active"
-        - @request.project_quotes.each do |quote| 
-          - code = quote.number.gsub("#{@request.number}-","")
-          .tab-pane{:role => "tabpanel", :id => code, :class => q_active}
-            .pq_technicians{:id => "pq#{quote.id}_technicians"} 
-              = render :partial => 'project_quotes/technicians', :locals => {:project_quote => quote }
-            
-            .pq_equipment{:id => "pq#{quote.id}_equipment"} 
-              = render :partial => 'project_quotes/equipment', :locals => {:request => quote }
+        .row
+          .col-md-8
+            - q_active = "active"
+            - @request.project_quotes.each do |quote| 
+              - code = quote.number.gsub("#{@request.number}-","")
+              .tab-pane{:role => "tabpanel", :id => code, :class => q_active}
+                - q_active = ""
+                .panel-group{:id => "accordion-pq-#{quote.id}", :role => "tablist", "aria-multiselectable" => "true"}
+                  // Personal
+                  .panel.panel-default
+                    .panel-heading{:role => "tab",  :id => "heading-pq-tech-#{quote.id}"}
+                      %h4.panel-title
+                        %a{:role => "button", "data-toggle" => "collapse", "data-parent" => "#accordion-pq-#{quote.id}", :href => "#collapse-pq-tech-#{quote.id}", "aria-expanded" => "true", "aria-controls" => "collapse-pq-tech-#{quote.id}"}= "Personal Involucrado"
+                  .panel-collapse{:id => "collapse-pq-tech-#{quote.id}", :class => "collapse in", :role => "tabpanel", "aria-labelledby" => "headingOne"}
+                    .panel-body
+                      .pq_technicians{:id => "pq#{quote.id}_technicians"} 
+                        = render :partial => 'project_quotes/technicians', :locals => {:project_quote => quote }
 
-            .pq_others{:id => "pq#{quote.id}_others"} 
-              = render :partial => 'project_quotes/others', :locals => {:request => quote }
-            #send-project-quote-button
-              %button.btn.btn-primary= "Enviar costeo de proyecto"
-          - q_active = false
+                  // Equipos
+                  .panel.panel-default
+                    .panel-heading{:role => "tab",  :id => "heading-pq-eq-#{quote.id}"}
+                      %h4.panel-title
+                        %a{:role => "button", "data-toggle" => "collapse", "data-parent" => "#accordion-pq-#{quote.id}", :href => "#collapse-pq-eq-#{quote.id}", "aria-expanded" => "true", "aria-controls" => "collapse-pq-eq-#{quote.id}"}= "Equipos"
+                  .panel-collapse{:id => "collapse-pq-eq-#{quote.id}", :class => "collapse in", :role => "tabpanel", "aria-labelledby" => "headingOne"}
+                    .panel-body
+                      .pq_equipment{:id => "pq#{quote.id}_equipment"} 
+                        = render :partial => 'project_quotes/equipment', :locals => {:project_quote => quote }
+
+                  // Otros
+                  .panel.panel-default
+                    .panel-heading{:role => "tab",  :id => "heading-pq-other-#{quote.id}"}
+                      %h4.panel-title
+                        %a{:role => "button", "data-toggle" => "collapse", "data-parent" => "#accordion-pq-#{quote.id}", :href => "#collapse-pq-other-#{quote.id}", "aria-expanded" => "true", "aria-controls" => "collapse-pq-other-#{quote.id}"}= "Otros: Consumibles, Viáticos, Subcontrataciones, etc."
+                  .panel-collapse{:id => "collapse-pq-other-#{quote.id}", :class => "collapse in", :role => "tabpanel", "aria-labelledby" => "headingOne"}
+                    .panel-body
+                      .pq_others{:id => "pq#{quote.id}_others"} 
+                        = render :partial => 'project_quotes/others', :locals => {:project_quote => quote }
+
+                
+              - q_active = false
+          .col-md-4
+            .quote-totals-area
+              %table.quote-totals.table.table-striped
+                %tr
+                  %th{:colspan => 2}= "Costeo"
+                %tr
+                  %td.quote-desc= "Personal Involucrado"
+                  %td.quote-cost#tech_total= "0"
+                %tr
+                  %td.quote-desc= "Equipos"
+                  %td.quote-cost#eq_total= "0"
+                %tr
+                  %td.quote-desc= "Otros"
+                  %td.quote-cost#other_total= "0"
+                %tr
+                  %td.quote-total-desc= "Total"
+                  %td.quote-total#pq_total= "#{@grand_total}"
+
+              #send-project-quote-area
+                %button.btn.btn-primary.btn-success{:id => "send-project-quote-button", "data-id" => @request.id}
+                  %span.glyphicon.glyphicon-send
+                  = " &nbsp;Solicitar autorización por ".html_safe
+                  %br
+                  = "Jefe de Departamento"
+                .send-project-quote-note
+                  = "Se enviará correo a <br>#{@request.user.department.user.full_name}<br>para autorizar el costeo".html_safe
 
 
             

@@ -388,6 +388,64 @@ class ServiceRequestsController < ApplicationController
      render :layout => false
   end
 
+
+  def send_request_department_auth
+    @service_request = ServiceRequest.find(params[:id])
+    if @service_request
+      if Resque.enqueue(RequestDepartmentAuthMailer, @service_request.id)
+        flash[:notice] = "Solicitud de autorización enviada al Jefe de Departamento"
+
+        respond_with do |format|
+          format.html do
+            if request.xhr?
+              json = {}
+              json[:flash] = flash
+              json[:id] = @service_request.id
+              render :json => json
+            else
+              redirect_to @service_request
+            end
+          end
+        end
+      else
+
+        respond_with do |format|
+          format.html do
+            if request.xhr?
+              json = {}
+              flash[:error] = "No se pudo enviar solicitud de autorización"
+              json[:errors] = @service_request.errors
+              json[:flash] = flash
+              json[:id] = @service_request.id
+              render :json => json, :status => :unprocessable_entity
+            else
+              redirect_to @service_request
+            end
+          end
+        end
+
+      end
+    else
+
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            flash[:error] = "No se pudo accesar a la carpeta con ID #{params[:id]}"
+            json[:errors] = @service_request.errors
+            json[:flash] = flash
+            json[:id] = @service_request.id
+            render :json => json, :status => :unprocessable_entity
+          else
+            redirect_to @service_request
+          end
+        end
+      end
+
+    end
+    
+  end
+
   private
   def cost_details(service_request)
     

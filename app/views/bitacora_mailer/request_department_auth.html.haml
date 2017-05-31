@@ -1,0 +1,149 @@
+!!!
+- grand_total = 0
+- tech_total = 0
+- eq_total = 0
+- others_total = 0
+
+- @project_quote.project_quote_technicians.each do |tech|
+  - tech_cost = tech.hours * tech.hourly_wage rescue 0
+  - tech_total = tech_total + tech_cost rescue 0
+
+- @project_quote.project_quote_equipment.each do |eq|
+  - eq_cost = eq.hours * eq.hourly_rate rescue 0
+  - eq_total = eq_total + eq_cost rescue 0
+
+- @project_quote.project_quote_others.each do |other|
+  - other_cost = other.price rescue 0
+  - others_total = others_total + other_cost rescue 0
+
+- grand_total = tech_total + eq_total + others_total
+
+
+  
+%html
+  %head
+    %meta{"content" => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
+  %body
+    %div{:style => "background-color: #ccc; padding: 20px;"}
+      %div{:style => "background-color: #eee; padding: 20px; border-bottom: 1px solid #ddd;"}
+        %table 
+          %tbody 
+            %tr
+              %td{:style => "width: 120px; text-align: center;"}
+                = image_tag ("http://cimav.edu.mx/foto/#{@service_request.user.email.split('@')[0]}/100"), :style => "border-radius: 50em; -webkit-border-radius: 50em; -moz-border-radius: 50em;"
+              %td
+                %h2{:style => "margin-bottom: 2px;"}= @service_request.user.full_name
+                = mail_to @service_request.user.email, @service_request.user.email, :subject =>  "[R] Costeo de Proyecto #{@service_request.number}"
+
+      %div{:style => "background-color: #ffffff; padding: 20px; padding-bottom: 60px;"}
+        %p= "Se solicita la autorización del costeo para el proyecto #{@service_request.number}: #{@service_request.request_link}"
+        %h2= "Resumen"
+        %table{:style => "border-collapse: collapse;"}
+          %tr
+            %td{:style => "padding: 5px; border-bottom: 1px solid #ddd;"}= "Personal Involucrado"
+            %td{:style => "padding: 5px; border-bottom: 1px solid #ddd; text-align: right;"}= number_to_currency(tech_total)
+          %tr
+            %td{:style => "padding: 5px; border-bottom: 1px solid #ddd;"}= "Equipos"
+            %td{:style => "padding: 5px; border-bottom: 1px solid #ddd; text-align: right;"}= number_to_currency(eq_total)
+          %tr
+            %td{:style => "padding: 5px;"}= "Otros"
+            %td{:style => "padding: 5px; text-align: right;"}= number_to_currency(others_total)
+          %tr
+            %th{:style => "padding: 5px; border-top: 2px solid #000;"}= "TOTAL"
+            %th{:style => "padding: 5px; border-top: 2px solid #000; text-align: right;"}= number_to_currency(grand_total)
+
+        %h2= "Detalle" 
+
+        %table{:style => "border-collapse: collapse;"}
+          - if @project_quote.project_quote_technicians.count > 0
+            - tech_total = 0
+            %tr
+              %th{:colspan => 4, :style => "padding: 5px; padding-top: 20px; border-bottom: 2px solid #000;"}= "Personal Involucrado"
+            %tr
+              %th{:style => "padding: 5px; border-bottom: 2px solid #000;"}= "Concepto"
+              %th{:style => "padding: 5px; border-bottom: 2px solid #000;"}= "Cantidad"
+              %th{:style => "padding: 5px; border-bottom: 2px solid #000;"}= "Precio Unitario"
+              %th{:style => "padding: 5px; border-bottom: 2px solid #000;"}= "Subtotal"
+            - techs = []
+            - @project_quote.project_quote_technicians.each do |tech|
+              - tech_cost = tech.hours * tech.hourly_wage rescue 0
+              - tech_total = tech_total + tech_cost rescue 0
+              - techs << tech.user_id
+              %tr
+                %td{:style => "padding: 5px; border-bottom: 1px solid #ddd;"}
+                  = tech.user.full_name
+                  - if !tech.details.blank?
+                    .tech-details= tech.details
+                %td{:style => "padding: 5px; border-bottom: 1px solid #ddd; text-align: right;"}
+                  = "#{tech.hours} horas" 
+                %td{:style => "padding: 5px; border-bottom: 1px solid #ddd; text-align: right;"}
+                  = number_to_currency(tech.hourly_wage)
+                %td{:style => "padding: 5px; border-bottom: 1px solid #ddd; text-align: right;"}
+                  = number_to_currency(tech_cost)
+            %tr
+              %td{:colspan => 3, :style => "text-align: padding: 5px; border-bottom: 2px solid #000; text-align: right;"}= "TOTAL PERSONAL: "
+              %td{:style => "text-align: padding: 5px; border-bottom: 2px solid #000;"}= number_to_currency(tech_total)
+
+          - if @project_quote.project_quote_equipment.count > 0
+            - eq_total = 0
+            - eqs = []
+            %tr
+              %th{:colspan => 4, :style => "padding: 5px; padding-top: 20px; border-bottom: 2px solid #000;"}= "Equipos"
+            %tr
+              %th{:style => "padding: 5px; border-bottom: 2px solid #000;"}= "Concepto"
+              %th{:style => "padding: 5px; border-bottom: 2px solid #000;"}= "Cantidad"
+              %th{:style => "padding: 5px; border-bottom: 2px solid #000;"}= "Precio Unitario"
+              %th{:style => "padding: 5px; border-bottom: 2px solid #000;"}= "Subtotal"
+            - @project_quote.project_quote_equipment.each do |eq|
+              - eq_cost = eq.hours * eq.hourly_rate rescue 0
+              - eq_total = eq_total + eq_cost rescue 0
+              - eqs << eq.equipment_id
+              %tr
+                %td{:style => "padding: 5px; border-bottom: 1px solid #ddd;"}
+                  = eq.equipment.name
+                %td{:style => "padding: 5px; border-bottom: 1px solid #ddd; text-align: right;"}
+                  = "#{eq.hours} horas" 
+                %td{:style => "padding: 5px; border-bottom: 1px solid #ddd; text-align: right;"}
+                  = number_to_currency(eq.hourly_rate)
+                %td{:style => "padding: 5px; border-bottom: 1px solid #ddd; text-align: right;"}
+                  = number_to_currency(eq_cost)
+            %tr
+              %td{:colspan => 3, :style => "text-align: padding: 5px; border-bottom: 2px solid #000; text-align: right;"}= "TOTAL EQUIPOS: "
+              %td{:style => "text-align: padding: 5px; border-bottom: 2px solid #000;"}= number_to_currency(eq_total)
+
+          - if @project_quote.project_quote_others.count > 0
+            - eq_total = 0
+            %tr
+              %th{:colspan => 4, :style => "padding: 5px;  padding-top: 20px; border-bottom: 2px solid #000;"}= "Otros"
+            %tr
+              %th{:style => "padding: 5px; border-bottom: 2px solid #000;"}= "Concepto"
+              %th{:style => "padding: 5px; border-bottom: 2px solid #000;"}= "Cantidad"
+              %th{:style => "padding: 5px; border-bottom: 2px solid #000;"}= "Precio Unitario"
+              %th{:style => "padding: 5px; border-bottom: 2px solid #000;"}= "Subtotal"
+            - @project_quote.project_quote_others.each do |other|
+              - other_cost = other.price rescue 0
+              - others_total = others_total + other_cost rescue 0
+              %tr
+                %td{:style => "padding: 5px; border-bottom: 1px solid #ddd;"}
+                  = other.other_type.name
+                  = ": "
+                  = other.concept 
+                %td{:style => "padding: 5px; border-bottom: 1px solid #ddd; text-align: right;"}
+                  = 1
+                %td{:style => "padding: 5px; border-bottom: 1px solid #ddd; text-align: right;"}
+                  = number_to_currency(other.price)
+                %td{:style => "padding: 5px; border-bottom: 1px solid #ddd; text-align: right;"}
+                  = number_to_currency(other.price)
+            %tr
+              %td{:colspan => 3, :style => "text-align: padding: 5px; border-bottom: 2px solid #000; text-align: right;"}= "TOTAL OTROS: "
+              %td{:style => "text-align: padding: 5px; border-bottom: 2px solid #000;"}= number_to_currency(others_total)
+        
+
+
+
+      %div{:style => "background-color: #888; padding: 20px; color: #eee;"}
+        %strong{:style => "margin-top: 8px; margin-left: 10px; color: #eee; font-size: 11px;"}
+        = "Mensaje enviado automáticamente desde "
+        %strong= "Bitácora Electrónica"
+           
+        

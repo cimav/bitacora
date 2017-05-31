@@ -286,6 +286,29 @@ class BitacoraMailer < ActionMailer::Base
     mail(:to => @to, :from => @from, :reply_to => reply_to, :subject => subject)
   end
 
+  def request_department_auth(service_request)
+    @from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"
+    @to = []
+
+     # Department Supervisor  
+    @to << service_request.user.department.user.email
+    
+    # Requestor
+    reply_to = service_request.user.email
+
+    @service_request = service_request
+    @project_quote = @service_request.active_quote
+
+    subject = "Costeo de Proyecto #{service_request.number}"
+
+    
+
+    mail(:to => @to, :from => @from, :reply_to => reply_to, :subject => subject)
+
+  end
+
+
+
 
   # Si se actualiza el del controller se debe de actualizar aquí también. 
   private

@@ -6,6 +6,32 @@ class ProjectQuotesController < ApplicationController
 
   def show
     @project_quote = ProjectQuote.find(params['id'])
+    @grand_total = get_grand_total(params[:id])
+    @grand_total = "FUCK"
+    render :layout => false
+  end
+
+  def get_grand_total(id)
+    grand_total = RequestedService.find_by_sql(["SELECT IFNULL(SUM(subtotal),0) AS total FROM (
+                                                   SELECT SUM(hours * hourly_rate) AS subtotal 
+                                                     FROM project_quote_equipments 
+                                                     WHERE project_quote_id = :project_quote
+                                                     GROUP BY project_quote_id 
+                                                   UNION 
+                                                     SELECT SUM(hours * hourly_wage) AS subtotal 
+                                                     FROM project_quote_technicians 
+                                                     WHERE project_quote_id = :project_quote
+                                                     GROUP BY project_quote_id
+                                                   UNION
+                                                     SELECT SUM(price) AS subtotal 
+                                                     FROM project_quote_others 
+                                                     WHERE project_quote_id = :project_quote
+                                                     GROUP BY project_quote_id
+                                                 ) subtotals", :project_quote => id]).first.total
+  end
+
+  def grand_total
+    @grand_total = get_grand_total(params[:id])
     render :layout => false
   end
 
@@ -18,7 +44,7 @@ class ProjectQuotesController < ApplicationController
     tech =  @project_quote.project_quote_technicians.new 
     user = User.find(params[:user_id])
     tech.user_id = params[:user_id]
-    tech.hours = params[:hours]
+    tech.hours = params[:tech_hours]
     tech.hourly_wage = user.hourly_wage
 
     if tech.save
@@ -151,10 +177,10 @@ class ProjectQuotesController < ApplicationController
     
     @project_quote = ProjectQuote.find(params[:id])
 
-    eq =  @project_quote.project_quote_equipments.new 
+    eq =  @project_quote.project_quote_equipment.new 
     the_eq = Equipment.find(params[:eq_id])
     eq.equipment_id = params[:eq_id]
-    eq.hours = params[:hours]
+    eq.hours = params[:eq_hours]
     if @project_quote.service_request.is_vinculacion?
       eq.hourly_rate = the_eq.hourly_rate
     else
@@ -169,7 +195,6 @@ class ProjectQuotesController < ApplicationController
           if request.xhr?
             json = {}
             json[:flash] = flash
-            json[:sample_id] = @project_quote.sample_id
             json[:id] = @project_quote.id
             render :json => json
           else
@@ -213,7 +238,8 @@ class ProjectQuotesController < ApplicationController
           if request.xhr?
             json = {}
             json[:flash] = flash
-              json[:id] = eq.id
+            json[:id] = eq.id
+            json[:project_quote_id] = eq.project_quote_id
             render :json => json
           else
             redirect_to eq
@@ -259,6 +285,7 @@ class ProjectQuotesController < ApplicationController
             json = {}
             json[:flash] = flash
             json[:id] = eq.id
+            json[:project_quote_id] = eq.project_quote_id
             render :json => json
           else
             redirect_to eq
@@ -286,143 +313,6 @@ class ProjectQuotesController < ApplicationController
   end
 
 
-  def new_material
-    
-    flash = {}
-    
-    @project_quote = ProjectQuote.find(params[:id])
-
-    mat =  @project_quote.project_quote_materials.new 
-    the_mat = Material.find(params[:mat_id])
-    mat.material_id = the_mat.id
-    mat.quantity = params[:quantity]
-    mat.unit_price = the_mat.unit_price
-
-    if mat.save
-      flash[:notice] = "Material agregado"
-
-      respond_with do |format|
-        format.html do
-          if request.xhr?
-            json = {}
-            json[:flash] = flash
-            json[:sample_id] = @project_quote.sample_id
-            json[:id] = @project_quote.id
-            render :json => json
-          else
-            redirect_to @project_quote
-          end
-        end
-      end
-
-    else
-
-      flash[:error] = "Error al agregar el material."
-      respond_with do |format|
-        format.html do
-          if request.xhr?
-            json = {}
-            json[:flash] = flash
-            json[:errors] = @project_quote.errors
-            render :json => json, :status => :unprocessable_entity
-          else
-            redirect_to @project_quote
-          end
-        end
-      end
-    end
-
-  end
-
-  
-  def update_mat_qty
-    
-    flash = {}
-    mat = ProjectQuoteMaterial.find(params[:mat_id])
-    
-    mat.quantity = params[:quantity]
-
-    if mat.save
-      flash[:notice] = "Cantidad actualizada"
-
-      respond_with do |format|
-        format.html do
-          if request.xhr?
-            json = {}
-            json[:flash] = flash
-              json[:id] = mat.id
-            render :json => json
-          else
-            redirect_to mat
-          end
-        end
-      end
-
-    else
-
-      flash[:error] = "Error al actualizar la cantidad"
-      respond_with do |format|
-        format.html do
-          if request.xhr?
-            json = {}
-            json[:flash] = flash
-            json[:errors] = mat.errors
-            render :json => json, :status => :unprocessable_entity
-          else
-            redirect_to mat
-          end
-        end
-      end
-    end
-
-  end
-
-  def materials_table
-    @project_quote = ProjectQuote.find(params[:id])
-    render :layout => false
-  end
-
-  def delete_mat
-
-    flash = {}
-    mat = ProjectQuoteMaterial.find(params[:mat_id])
-    # TODO: Validar que el tecnico que esta haciendo el borrado sea el dueño del servicio
-    if mat.destroy
-      flash[:notice] = "Material eliminado"
-
-      respond_with do |format|
-        format.html do
-          if request.xhr?
-            json = {}
-            json[:flash] = flash
-            json[:id] = mat.id
-            render :json => json
-          else
-            redirect_to mat
-          end
-        end
-      end
-
-    else
-
-      flash[:error] = "Error al eliminar el material."
-      respond_with do |format|
-        format.html do
-          if request.xhr?
-            json = {}
-            json[:flash] = flash
-            json[:errors] = mat.errors
-            render :json => json, :status => :unprocessable_entity
-          else
-            redirect_to mat
-          end
-        end
-      end
-    end
-    
-  end
-
-
   def new_other
     
     flash = {}
@@ -442,7 +332,6 @@ class ProjectQuotesController < ApplicationController
           if request.xhr?
             json = {}
             json[:flash] = flash
-            json[:sample_id] = @project_quote.sample_id
             json[:id] = @project_quote.id
             render :json => json
           else

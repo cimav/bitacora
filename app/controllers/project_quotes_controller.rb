@@ -7,7 +7,6 @@ class ProjectQuotesController < ApplicationController
   def show
     @project_quote = ProjectQuote.find(params['id'])
     @grand_total = get_grand_total(params[:id])
-    @grand_total = "FUCK"
     render :layout => false
   end
 
@@ -421,6 +420,7 @@ class ProjectQuotesController < ApplicationController
             json = {}
             json[:flash] = flash
             json[:id] = other.id
+            json[:project_quote_id] = other.project_quote_id
             render :json => json
           else
             redirect_to other

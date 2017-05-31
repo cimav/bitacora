@@ -1293,26 +1293,26 @@ $(document).on('click', '#add-project-quote-other', () ->
    )
 
 reloadProjectQuoteOthersTable = (pq_id) ->
-  url = '/project_quotes/' + pq_id + '/equipment_table'
+  url = '/project_quotes/' + pq_id + '/others_table'
   $.get(url, {}, (html) ->
-    $('#pq' + pq_id + '_equipment').empty().html(html)
+    $('#pq' + pq_id + '_others').empty().html(html)
     updateProjectGrandTotal(pq_id)
   )
 
 
-$(document).on('ajax:beforeSend', '.pq_other .close', (evt, xhr, settings) ->
+$(document).on('ajax:beforeSend', '.pq_others .close', (evt, xhr, settings) ->
     $(".pq_other-row").removeClass('error')
   )
-$(document).on('ajax:success', '.pq_other .close', (evt, data, status, xhr) ->
+$(document).on('ajax:success', '.pq_others .close', (evt, data, status, xhr) ->
     res = $.parseJSON(xhr.responseText)
-    tech_id = res['id']
+    other_id = res['id']
     pq_id = res['project_quote_id']
     showFlash(res['flash']['notice'], 'alert-success')
-    $("#other_row_#{tech_id}").remove()
+    $("#other_row_#{other_id}").remove()
     reloadProjectQuoteOthersTable(pq_id)
   )
 
-$(document).on('ajax:error', '.pq_other .close', (evt, xhr, status, error) ->
+$(document).on('ajax:error', '.pq_others .close', (evt, xhr, status, error) ->
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['error'], 'alert-error')
   )

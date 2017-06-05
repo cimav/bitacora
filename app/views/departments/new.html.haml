@@ -1,0 +1,36 @@
+%h1= "Nuevo departamento"
+= form_for @department, :remote => true, :html => {:'data-type' => 'html', :id => 'new-department-form'} do |f|
+  .field#field_department_name
+    = f.label :name, 'Nombre:'
+    = f.text_field :name, {:class => 'form-control', :placeholder => 'Nombre del departamento'}
+  .field#field_department_prefix
+    = f.label :prefix, 'Prefijo:'
+    = f.text_field :prefix, {:class => 'form-control', :placeholder => '3 o 4 letras'}
+  .field#field_department_description
+    = f.label :description, 'Descripción:'
+    = f.text_area :description, {:class => 'form-control', :rows => 8}
+  .field#field_department_business_unit_id
+    = f.label :business_unit_id, 'Sede:'
+    - bu_options = ''
+    - BusinessUnit.order(:name).each do |item|
+      - if item.id == @department.business_unit_id
+        - sel = 'selected = "selected"'
+      - else
+        - sel = ''
+      - bu_options += "<option value=\"#{item.id}\" #{sel}>#{item.name}</option>"
+    = f.select :business_unit_id, bu_options.html_safe, {}, {:class => 'form-control'}
+  .field#field_department_user_id
+    = f.label :user_id, 'Responsable:'
+    %br
+    - resp_options = ''
+    - User.where("access = :a OR access = :b", {:a => User::ACCESS_EMPLOYEE, :b => User::ACCESS_ADMIN}).order('first_name, last_name').each do |item|
+      - resp_options += "<option value=\"#{item.id}\">#{item.full_name}</option>"
+    = f.select :user_id, resp_options.html_safe, {:class => 'form-control'}
+      
+  .submit-button{:style => 'margin-top: 20px;'}
+    = f.submit "Agregar departamento", {:class => "btn btn-primary"}
+
+:javascript
+  $(function() {  
+    $("#department_user_id").select2();
+  }); 

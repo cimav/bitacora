@@ -83,6 +83,57 @@ $(document).on('click', '.lab-req-serv-item', () ->
   setHash('#!/laboratory/' + lab_id + '/s/' + id, true)
 
 
+#--------------
+# LAB REPORTS
+#--------------
+$(document).on('ajax:beforeSend', '.reports-lab', (evt, xhr, settings) ->
+    lab_id = $(this).data('laboratory-id')
+    url = '/laboratory/' + lab_id + '/reports'
+    setHash('#!/laboratory/' + lab_id + '/reports', false)
+  )
+$(document).on('ajax:success', '.reports-lab', (evt, data, status, xhr) ->
+    $('#lab-work-panel').empty().html(data)
+  )
+
+$(document).on('ajax:error', '.reports-lab', (evt, xhr, status, error) ->
+    alert('Error')
+  )
+
+
+# General report
+
+$(document).on('ajax:beforeSend', '.reports-general-lab', (evt, xhr, settings) ->
+    lab_id = $(this).data('laboratory-id')
+    url = '/laboratory/' + lab_id + '/reports_general'
+    setHash('#!/laboratory/' + lab_id + '/reports_general', false)
+  )
+$(document).on('ajax:success', '.reports-general-lab', (evt, data, status, xhr) ->
+    $('#lab-report-area').empty().html(data)
+  )
+
+$(document).on('ajax:error', '.reports-general-lab', (evt, xhr, status, error) ->
+    alert('Error')
+  )
+
+$(document).on('click', '#report_general_generate', () ->
+    lab_id =  $(this).attr('laboratory_id')
+    start_date = $('#start-date').val()
+    end_date = $('#end-date').val()
+    url = '/laboratory/' + lab_id + '/reports_general?start_date=' + start_date + '&end_date=' + end_date 
+    $.get(url, {}, (html) ->
+      $('#lab-report-area').empty().html(html)
+    )
+  )
+
+$(document).on('click', '#report_general_generate_excel', () ->
+    lab_id =  $(this).attr('laboratory_id')
+    start_date = $('#start-date').val()
+    end_date = $('#end-date').val()
+    url = '/laboratory/' + lab_id + '/reports_general.xls?start_date=' + start_date + '&end_date=' + end_date 
+    window.open(url,"_excel")
+  )
+
+
 #----------
 # LAB ADMIN
 #----------
@@ -161,6 +212,10 @@ $(document).on('click', '.admin-lab-service-item', () ->
       url = '/laboratory_services/' + lab_id + '/edit_cost'
       $.get(url, {}, (html) ->
         $('#admin-service-costs').html(html)
+      )
+      url = '/laboratory_services/' + lab_id + '/edit_additionals'
+      $.get(url, {}, (html) ->
+        $('#admin-service-additionals').html(html)
       )
     )
   )
@@ -686,6 +741,36 @@ $(document).on('ajax:success', '#new-lab-service-classification-form', (evt, dat
     showFlash(res['flash']['notice'], 'success')
     $('#admin-lab-classification-search-box').val(res['name'])
     adminLabClassificationLiveSearch()
+  )
+
+$(document).on('ajax:error', '#new-lab-service-classification-form', (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+
+#----------------------------
+# LAB ADMIN IMAGES
+#----------------------------
+$(document).on('ajax:beforeSend', '.admin-images', (evt, xhr, settings) ->
+    lab_id = $(this).attr('data-laboratory-id')
+    url = '/laboratory/' + lab_id + '/admin_images'
+  )
+$(document).on('ajax:success', '.admin-images', (evt, data, status, xhr) ->
+    $('#admin-area').empty().html(data)
+  )
+
+$(document).on('ajax:error', '.admin-images', (evt, xhr, status, error) ->
+    alert('Error')
+  )
+
+$(document).on('ajax:beforeSend', '#new-image-classification-form', (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.has-errors').removeClass('has-errors')
+  )
+$(document).on('ajax:success', '#new-image-form', (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
   )
 
 $(document).on('ajax:error', '#new-lab-service-classification-form', (evt, xhr, status, error) ->

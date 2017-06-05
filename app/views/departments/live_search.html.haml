@@ -1,0 +1,9 @@
+%ul
+  - @departments.each do |department|
+    %li.departments-item.item{"data-id" => department.id}
+      .departments-item-name{:id => "departments_name_#{department.id}"}= department.name
+      .departments-item-user{:id => "departments_user_#{department.id}"}= department.user.full_name
+      .departments-item-unit{:id => "departments_unit_#{department.id}"}= department.business_unit.name
+.items-counter
+  .items-counter-inner
+    = "#{@departments.count} departamentos"

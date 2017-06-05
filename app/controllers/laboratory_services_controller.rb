@@ -178,6 +178,11 @@ class LaboratoryServicesController < ApplicationController
     render :layout => false
   end
 
+  def edit_additionals
+    @laboratory_service = LaboratoryService.find(params[:id])
+    render :layout => false
+  end
+
   def update
     @laboratory_service = LaboratoryService.find(params[:id])
 

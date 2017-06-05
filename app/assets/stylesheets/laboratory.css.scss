@@ -17,6 +17,42 @@
   padding: 20px;
 }
 
+#lab-report-area {
+  float: left;
+  background: $white;
+  left: $lab-req-serv-panel-width - 60;
+  border-left: 1px solid $line-color;
+  position: absolute;
+  top: 55px;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+}
+
+#lab-report-options {
+  border-bottom: 1px solid $line-color;
+  padding: 10px;
+}
+#lab-report-area-inner {
+  padding: 20px;
+  position: fixed;
+  overflow: auto;
+  top: 127px;
+  bottom: 0;
+}
+
+#lab-report-list {
+  background: $bg-color;
+  width: $lab-req-serv-panel-width - 60;
+  position: absolute;
+  border-right: 1px solid darken($line-color, 10%);
+  overflow: auto;
+  top: 55px;
+  bottom: 0;
+  padding: 0px;
+}
+
+
 #lab-req-serv-panel {
   background: $bg-color;
   width: $lab-req-serv-panel-width;
@@ -326,6 +362,16 @@
 .admin-toolbar {
   float: right;
   margin: 10px 10px 0 0;
+  width: 30% !important;
+}
+
+h2.laboratory-name {
+  width:60% !important;
+  overflow:hidden;
+}
+
+.field {
+  margin: 0px 20px 15px 20px;
 }
 
 #admin-area {

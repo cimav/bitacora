@@ -8,6 +8,7 @@ class RequestedService < ActiveRecord::Base
   has_many :activity_log
   has_many :service_files
   has_one :service_request, :through => :sample
+  has_one :laboratory_service_classification, :through => :laboratory_service
 
   has_many :requested_service_technicians
   has_many :requested_service_equipments

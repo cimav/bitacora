@@ -152,3 +152,19 @@ $(document).on('ajax:error', '.collaborator-item .close', (evt, xhr, status, err
     res = $.parseJSON(xhr.responseText)
     showFlash(res['flash']['error'], 'error')
   )
+
+
+
+# PROYECTOS VINCULACION
+
+$(document).on('click', '#send-project-quote-button', () ->
+  id = $(this).data('id')
+  $(this).prop('disabled', true)
+  url = '/service_requests/' + id + '/send_request_department_auth';
+
+  $.post(url, {}, (html) ->
+    url = '/#!/service_requests/' + id 
+    window.location = url
+  )
+  false
+)

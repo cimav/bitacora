@@ -30,6 +30,15 @@
   .field#field_employee_number
     = f.label :employee_number, 'Identificador de empleado:'
     = f.text_field :employee_number, {:class => 'form-control'}
+  .field#field_department_id
+    - dep_options = "<option value=\"\">Sin departamento</option>"
+    - Department.where("status = :status", {:status => Department::ACTIVE}).order("name").each do |dep|
+      - if @user.department_id.to_i == dep.id
+        - dep_options += "<option value=\"#{dep.id}\" selected=\"selected\">#{dep.name} (#{dep.user.full_name})</option>"
+      - else
+        - dep_options += "<option value=\"#{dep.id}\">#{dep.name} (#{dep.user.full_name})</option>"
+    = f.label :department_id, 'Departamento:'
+    = f.select :department_id, dep_options.html_safe, {}, :class => 'form-control'
   - if !@user.hourly_wage.blank?
     .field#field_hourly_wage
       = f.label :hourly_wage, 'Sueldo por hora:'

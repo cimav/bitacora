@@ -938,6 +938,77 @@ $(document).on('ajax:error', '#edit-laboratory-form', (evt, xhr, status, error) 
   )
 
 #
+# Departments
+#
+
+@AdminDepartmentsLiveSearch = AdminDepartmentsLiveSearch = () ->
+  form = $("#departments-live-search")
+  url = "/departments/live_search"
+  formData = form.serialize()
+  $.get(url, formData, (html) ->
+    $("#departments-list").empty().html(html)
+    $("#departments-list .departments-item:first").click()
+  )
+
+$(document).on('change', '#search_unit_id', () ->
+    AdminDepartmentsLiveSearch()
+  )
+
+$(document).on('keyup', '#departments-search-box', () ->
+    AdminDepartmentsLiveSearch()
+  )
+
+$(document).on("click", ".departments-item", () ->
+  id = $(this).attr('data-id')
+  url = '/departments/' + id + '/edit'
+  $(".departments-item").removeClass("active")
+  $(this).addClass('active')
+  $.get(url, {}, (html) ->
+    $('#department-details').empty().html(html)
+  )
+)
+
+$(document).on("click", "#add-new-admin-department-button", () ->
+  url = '/departments/new'
+  $.get(url, {}, (html) ->
+    $('#department-details').empty().html(html)
+  )
+)
+
+$(document).on('ajax:beforeSend', '#new-department-form', (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.has-errors').removeClass('has-errors')
+  )
+$(document).on('ajax:success', '#new-department-form', (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    $('#departments-search-box').val(res['name'])
+    AdminDepartmentsLiveSearch()
+  )
+
+$(document).on('ajax:error', '#new-department-form', (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+$(document).on('ajax:beforeSend', '#edit-department-form', (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.has-errors').removeClass('has-errors')
+  )
+$(document).on('ajax:success', '#edit-department-form', (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['notice'], 'success')
+    $('#material_display_' + res['id']).html(res['display'])
+  )
+
+$(document).on('ajax:error', '#edit-department-form', (evt, xhr, status, error) ->
+    showFormErrors(xhr, status, error)
+  )
+
+
+
+#
 # Users
 #
 
@@ -1069,6 +1140,199 @@ $(document).on('ajax:success', '#edit-service-request-form', (evt, data, status,
 $(document).on('ajax:error', '#edit-service-request-form', (evt, xhr, status, error) ->
     showFormErrors(xhr, status, error)
   )
+
+
+
+#---------------------
+# Project Quote 
+#---------------------
+
+updateProjectGrandTotal = (pq_id) ->
+  url = '/project_quotes/' + pq_id + '/grand_total'
+  $.get(url, {}, (html) ->
+    $('#pq_total').empty().html(html)
+  )
+
+#
+# Technicians
+#
+
+$(document).on('click', '#add-project-quote-technician', () ->
+    $(this).prop('disabled', true)
+    pq_id = $(this).data('pq_id')
+    url = '/project_quotes/' + pq_id + '/new_technician'
+    $.post(url,
+           { user_id: $('#new_tech_user_id').val(), tech_hours: $('#tech_hours').val() },
+           (xhr) ->
+             res = $.parseJSON(xhr)
+             showFlash(res['flash']['notice'], 'success')
+             reloadProjectQuoteTechniciansTable(pq_id)
+     )
+     .fail( (data) ->
+       res = $.parseJSON(data.responseText)
+       showFlash(res['flash']['error'], 'alert-error')
+     )
+   )
+
+reloadProjectQuoteTechniciansTable = (pq_id) ->
+  url = '/project_quotes/' + pq_id + '/technicians_table'
+  $.get(url, {}, (html) ->
+    $('#pq' + pq_id + '_technicians').empty().html(html)
+    updateProjectGrandTotal(pq_id)
+  )
+
+
+$(document).on('ajax:beforeSend', '.pq_technicians .close', (evt, xhr, settings) ->
+    $(".technician-row").removeClass('error')
+  )
+$(document).on('ajax:success', '.pq_technicians .close', (evt, data, status, xhr) ->
+    res = $.parseJSON(xhr.responseText)
+    tech_id = res['id']
+    pq_id = res['project_quote_id']
+    showFlash(res['flash']['notice'], 'alert-success')
+    $("#technician_row_#{tech_id}").remove()
+    reloadProjectQuoteTechniciansTable(pq_id)
+  )
+
+$(document).on('ajax:error', '.pq_technicians .close', (evt, xhr, status, error) ->
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['error'], 'alert-error')
+  )
+
+$(document).on('change', '.pq_tech_hours', () ->
+    pq_id = $(this).data('pq_id')
+    url = '/project_quotes/' + pq_id + '/update_hours'
+    $.post(url,
+           { tech_id: $(this).attr('data-id'), hours: $(this).val() },
+           (xhr) ->
+             res = $.parseJSON(xhr)
+             pq_id = res['project_quote_id']
+             showFlash(res['flash']['notice'], 'success')
+             reloadProjectQuoteTechniciansTable(pq_id)
+     )
+  )
+
+
+#
+# Equipment
+#
+$(document).on('click', '#add-project-quote-equipment', () ->
+    $(this).prop('disabled', true)
+    pq_id = $(this).data('pq_id')
+    url = '/project_quotes/' + pq_id + '/new_equipment'
+    $.post(url,
+           { eq_id: $('#new_eq_id').val(), eq_hours: $('#eq_hours').val() },
+           (xhr) ->
+             res = $.parseJSON(xhr)
+             showFlash(res['flash']['notice'], 'success')
+             reloadProjectQuoteEquipmentTable(pq_id)
+     )
+     .fail( (data) ->
+       res = $.parseJSON(data.responseText)
+       showFlash(res['flash']['error'], 'alert-error')
+     )
+   )
+
+reloadProjectQuoteEquipmentTable = (pq_id) ->
+  url = '/project_quotes/' + pq_id + '/equipment_table'
+  $.get(url, {}, (html) ->
+    $('#pq' + pq_id + '_equipment').empty().html(html)
+    updateProjectGrandTotal(pq_id)
+  )
+
+
+$(document).on('ajax:beforeSend', '.pq_equipment .close', (evt, xhr, settings) ->
+    $(".equipment-row").removeClass('error')
+  )
+$(document).on('ajax:success', '.pq_equipment .close', (evt, data, status, xhr) ->
+    res = $.parseJSON(xhr.responseText)
+    tech_id = res['id']
+    pq_id = res['project_quote_id']
+    showFlash(res['flash']['notice'], 'alert-success')
+    $("#equipment_row_#{tech_id}").remove()
+    reloadProjectQuoteEquipmentTable(pq_id)
+  )
+
+$(document).on('ajax:error', '.pq_equipment .close', (evt, xhr, status, error) ->
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['error'], 'alert-error')
+  )
+
+$(document).on('change', '.pq_eq_hours', () ->
+    pq_id = $(this).data('pq_id')
+    url = '/project_quotes/' + pq_id + '/update_eq_hours'
+    $.post(url,
+           { eq_id: $(this).attr('data-id'), hours: $(this).val() },
+           (xhr) ->
+             res = $.parseJSON(xhr)
+             pq_id = res['project_quote_id']
+             showFlash(res['flash']['notice'], 'success')
+             reloadProjectQuoteEquipmentTable(pq_id)
+     )
+  )
+
+
+#
+# Other
+#
+$(document).on('click', '#add-project-quote-other', () ->
+    $(this).prop('disabled', true)
+    pq_id = $(this).data('pq_id')
+    url = '/project_quotes/' + pq_id + '/new_other'
+    $.post(url,
+           { other_type_id: $('#new_other_type').val(), concept: $('#new_other_concept').val(), price: $('#new_other_price').val() },
+           (xhr) ->
+             res = $.parseJSON(xhr)
+             showFlash(res['flash']['notice'], 'success')
+             reloadProjectQuoteOthersTable(pq_id)
+     )
+     .fail( (data) ->
+       res = $.parseJSON(data.responseText)
+       showFlash(res['flash']['error'], 'alert-error')
+     )
+   )
+
+reloadProjectQuoteOthersTable = (pq_id) ->
+  url = '/project_quotes/' + pq_id + '/others_table'
+  $.get(url, {}, (html) ->
+    $('#pq' + pq_id + '_others').empty().html(html)
+    updateProjectGrandTotal(pq_id)
+  )
+
+
+$(document).on('ajax:beforeSend', '.pq_others .close', (evt, xhr, settings) ->
+    $(".pq_other-row").removeClass('error')
+  )
+$(document).on('ajax:success', '.pq_others .close', (evt, data, status, xhr) ->
+    res = $.parseJSON(xhr.responseText)
+    other_id = res['id']
+    pq_id = res['project_quote_id']
+    showFlash(res['flash']['notice'], 'alert-success')
+    $("#other_row_#{other_id}").remove()
+    reloadProjectQuoteOthersTable(pq_id)
+  )
+
+$(document).on('ajax:error', '.pq_others .close', (evt, xhr, status, error) ->
+    res = $.parseJSON(xhr.responseText)
+    showFlash(res['flash']['error'], 'alert-error')
+  )
+
+$(document).on('change', '.pq_other_price', () ->
+    pq_id = $(this).data('pq_id')
+    url = '/project_quotes/' + pq_id + '/update_other_price'
+    $.post(url,
+           {  other_id: $(this).attr('data-id'), price: $(this).val() },
+           (xhr) ->
+             res = $.parseJSON(xhr)
+             pq_id = res['project_quote_id']
+             showFlash(res['flash']['notice'], 'success')
+             reloadProjectQuoteOthersTable(pq_id)
+     )
+  )
+
+
+
+
 
 
 

@@ -2,6 +2,7 @@ class LaboratoryService < ActiveRecord::Base
   attr_accessible :name, :description, :service_type_id, :laboratory_id, :internal_cost, :is_catalog, :sale_price, :is_exclusive_vinculacion, :laboratory_service_classification_id, :status
   belongs_to :laboratory
   has_many :requested_service
+  has_many :laboratory_service_additionals
   has_many :alerts
   has_many :users, :through => :requested_service
   belongs_to :service_type

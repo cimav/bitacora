@@ -74,6 +74,7 @@ class ServiceRequestsController < ApplicationController
     cs1 = ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
     cs2 = ServiceRequest::SERVICIO_VINCULACION_TIPO_2
     cs3 = ServiceRequest::SERVICIO_VINCULACION
+    cs4 = ServiceRequest::PROYECTO_VINCULACION
 
     collaborators = @request.collaborators.map { |c| c.user_id }
     authorized = current_user.is_admin? ||
@@ -82,12 +83,16 @@ class ServiceRequestsController < ApplicationController
                  @request.user.supervisor1_id == current_user.id ||
                  @request.user.supervisor2_id == current_user.id ||
                  (collaborators.include? current_user.id) ||
-                 ( (@request.request_type_id == cs1 || @request.request_type_id == cs2 || @request.request_type_id == cs3) && current_user.access.to_i == User::ACCESS_CUSTOMER_SERVICE)         
+                 ( (@request.request_type_id == cs1 || @request.request_type_id == cs2 || @request.request_type_id == cs3 || @request.request_type_id == cs4) && current_user.access.to_i == User::ACCESS_CUSTOMER_SERVICE)         
 
     if !authorized
       render :inline => '<div class="sheet"><div class="app-message">No Autorizado</div></div>'.html_safe                   
     elsif (@request.status == ServiceRequest::ACTIVE) 
-      render :layout => false
+      if @request.request_type_id == ServiceRequest::PROYECTO_VINCULACION && @request.system_status == ServiceRequest::SYSTEM_TO_QUOTE 
+        render "quote_project", :layout => false
+      else
+        render :layout => false
+      end
     else
       render :inline => 'Carpeta Eliminada'
     end
@@ -381,6 +386,76 @@ class ServiceRequestsController < ApplicationController
   def files_list
      @service_request = ServiceRequest.find(params[:id])
      render :layout => false
+  end
+
+
+  def send_request_department_auth
+    @service_request = ServiceRequest.find(params[:id])
+    if @service_request
+      if Resque.enqueue(RequestDepartmentAuthMailer, @service_request.id)
+        flash[:notice] = "Solicitud de autorización enviada al Jefe de Departamento"
+
+        respond_with do |format|
+          format.html do
+            if request.xhr?
+              json = {}
+              json[:flash] = flash
+              json[:id] = @service_request.id
+              render :json => json
+            else
+              redirect_to @service_request
+            end
+          end
+        end
+      else
+
+        respond_with do |format|
+          format.html do
+            if request.xhr?
+              json = {}
+              flash[:error] = "No se pudo enviar solicitud de autorización"
+              json[:errors] = @service_request.errors
+              json[:flash] = flash
+              json[:id] = @service_request.id
+              render :json => json, :status => :unprocessable_entity
+            else
+              redirect_to @service_request
+            end
+          end
+        end
+
+      end
+    else
+
+      respond_with do |format|
+        format.html do
+          if request.xhr?
+            json = {}
+            flash[:error] = "No se pudo accesar a la carpeta con ID #{params[:id]}"
+            json[:errors] = @service_request.errors
+            json[:flash] = flash
+            json[:id] = @service_request.id
+            render :json => json, :status => :unprocessable_entity
+          else
+            redirect_to @service_request
+          end
+        end
+      end
+
+    end
+    
+  end
+
+  def department_supervisor_auth
+    @service_request = ServiceRequest.where("vinculacion_hash = ?", params[:hash]).first
+
+    if !@service_request 
+      render :inline => "Error, no encontrado"
+    else
+      @h = params[:hash]
+      @project_quote = @service_request.active_quote
+      render :layout => 'standalone'
+    end
   end
 
   private

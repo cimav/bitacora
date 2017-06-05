@@ -1,0 +1,45 @@
+#lab-report-options
+  .row
+    .col-md-4
+      = "Inicio"
+      %input{:type => 'date', :class => 'form-control', :id => 'start-date', :name => 'start-date', :value => @start_date}
+    .col-md-1
+    .col-md-4
+      = "Fin"
+      %input{:type => 'date', :class => 'form-control', :id => 'end-date', :name => 'end-date', :value => @end_date}
+    .col-md-3
+      %br
+      %btn#report_general_generate.btn.btn-primary{:laboratory_id => @laboratory.id}= "Generar reporte"
+#lab-report-area-inner
+  %btn#report_general_generate_excel.btn.btn-success.btn-xs{:laboratory_id => @laboratory.id}= "Descargar Versión Excel"
+  %table.table.table-striped
+    %thead 
+      %tr
+        %th= "Fecha"
+        %th= "Código"
+        %th= "Servicio"
+        %th= "Clas."
+        %th= "Tipo"
+        %th= "Carpeta"
+        %th= "Solicitante"
+        %th= "Muestra"
+        %th= "Cant."
+        %th= "Técnico Asignado"
+        %th= "Estado"
+    %tbody
+      - @requested_services.each do |rs|
+        %tr
+          %td{:style => "white-space: pre;"}= rs.created_at.strftime("%Y/%m/%d %H:%M")
+          %td{:style => "white-space: pre;"}= rs.number
+          %td= rs.laboratory_service.name
+          %td= rs.laboratory_service.laboratory_service_classification.name rescue '-'
+          %td{:style => "white-space: pre;"}= rs.service_request.request_type.name rescue '-'
+          %td= "#{rs.service_request.number}: #{rs.service_request.request_link}" rescue '-'
+          %td= rs.service_request.user.full_name rescue '-'
+          %td= rs.sample.identification rescue '-'
+          %td= rs.sample.quantity rescue '-'
+          %td= rs.user.full_name rescue '-'
+          %td= rs.status_text
+      %tr
+        %th{:colspan => 11}= "#{@requested_services.count} registros"
+      

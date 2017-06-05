@@ -8,16 +8,24 @@ class VinculacionSubscriptions
   subscribe :notificar_cancelacion
   subscribe :cancelar_servicio_solicitado
   
-  # COSTEO TIPO 3
+  # COSTEO TIPO 3 y Proyectos
   def solicitar_costeo(attributes)
 
     # Create service_request
     Rails.logger.debug "Solicitar Costeo #{attributes['costeo_id']}: #{attributes['codigo']}"
     if u_requestor = User.where(:email => attributes['empleado_email']).first
+
       folder = u_requestor.service_request.new 
       folder.system_id                   = attributes['id']
       folder.system_request_id           = attributes['solicitud_id']
-      folder.request_type_id             = ServiceRequest::SERVICIO_VINCULACION
+      
+      if (attributes['tipo'] == 3)
+        folder.request_type_id           = ServiceRequest::SERVICIO_VINCULACION
+      end
+      if (attributes['tipo'] == 4)
+        folder.request_type_id           = ServiceRequest::PROYECTO_VINCULACION
+      end
+      
       folder.request_link                = attributes['nombre']
       folder.number                      = attributes['codigo']
       folder.description                 = attributes['descripcion']
@@ -41,6 +49,7 @@ class VinculacionSubscriptions
       end
       folder.save(:validate => false)
 
+
       # Add samples to service_request
       attributes['muestras'].each do |m|  
         Rails.logger.debug "Agregar muestra #{m['muestra']['identificacion']} (costeo #{attributes['costeo_id']})"
@@ -61,7 +70,13 @@ class VinculacionSubscriptions
         end
       end
 
-      Resque.enqueue(NewTipo3Mailer, folder.id)
+      if (attributes['tipo'] == 3)
+        Resque.enqueue(NewTipo3Mailer, folder.id)
+      end
+
+      if (attributes['tipo'] == 4)
+        Resque.enqueue(NewProyectoVinculacionMailer, folder.id)
+      end
 
     end
   end

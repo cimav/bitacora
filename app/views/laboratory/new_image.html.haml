@@ -1,0 +1,12 @@
+= form_for @laboratory_service_classification, :remote => true, :html => {:'data-type' => 'html', :id => 'new-lab-service-classification-form'} do |f|
+  %h3= "Nueva clasificación"
+  = f.hidden_field :laboratory_id, {:value => @laboratory.id}
+  = f.hidden_field :hourly_rate, {:value => "0"}
+  .field#field_laboratory_service_classification_name
+    = f.label :name, 'Nombre:'
+    = f.text_field :name, :placeholder => 'Nombre de la clasificación', :class => 'form-control'
+  .field#field_laboratory_service_classification_description
+    = f.label :description, 'Descripción:'
+    = f.text_area :description, :class => 'form-control'
+  .submit-button
+    = f.submit "Agregar clasificación", {:class => "btn btn-primary"}

@@ -1,0 +1,55 @@
+- editable = true
+
+%table.table.table-striped
+  %thead
+    - if project_quote.project_quote_others.count > 0
+      %tr
+        %th= "Tipo"
+        %th= "Concepto"
+        %th{:colspan => 2}= "Precio"
+        %th= " "
+  %tbody
+    - other_total = 0
+    - eqs = []
+    - if project_quote.project_quote_others.count == 0
+      %tr.empty-cost
+        %td{:colspan => 5}= "No hay registrados otros conceptos"
+    - project_quote.project_quote_others.each do |other|
+      - other_total = other_total + other.price
+      %tr.other-row{'data-id' => other.id, :id => "other_row_#{other.id}"}
+        %td
+          = other.other_type.name
+        %td
+          = other.concept
+          - if !other.details.blank?
+            .other-details= other.details
+        %td{:colspan => 2}
+          - if editable
+            = text_field_tag "price_#{other.id}", other.price, {:class => "other_price form-control input-sm", "data-id" => other.id}
+          - else
+            .align-right= number_to_currency(other.price) 
+        %td
+          - if editable
+            = link_to '×', {:controller => 'project_quotes', :action => 'delete_other', :other_id => other.id}, :method => :post, :remote => true, :class => 'close', :'data-type' => 'html', 'data-id' => other.id
+    - if editable
+      - u_options = ''
+      - OtherType.order('name').each do |o|
+        - u_options += "<option value=\"#{o.id}\">#{o.name}</option>"
+    - if u_options != '' && editable
+      %tr.add-row
+        %td
+          = select_tag :new_other_type, u_options.html_safe, {:class => 'form-control input-sm'}
+        %td
+          = text_field_tag 'new_other_concept', nil,  { :placeholder => "Concepto…", :class => 'form-control input-sm' }
+        %td
+          = text_field_tag 'new_other_price', nil, { :placeholder => "Precio…", :class => 'form-control input-sm' }
+        %td{:colspan => 2}
+          %button.btn.btn-primary.btn-sm.btn-block#add-project-quote-other{'data-pq_id' => project_quote.id}= "Agregar"
+
+
+:javascript
+  $(document).ready(function(){
+    $('.pq_other_id').select2();
+  });
+  $("#other_total").html("#{number_to_currency(other_total)}");
+

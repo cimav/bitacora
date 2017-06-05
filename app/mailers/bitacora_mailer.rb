@@ -99,6 +99,22 @@ class BitacoraMailer < ActionMailer::Base
   
   end
 
+  def new_proyecto_vinculacion(service_request)
+    @from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"
+    @to = []
+
+     # Coordinator
+    @to << service_request.user.email
+
+    @service_request = service_request
+    @reply_to = service_request.supervisor.email
+
+    subject = "Solicitud de Costeo del Proyecto #{service_request.number}: #{service_request.vinculacion_client_name}"
+
+    mail(:to => @to, :from => @from, :reply_to => @reply_to, :subject => subject)
+  
+  end
+
   def costeo_enviado(service_request)
     @from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"
     @to = []
@@ -269,6 +285,29 @@ class BitacoraMailer < ActionMailer::Base
     
     mail(:to => @to, :from => @from, :reply_to => reply_to, :subject => subject)
   end
+
+  def request_department_auth(service_request)
+    @from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"
+    @to = []
+
+     # Department Supervisor  
+    @to << service_request.user.department.user.email
+    
+    # Requestor
+    reply_to = service_request.user.email
+
+    @service_request = service_request
+    @project_quote = @service_request.active_quote
+
+    subject = "Costeo de Proyecto #{service_request.number}"
+
+    
+
+    mail(:to => @to, :from => @from, :reply_to => reply_to, :subject => subject)
+
+  end
+
+
 
 
   # Si se actualiza el del controller se debe de actualizar aquí también. 

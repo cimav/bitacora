@@ -1,0 +1,27 @@
+#admin-area 
+  = render :partial => 'tabs', :locals => {:laboratory => @laboratory, :option_selected => 'images'}
+  #admin-images-details
+    #admin-images-header 
+      %h2= "Imágenes del laboratorio"
+
+    #admin-images-list
+      .lab-image-item
+
+        #upload-area
+          - @laboratory_image = LaboratoryImage.new
+          = form_for(@laboratory_image, :html => {:id => 'image-upload-file-form', :multipart => true}) do |f|
+            = f.hidden_field :laboratory_id, {:value => @laboratory.id }
+            #upload-box
+              = f.file_field :file, {"multiple" => "multiple"}
+              .upload Subir archivos
+              .upload-msg Puedes seleccionar varios archivos a la vez para subir.
+      - @laboratory.laboratory_images.each do |img|
+        .lab-image-item
+          %img{'src' => img.file.square.url}
+          = img.description
+
+
+:javascript
+  $(document).on('change', '#laboratory_image_file', function() {
+    $("#image-upload-file-form").submit();
+  });

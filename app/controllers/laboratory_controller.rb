@@ -55,6 +55,59 @@ class LaboratoryController < ApplicationController
     render :layout => false
   end
 
+  def reports
+    @laboratory = Laboratory.find(params[:id])
+    render :layout => false
+  end
+
+  def reports_general
+    @laboratory = Laboratory.find(params[:id])
+
+    if (params[:start_date]) 
+      @start_date = params[:start_date]
+      @end_date = params[:end_date]
+    else
+      @start_date = DateTime.now.strftime "%Y-01-01"
+      @end_date = DateTime.now.strftime "%Y-%m-%d"
+    end
+
+    @requested_services = RequestedService.where.not(status: RequestedService::DELETED)
+                                          .joins('LEFT OUTER JOIN samples ON sample_id = samples.id')
+                                          .joins('LEFT OUTER JOIN laboratory_services ON laboratory_service_id = laboratory_services.id')
+                                          .joins('LEFT OUTER JOIN laboratory_service_classifications ON laboratory_service_classification_id = laboratory_service_classifications.id')
+                                          .joins('LEFT OUTER JOIN service_requests ON service_requests.id = samples.service_request_id')
+                                          .joins('LEFT OUTER JOIN users ON users.id = service_requests.user_id')
+                                          .where('laboratory_services.laboratory_id = :lab',  {:lab => params[:id]})
+    @requested_services = @requested_services.where("requested_services.created_at BETWEEN :start AND :end", {:start => @start_date, :end => @end_date})
+    @requested_services = @requested_services.order('requested_services.created_at ASC')
+
+    respond_with do |format|
+      format.html do
+        render :layout => false
+      end
+      format.xls do
+        rows = Array.new
+
+        @requested_services.collect do |rs|
+          rows << {'Fecha' => rs.created_at,
+                   'Código' => rs.number,
+                   'Servicio' => rs.laboratory_service.name,
+                   'Clasificador' => (rs.laboratory_service.laboratory_service_classification.name rescue '-'),
+                   'Tipo' => (rs.service_request.request_type.name rescue '-'),
+                   'Carpeta' => ("#{rs.service_request.number}: #{rs.service_request.request_link}" rescue '-'),
+                   'Solicitante' => (rs.service_request.user.full_name rescue '-'),
+                   'Muestra' => (rs.sample.identification rescue '-'),
+                   'Cantidad' => (rs.sample.quantity rescue '-'),
+                   'Tecnico_Asignado' => (rs.user.full_name rescue '-'),
+                   'Estado' => rs.status_text,
+                 }
+        end
+        column_order = ["Fecha","Código","Servicio","Clasificador","Tipo","Carpeta","Solicitante","Muestra","Cantidad","Tecnico_Asignado","Estado"]
+        to_excel(rows,column_order,"Servicios","Reporte_General")
+      end
+    end
+  end
+
   def admin_members
     @laboratory = Laboratory.find(params[:id])
     render :layout => false
@@ -71,6 +124,12 @@ class LaboratoryController < ApplicationController
   end
 
   def admin_classifications
+    @laboratory = Laboratory.find(params[:id])
+    @laboratory_image = @laboratory.laboratory_image.new
+    render :layout => false
+  end
+
+  def admin_images
     @laboratory = Laboratory.find(params[:id])
     render :layout => false
   end

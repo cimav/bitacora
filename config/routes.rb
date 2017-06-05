@@ -26,6 +26,9 @@ Bitacora::Application.routes.draw do
   post '/service_requests/delete_collaborator' => 'service_requests#delete_collaborator'
   get '/service_requests/:id/folder_without_services' => 'service_requests#folder_without_services'
   get '/service_requests/:id/files_list' => 'service_requests#files_list'
+  post '/service_requests/:id/send_request_department_auth' => 'service_requests#send_request_department_auth'
+  get '/autorizar/:hash' => 'service_requests#department_supervisor_auth'
+  
   get '/vinculacion_files/get/:id', to: 'vinculacion_files#file'
 
 
@@ -93,6 +96,7 @@ Bitacora::Application.routes.draw do
       get 'status_by_rs'
       get 'edit'
       get 'edit_cost'
+      get 'edit_additionals'
 
       get 'grand_total'
 
@@ -124,6 +128,9 @@ Bitacora::Application.routes.draw do
   get '/users/live_search' => 'users#live_search'
   resources :users
 
+  get '/departments/live_search' => 'departments#live_search'
+  resources :departments
+
   get '/laboratories/live_search' => 'laboratories#live_search'
   resources :laboratories
 
@@ -133,6 +140,8 @@ Bitacora::Application.routes.draw do
 
       get 'live_search'
       get 'admin'
+      get 'reports'
+      get 'reports_general'
       
       get 'admin_services'
       get 'admin_lab_services_live_search'
@@ -150,6 +159,8 @@ Bitacora::Application.routes.draw do
       get 'admin_classifications'
       get 'admin_lab_classification_live_search'
       get 'new_classification'
+
+      get 'admin_images'
     end
   end
   get  '/laboratory/:id/f/*filter' => 'laboratory#show'
@@ -170,6 +181,11 @@ Bitacora::Application.routes.draw do
   resources :service_files do
     member do
       get 'file'
+      get 'remove_file'
+    end
+  end
+  resources :laboratory_images do
+    member do
       get 'remove_file'
     end
   end
@@ -203,6 +219,35 @@ Bitacora::Application.routes.draw do
   resources :laboratory_service_classifications
 
 
+
+  resources :project_quotes do
+    member do
+              
+      post 'new_technician'
+      post 'update_hours'
+      get 'technicians_table'
+
+      post 'new_equipment'
+      post 'update_eq_hours'
+      get 'equipment_table'
+
+      post 'new_material'
+      post 'update_mat_qty'
+      get 'materials_table'
+      
+      post 'new_other'
+      post 'update_other_price'
+      get 'others_table'
+
+      get 'grand_total'
+
+    end
+  end
+  post '/project_quotes/delete_tech' => 'project_quotes#delete_tech'
+  post '/project_quotes/delete_eq' => 'project_quotes#delete_eq'
+  post '/project_quotes/delete_mat' => 'project_quotes#delete_mat'
+  post '/project_quotes/delete_other' => 'project_quotes#delete_other'
+
   get '/admin' => 'admin#index'
   get '/admin/clients' => 'admin#clients'
   get '/admin/client_types' => 'admin#client_types'
@@ -210,6 +255,7 @@ Bitacora::Application.routes.draw do
   get '/admin/materials' => 'admin#materials'
   get '/admin/laboratories' => 'admin#laboratories'
   get '/admin/users' => 'admin#users'
+  get '/admin/departments' => 'admin#departments'
   get '/admin/request_types' => 'admin#request_types'
   get '/admin/service_types' => 'admin#service_types'
   get '/admin/other_types' => 'admin#other_types'

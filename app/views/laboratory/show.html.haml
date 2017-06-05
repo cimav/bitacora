@@ -3,9 +3,10 @@
   - raise "Error: No es miembro de este laboratorio"
 
 #header-bar
-  %h2= @laboratory.name
-  - if lab_access.to_i == LaboratoryMember::ACCESS_ADMIN
-    .admin-toolbar
+  %h2.laboratory-name= @laboratory.name
+  .admin-toolbar
+    = link_to "Reportes", {:controller => 'laboratory', :action => 'reports', :id => @laboratory.id}, :method => :get, :remote => true, :class => 'reports-lab btn btn-default', :'data-type' => 'html', :id => "reports-lab-#{@laboratory.id}", 'data-laboratory-id' => @laboratory.id
+    - if lab_access.to_i == LaboratoryMember::ACCESS_ADMIN
       = link_to "Administrar laboratorio", {:controller => 'laboratory', :action => 'admin', :id => @laboratory.id}, :method => :get, :remote => true, :class => 'admin-lab btn btn-default', :'data-type' => 'html', :id => "admin-lab-#{@laboratory.id}", 'data-laboratory-id' => @laboratory.id
 
 #lab-work-panel

@@ -5,6 +5,7 @@
 
 #clients-panel,
 #laboratories-panel,
+#departments-panel,
 #equipment-panel,
 #materials-panel,
 #users-panel,
@@ -88,6 +89,7 @@
   #clients-buttons,
   #equipment-buttons,
   #laboratories-buttons,
+  #departments-buttons,
   #materials-buttons,
   #users-buttons,
   #request-types-buttons,
@@ -121,6 +123,7 @@
 #client-details,
 #equipment-details,
 #laboratory-details,
+#department-details,
 #materials-details,
 #user-details,
 #service-types-details,
@@ -159,4 +162,36 @@
 
 .laboratories-item-name {
   font-weight: bold;
+}
+
+
+.lab-image-item {
+  border: 1px solid $med-grey;
+  background: $light-grey;
+  padding: 10px;
+  width: 270px; 
+  height: 350px;
+  max-height: 350px;
+  float: left;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  font-size: 90%;
+  img {
+    width: 250px;
+    height: 250px;
+    margin-bottom: 10px;
+  }
+}
+
+.lab-image-item #upload-box {
+  float: left !important;
+  text-align: center;
+  position: relative;
+  width: 250px !important;
+}
+
+.departments-item-user,
+.departments-item-unit {
+  font-size: 80%;
+  margin-top: 4px;
 }

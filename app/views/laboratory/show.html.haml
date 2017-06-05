@@ -91,6 +91,14 @@
             - sel = 'selected="selected"' if @filter['c'].to_i == c.vinculacion_client_id.to_i
           - client_options += "<option value=\"#{c.vinculacion_client_id}\" #{sel}>#{c.vinculacion_client_name}</option>"
         = select_tag "lrs_client", client_options.html_safe, {:class => 'form-control'}
+        %label Unidad
+        - bu_options = "<option value=\"0\">Todas las unidades</option>"
+        - User.find_by_sql("SELECT id, name FROM business_units ORDER BY name").each do |bu|
+          - sel = ''
+          - if @filter['bu']
+            - sel = 'selected="selected"' if @filter['bu'].to_i == c.vinculacion_client_id.to_i
+          - bu_options += "<option value=\"#{bu.id}\" #{sel}>#{bu.name}</option>"
+        = select_tag "lrs_bu", bu_options.html_safe, {:class => 'form-control'}
   #lab-req-serv-items
 
 :javascript

@@ -26,6 +26,16 @@
           = f.text_area :description, :class => 'form-control'
         - else
           = @laboratory_service.description
+      .field#field_laboratory_service_show_web
+        = f.label :show_web, 'Mostrar en página web'
+        - st_options = ''
+        - sel0 = ''
+        - sel1 = ''
+        - sel0 = 'selected="selected"' if !@laboratory_service.show_web
+        - sel1 = 'selected="selected"' if @laboratory_service.show_web
+        - st_options += "<option value=\"0\" #{sel0}>No</option>"
+        - st_options += "<option value=\"1\" #{sel1}>Si</option>"
+        = f.select :show_web, st_options.html_safe, {}, {:class => 'form-control'}
       .field#field_laboratory_service_service_type_id
         = f.label :service_type_id, 'Tipo de Servicio:'
         - if editable

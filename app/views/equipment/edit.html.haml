@@ -21,6 +21,16 @@
       .field#field_equipment_name
         = f.label :name, 'Nombre:'
         = f.text_field :name, {:class => 'form-control', :placeholder => 'Nombre del equipo'}
+      .field#field_equipment_show_web
+        = f.label :is_exclusive_vinculacion, 'Mostrar en página web'
+        - st_options = ''
+        - sel0 = ''
+        - sel1 = ''
+        - sel0 = 'selected="selected"' if !@equipment.show_web
+        - sel1 = 'selected="selected"' if @equipment.show_web
+        - st_options += "<option value=\"0\" #{sel0}>No</option>"
+        - st_options += "<option value=\"1\" #{sel1}>Si</option>"
+        = f.select :show_web, st_options.html_safe, {}, {:class => 'form-control'}
       .field#field_laboratory_equipment_item_number
         = f.label :item_number, 'Número de Inventario:'
         = f.text_field :item_number, :placeholder => 'CABMS', :class => 'form-control'

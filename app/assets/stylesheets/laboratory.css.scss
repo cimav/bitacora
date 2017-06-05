@@ -35,6 +35,10 @@
 }
 #lab-report-area-inner {
   padding: 20px;
+  position: fixed;
+  overflow: auto;
+  top: 127px;
+  bottom: 0;
 }
 
 #lab-report-list {

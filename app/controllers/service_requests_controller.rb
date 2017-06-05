@@ -446,6 +446,18 @@ class ServiceRequestsController < ApplicationController
     
   end
 
+  def department_supervisor_auth
+    @service_request = ServiceRequest.where("vinculacion_hash = ?", params[:hash]).first
+
+    if !@service_request 
+      render :inline => "Error, no encontrado"
+    else
+      @h = params[:hash]
+      @project_quote = @service_request.active_quote
+      render :layout => 'standalone'
+    end
+  end
+
   private
   def cost_details(service_request)
     

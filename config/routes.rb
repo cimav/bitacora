@@ -27,6 +27,7 @@ Bitacora::Application.routes.draw do
   get '/service_requests/:id/folder_without_services' => 'service_requests#folder_without_services'
   get '/service_requests/:id/files_list' => 'service_requests#files_list'
   post '/service_requests/:id/send_request_department_auth' => 'service_requests#send_request_department_auth'
+  get '/autorizar/:hash' => 'service_requests#department_supervisor_auth'
   
   get '/vinculacion_files/get/:id', to: 'vinculacion_files#file'
 

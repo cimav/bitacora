@@ -73,6 +73,27 @@ ActiveRecord::Schema.define(version: 20170524222057) do
     t.integer "user_id",              limit: 4
   end
 
+  create_table "aux_reporte_finalizados", id: false, force: :cascade do |t|
+    t.integer  "sigre_id",               limit: 4
+    t.string   "codigo",                 limit: 20
+    t.string   "tipo",                   limit: 255
+    t.string   "cliente",                limit: 255
+    t.text     "descripcion",            limit: 65535
+    t.integer  "laboratorio_id",         limit: 4,                                  default: 0
+    t.string   "laboratorio",            limit: 255
+    t.string   "clasificador",           limit: 255
+    t.text     "servicio_laboratorio",   limit: 16777215
+    t.date     "fecha_inicio"
+    t.date     "fecha_fin"
+    t.datetime "fecha_finalizado_real"
+    t.string   "cotizacion_consecutivo", limit: 255
+    t.decimal  "precio_venta",                            precision: 10, scale: 2,  default: 0.0, null: false
+    t.decimal  "costo_interno",                           precision: 42, scale: 4,  default: 0.0, null: false
+    t.decimal  "total",                                   precision: 42, scale: 4,  default: 0.0, null: false
+    t.decimal  "porcentaje",                              precision: 53, scale: 8,  default: 0.0, null: false
+    t.decimal  "corresponde",                             precision: 65, scale: 14, default: 0.0, null: false
+  end
+
   create_table "bak_users", id: false, force: :cascade do |t|
     t.integer  "id",               limit: 4,                           default: 0,     null: false
     t.string   "email",            limit: 255
@@ -662,6 +683,20 @@ ActiveRecord::Schema.define(version: 20170524222057) do
     t.string  "B",           limit: 255
     t.string  "dseEMail",    limit: 255
     t.string  "C",           limit: 255
+  end
+
+  create_table "sdi2017", id: false, force: :cascade do |t|
+    t.string "A", limit: 255
+    t.string "B", limit: 255
+    t.string "C", limit: 255
+  end
+
+  create_table "sdi2017xx", id: false, force: :cascade do |t|
+    t.string "A",           limit: 255
+    t.string "B",           limit: 255
+    t.string "C",           limit: 255
+    t.string "dprUHCodigo", limit: 10
+    t.string "dseEmail",    limit: 255
   end
 
   create_table "serv1589", id: false, force: :cascade do |t|

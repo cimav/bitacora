@@ -29,6 +29,9 @@ setHashForLabLiveSearch = (lab_id) ->
 
   if $('#lrs_client').val() > 0
     filter = filter + "c" + $('#lrs_client').val() + "|" 
+
+  if $('#lrs_bu').val() > 0
+    filter = filter + "bu" + $('#lrs_bu').val() + "|" 
   
   if $('#q').val() != ''
     filter = filter + "b" + $('#q').val() + "|" 
@@ -55,6 +58,10 @@ $(document).on('change', '#lrs_type', () ->
   )
 
 $(document).on('change', '#lrs_assigned_to', () ->
+    labReqServicesLiveSearch()
+  )
+
+$(document).on('change', '#lrs_bu', () ->
     labReqServicesLiveSearch()
   )
 

@@ -23,7 +23,10 @@
           - if r.supervisor
             = image_tag (r.supervisor.avatar_url), :class => 'img-circle folder-supervisor'
           - r.collaborators.each do |collaborator|
-            = image_tag (collaborator.user.avatar_url), :class => 'img-circle folder-collaborator'
+            - if collaborator.user
+              = image_tag (collaborator.user.avatar_url), :class => 'img-circle folder-collaborator'
+            - else
+              = "ERROR"
       %td.service-request-status
         - if r.system_status != ServiceRequest::SYSTEM_FREE
           .search-folder-status-message

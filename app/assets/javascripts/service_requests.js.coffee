@@ -126,7 +126,7 @@ $(document).on('click', '#add-collaborator-save', () ->
   id = $(this).data('id')
   url = '/service_requests/' + id + '/add_collaborator';
   $('#collaborators').hide();
-  collab_id = $('#collaborator_id').select2('data').id;
+  collab_id = $('#collaborator_id').val();
   $.post(url, {'collaborator_id': collab_id}, (html) ->
     $('#collaborator-panel').empty().html(html)
     url = '/service_requests/' + id + '/get_collaborators';

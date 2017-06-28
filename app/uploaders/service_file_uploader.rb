@@ -2,6 +2,10 @@
 
 class ServiceFileUploader < CarrierWave::Uploader::Base
  storage :file
+ 
+ def filename
+  original_filename.gsub(/ /i,'_').gsub(/[^\.a-z0-9_]/i, '') if original_filename
+ end
 
   def store_dir
     if model.requested_service_id == 0 

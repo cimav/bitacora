@@ -40,10 +40,15 @@ class LaboratoryImageUploader < CarrierWave::Uploader::Base
     %w(jpg jpeg png)
   end
 
+  def filename
+    original_filename.gsub(/ /i,'_').gsub(/[^\.a-z0-9_]/i, '') if original_filename
+  end
+
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
   # def filename
   #   "something.jpg" if original_filename
   # end
+  #
 
 end

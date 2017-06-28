@@ -142,6 +142,7 @@ Bitacora::Application.routes.draw do
       get 'admin'
       get 'reports'
       get 'reports_general'
+      get 'report_vinculacion'
       
       get 'admin_services'
       get 'admin_lab_services_live_search'

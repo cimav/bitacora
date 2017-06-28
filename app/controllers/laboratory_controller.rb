@@ -65,6 +65,76 @@ class LaboratoryController < ApplicationController
     render :layout => false
   end
 
+  def report_vinculacion
+    @laboratory = Laboratory.find(params[:id])
+
+    if (params[:start_date]) 
+      @start_date = params[:start_date]
+      @end_date = params[:end_date]
+    else
+      @start_date = DateTime.now.strftime "%Y-01-01"
+      @end_date = DateTime.now.strftime "%Y-%m-%d"
+    end
+
+
+    @registros = ReporteFinalizados.where("laboratorio_id = #{@laboratory.id} AND fecha_finalizado_real BETWEEN '#{@start_date}' AND '#{@end_date}'")
+
+
+# sigre_id, 
+# codigo, 
+# tipo, 
+# cliente, 
+# descripcion, 
+# laboratorio_id, 
+# laboratorio, 
+# clasificador, 
+# servicio_laboratorio, 
+# fecha_inicio, 
+# fecha_fin, 
+# fecha_finalizado_real, 
+# cotizacion_consecutivo, 
+# precio_venta, 
+# costo_interno, 
+# total, 
+# porcentaje, 
+# corresponde
+
+
+    respond_with do |format|
+      format.html do
+        render :layout => false
+      end
+      format.xls do
+        rows = Array.new
+
+        @registros.collect do |r|
+          rows << {'SIGRE' => (r.sigre_id rescue '-'), 
+                   'CODIGO' => (r.codigo rescue '-'), 
+                   'TIPO' => (r.tipo rescue '-'), 
+                   'CLIENTE' => (r.cliente rescue '-'), 
+                   'DESCRIPCION' => (r.descripcion rescue '-'), 
+                   'LABID' => (r.laboratorio_id rescue '-'), 
+                   'LABORATORIO' => (r.laboratorio rescue '-'), 
+                   'CLASIFICADOR' => (r.clasificador rescue '-'), 
+                   'SERVICIO' => (r.servicio_laboratorio rescue '-'), 
+                   'INICIO' => (r.fecha_inicio.strftime("%Y/%m/%d %H:%M") rescue '-'),
+                   'FIN' => (r.fecha_fin.strftime("%Y/%m/%d %H:%M") rescue '-'),
+                   'FECHA_FINALIZADO' => (r.fecha_finalizado_real.strftime("%Y/%m/%d %H:%M") rescue '-'),
+                   'COTIZACION' => (r.cotizacion_consecutivo rescue '-'), 
+                   'PRECIO_VENTA' => (r.precio_venta rescue '-'), 
+                   'COSTO_INTERNO' => (r.costo_interno rescue '-'), 
+                   'TOTAL' => (r.total rescue '-'), 
+                   'PORCENTAJE' => (r.porcentaje rescue '-'), 
+                   'CORRESPONDE' => (r.corresponde rescue '-'),
+                 }
+        end
+        column_order = ['SIGRE', 'CODIGO','TIPO','CLIENTE','DESCRIPCION','LABID','LABORATORIO','CLASIFICADOR','SERVICIO','INICIO','FIN','FECHA_FINALIZADO','COTIZACION','PRECIO_VENTA','COSTO_INTERNO','TOTAL','PORCENTAJE','CORRESPONDE']
+        to_excel(rows,column_order,"VINCULACION","Reporte_Vinculacion")
+      end
+    end
+
+  end
+
   def reports_general
     @laboratory = Laboratory.find(params[:id])
 

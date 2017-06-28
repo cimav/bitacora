@@ -1,0 +1,58 @@
+#lab-report-options
+  .row
+    .col-md-4
+      = "Inicio"
+      %input{:type => 'date', :class => 'form-control', :id => 'start-date', :name => 'start-date', :value => @start_date}
+    .col-md-1
+    .col-md-4
+      = "Fin"
+      %input{:type => 'date', :class => 'form-control', :id => 'end-date', :name => 'end-date', :value => @end_date}
+    .col-md-3
+      %br
+      %btn#report_vinculacion_generate.btn.btn-primary{:laboratory_id => @laboratory.id}= "Generar reporte"
+#lab-report-area-inner
+  %btn#report_vinculacion_generate_excel.btn.btn-success.btn-xs{:laboratory_id => @laboratory.id}= "Descargar Versión Excel"
+  %table.table.table-striped
+    %thead 
+      %tr
+        %th= "SIGRE ID"
+        %th= "Código"
+        %th= "Tipo"
+        %th= "Cliente"
+        %th= "Descripción"
+        %th= "Lab. Id"
+        %th= "Laboratorio"
+        %th= "Clasificador"
+        %th= "Servicio Laboratorio"
+        %th= "Inicio"
+        %th= "Fin"
+        %th= "Finalizado Real"
+        %th= "Cotización"
+        %th= "Precio Venta"
+        %th= "Costo Interno"
+        %th= "Total"
+        %th= "Porcentaje"
+        %th= "Corresponde"
+    %tbody
+      - @registros.each do |r|
+        %tr
+          %td= r.sigre_id rescue '-' 
+          %td= r.codigo rescue '-' 
+          %td= r.tipo rescue '-' 
+          %td= r.cliente rescue '-' 
+          %td= r.descripcion rescue '-' 
+          %td= r.laboratorio_id rescue '-' 
+          %td= r.laboratorio rescue '-' 
+          %td= r.clasificador rescue '-' 
+          %td= r.servicio_laboratorio rescue '-' 
+          %td{:style => "white-space: pre;"}= r.fecha_inicio.strftime("%Y/%m/%d %H:%M") rescue '-'
+          %td{:style => "white-space: pre;"}= r.fecha_fin.strftime("%Y/%m/%d %H:%M") rescue '-'
+          %td{:style => "white-space: pre;"}= r.fecha_finalizado_real.strftime("%Y/%m/%d %H:%M") rescue '-'
+          %td= r.cotizacion_consecutivo rescue '-' 
+          %td= r.precio_venta rescue '-' 
+          %td= r.costo_interno rescue '-' 
+          %td= r.total rescue '-' 
+          %td= r.porcentaje rescue '-' 
+          %td= r.corresponde rescue '-'
+      %tr
+        %th{:colspan => 11}= "#{@registros.count} registros"

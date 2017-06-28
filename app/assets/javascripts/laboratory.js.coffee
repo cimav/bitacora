@@ -134,6 +134,40 @@ $(document).on('click', '#report_general_generate_excel', () ->
   )
 
 
+# Vinculacion report
+
+$(document).on('ajax:beforeSend', '.report-vinculacion-lab', (evt, xhr, settings) ->
+    lab_id = $(this).data('laboratory-id')
+    url = '/laboratory/' + lab_id + '/report_vinculacion'
+    setHash('#!/laboratory/' + lab_id + '/report_vinculacion', false)
+  )
+$(document).on('ajax:success', '.report-vinculacion-lab', (evt, data, status, xhr) ->
+    $('#lab-report-area').empty().html(data)
+  )
+
+$(document).on('ajax:error', '.report-vinculacion-lab', (evt, xhr, status, error) ->
+    alert('Error')
+  )
+
+$(document).on('click', '#report_vinculacion_generate', () ->
+    lab_id =  $(this).attr('laboratory_id')
+    start_date = $('#start-date').val()
+    end_date = $('#end-date').val()
+    url = '/laboratory/' + lab_id + '/report_vinculacion?start_date=' + start_date + '&end_date=' + end_date 
+    $.get(url, {}, (html) ->
+      $('#lab-report-area').empty().html(html)
+    )
+  )
+
+$(document).on('click', '#report_vinculacion_generate_excel', () ->
+    lab_id =  $(this).attr('laboratory_id')
+    start_date = $('#start-date').val()
+    end_date = $('#end-date').val()
+    url = '/laboratory/' + lab_id + '/report_vinculacion.xls?start_date=' + start_date + '&end_date=' + end_date 
+    window.open(url,"_excel")
+  )
+
+
 #----------
 # LAB ADMIN
 #----------

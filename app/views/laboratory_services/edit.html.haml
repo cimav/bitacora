@@ -86,7 +86,7 @@
       .field#field_laboratory_service_classification_id
         = f.label :service_type_id, 'Clasificación del Servicio:'
 
-        - st_options = ''
+        - st_options = '<option value=""></option>'
         - @laboratory_service.laboratory.laboratory_service_classifications.order(:name).each do |item|
           - if item.id == @laboratory_service.laboratory_service_classification_id
             - sel = 'selected = "selected"'

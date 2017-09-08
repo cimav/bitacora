@@ -31,6 +31,16 @@
           - sel = ''
         - resp_options += "<option value=\"#{item.user.id}\" #{sel}>#{item.user.full_name}</option>"
       = f.select :user_id, resp_options.html_safe, { }, { :class => 'form-control' }
+    .field#field_laboratory_quote_needs_auth
+      = f.label :quote_needs_auth, 'Envio de costeos a Vinculación'
+      - st_options = ''
+      - sel0 = ''
+      - sel1 = ''
+      - sel0 = 'selected="selected"' if !@laboratory.quote_needs_auth
+      - sel1 = 'selected="selected"' if @laboratory.quote_needs_auth
+      - st_options += "<option value=\"0\" #{sel0}>No requiere autorización</option>"
+      - st_options += "<option value=\"1\" #{sel1}>Requiere autorización de administrador de laboratorio</option>"
+      = f.select :quote_needs_auth, st_options.html_safe, {}, {:class => 'form-control'}
 
     .submit-button
       = f.submit "Actualizar laboratorio", {:class => 'btn btn-primary'}

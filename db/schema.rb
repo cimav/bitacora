@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170524222057) do
+ActiveRecord::Schema.define(version: 20170908233635) do
 
   create_table "activity_logs", force: :cascade do |t|
     t.integer  "user_id",                  limit: 4
@@ -53,8 +53,17 @@ ActiveRecord::Schema.define(version: 20170524222057) do
   add_index "alerts", ["technician"], name: "index_alerts_on_technician", using: :btree
   add_index "alerts", ["user_id"], name: "index_alerts_on_user_id", using: :btree
 
+  create_table "aleyda", id: false, force: :cascade do |t|
+    t.integer "id", limit: 4, default: 0, null: false
+  end
+
   create_table "ariz", id: false, force: :cascade do |t|
     t.integer "id", limit: 4, default: 0, null: false
+  end
+
+  create_table "arturo", id: false, force: :cascade do |t|
+    t.string  "number",        limit: 20
+    t.integer "supervisor_id", limit: 4
   end
 
   create_table "asignacionusuario", id: false, force: :cascade do |t|
@@ -71,27 +80,6 @@ ActiveRecord::Schema.define(version: 20170524222057) do
     t.integer "reguser",              limit: 4
     t.integer "assuser",              limit: 4
     t.integer "user_id",              limit: 4
-  end
-
-  create_table "aux_reporte_finalizados", id: false, force: :cascade do |t|
-    t.integer  "sigre_id",               limit: 4
-    t.string   "codigo",                 limit: 20
-    t.string   "tipo",                   limit: 255
-    t.string   "cliente",                limit: 255
-    t.text     "descripcion",            limit: 65535
-    t.integer  "laboratorio_id",         limit: 4,                                  default: 0
-    t.string   "laboratorio",            limit: 255
-    t.string   "clasificador",           limit: 255
-    t.text     "servicio_laboratorio",   limit: 16777215
-    t.date     "fecha_inicio"
-    t.date     "fecha_fin"
-    t.datetime "fecha_finalizado_real"
-    t.string   "cotizacion_consecutivo", limit: 255
-    t.decimal  "precio_venta",                            precision: 10, scale: 2,  default: 0.0, null: false
-    t.decimal  "costo_interno",                           precision: 42, scale: 4,  default: 0.0, null: false
-    t.decimal  "total",                                   precision: 42, scale: 4,  default: 0.0, null: false
-    t.decimal  "porcentaje",                              precision: 53, scale: 8,  default: 0.0, null: false
-    t.decimal  "corresponde",                             precision: 65, scale: 14, default: 0.0, null: false
   end
 
   create_table "bak_users", id: false, force: :cascade do |t|
@@ -368,8 +356,9 @@ ActiveRecord::Schema.define(version: 20170524222057) do
     t.integer  "business_unit_id", limit: 4
     t.integer  "user_id",          limit: 4
     t.integer  "status",           limit: 4,        default: 1
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
+    t.boolean  "quote_needs_auth", limit: 1,        default: false
   end
 
   add_index "laboratories", ["user_id"], name: "index_laboratories_on_user_id", using: :btree

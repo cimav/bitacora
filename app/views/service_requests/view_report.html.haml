@@ -43,6 +43,8 @@
       - @details['servicios'].each do |s|
         %h4
           = "#{s['muestra_identificador']}: #{s['nombre_servicio']}"
+          - if s['es_catalogo'] 
+            = " [SERVICIO CATALOGO] "
           %span.total= number_to_currency(totals[s['bitacora_id']]['total'])
         %table.table.table-bordered
           - ['personal', 'equipos', 'otros'].each do |r|

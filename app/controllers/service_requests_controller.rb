@@ -521,6 +521,7 @@ class ServiceRequestsController < ApplicationController
       "muestra_system_id"     => requested_service.sample.system_id,
       "muestra_identificador" => requested_service.sample.identification,
       "nombre_servicio"       => requested_service.laboratory_service.name,
+      "es_catalogo"           => requested_service.service_quote_type == RequestedService::QUOTE_USE_CATALOG,
       "personal"              => technicians,
       "equipos"               => equipment,
       "otros"                 => others

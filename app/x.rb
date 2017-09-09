@@ -1,3 +1,0 @@
-@to = []
-
-puts @to.count

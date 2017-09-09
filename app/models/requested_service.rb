@@ -34,6 +34,7 @@ class RequestedService < ActiveRecord::Base
 
   TO_QUOTE       = 21
   WAITING_START  = 22
+  QUOTE_AUTH     = 23
 
   FINISHED       = 99
 

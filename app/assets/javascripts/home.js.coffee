@@ -343,6 +343,15 @@ $(document).on('click', '#change_status_send_quote', () ->
     )
   )
 
+# RETURN QUOTE
+$(document).on('click', '#change_status_return_quote', () ->
+    $(this).prop('disabled', true)
+    url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/return_quote_dialog'
+    $.get(url, {}, (html) ->
+      $('#folder-work-panel').empty().html(html)
+    )
+  )
+
 # INITIAL
 $(document).on('click', '#change_status_initial', () ->
   $(this).prop('disabled', true)

@@ -5,13 +5,6 @@
 - im_req_supervisor = @requested_service.sample.service_request.user.supervisor1_id == current_user.id || @requested_service.sample.service_request.user.supervisor2_id == current_user.id || @requested_service.sample.service_request.supervisor_id == current_user.id
 
 
-- initial_action =  @requested_service.status.to_i > RequestedService::INITIAL &&  
--                   @requested_service.status.to_i < RequestedService::FINISHED &&  
--                   im_lab_admin && @requested_service.status.to_i != RequestedService::REQ_SUP_AUTH &&  
--                   @requested_service.status.to_i != RequestedService::REQ_OWNER_AUTH &&  
--                   @requested_service.status.to_i != RequestedService::TO_QUOTE &&  
--                   @requested_service.status.to_i != RequestedService::WAITING_START
-
 - received_action = @requested_service.status.to_i == RequestedService::INITIAL && im_lab_admin
 
 - assigned_action = @requested_service.status.to_i == RequestedService::RECEIVED && im_lab_admin
@@ -26,16 +19,6 @@
 
 - finished_action = (@requested_service.status.to_i == RequestedService::IN_PROGRESS || @requested_service.status.to_i == RequestedService::REINIT) && (im_lab_admin || im_service_tech)
 
-- canceled_action = @requested_service.status.to_i != RequestedService::TO_QUOTE &&
--                   @requested_service.status.to_i != RequestedService::WAITING_START &&
--                   (  @requested_service.status.to_i > RequestedService::INITIAL && 
--                      @requested_service.status.to_i < RequestedService::FINISHED && 
--                      im_lab_admin) ||
--                   (  (  @requested_service.status.to_i == RequestedService::INITIAL || 
--                         @requested_service.status.to_i == RequestedService::SUSPENDED) &&
--                      im_requestor ) ||
--                   ((@requested_service.status.to_i == RequestedService::REQ_OWNER_AUTH) && im_requestor)
-
 - if @requested_service.sample.service_request.request_type_id == ServiceRequest::SERVICIO_VINCULACION_TIPO_2 || @requested_service.sample.service_request.request_type_id == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
   - canceled_action = false
 
@@ -47,9 +30,36 @@
 
 - send_quote_action = @requested_service.status.to_i == RequestedService::TO_QUOTE && (im_lab_admin || im_service_tech)
 
+- auth_quote_action = @requested_service.status.to_i == RequestedService::QUOTE_AUTH && (im_lab_admin || im_service_tech)
+
+
 - waiting_action = @requested_service.status.to_i == RequestedService::WAITING_START && im_requestor
 
+
+- initial_action =  !auth_quote_action &&
+-                   @requested_service.status.to_i > RequestedService::INITIAL &&  
+-                   @requested_service.status.to_i < RequestedService::FINISHED &&  
+-                   im_lab_admin && @requested_service.status.to_i != RequestedService::REQ_SUP_AUTH &&  
+-                   @requested_service.status.to_i != RequestedService::REQ_OWNER_AUTH &&  
+-                   @requested_service.status.to_i != RequestedService::TO_QUOTE &&  
+-                   @requested_service.status.to_i != RequestedService::WAITING_START
+
+- canceled_action = !auth_quote_action && 
+-                   @requested_service.status.to_i != RequestedService::TO_QUOTE &&
+-                   @requested_service.status.to_i != RequestedService::WAITING_START &&
+-                   (  @requested_service.status.to_i > RequestedService::INITIAL && 
+-                      @requested_service.status.to_i < RequestedService::FINISHED && 
+-                      im_lab_admin) ||
+-                   (  (  @requested_service.status.to_i == RequestedService::INITIAL || 
+-                         @requested_service.status.to_i == RequestedService::SUSPENDED) &&
+-                      im_requestor ) ||
+-                   ((@requested_service.status.to_i == RequestedService::REQ_OWNER_AUTH) && im_requestor)
+
+
+
 - delete_action =  (@requested_service.status.to_i == RequestedService::TO_QUOTE && im_requestor) || (@requested_service.sample.service_request.system_status.to_i == ServiceRequest::SYSTEM_TO_QUOTE && im_requestor) || (@requested_service.sample.service_request.system_status.to_i == ServiceRequest::SYSTEM_PARTIAL_QUOTED && im_requestor)  || (@requested_service.sample.service_request.system_status.to_i == ServiceRequest::SYSTEM_QUOTED && im_requestor) || ( @requested_service.status.to_i == RequestedService::REQ_SUP_AUTH && im_req_supervisor  )
+
+- delete_action = !auth_quote_action && delete_action
 
 - has_action = initial_action || received_action || assigned_action || suspended_action || reinit_action || in_progress_action || finished_action || canceled_action || sup_auth_action || owner_auth_action || send_quote_action || waiting_action || delete_action
 
@@ -117,13 +127,30 @@
         - if send_quote_action
           %button{:class => "btn btn-block btn-status bg-status-send-quote", :status_action => RequestedService::TO_QUOTE, :id => 'change_status_send_quote'}
             %span.glyphicon.glyphicon-usd
-            = "Enviar costeo a Responsable"
+            - if @requested_service.laboratory_service.laboratory.quote_needs_auth
+              = "Solicitar autorización de costeo"
+            - else
+              = "Enviar costeo a Responsable"
+
+        - if auth_quote_action
+          - user_request_auth = ActivityLog.where(:requested_service_id => @requested_service.id, :message_type => 'STATUS', :requested_service_status => RequestedService::QUOTE_AUTH ).last.user_id
+          - if current_user.id == user_request_auth
+            = "Solo un administrador distinto a ti puede autorizar el costeo de este servicio"
+          - else
+            %button{:class => "btn btn-block btn-status bg-status-send-quote", :status_action => RequestedService::TO_QUOTE, :id => 'change_status_send_quote'}
+              %span.glyphicon.glyphicon-usd
+              = "Autorizar y enviar costeo"
+            %button{:class => "btn btn-block btn-status bg-status-return-quote", :status_action => RequestedService::TO_QUOTE, :id => 'change_status_return_quote'}
+              %span.glyphicon.glyphicon-step-backward
+              = "Regresar costeo a técnico"
+
+
         - if canceled_action
           %button{:class => "btn btn-block btn-status bg-status-canceled", :status_action => RequestedService::CANCELED, :id => 'change_status_canceled'}
             %span.glyphicon.glyphicon-remove
             = "Cancelar"
         - if delete_action
-          %button{:class => "btn btn-block btn-status bg-status-canceled", :status_action => RequestedService::TO_QUOTE, :id => 'change_status_deleted'}
+          %button{:class => "btn btn-block btn-status bg-status-canceled", :status_action => RequestedService::DELETED, :id => 'change_status_deleted'}
             %span.glyphicon.glyphicon-trash
             = "Eliminar"
   

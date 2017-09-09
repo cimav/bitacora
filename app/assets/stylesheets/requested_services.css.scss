@@ -15,6 +15,7 @@
 .status-to-quote    { color: #a58ad5; }
 .status-send-quote    { color: darken(#a58ad5, 10%); }
 .status-waiting     { color: #666; }
+.status-return-quote { color: $brand-warning; }
 
 .btn-status {
   color: #fff;
@@ -36,6 +37,7 @@
 .bg-status-to-quote    { background: #a58ad5; }
 .bg-status-send-quote  { background: darken(#a58ad5, 10%); }
 .bg-status-waiting     { background: #666; }
+.bg-status-return-quote   { background: $brand-warning; }
 
 
 .bg-edit-folder { background: $folder-color; color: darken($folder-color,50%) !important; }

@@ -237,6 +237,29 @@ class BitacoraMailer < ActionMailer::Base
   
   end
 
+  def quote_needs_auth(requested_service_id, user_id)
+
+    @requested_service = RequestedService.find(requested_service_id)
+
+    @from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"
+    @to = []
+
+    # Lab Admins
+    @requested_service.laboratory_service.laboratory.laboratory_members.where(:access => LaboratoryMember::ACCESS_ADMIN).each do |u|
+      if user_id.to_i != u.user_id.to_i
+        @to << u.user.email
+      end
+    end
+
+    if @to.count == 0
+      @to << @requested_service.user.email
+    end 
+
+    subject = "Autorizar Costeo del Servicio #{@requested_service.number}: #{@requested_service.laboratory_service.name}"
+
+    mail(:to => @to, :from => @from, :subject => subject)
+  end
+
 
   def status_change(requested_service, user, msgs)
     @from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"

@@ -64,6 +64,11 @@ class RequestedServicesController < ApplicationController
     render :layout => false
   end
 
+  def return_quote_dialog
+    @requested_service = RequestedService.find(params['id'])
+    render :layout => false
+  end
+
   def get_grand_total(id)
     grand_total = RequestedService.find_by_sql(["SELECT IFNULL(SUM(subtotal),0) AS total FROM (
                                                    SELECT SUM(hours * hourly_rate) AS subtotal 
@@ -260,6 +265,8 @@ class RequestedServicesController < ApplicationController
         msg = "El servicio #{@requested_service.number} ha sido autorizado por el supervisor #{current_user.full_name}" if @requested_service.status.to_i == RequestedService::INITIAL && prev_status.to_i == RequestedService::REQ_SUP_AUTH
         msg = "El servicio #{@requested_service.number} ha sido autorizado por #{current_user.full_name}" if @requested_service.status.to_i == RequestedService::INITIAL && prev_status.to_i == RequestedService::REQ_OWNER_AUTH
         msg = "La cotización del servicio #{@requested_service.number} ha sido enviada" if @requested_service.status.to_i == RequestedService::WAITING_START
+        msg = "La solicitud de autorización de costeo del servicio #{@requested_service.number} ha sido enviada" if @requested_service.status.to_i == RequestedService::QUOTE_AUTH
+        msg = "El costeo del servicio #{@requested_service.number} ha sido regresado" if @requested_service.status.to_i == RequestedService::TO_QUOTE
         msg = "Muestra para el servicio #{@requested_service.number} recibida" if @requested_service.status.to_i == RequestedService::RECEIVED
         msg = "El servicio #{@requested_service.number} ha sido asignada a #{@requested_service.user.full_name}" if @requested_service.status.to_i == RequestedService::ASSIGNED
         msg = "El servicio #{@requested_service.number} ha sido suspendida" if @requested_service.status.to_i == RequestedService::SUSPENDED
@@ -284,6 +291,11 @@ class RequestedServicesController < ApplicationController
                                                  message_type: 'USER',
                                                  requested_service_status: @requested_service.status,
                                                  message: "#{params[:activity_log_msg]}")
+        end
+
+        if @requested_service.status.to_i == RequestedService::QUOTE_AUTH && prev_status.to_i != RequestedService::QUOTE_AUTH
+          # Sent mail to admin
+          Resque.enqueue(QuoteNeedsAuthMailer, @requested_service.id, current_user.id)
         end
 
         if params[:send_mail] == 'yes'

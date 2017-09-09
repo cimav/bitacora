@@ -1,13 +1,22 @@
 .sheet
   .header-status{:class => "bg-status-send-quote"}
-    %span.status= "Enviar costeo"
+    - if @requested_service.laboratory_service.laboratory.quote_needs_auth && @requested_service.status.to_i == RequestedService::TO_QUOTE
+      %span.status= "Enviar costeo a administrador para su autorización"
+    - else
+      %span.status= "Enviar costeo"
     %a.close{:class => 'requested-service-link', 'data-id' => @requested_service.id, 'data-sample-id' => @requested_service.sample_id}="×"
   .dialog-content.padded
     = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'status-form'} do |f|
       .dialog-title
-        %h3= "Enviar costeo"
+        - if @requested_service.laboratory_service.laboratory.quote_needs_auth && @requested_service.status.to_i == RequestedService::TO_QUOTE
+          %h3= "Enviar costeo a administrador para su autorización"
+        - else
+          %h3= "Enviar costeo"
       .dialog-body
-        = f.hidden_field :status, {:value => RequestedService::WAITING_START}
+        - if @requested_service.laboratory_service.laboratory.quote_needs_auth && @requested_service.status.to_i == RequestedService::TO_QUOTE
+          = f.hidden_field :status, {:value => RequestedService::QUOTE_AUTH}
+        - else
+          = f.hidden_field :status, {:value => RequestedService::WAITING_START}
         .notes.field
           = label_tag 'activity_log_msg', 'Notas:'
           = text_area_tag 'activity_log_msg', '', {:class => 'form-control'}

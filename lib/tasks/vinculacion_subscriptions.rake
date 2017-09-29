@@ -25,6 +25,7 @@ class VinculacionSubscriptions
       if (attributes['tipo'] == 4)
         folder.request_type_id           = ServiceRequest::PROYECTO_VINCULACION
       end
+      Rails.logger.debug "Tipo: #{folder.request_type_id}"
       
       folder.request_link                = attributes['nombre']
       folder.number                      = attributes['codigo']
@@ -32,6 +33,7 @@ class VinculacionSubscriptions
       folder.vinculacion_client_id       = attributes['cliente_id']
       folder.vinculacion_client_name     = attributes['cliente_nombre']
       folder.vinculacion_client_contact  = attributes['cliente_contacto']
+      folder.vinculacion_client_phone    = attributes['cliente_telefono']
       folder.vinculacion_client_email    = attributes['cliente_email']
       folder.vinculacion_client_address1 = attributes['cliente_calle']
       folder.vinculacion_client_address2 = attributes['cliente_colonia']
@@ -42,12 +44,17 @@ class VinculacionSubscriptions
       folder.vinculacion_hash            = attributes['vinculacion_hash']
 
       folder.system_status     = ServiceRequest::SYSTEM_TO_QUOTE
+      Rails.logger.debug "Status: #{folder.system_status}"
       if u_supervisor = User.where(:email => attributes['agente_email']).first
         folder.supervisor_id = u_supervisor.id
+        Rails.logger.debug "Es agente"
       else
         folder.supervisor_id = u_requestor.id
+        Rails.logger.debug "Es requisitor"
       end
+      Rails.logger.debug "Supervisor: #{folder.supervisor_id}"
       folder.save(:validate => false)
+      Rails.logger.debug "Si guardo folder"
 
 
       # Add samples to service_request

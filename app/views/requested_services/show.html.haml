@@ -209,9 +209,13 @@
                 = "Costo para Estímulos"
                 %br
                 = "(Precio Venta / 2)"
+              %th.text-center= "Muestras"
+              %th.text-center= "Total"
             %tr
               %td.text-center= number_to_currency(@requested_service.laboratory_service.sale_price)
               %td.text-center= number_to_currency(total_serv)
+              %td.text-center= @requested_service.sample.quantity
+              %td.text-center= number_to_currency(total_serv * @requested_service.sample.quantity)
 
           %h4= "Repartición"
           %table.table
@@ -221,7 +225,7 @@
               %th.text-center= "Total"
               %th.text-center= "Puntos"
             - @requested_service.requested_service_technicians.each do |p| 
-              - total_user = total_serv / (p.participation / 100)
+              - total_user = (total_serv * @requested_service.sample.quantity) / (p.participation / 100)
               - if current_user.id == p.user.id
                 - klass = 'success'
               - else

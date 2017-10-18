@@ -33,15 +33,22 @@
   - request.collaborators.each do |collaborator|
     %tr.collaborator-item{'id' => "collaborator-item#{collaborator.id}"}
       %td
-        = image_tag (collaborator.user.avatar_url), :class => 'img-circle folder-collaborator'
-      %td
-        - if collaborator.user_id == current_user.id
-          %strong= collaborator.user.full_name
+        - if collaborator.user
+          = image_tag (collaborator.user.avatar_url), :class => 'img-circle folder-collaborator'
         - else
-          = collaborator.user.full_name
+          = collaborator.id
+      %td
+        - if collaborator.user
+          - if collaborator.user_id == current_user.id
+            %strong= collaborator.user.full_name
+          - else
+            = collaborator.user.full_name
         - if request.user.id == current_user.id
           = link_to '×', {:controller => 'service_requests', :action => 'delete_collaborator', 'collaborator_id' => collaborator.id}, :method => :post, :remote => true, :class => 'close remove-collaborator', :'data-type' => 'html'
   - if request.user.id == current_user.id
     %tr
       %td{:colspan => 2}
         %button#add-collaborator-button.btn.btn-success.btn-xs{'data-id' => request.id}= "Agregar colaborador"
+
+
+

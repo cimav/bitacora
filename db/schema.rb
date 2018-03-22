@@ -11,7 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170908233635) do
+ActiveRecord::Schema.define(version: 20180321194134) do
+
+  create_table "P170080", id: false, force: :cascade do |t|
+    t.integer  "id",                 limit: 4,        default: 0,   null: false
+    t.integer  "service_request_id", limit: 4
+    t.integer  "consecutive",        limit: 4
+    t.string   "number",             limit: 20
+    t.string   "identification",     limit: 255
+    t.text     "description",        limit: 16777215
+    t.string   "status",             limit: 255,      default: "1"
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
+    t.integer  "quantity",           limit: 4
+    t.string   "code",               limit: 255
+    t.integer  "system_id",          limit: 4
+  end
 
   create_table "activity_logs", force: :cascade do |t|
     t.integer  "user_id",                  limit: 4
@@ -80,6 +95,45 @@ ActiveRecord::Schema.define(version: 20170908233635) do
     t.integer "reguser",              limit: 4
     t.integer "assuser",              limit: 4
     t.integer "user_id",              limit: 4
+  end
+
+  create_table "aux_reporte_finalizados", id: false, force: :cascade do |t|
+    t.integer  "sigre_id",               limit: 4
+    t.string   "codigo",                 limit: 20
+    t.string   "tipo",                   limit: 255
+    t.string   "cliente",                limit: 255
+    t.text     "descripcion",            limit: 65535
+    t.integer  "laboratorio_id",         limit: 4,                                  default: 0
+    t.string   "laboratorio",            limit: 255
+    t.string   "clasificador",           limit: 255
+    t.text     "servicio_laboratorio",   limit: 16777215
+    t.date     "fecha_inicio"
+    t.date     "fecha_fin"
+    t.datetime "fecha_finalizado_real"
+    t.string   "cotizacion_consecutivo", limit: 255
+    t.decimal  "precio_venta",                            precision: 10, scale: 2,  default: 0.0, null: false
+    t.decimal  "costo_interno",                           precision: 42, scale: 4,  default: 0.0, null: false
+    t.decimal  "total",                                   precision: 42, scale: 4,  default: 0.0, null: false
+    t.decimal  "porcentaje",                              precision: 53, scale: 8,  default: 0.0, null: false
+    t.decimal  "corresponde",                             precision: 65, scale: 14, default: 0.0, null: false
+  end
+
+  create_table "bak_laboratory_services", id: false, force: :cascade do |t|
+    t.integer  "id",                                   limit: 4,                                 default: 0,     null: false
+    t.integer  "laboratory_id",                        limit: 4
+    t.integer  "service_type_id",                      limit: 4
+    t.text     "name",                                 limit: 16777215
+    t.text     "description",                          limit: 16777215
+    t.datetime "created_at",                                                                                     null: false
+    t.datetime "updated_at",                                                                                     null: false
+    t.decimal  "internal_cost",                                         precision: 10, scale: 2
+    t.integer  "is_catalog",                           limit: 4,                                 default: 0
+    t.decimal  "sale_price",                                            precision: 10, scale: 2
+    t.integer  "is_exclusive_vinculacion",             limit: 4,                                 default: 0
+    t.decimal  "evaluation_cost",                                       precision: 10, scale: 2
+    t.integer  "status",                               limit: 4,                                 default: 0
+    t.integer  "laboratory_service_classification_id", limit: 4,                                 default: 0
+    t.boolean  "show_web",                             limit: 1,                                 default: false
   end
 
   create_table "bak_users", id: false, force: :cascade do |t|
@@ -628,12 +682,29 @@ ActiveRecord::Schema.define(version: 20170908233635) do
     t.datetime "updated_at",                                           null: false
     t.integer  "from_id",               limit: 4
     t.integer  "service_quote_type",    limit: 4
+    t.integer  "cedula_id",             limit: 4,        default: 0
   end
 
   add_index "requested_services", ["laboratory_service_id"], name: "index_requested_services_on_laboratory_service_id", using: :btree
   add_index "requested_services", ["sample_id"], name: "index_requested_services_on_sample_id", using: :btree
   add_index "requested_services", ["suggested_user_id"], name: "index_requested_services_on_suggested_user_id", using: :btree
   add_index "requested_services", ["user_id"], name: "index_requested_services_on_user_id", using: :btree
+
+  create_table "rs", id: false, force: :cascade do |t|
+    t.integer  "id",                    limit: 4,        default: 0,   null: false
+    t.integer  "laboratory_service_id", limit: 4
+    t.integer  "sample_id",             limit: 4
+    t.integer  "consecutive",           limit: 4
+    t.string   "number",                limit: 20
+    t.text     "details",               limit: 16777215
+    t.integer  "user_id",               limit: 4
+    t.integer  "suggested_user_id",     limit: 4
+    t.string   "status",                limit: 255,      default: "1"
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+    t.integer  "from_id",               limit: 4
+    t.integer  "service_quote_type",    limit: 4
+  end
 
   create_table "rx", id: false, force: :cascade do |t|
     t.integer "id", limit: 4, default: 0, null: false

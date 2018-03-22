@@ -1,3 +1,5 @@
+# coding: utf-8
+require 'resque-bus'
 class ServiceRequestsController < ApplicationController
   before_filter :auth_required
   respond_to :html, :json
@@ -296,24 +298,11 @@ class ServiceRequestsController < ApplicationController
 
     request = ServiceRequest.find(params[:id])
 
-    params['user'].each do |user_id,percentage|
-      participation = request.service_request_participations.new
-      participation.user_id = user_id
-      participation.percentage = percentage
-      participation.save
-    end  
-
-    participations = Array.new
-    request.service_request_participations.each do |p|
-      participations << {
-        "email" => p.user.email,
-        "porcentaje" => p.percentage,
-      }
-    end
-
     # Publish reporte to Vinculacion system.
     details = cost_details(request)
-    details['participaciones'] = participations
+    #details['participaciones'] = participations
+    puts "DETALLES"
+    puts details
     QueueBus.publish('recibir_reporte_tipo_2', details)
     request.system_status = ServiceRequest::SYSTEM_REPORT_SENT
     request.save
@@ -486,11 +475,15 @@ class ServiceRequestsController < ApplicationController
 
     # Technicians
     technicians = Array.new
+    cedula_id = requested_service.cedula_id
     requested_service.requested_service_technicians.each do |tech|
       technicians << {
         "detalle" => tech.user.full_name,
+        "email" => tech.user.email,
         "cantidad" => tech.hours,
-        "precio_unitario" => tech.hourly_wage 
+        "precio_unitario" => tech.hourly_wage, 
+        "cedula" => cedula_id,
+        "porcentaje" => tech.participation
       }
     end
 
@@ -500,7 +493,8 @@ class ServiceRequestsController < ApplicationController
       equipment << {
         "detalle" => eq.equipment.name,
         "cantidad" => eq.hours,
-        "precio_unitario" => eq.hourly_rate
+        "precio_unitario" => eq.hourly_rate,
+        "cedula" => cedula_id
       }
     end
 
@@ -511,7 +505,8 @@ class ServiceRequestsController < ApplicationController
       others << {
         "detalle" => "#{ot.other_type.name}: #{ot.concept}",
         "cantidad" => 1,
-        "precio_unitario" => ot.price
+        "precio_unitario" => ot.price,
+        "cedula" => cedula_id
       }
     end
 

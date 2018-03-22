@@ -21,24 +21,11 @@
       %h2
         = "T2: Reporte del servicio #{@details['codigo']}"
 
-      %h3{:id => 'participacion'}
-        = "Participación"
-        %span.total{:id => 'sumatoria'}= ''
-      %table.table.table-bordered
-        %thead
-          %tr
-            %th Participante
-            %th Participación
-        %tbody
-          - @participants.each do |p|
-            %tr
-              %td= p.full_name
-              %td= number_field_tag "user[#{p.id}]", nil, {:class => 'form-control pvalor', :onkeyup => "this.value = this.value.split('.').join(''); if (this.value > 100) { this.value = 100; }; doSumatoria();",  :min => 0, :max => 100, :step => 1}
       
       %h3
         = "Costeo final" 
         %span.total= number_to_currency(global_total)
-      - rheader = {'personal' => ['Nombre', 'Horas', 'Costo x Hora'], 'equipos' => ['Equipo', 'Horas', 'Costo x Hora'], 'otros' => ['Concepto', 'Cantidad', 'Precio']}
+      - rheader = {'personal' => ['Nombre', 'Horas', 'Costo x Hora', 'Participación'], 'equipos' => ['Equipo', 'Horas', 'Costo x Hora'], 'otros' => ['Concepto', 'Cantidad', 'Precio']}
 
       - @details['servicios'].each do |s|
         %h4
@@ -59,7 +46,7 @@
               - s[r].each do |i|
                 - subtotal = i['cantidad'] * i['precio_unitario']
                 %tr
-                  %td=i['detalle']
+                  %td="#{i['detalle']} (#{i['porcentaje']}%)"
                   %td.text-right=i['cantidad']
                   %td.text-right=number_to_currency(i['precio_unitario'])
                   %td.text-right=number_to_currency(subtotal)      
@@ -72,7 +59,6 @@
     $('.pvalor').each(function(){
         if (isNaN(parseFloat(this.value))) {
           sum += 0;
-          alert('aqui');
         } else {
           sum += parseFloat(this.value);
         }

@@ -1,5 +1,7 @@
+# coding: utf-8
+require 'resque-bus'
 class AlertsController < ApplicationController
-    before_filter :auth_required
+  before_filter :auth_required
   respond_to :html, :json
 
   def get_from_laboratory_service

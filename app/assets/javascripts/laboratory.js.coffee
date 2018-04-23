@@ -168,6 +168,40 @@ $(document).on('click', '#report_vinculacion_generate_excel', () ->
   )
 
 
+# Eq Use report
+
+$(document).on('ajax:beforeSend', '.report-equipment', (evt, xhr, settings) ->
+    lab_id = $(this).data('laboratory-id')
+    url = '/laboratory/' + lab_id + '/report_equipment'
+    setHash('#!/laboratory/' + lab_id + '/report_equipment', false)
+  )
+$(document).on('ajax:success', '.report-equipment', (evt, data, status, xhr) ->
+    $('#lab-report-area').empty().html(data)
+  )
+
+$(document).on('ajax:error', '.report-equipment', (evt, xhr, status, error) ->
+    alert('Error')
+  )
+
+$(document).on('click', '#report_equipment_generate', () ->
+    lab_id =  $(this).attr('laboratory_id')
+    start_date = $('#start-date').val()
+    end_date = $('#end-date').val()
+    url = '/laboratory/' + lab_id + '/report_equipment?start_date=' + start_date + '&end_date=' + end_date 
+    $.get(url, {}, (html) ->
+      $('#lab-report-area').empty().html(html)
+    )
+  )
+
+$(document).on('click', '#report_equipment_generate_excel', () ->
+    lab_id =  $(this).attr('laboratory_id')
+    start_date = $('#start-date').val()
+    end_date = $('#end-date').val()
+    url = '/laboratory/' + lab_id + '/report_equipment.xls?start_date=' + start_date + '&end_date=' + end_date 
+    window.open(url,"_excel")
+  )
+
+
 #----------
 # LAB ADMIN
 #----------

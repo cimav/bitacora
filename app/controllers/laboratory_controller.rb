@@ -80,26 +80,6 @@ class LaboratoryController < ApplicationController
     @registros = ReporteFinalizados.where("laboratorio_id = #{@laboratory.id} AND fecha_finalizado_real BETWEEN '#{@start_date}' AND '#{@end_date}'")
 
 
-# sigre_id, 
-# codigo, 
-# tipo, 
-# cliente, 
-# descripcion, 
-# laboratorio_id, 
-# laboratorio, 
-# clasificador, 
-# servicio_laboratorio, 
-# fecha_inicio, 
-# fecha_fin, 
-# fecha_finalizado_real, 
-# cotizacion_consecutivo, 
-# precio_venta, 
-# costo_interno, 
-# total, 
-# porcentaje, 
-# corresponde
-
-
     respond_with do |format|
       format.html do
         render :layout => false
@@ -179,6 +159,53 @@ class LaboratoryController < ApplicationController
         end
         column_order = ["Fecha","Código","Servicio","Clasificador","Tipo","Carpeta","Solicitante","Muestra","Cantidad","Tecnico_Asignado","Estado"]
         to_excel(rows,column_order,"Servicios","Reporte_General")
+      end
+    end
+  end
+
+  def report_equipment
+    @laboratory = Laboratory.find(params[:id])
+
+    if (params[:start_date]) 
+      @start_date = params[:start_date]
+      @end_date = params[:end_date]
+    else
+      @start_date = DateTime.now.strftime "%Y-01-01"
+      @end_date = DateTime.now.strftime "%Y-%m-%d"
+    end
+
+    sql = "SELECT equipment.name, 
+                      COUNT(requested_services.id) AS services_sum, 
+                      SUM(IF(requested_services.number = 'TEMPLATE',0,samples.quantity)) AS samples_sum, 
+                      SUM(IF(requested_services.number = 'TEMPLATE',0,hours)) AS hours_sum  
+               FROM equipment 
+               LEFT JOIN requested_service_equipments ON equipment.id = equipment_id 
+               LEFT JOIN requested_services ON requested_service_id = requested_services.id  
+               LEFT JOIN samples ON sample_id = samples.id 
+               WHERE 
+                 equipment.laboratory_id = ?
+                 AND requested_services.created_at BETWEEN ? AND ?
+               GROUP BY equipment.id"
+
+    @eq_use = Equipment.find_by_sql([sql, @laboratory.id, @start_date, @end_date])
+
+
+    respond_with do |format|
+      format.html do
+        render :layout => false
+      end
+      format.xls do
+        rows = Array.new
+
+        @eq_use.collect do |e|
+          rows << {'Nombre' => e.name,
+                   'Servicios' => e.services_sum,
+                   'Muestras' => e.samples_sum,
+                   'Horas' => e.hours_sum
+                 }
+        end
+        column_order = ["Nombre", "Servicios", "Muestras", "Horas"]
+        to_excel(rows,column_order,"Servicios","Reporte_Uso_Equipo")
       end
     end
   end

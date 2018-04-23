@@ -8,4 +8,5 @@ class Equipment < ActiveRecord::Base
   
   ACTIVE = 1
   INACTIVE = 2
+
 end

@@ -1,0 +1,31 @@
+#lab-report-options
+  .row
+    .col-md-4
+      = "Inicio"
+      %input{:type => 'date', :class => 'form-control', :id => 'start-date', :name => 'start-date', :value => @start_date}
+    .col-md-1
+    .col-md-4
+      = "Fin"
+      %input{:type => 'date', :class => 'form-control', :id => 'end-date', :name => 'end-date', :value => @end_date}
+    .col-md-3
+      %br
+      %btn#report_equipment_generate.btn.btn-primary{:laboratory_id => @laboratory.id}= "Generar reporte"
+#lab-report-area-inner
+  %btn#report_equipment_generate_excel.btn.btn-success.btn-xs{:laboratory_id => @laboratory.id}= "Descargar Versión Excel"
+  %table.table.table-striped
+    %thead 
+      %tr
+        %th= "Equipo"
+        %th= "Servicios"
+        %th= "Muestras"
+        %th= "Horas"
+    %tbody
+      - @eq_use.each do |e|
+        %tr
+          %td= e.name rescue '-'
+          %td{:style => 'text-align: right'}= e.services_sum rescue '-'
+          %td{:style => 'text-align: right'}= e.samples_sum rescue '-'
+          %td{:style => 'text-align: right'}= e.hours_sum rescue '-'
+      %tr
+        %th{:colspan => 11}= "#{@eq_use.count} registros"
+      

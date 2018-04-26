@@ -13,21 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20180321194134) do
 
-  create_table "P170080", id: false, force: :cascade do |t|
-    t.integer  "id",                 limit: 4,        default: 0,   null: false
-    t.integer  "service_request_id", limit: 4
-    t.integer  "consecutive",        limit: 4
-    t.string   "number",             limit: 20
-    t.string   "identification",     limit: 255
-    t.text     "description",        limit: 16777215
-    t.string   "status",             limit: 255,      default: "1"
-    t.datetime "created_at",                                        null: false
-    t.datetime "updated_at",                                        null: false
-    t.integer  "quantity",           limit: 4
-    t.string   "code",               limit: 255
-    t.integer  "system_id",          limit: 4
-  end
-
   create_table "activity_logs", force: :cascade do |t|
     t.integer  "user_id",                  limit: 4
     t.integer  "service_request_id",       limit: 4
@@ -689,22 +674,6 @@ ActiveRecord::Schema.define(version: 20180321194134) do
   add_index "requested_services", ["sample_id"], name: "index_requested_services_on_sample_id", using: :btree
   add_index "requested_services", ["suggested_user_id"], name: "index_requested_services_on_suggested_user_id", using: :btree
   add_index "requested_services", ["user_id"], name: "index_requested_services_on_user_id", using: :btree
-
-  create_table "rs", id: false, force: :cascade do |t|
-    t.integer  "id",                    limit: 4,        default: 0,   null: false
-    t.integer  "laboratory_service_id", limit: 4
-    t.integer  "sample_id",             limit: 4
-    t.integer  "consecutive",           limit: 4
-    t.string   "number",                limit: 20
-    t.text     "details",               limit: 16777215
-    t.integer  "user_id",               limit: 4
-    t.integer  "suggested_user_id",     limit: 4
-    t.string   "status",                limit: 255,      default: "1"
-    t.datetime "created_at",                                           null: false
-    t.datetime "updated_at",                                           null: false
-    t.integer  "from_id",               limit: 4
-    t.integer  "service_quote_type",    limit: 4
-  end
 
   create_table "rx", id: false, force: :cascade do |t|
     t.integer "id", limit: 4, default: 0, null: false

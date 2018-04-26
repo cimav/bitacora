@@ -214,4 +214,12 @@ class RequestedService < ActiveRecord::Base
     st
   end
 
+  def tech_hours
+    h = 0
+    self.requested_service_technicians.each do |t|
+      h = h + t.hours
+    end
+    h
+  end
+
 end

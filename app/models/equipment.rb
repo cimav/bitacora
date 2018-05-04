@@ -3,6 +3,7 @@ class Equipment < ActiveRecord::Base
 
   belongs_to :laboratory
   has_many :alerts
+  has_many :maintenances
   has_many :requested_service_equipment
   has_many :requested_services, :through => :requested_service_equipment
   

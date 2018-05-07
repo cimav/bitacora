@@ -213,6 +213,9 @@ Bitacora::Application.routes.draw do
   get '/request_types/live_search' => 'request_types#live_search'
   resources :request_types
 
+  get '/providers/live_search' => 'providers#live_search'
+  resources :providers
+
   get '/service_types/live_search' => 'service_types#live_search'
   resources :service_types
 
@@ -260,6 +263,7 @@ Bitacora::Application.routes.draw do
   get '/admin/users' => 'admin#users'
   get '/admin/departments' => 'admin#departments'
   get '/admin/request_types' => 'admin#request_types'
+  get '/admin/providers' => 'admin#providers'
   get '/admin/service_types' => 'admin#service_types'
   get '/admin/other_types' => 'admin#other_types'
 

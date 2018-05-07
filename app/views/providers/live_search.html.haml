@@ -1,0 +1,7 @@
+%ul
+  - @provider.each do |provider|
+    %li.provider-item.item{"data-id" => provider.id}
+      .request-type-item-name{:id => "provider_display_#{provider.id}"}= "#{provider.name}"
+.items-counter
+  .items-counter-inner
+    = "#{@provider.count} proveedores"

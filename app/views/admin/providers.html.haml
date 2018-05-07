@@ -1,0 +1,15 @@
+#providers-panel
+  #providers-search-panel.search-box
+    = form_tag 'xxx', :id => 'providers-live-search', :method => 'get', :remote => true do
+      = text_field_tag :q, nil, :id => 'providers-search-box', :placeholder => 'Busqueda', :class => 'form-control'
+  #providers-list.items-placeholder 
+  #providers-buttons.bottom-box
+    = button_tag "Agregar nuevo proveedor", {:class => 'btn btn-info', :id => 'add-new-admin-provider-button'}
+    
+
+#providers-details
+
+:javascript 
+  $(function() {
+    ProvidersLiveSearch()
+  })

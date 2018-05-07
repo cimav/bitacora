@@ -11,6 +11,7 @@
 #users-panel,
 #service-types-panel,
 #request-types-panel,
+#providers-panel,
 #other-types-panel {
   position: fixed;
   top: 54px;
@@ -93,6 +94,7 @@
   #materials-buttons,
   #users-buttons,
   #request-types-buttons,
+  #providers-buttons,
   #service-types-buttons,
   #other-types-buttons {
       width: $side-panel-width;
@@ -128,6 +130,7 @@
 #user-details,
 #service-types-details,
 #request-types-details,
+#providers-details,
 #other-types-details {
   left: $side-panel-width + $sidenav-width + 24;
   right: 0px;

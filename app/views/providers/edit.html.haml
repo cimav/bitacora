@@ -1,0 +1,18 @@
+%h1= @provider.name
+= form_for @provider, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-provider-form'} do |f|
+  .field#field_provider_name
+    = f.label :name, 'Nombre:'
+    = f.text_field :name, {:class => 'form-control', :placeholder => 'Nombre'}
+  .field#field_provider_email
+    = f.label :email, 'Correo:'
+    = f.text_field :email, {:class => 'form-control', :placeholder => 'Correo'}
+  .field#field_provider_phone
+    = f.label :phone, 'Teléfono:'
+    = f.text_field :phone, {:class => 'form-control', :placeholder => 'Teléfono'}
+  .field#field_provider_address
+    = f.label :address, 'Dirección:'
+    = f.text_area :address, {:class => 'form-control', :placeholder => 'Dirección'}
+ 
+      
+  .submit-button
+    = f.submit "Actualizar proveedor", {:class => "btn btn-primary"}

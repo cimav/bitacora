@@ -42,4 +42,8 @@ class AdminController < ApplicationController
     render :layout => false
   end
 
+  def providers
+    render :layout => false
+  end
+
 end

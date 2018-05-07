@@ -10,17 +10,17 @@
     #sidenav
       #brand
         %img{:src => '/assets/bitacora-logo.svg'}
-        Bitácora Electrónica
+        .bitacora-logo= "Bitácora Electrónica"
       %ul.nav.nav-pills.nav-stacked
         %li
           %a#folders-link
             %span.glyphicon.glyphicon-folder-open
-            .option-name= 'Carpetas' 
+            .option-name= ' Carpetas' 
         - current_user.laboratories.each do |laboratory|
           %li
             %a{'data-laboratory_id' => laboratory.id, :class=> "lab-link", :id => "lab-#{laboratory.id}-link"}
               %span.glyphicon.glyphicon-th-list
-              .option-name= laboratory.name
+              .option-name= " #{laboratory.name}"
         - if current_user.is_admin? || current_user.is_customer_service?
           %li
             = link_to '/#!/admin', :id => 'admin-link' do

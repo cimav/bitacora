@@ -1,0 +1,7 @@
+= form_for @provider, :remote => true, :html => {:'data-type' => 'html', :id => 'new-provider-form'} do |f|
+  %h3= "Nuevo Proveedor"
+  .field#field_provider_name
+    = f.label :name, 'Nombre:'
+    = f.text_field :name, {:class => 'form-control', :placeholder => 'Nombre'}
+  .submit-button
+    = f.submit "Agregar proveedor", {:class => "btn btn-primary"}

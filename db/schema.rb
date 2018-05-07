@@ -11,7 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180321194134) do
+ActiveRecord::Schema.define(version: 20180427183931) do
+
+  create_table "P170080", id: false, force: :cascade do |t|
+    t.integer  "id",                 limit: 4,        default: 0,   null: false
+    t.integer  "service_request_id", limit: 4
+    t.integer  "consecutive",        limit: 4
+    t.string   "number",             limit: 20
+    t.string   "identification",     limit: 255
+    t.text     "description",        limit: 16777215
+    t.string   "status",             limit: 255,      default: "1"
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
+    t.integer  "quantity",           limit: 4
+    t.string   "code",               limit: 255
+    t.integer  "system_id",          limit: 4
+  end
 
   create_table "activity_logs", force: :cascade do |t|
     t.integer  "user_id",                  limit: 4
@@ -464,6 +479,17 @@ ActiveRecord::Schema.define(version: 20180321194134) do
   add_index "laboratory_services", ["laboratory_id"], name: "index_laboratory_services_on_laboratory_id", using: :btree
   add_index "laboratory_services", ["service_type_id"], name: "index_laboratory_services_on_service_type_id", using: :btree
 
+  create_table "maintenances", force: :cascade do |t|
+    t.integer  "equipment_id",     limit: 4
+    t.integer  "provider_id",      limit: 4
+    t.string   "name",             limit: 255
+    t.string   "purchase_request", limit: 255
+    t.text     "description",      limit: 65535
+    t.string   "status",           limit: 255,   default: "1"
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+  end
+
   create_table "material_types", force: :cascade do |t|
     t.string   "name",        limit: 255
     t.text     "description", limit: 16777215
@@ -570,6 +596,16 @@ ActiveRecord::Schema.define(version: 20180321194134) do
     t.datetime "updated_at",                       null: false
   end
 
+  create_table "providers", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "phone",      limit: 255
+    t.string   "email",      limit: 255
+    t.text     "address",    limit: 65535
+    t.integer  "status",     limit: 4,     default: 1
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+  end
+
   create_table "repduarte", id: false, force: :cascade do |t|
     t.datetime "created_at"
     t.string   "nombre",          limit: 511
@@ -674,6 +710,22 @@ ActiveRecord::Schema.define(version: 20180321194134) do
   add_index "requested_services", ["sample_id"], name: "index_requested_services_on_sample_id", using: :btree
   add_index "requested_services", ["suggested_user_id"], name: "index_requested_services_on_suggested_user_id", using: :btree
   add_index "requested_services", ["user_id"], name: "index_requested_services_on_user_id", using: :btree
+
+  create_table "rs", id: false, force: :cascade do |t|
+    t.integer  "id",                    limit: 4,        default: 0,   null: false
+    t.integer  "laboratory_service_id", limit: 4
+    t.integer  "sample_id",             limit: 4
+    t.integer  "consecutive",           limit: 4
+    t.string   "number",                limit: 20
+    t.text     "details",               limit: 16777215
+    t.integer  "user_id",               limit: 4
+    t.integer  "suggested_user_id",     limit: 4
+    t.string   "status",                limit: 255,      default: "1"
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+    t.integer  "from_id",               limit: 4
+    t.integer  "service_quote_type",    limit: 4
+  end
 
   create_table "rx", id: false, force: :cascade do |t|
     t.integer "id", limit: 4, default: 0, null: false

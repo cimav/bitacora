@@ -1,0 +1,24 @@
+= form_for [@equipment, @maintenance], :remote => true, :html => {:'data-type' => 'html', :id => 'new-maintenance-form'} do |f|
+  %h3= "Programar mantenimiento"
+
+  .field#field_maintenance_expected_date
+    = f.label :expected_date, 'Fecha estimada:'
+    = f.date_field :expected_date, {:class => 'form-control'} 
+
+  .field#field_maintenance_name
+    = f.label :name, 'Descripción:'
+    = f.text_field :name, {:class => 'form-control', :placeholder => 'Descripción corta'} 
+
+  .field#field_maintenance_description
+    = f.label :description, 'Detalles:'
+    = f.text_area :description, {:class => 'form-control', :rows => 10}
+
+  .field#field_maintenance_provider_id
+    = f.label :provider_id, 'Proveedor:'
+    - prov_options = ''
+    - Provider.order('name').each do |prov|
+      - prov_options += "<option value=\"#{prov.id}\">#{prov.name}</option>"
+    = f.select :provider_id, prov_options.html_safe, {}, :class => 'form-control maintenance-provider-combo'
+
+  .submit-button
+    = f.submit "Programar mantenimiento", {:class => "btn btn-primary"}

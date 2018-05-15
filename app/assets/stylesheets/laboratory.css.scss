@@ -511,7 +511,8 @@ h2.laboratory-name {
 #admin-equipment-details,
 #admin-member-details,
 #admin-classification-details {
-  margin-left: $side-panel-width + 40;
+  padding-left: $side-panel-width + 40;
+  padding-right: 240px;
 }
 
 #admin-service-tabs {

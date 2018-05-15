@@ -194,7 +194,12 @@ Bitacora::Application.routes.draw do
   end
 
   get '/equipment/live_search' => 'equipment#live_search'
-  resources :equipment
+  resources :equipment do 
+    resources :maintenances
+    member do
+      get 'maintenances'
+    end
+  end
 
   get '/materials/live_search' => 'materials#live_search'
   get '/materials/new_dialog' => 'materials#new_dialog'

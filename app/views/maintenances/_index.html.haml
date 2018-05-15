@@ -1,1 +1,6 @@
-%h1= "Mantenimientos para #{@equipment.name}"
+#maintenance-workarea
+  = render :partial => 'maintenances/list', :locals => {:equipment => @equipment}
+
+
+
+

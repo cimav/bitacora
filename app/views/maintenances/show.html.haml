@@ -1,0 +1,20 @@
+%h4
+  = @maintenance.name 
+  %span.badge.badge-secondary.badge-info= @maintenance.status_text
+%p
+  %strong= "Fecha programada: "
+  = @maintenance.expected_date
+
+- if @maintenance.real_date 
+  %p
+  %strong= "Fecha de mantenimiento: "
+  = @maintenance.real_date
+
+%p= @maintenance.description
+
+#activity_log
+  = render :partial => 'activity_log/activity_log', :locals => {:activity_log => @maintenance.activity_log, 
+                                                                      :service_request_id => 0, 
+                                                                      :sample_id => 0, 
+                                                                      :requested_service_id => 0,
+                                                                      :maintenance_id => @maintenance.id}

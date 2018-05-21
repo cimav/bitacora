@@ -4,8 +4,22 @@
 
 #maintenance-workarea {
   margin-top: 2em;
+  a {
+    cursor: pointer;
+  }
 }
 
+.maintenance-header {
+  width: 70%;
+}
+
+.man-hidden {
+  display: none;
+}
+
+.maintenance-log {
+  width: 70%;
+}
 
 .no-maintenances {
   font-size: 120%;	

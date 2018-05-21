@@ -23,9 +23,9 @@ class MaintenancesController < ApplicationController
       # LOG
       @maintenance.activity_log.create(user_id: current_user.id, 
                                            message_type: 'CREATE', 
-                                           sample_id: 0,
-                                           requested_service_id: 0,
-                                           service_request_id: 0,
+                                           sample_id: -1,
+                                           requested_service_id: -1,
+                                           service_request_id: -1,
                                            message: "Mantenimiento programado")
 
       respond_with do |format|
@@ -66,6 +66,8 @@ class MaintenancesController < ApplicationController
 
   def edit
     @maintenance = Maintenance.find(params[:id])
+    @equipment = @maintenance.equipment
+
     render :layout => false
   end
 
@@ -74,13 +76,21 @@ class MaintenancesController < ApplicationController
 
     flash = {}
     if @maintenance.update_attributes(params[:maintenance])
-      flash[:notice] = "Tipo actualizado."
+      flash[:notice] = "Mantenimiento actualizado."
+      # LOG
+      @maintenance.activity_log.create(user_id: current_user.id, 
+                                           message_type: 'UPDATE', 
+                                           sample_id: -1,
+                                           requested_service_id: -1,
+                                           service_request_id: -1,
+                                           message: "Mantenimiento actualizado")
       respond_with do |format|
         format.html do
           if request.xhr?
             json = {}
             json[:flash] = flash
             json[:id] = @maintenance.id
+            json[:equipment_id] = @maintenance.equipment_id
             json[:display] = @maintenance.name
             render :json => json
           else
@@ -89,7 +99,7 @@ class MaintenancesController < ApplicationController
         end
       end
     else
-      flash[:error] = "Error al actualizar tipo"
+      flash[:error] = "Error al actualizar mantenimiento"
       respond_with do |format|
         format.html do
           if request.xhr?

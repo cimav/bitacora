@@ -7,7 +7,7 @@ class ActivityLogController < ApplicationController
     @log = ActivityLog.where("(
                                  (service_request_id = :service_request AND sample_id = 0 AND requested_service_id = 0)
                                   OR (service_request_id = :service_request AND sample_id = :sample AND requested_service_id = 0)
-                                  OR (service_request_id = :service_request AND sample_id = :sample AND requested_service_id = :requested_service)
+                                  OR (service_request_id = :service_request AND sample_id = :sample AND requested_service_id = :requested_service AND maintenance_id = 0)
                                   OR (maintenance_id = :maintenance)
                               )
                               ", {:service_request => @from_log.service_request_id,

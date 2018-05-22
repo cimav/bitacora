@@ -181,7 +181,8 @@
         = render :partial => 'activity_log/activity_log', :locals => {:activity_log => @activity_log, 
                                                                       :service_request_id => @requested_service.sample.service_request_id, 
                                                                       :sample_id => @requested_service.sample_id, 
-                                                                      :requested_service_id => @requested_service.id}
+                                                                      :requested_service_id => @requested_service.id,
+                                                                      :maintenance_id => 0}
     
     #costeo.tab-pane
       #costeo_inner

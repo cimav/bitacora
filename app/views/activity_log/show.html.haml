@@ -1,4 +1,5 @@
 = render :partial => 'activity_log/activity_log', :locals => {:activity_log => @log,
                                                                 :service_request_id => @from_log.service_request_id,
                                                                 :sample_id => @from_log.sample_id,
-                                                                :requested_service_id => @from_log.requested_service_id}
+                                                                :requested_service_id => @from_log.requested_service_id,
+                                                                :maintenance_id => @from_log.maintenance_id}

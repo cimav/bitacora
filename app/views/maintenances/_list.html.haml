@@ -1,0 +1,22 @@
+.add-maintenance
+  - if @equipment.maintenances.count == 0
+    %span.no-maintenances 
+      = "El equipo no tiene mantenimientos programados"
+  %a.btn.btn-sm.btn-primary{:id => 'add-new-maintenance', 'data-eq-id' => @equipment.id}= "Programar mantenimiento"
+- if equipment.maintenances.count > 0
+  %table.table.table-bordered.table-hover.table-maintenances{:style => "width: 60%;"}
+    %thead
+      %tr
+        %th= "Mantenimiento"
+        %th= "Proveedor"
+        %th= "Fecha programada"
+        %th= "Fecha real"
+        %th= "Estado"
+    %tbody 
+      - equipment.maintenances.order('expected_date DESC').each do |m|
+        %tr{'data-id' => m.id, 'data-eq-id' => m.equipment_id}
+          %td= m.name
+          %td= m.provider.name
+          %td= m.expected_date
+          %td= m.real_date
+          %td= m.status_text

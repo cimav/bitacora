@@ -1,0 +1,39 @@
+// Place all the styles related to the Maintenances controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#maintenance-workarea {
+  margin-top: 2em;
+  a {
+    cursor: pointer;
+  }
+}
+
+.maintenance-header {
+  width: 70%;
+}
+
+.man-hidden {
+  display: none;
+}
+
+.maintenance-log {
+  width: 70%;
+}
+
+.no-maintenances {
+  font-size: 120%;	
+  padding-right: 3em;
+}
+
+.add-maintenance {
+  margin: 3em 0;
+}
+
+.maintenance-provider-combo {
+  width: 40%;
+}
+
+.table-maintenances tr {
+  cursor: pointer;
+}

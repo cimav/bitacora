@@ -108,4 +108,6 @@ class EquipmentController < ApplicationController
       end
     end
   end
+
+  
 end

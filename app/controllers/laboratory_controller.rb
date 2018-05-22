@@ -14,7 +14,43 @@ class LaboratoryController < ApplicationController
   end
   
   def live_search
-    @requested_services = RequestedService.where.not(status: RequestedService::DELETED).joins(:sample).joins(:laboratory_service).joins('LEFT OUTER JOIN service_requests ON service_requests.id = samples.service_request_id').joins('LEFT OUTER JOIN users ON users.id = service_requests.user_id').where('laboratory_id = :lab',  {:lab => params[:id]})
+
+    lab_id = params[:id]
+    sql = "SELECT requested_services.id, 
+                  requested_services.number, 
+                  requested_services.status,
+                  requested_services.created_at, 
+                  samples.service_request_id, 
+                  samples.service_request_id AS sample_service_request,
+                  service_requests.status AS service_request_status,
+                  laboratory_services.laboratory_id,
+                  sample_id,
+                  request_types.id AS request_type_id,
+                  request_types.short_name AS request_type_short_name,
+                  request_types.name AS request_type_name, 
+                  service_requests.number AS service_request_number,
+                  users.first_name,
+                  users.last_name,
+                  laboratory_services.name AS laboratory_service_name,
+                  vinculacion_client_name,
+                  samples.identification AS sample_identification,
+                  samples.quantity AS sample_quantity,
+                  vinculacion_start_date,
+                  vinculacion_end_date,
+                  system_status,
+                  users.email
+
+
+           FROM `requested_services` 
+                   INNER JOIN `samples` ON `samples`.`id` = `requested_services`.`sample_id` 
+                   INNER JOIN `laboratory_services` ON `laboratory_services`.`id` = `requested_services`.`laboratory_service_id` 
+                   LEFT OUTER JOIN service_requests ON service_requests.id = samples.service_request_id 
+                   LEFT OUTER JOIN users ON users.id = service_requests.user_id 
+                   LEFT OUTER JOIN request_types ON request_type_id = request_types.id
+           WHERE (`requested_services`.`status` != '-2') 
+                  AND (laboratory_id = '#{lab_id}') "
+
+                  
     if params[:lrs_status] != '-todos'
       if params[:lrs_status] == '-abiertos'
         abiertos = []
@@ -26,32 +62,37 @@ class LaboratoryController < ApplicationController
         abiertos << RequestedService::IN_PROGRESS
         abiertos << RequestedService::TO_QUOTE
         abiertos << RequestedService::WAITING_START
-        @requested_services = @requested_services.where("requested_services.status IN (#{abiertos.join(',')})")
+        sql = sql + " AND (requested_services.status IN (#{abiertos.join(',')}))  "
       else
-        @requested_services = @requested_services.where('requested_services.status' => params[:lrs_status])
+        sql = sql + " AND requested_services.status = #{params[:lrs_status]}  "
       end
     end
+    
     if params[:lrs_requestor] != '0'
-      @requested_services = @requested_services.where('samples.service_request_id IN (SELECT id FROM service_requests WHERE user_id = :req)', {:req => params[:lrs_requestor]})
+      sql = sql + " AND samples.service_request_id IN (SELECT id FROM service_requests WHERE user_id = #{params[:lrs_requestor]}) "
     end
     if params[:lrs_assigned_to] != '0'
-      @requested_services = @requested_services.where('requested_services.user_id' => params[:lrs_assigned_to])
+      sql = sql + " AND requested_services.user_id = #{params[:lrs_assigned_to]} "
     end
 
     if params[:lrs_bu] != '0'
-      @requested_services = @requested_services.where('service_requests.user_id IN (SELECT id FROM users WHERE business_unit_id = :bu)', {:bu => params[:lrs_bu]})
+      sql = sql + " AND service_requests.user_id IN (SELECT id FROM users WHERE business_unit_id = #{params[:lrs_bu]})"
     end
 
     if params[:lrs_client] != '0'
-      @requested_services = @requested_services.where('service_requests.vinculacion_client_id' => params[:lrs_client])
+      sql = sql + " AND service_requests.vinculacion_client_id = #{params[:lrs_client]} "
     end
     if params[:lrs_type] != '0'
-      @requested_services = @requested_services.where('service_requests.request_type_id' => params[:lrs_type])
+      sql = sql + " AND service_requests.request_type_id = #{params[:lrs_type]}"
     end
     if !params[:q].blank?
-      @requested_services = @requested_services.where("(laboratory_services.description LIKE :q OR laboratory_services.name LIKE :q OR samples.identification LIKE :q OR requested_services.number LIKE :q OR samples.description LIKE :q)", {:q => "%#{params[:q]}%"})
+      q = "%#{params[:q]}%"
+      sql = sql + " AND (laboratory_services.description LIKE #{q} OR laboratory_services.name LIKE #{q} OR samples.identification LIKE #{q} OR requested_services.number LIKE #{q} OR samples.description LIKE #{q})"
     end
-    @requested_services = @requested_services.order('requested_services.created_at DESC')
+    sql = sql + " ORDER BY requested_services.created_at DESC"
+
+    @requested_services = RequestedService.find_by_sql(sql)
+
     render :layout => false
   end
 

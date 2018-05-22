@@ -4,6 +4,8 @@
     %a{:href => "#admin-eq-details", "data-toggle" => "tab", "id" => "eq_details_tab"}= "Datos Generales"
   %li#tab-alertas
     %a{:href => "#admin-eq-alertas", "data-toggle" => "tab", "id" => "eq_alerts_tab"}= "Alertas"
+  %li#tab-mantenimientos
+    %a{:href => "#admin-eq-mantenimientos", "data-toggle" => "tab", "id" => "eq_mantenaince_tab"}= "Mantenimientos"
 
 .tab-content
   #admin-eq-details.tab-pane.active
@@ -74,3 +76,7 @@
                                                         :technician => 0, 
                                                         :equipment_id => @equipment.id,
                                                         :message_type => 'EQUIPO'}
+  #admin-eq-mantenimientos.tab-pane
+    #eq-mantenimientos
+      = render :partial => 'maintenances/index', :locals => {:equipment => @equipment}
+

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180427183931) do
+ActiveRecord::Schema.define(version: 20180515232500) do
 
   create_table "P170080", id: false, force: :cascade do |t|
     t.integer  "id",                 limit: 4,        default: 0,   null: false
@@ -36,8 +36,9 @@ ActiveRecord::Schema.define(version: 20180427183931) do
     t.string   "message_type",             limit: 255
     t.integer  "requested_service_status", limit: 4
     t.text     "message",                  limit: 16777215
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
+    t.integer  "maintenance_id",           limit: 4,        default: 0
   end
 
   add_index "activity_logs", ["requested_service_id"], name: "index_activity_logs_on_requested_service_id", using: :btree
@@ -488,6 +489,8 @@ ActiveRecord::Schema.define(version: 20180427183931) do
     t.string   "status",           limit: 255,   default: "1"
     t.datetime "created_at",                                   null: false
     t.datetime "updated_at",                                   null: false
+    t.date     "expected_date"
+    t.date     "real_date"
   end
 
   create_table "material_types", force: :cascade do |t|

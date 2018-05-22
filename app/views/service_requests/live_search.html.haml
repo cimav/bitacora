@@ -13,7 +13,66 @@
           .client= r.vinculacion_client_name
       %td.service-request-date
         = date_text(r.created_at)
-        = render :partial => 'vinculacion_dates', :locals => {:request => r}
+        - if (r.system_status == ServiceRequest::SYSTEM_FREE && r.vinculacion_end_date) || r.system_status == ServiceRequest::SYSTEM_ACCEPTED || r.system_status == ServiceRequest::SYSTEM_SAMPLES_DELIVERED || r.system_status == ServiceRequest::SYSTEM_PARTIAL_FINISHED ||  r.system_status == ServiceRequest::SYSTEM_ALL_FINISHED || r.system_status == ServiceRequest::SYSTEM_REPORT_SENT || r.system_status == ServiceRequest::SYSTEM_IN_PROGRESS
+          - if r.vinculacion_end_date
+            .vinculacion-end-date
+              - days = (r.vinculacion_end_date - r.vinculacion_start_date).to_i
+              - days = 1 if days <= 0
+              - current_days = (r.vinculacion_end_date - Time.now.to_date).to_i
+              - percentage = (days - current_days) * 100 / days
+              - percentage = 100 if percentage >= 100
+              - if current_days == 0
+                - klass = 'progress-bar-danger pulsate_today'
+                - faltan = "Debe entregarse hoy"
+                - percentage_msg = "HOY"
+              - elsif current_days < 0
+                - klass = 'progress-bar-danger'
+                - faltan = "Retraso de #{(current_days * -1)} días"
+                - percentage_msg = "RETRASO"
+              - elsif percentage > 80
+                - klass = 'progress-bar-warning'
+                - faltan = "Faltan #{current_days} días"
+                - percentage_msg = "#{percentage}%"
+              - else
+                - klass = 'progress-bar-success'
+                - faltan = "Faltan #{current_days} días"
+                - percentage_msg = "#{percentage}%"
+              
+              - if r.system_status == ServiceRequest::SYSTEM_REPORT_SENT
+                - klass = 'progress-bar-success'
+                - faltan = 'Reporte entregado'
+                - percentage = 100
+                - percentage_msg = "ENTREGADO"
+              
+              - if r.system_status == ServiceRequest::SYSTEM_NOT_ACCEPTED
+                - klass = 'progress-bar-warning'
+                - faltan = 'No acepto cliente'
+                - percentage = 100
+                - percentage_msg = "NO ACEPTADO"
+
+              - if r.system_status == ServiceRequest::SYSTEM_CANCELED
+                - klass = 'progress-bar-danger'
+                - faltan = 'Cancelado'
+                - percentage = 100
+                - percentage_msg = "CANCELADO" 
+
+
+              .vin_start
+                %span.glyphicon.glyphicon-calendar
+                = "Inicio:"
+                = l r.vinculacion_start_date, format: :short
+              .vin_end
+                %span.glyphicon.glyphicon-calendar
+                = "Entregar:"
+                = l r.vinculacion_end_date, format: :short
+              .delivery
+                %span.glyphicon.glyphicon-time
+                = faltan
+              .progress
+                .progress-bar{'class' => klass,:role => 'progressbar', 'aria-valuenow' => percentage, 'aria-valuemin' => "0", 'aria-valuemax' => "100", :style => "width:#{percentage}%"}
+                  = "#{percentage_msg}"
+
+
 
       %td.service-collaborators
         .folder-owner-data

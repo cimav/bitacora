@@ -56,6 +56,23 @@ class RequestedService < ActiveRecord::Base
     FINISHED       => 'Finalizado'
   }
 
+  STATUS_CLASS = {
+    INITIAL        => 'status-initial',
+    RECEIVED       => 'status-received',
+    ASSIGNED       => 'status-assigned',
+    SUSPENDED      => 'status-suspended',
+    REINIT         => 'status-reinit',
+    CANCELED       => 'status-canceled',
+    IN_PROGRESS    => 'status-in-progress',
+    REQ_SUP_AUTH   => 'status-auth',
+    REQ_OWNER_AUTH => 'status-auth',
+
+    TO_QUOTE       => 'status-to-quote',
+    WAITING_START  => 'status-waiting',
+
+    FINISHED       => 'status-finished'  
+  }
+
   QUOTE_USE_CATALOG = 1
   QUOTE_ADHOC       = 2
 

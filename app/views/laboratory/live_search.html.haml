@@ -1,36 +1,95 @@
 - @requested_services.each do |rs|
-  - next if !rs.sample.service_request
-  - next if rs.sample.service_request.status == ServiceRequest::DELETED
-  .requested-service.lab-req-serv-item{'data-number' => rs.number, 'data-requested-service-id' => rs.id, 'data-sample-id' => rs.sample_id, 'data-laboratory-id' => rs.laboratory_service.laboratory_id, :id => "requested_service_#{rs.id}"}
+  - next if !rs.sample_service_request
+  - next if rs.service_request_status == ServiceRequest::DELETED
+  .requested-service.lab-req-serv-item{'data-number' => rs.number, 'data-requested-service-id' => rs.id, 'data-sample-id' => rs.sample_id, 'data-laboratory-id' => rs.laboratory_id, :id => "requested_service_#{rs.id}"}
     .rs-header
-      .rs-type{:class => "label_#{rs.sample.service_request.request_type.short_name}"}= rs.sample.service_request.request_type.name
-      .rs-status{:class => "bg-#{rs.status_class}"}= rs.status_text
-      .rs-number= rs.sample.service_request.number  
+      .rs-type{:class => "label_#{rs.request_type_short_name}"}= rs.request_type_name
+      .rs-status{:class => "bg-#{RequestedService::STATUS_CLASS[rs.status.to_i]}"}= RequestedService::STATUS[rs.status.to_i]
+      .rs-number= rs.service_request_number  
       .rs-date= date_text(rs.created_at)
     %table.rs-area
       %tr
         %td.rs-user
           .avatar
-            = image_tag (rs.sample.service_request.user.avatar_url), :class => 'img-circle'
-          .full-name= rs.sample.service_request.user.full_name
+            - avatar_url = "http://cimav.edu.mx/foto/#{rs.email.split('@')[0]}/64"
+            = image_tag (avatar_url), :class => 'img-circle'
+          .full-name= "#{rs.first_name} #{rs.last_name}" 
         %td.rs-data
           .rs-name
-            = rs.laboratory_service.name
-          - if rs.sample.service_request.request_type_id == ServiceRequest::SERVICIO_VINCULACION || rs.sample.service_request.request_type_id == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
+            = rs.laboratory_service_name
+          - if rs.request_type_id == ServiceRequest::SERVICIO_VINCULACION || rs.request_type_id == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
             .rs-client
               %strong= "Cliente: "
-              = rs.sample.service_request.vinculacion_client_name
+              = rs.vinculacion_client_name
           .rs-sample
             .rs-sample-identification
               %strong= "Muestra: "
-              = rs.sample.identification
-            - if rs.sample.quantity > 1
+              = rs.sample_identification
+            - if rs.sample_quantity > 1
               %strong= "Cantidad: "
-              .quantity= "#{rs.sample.quantity} muestras"
+              .quantity= "#{rs.sample_quantity} muestras"
             - else
               %strong= "Cantidad: "
-              .quantity= "#{rs.sample.quantity} muestra"
-          = render :partial => 'service_requests/vinculacion_dates', :locals => {:request => rs.sample.service_request}
+              .quantity= "#{rs.sample_quantity} muestra"
+
+          - if (rs.system_status == ServiceRequest::SYSTEM_FREE && rs.vinculacion_end_date) || rs.system_status == ServiceRequest::SYSTEM_ACCEPTED || rs.system_status == ServiceRequest::SYSTEM_SAMPLES_DELIVERED || rs.system_status == ServiceRequest::SYSTEM_PARTIAL_FINISHED ||  rs.system_status == ServiceRequest::SYSTEM_ALL_FINISHED || rs.system_status == ServiceRequest::SYSTEM_REPORT_SENT || rs.system_status == ServiceRequest::SYSTEM_IN_PROGRESS
+            - if rs.vinculacion_end_date
+              .vinculacion-end-date
+                - days = (rs.vinculacion_end_date - rs.vinculacion_start_date).to_i
+                - days = 1 if days <= 0
+                - current_days = (rs.vinculacion_end_date - Time.now.to_date).to_i
+                - percentage = (days - current_days) * 100 / days
+                - percentage = 100 if percentage >= 100
+                - if current_days == 0
+                  - klass = 'progress-bar-danger pulsate_today'
+                  - faltan = "Debe entregarse hoy"
+                  - percentage_msg = "HOY"
+                - elsif current_days < 0
+                  - klass = 'progress-bar-danger'
+                  - faltan = "Retraso de #{(current_days * -1)} días"
+                  - percentage_msg = "RETRASO"
+                - elsif percentage > 80
+                  - klass = 'progress-bar-warning'
+                  - faltan = "Faltan #{current_days} días"
+                  - percentage_msg = "#{percentage}%"
+                - else
+                  - klass = 'progress-bar-success'
+                  - faltan = "Faltan #{current_days} días"
+                  - percentage_msg = "#{percentage}%"
+                
+                - if rs.system_status == ServiceRequest::SYSTEM_REPORT_SENT
+                  - klass = 'progress-bar-success'
+                  - faltan = 'Reporte entregado'
+                  - percentage = 100
+                  - percentage_msg = "ENTREGADO"
+                
+                - if rs.system_status == ServiceRequest::SYSTEM_NOT_ACCEPTED
+                  - klass = 'progress-bar-warning'
+                  - faltan = 'No acepto cliente'
+                  - percentage = 100
+                  - percentage_msg = "NO ACEPTADO"
+
+                - if rs.system_status == ServiceRequest::SYSTEM_CANCELED
+                  - klass = 'progress-bar-danger'
+                  - faltan = 'Cancelado'
+                  - percentage = 100
+                  - percentage_msg = "CANCELADO" 
+
+
+                .vin_start
+                  %span.glyphicon.glyphicon-calendar
+                  = "Inicio:"
+                  = l rs.vinculacion_start_date, format: :short
+                .vin_end
+                  %span.glyphicon.glyphicon-calendar
+                  = "Entregar:"
+                  = l rs.vinculacion_end_date, format: :short
+                .delivery
+                  %span.glyphicon.glyphicon-time
+                  = faltan
+                .progress
+                  .progress-bar{'class' => klass,:role => 'progressbar', 'aria-valuenow' => percentage, 'aria-valuemin' => "0", 'aria-valuemax' => "100", :style => "width:#{percentage}%"}
+                    = "#{percentage_msg}"
       
     .clearfix
   

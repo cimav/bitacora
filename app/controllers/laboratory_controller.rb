@@ -14,12 +14,6 @@ class LaboratoryController < ApplicationController
   end
   
   def live_search
-    # @requested_services = RequestedService.where.not(status: RequestedService::DELETED)
-    #                                       .joins(:sample)
-    #                                       .joins(:laboratory_service)
-    #                                       .joins('LEFT OUTER JOIN service_requests ON service_requests.id = samples.service_request_id')
-    #                                       .joins('LEFT OUTER JOIN users ON users.id = service_requests.user_id').where('laboratory_id = :lab',  {:lab => params[:id]})
-    #                                       .limit(1)
 
     lab_id = params[:id]
     sql = "SELECT requested_services.id, 

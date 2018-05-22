@@ -45,6 +45,7 @@ body {
 
   .nav-pills > li > a {
     border-radius: 0px;
+    cursor: pointer;
   }
 
   .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {

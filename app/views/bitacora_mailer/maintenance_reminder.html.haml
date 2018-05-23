@@ -1,0 +1,33 @@
+!!!
+%html
+  %head
+    %meta{"content" => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
+  %body
+    %div{:style => "background-color: #ffffff; padding: 20px; padding-bottom: 60px;"}
+      %table
+        %tr
+          %td{:style => "min-width: 400px;"}
+            %h2{:style => "font-size: 18px;"}= "#{@subject}"
+            %table
+              %tbody
+                .item
+                  %strong= "Equipo: "
+                  = @maintenance.equipment.name
+                .item
+                  %strong= "Laboratorio: "
+                  = @maintenance.equipment.laboratory.name
+                .item
+                  %strong= "Mantenimiento: "
+                  = @maintenance.name
+                .item
+                  %strong= "Fecha Programada: "
+                  = @maintenance.expected_date
+                .item
+                  %strong= "Descripción: "
+                  %p= @maintenance.description
+
+              
+    %div{:style => "background-color: #888; padding: 20px; color: #eee;"}
+      %strong{:style => "margin-top: 8px; margin-left: 10px; color: #eee; font-size: 11px;"}
+      = "Mensaje enviado automáticamente desde "
+      %strong= "Bitácora Electrónica"

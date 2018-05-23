@@ -331,6 +331,22 @@ class BitacoraMailer < ActionMailer::Base
   end
 
 
+  def maintenance_reminder(m, subject)
+    @from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"
+    @to = []
+
+    # Lab Admin
+    @to << m.equipment.laboratory.user.email
+    
+    @maintenance = m
+
+    @subject = subject
+
+    mail(:to => @to, :from => @from, :subject => @subject)
+
+  end
+
+
 
 
   # Si se actualiza el del controller se debe de actualizar aquí también. 
@@ -404,5 +420,9 @@ class BitacoraMailer < ActionMailer::Base
 
     return details
   end
+
+
+  
+
 
 end

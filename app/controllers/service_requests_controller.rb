@@ -36,6 +36,19 @@ class ServiceRequestsController < ApplicationController
     cs1 = ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO
     cs2 = ServiceRequest::SERVICIO_VINCULACION_TIPO_2
     cs3 = ServiceRequest::SERVICIO_VINCULACION
+
+    if params[:o] && params[:o].to_i > 0 
+      @offset = params[:o]
+    else
+      @offset = 0
+    end
+    @limit = 50
+
+    if params[:q]
+      @q = params[:q]
+    else
+      @q = ''
+    end
     
     if current_user.access.to_i == User::ACCESS_CUSTOMER_SERVICE
       extra_sql = "OR ( request_type_id = :cs1 OR request_type_id = :cs2 OR request_type_id = :cs3 )"
@@ -52,16 +65,14 @@ class ServiceRequestsController < ApplicationController
                                                           )
                                                       )", {:s => ServiceRequest::ACTIVE, :u => current_user.id, :cs1 => cs1, :cs2 => cs2, :cs3 => cs3, :cs_a => User::ACCESS_CUSTOMER_SERVICE}).order('service_requests.created_at DESC')
 
-
-
     if !params[:q].blank?
       @requests = @requests.where("(description LIKE :q OR number LIKE :q OR request_link LIKE :q)", {:q => "%#{params[:q]}%"}) 
     end
     if !params[:folder_filter].blank? && params[:folder_filter] != '*'
       @requests = @requests.where("(request_type_id = :t)", {:t => params[:folder_filter]}) 
     end
-    #@requests = @requests.order('service_requests.created_at DESC').limit(200)
-    @requests = @requests.order('service_requests.created_at DESC')
+    
+    @requests = @requests.order('service_requests.created_at DESC').limit(@limit).offset(@offset)
     render :layout => false
   end
 

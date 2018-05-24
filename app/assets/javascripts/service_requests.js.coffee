@@ -7,6 +7,16 @@ $(document).on('click', '.sample-header .identification', () ->
   $("#sample-item-#{sample_id}").toggleClass('opened')
 )
 
+$(document).on('click', '#load-more-sr-a', () ->
+  q = $(this).data('q')
+  o = $(this).data('o')
+  url = '/service_requests/live_search?q=' + q + '&o=' + o
+  $.get(url, {}, (html) ->
+    $('#div_load-more-sr-' + o).empty().html(html)
+  )
+)
+
+
 $(document).on('click', '.edit-sample-btn', () ->
   sample_id = $(this).data('sample-id')
   url = '/samples/edit_dialog/' + sample_id

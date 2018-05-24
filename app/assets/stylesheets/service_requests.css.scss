@@ -2,6 +2,16 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.load-more-sr-inner {
+  height: 96px;
+  text-align: center;
+  font-size: 150%;
+  
+  a {
+    cursor: pointer;
+  }
+}
+
 #folder-search-panel {
   width: 100%;
   background: $light-bg;

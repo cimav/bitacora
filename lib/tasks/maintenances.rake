@@ -4,7 +4,7 @@ task :maintenances => :environment do
   today = Date.today
   
   # Mantenimientos que vencen en 2 meses
-  puts Maintenance.where(status: Maintenance::STATUS_PROGRAMMED, expected_date: today + 2.month).to_sql
+  maintenances = Maintenance.where(status: Maintenance::STATUS_PROGRAMMED, expected_date: today + 2.month)
   maintenances.each do |m|
     BitacoraMailer.maintenance_reminder(m, "Mantenimiento programado dentro de 2 meses para #{m.equipment.name}").deliver
   end

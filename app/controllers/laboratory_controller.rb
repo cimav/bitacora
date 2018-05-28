@@ -86,7 +86,7 @@ class LaboratoryController < ApplicationController
       sql = sql + " AND service_requests.request_type_id = #{params[:lrs_type]}"
     end
     if !params[:q].blank?
-      q = "%#{params[:q]}%"
+      q = "'%#{params[:q]}%'"
       sql = sql + " AND (laboratory_services.description LIKE #{q} OR laboratory_services.name LIKE #{q} OR samples.identification LIKE #{q} OR requested_services.number LIKE #{q} OR samples.description LIKE #{q})"
     end
     sql = sql + " ORDER BY requested_services.created_at DESC"

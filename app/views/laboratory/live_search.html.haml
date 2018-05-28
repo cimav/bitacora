@@ -11,7 +11,7 @@
       %tr
         %td.rs-user
           .avatar
-            - avatar_url = "http://cimav.edu.mx/foto/#{rs.email.split('@')[0]}/64"
+            - avatar_url = "http://cimav.edu.mx/foto/#{rs.email.split('@')[0]}/64" rescue 'http://cimav.edu.mx/foto/desconocido/64'
             = image_tag (avatar_url), :class => 'img-circle'
           .full-name= "#{rs.first_name} #{rs.last_name}" 
         %td.rs-data

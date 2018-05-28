@@ -1,0 +1,8 @@
+%ul
+  - @equipment.each do |equipment|
+    %li.equipment-item.item{"data-id" => equipment.id}
+      .equipment-item-name{:id => "equipment_name_#{equipment.id}"}= equipment.name
+      .equipment-item-laboratory{:id => "equipment_lab_#{equipment.id}"}= equipment.laboratory.name
+.items-counter
+  .items-counter-inner
+    = "#{@equipment.count} equipos"

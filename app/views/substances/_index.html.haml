@@ -1,0 +1,32 @@
+- if substances.count <= 0
+  %div{:style => "padding: 3em; text-align: center;"}
+  = "El laboratorio no tiene sustancias registradas"
+  %br
+  %br
+  %a.btn.btn-primary#add-new-substance-button{'data-laboratory-id' => laboratory_id}= "Agregar nueva sustancia"
+
+  
+- else
+  %br 
+  %br
+  %a.btn.btn-primary#add-new-substance-button{'data-laboratory-id' => laboratory_id}= "Agregar nueva sustancia"
+  %br
+  %br
+  %table.table.table-bordered.table-hover#table-substances
+    %thead
+      %tr
+        %th= "Nombre"
+        %th= "Cantidad (con unidad)"
+        %th= "Descripción"
+        %th= "Contenedor"
+        %th= "Caducidad"
+        %th= "Estado"
+    %tbody
+      - substances.each do |s|
+        %tr.substance-row{"data-id" => s.id}
+          %td= s.name
+          %td= s.quantity
+          %td= s.description
+          %td= s.container
+          %td= s.expire_date
+          %td= s.status_text

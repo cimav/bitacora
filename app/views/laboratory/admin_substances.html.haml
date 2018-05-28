@@ -1,0 +1,4 @@
+#admin-area 
+  = render :partial => 'tabs', :locals => {:laboratory => @laboratory, :option_selected => 'substances'}
+  #admin-substances
+    = render :partial => 'substances/index', :locals => {:substances => @laboratory.substances, :laboratory_id => @laboratory.id}

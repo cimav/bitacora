@@ -164,6 +164,8 @@ Bitacora::Application.routes.draw do
       get 'new_classification'
 
       get 'admin_images'
+    
+      get 'admin_substances'
     end
   end
   get  '/laboratory/:id/f/*filter' => 'laboratory#show'
@@ -204,6 +206,8 @@ Bitacora::Application.routes.draw do
   get '/materials/live_search' => 'materials#live_search'
   get '/materials/new_dialog' => 'materials#new_dialog'
   resources :materials
+
+  resources :substances
 
   get '/clients/typeahead' => 'clients#typeahead'
   get '/clients/info' => 'clients#info'

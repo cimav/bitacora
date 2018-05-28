@@ -277,6 +277,11 @@ class LaboratoryController < ApplicationController
     render :layout => false
   end
 
+  def admin_substances
+    @laboratory = Laboratory.find(params[:id])
+    render :layout => false
+  end
+
   def new
     @laboratory_service = LaboratoryService.new
     render :layout => false

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180515232500) do
+ActiveRecord::Schema.define(version: 20180524212639) do
 
   create_table "P170080", id: false, force: :cascade do |t|
     t.integer  "id",                 limit: 4,        default: 0,   null: false
@@ -966,6 +966,19 @@ ActiveRecord::Schema.define(version: 20180515232500) do
     t.integer "eid", limit: 4,   default: 0
     t.string  "a",   limit: 255
     t.integer "aid", limit: 4,   default: 0
+  end
+
+  create_table "substances", force: :cascade do |t|
+    t.integer  "laboratory_id", limit: 4
+    t.string   "name",          limit: 255
+    t.string   "quantity",      limit: 255
+    t.text     "description",   limit: 65535
+    t.string   "container",     limit: 255
+    t.date     "expire_date"
+    t.integer  "status",        limit: 4,     default: 1
+    t.integer  "user_id",       limit: 4
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
   end
 
   create_table "temp2", id: false, force: :cascade do |t|

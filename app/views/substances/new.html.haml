@@ -1,0 +1,23 @@
+%h2= "Nueva substancia"
+= form_for @substance, :remote => true, :html => {:'data-type' => 'html', :id => 'new-substance-form'} do |f|
+  = f.hidden_field :laboratory_id, :value => @laboratory_id
+  .field#field_substance_name
+    = f.label :name, 'Nombre:'
+    = f.text_field :name, {:class => 'form-control', :placeholder => 'Nombre'}
+  .field#field_substance_description
+    = f.label :description, 'Descripción:'
+    = f.text_area :description, {:class => 'form-control', :rows => 10}
+  .field#field_substance_expire_date
+    = f.label :expire_date, 'Fecha de caducidad:'
+    = f.date_field :expire_date, {:class => 'form-control'}
+  .field#field_substance_quantity
+    = f.label :quantity, 'Cantidad:'
+    = f.text_field :quantity, {:class => 'form-control', :placeholder => 'Especificar unidad'}
+  .field#field_substance_container
+    = f.label :container, 'Contenedor:'
+    = f.text_field :container, {:class => 'form-control', :placeholder => 'Contenedor / Ubicación'}
+  .field#field_substance_status
+    = f.label :provider_id, 'Estado:'
+    = f.select :status, Substance::STATUS_TYPES.invert.sort {|a,b| (a[1] <=> b[1]) if a[1] > 0}, {}, :class => 'form-control'
+  .submit-button
+    = f.submit "Agregar", {:class => "btn btn-primary"}

@@ -6,6 +6,7 @@ class Laboratory < ActiveRecord::Base
   has_many :laboratory_images
   has_many :laboratory_service_classifications
   has_many :equipment
+  has_many :substances
   belongs_to :user
   belongs_to :business_unit
   has_many :users, :through => :laboratory_members

@@ -815,6 +815,65 @@ $(document).on('ajax:error', '#new-lab-service-classification-form', (evt, xhr, 
     showFormErrors(xhr, status, error)
   )
 
+#----------------------------
+# LAB ADMIN SUBSTANCES
+#----------------------------
+$(document).on('ajax:beforeSend', '.admin-substances', (evt, xhr, settings) ->
+    lab_id = $(this).attr('data-laboratory-id')
+    url = '/laboratory/' + lab_id + '/admin_substances'
+  )
+$(document).on('ajax:success', '.admin-substances', (evt, data, status, xhr) ->
+    $('#admin-area').empty().html(data)
+  )
+
+$(document).on('ajax:error', '.admin-substances', (evt, xhr, status, error) ->
+    alert('Error')
+  )
+
+$(document).on('click', '#add-new-substance-button', () ->
+    url = '/substances/new?laboratory_id=' + $(this).attr('data-laboratory-id')
+    $.get(url, {}, (html) ->
+      $('#admin-substances').empty().html(html)
+    )
+  )
+
+$(document).on('click', '.substance-row', () ->
+    url = '/substances/' + $(this).attr('data-id') + '/edit'
+    $.get(url, {}, (html) ->
+      $('#admin-substances').empty().html(html)
+    )
+  )
+
+
+$(document).on('ajax:beforeSend', '#new-substance-form', (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.has-errors').removeClass('has-errors')
+  )
+$(document).on('ajax:success', '#new-substance-form', (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    url = '/laboratory/' + res['lab_id'] + '/admin_substances'
+    $.get(url, {}, (html) ->
+      $('#admin-substances').empty().html(html)
+    )
+    showFlash(res['flash']['notice'], 'success')
+  )
+
+
+$(document).on('ajax:beforeSend', '#edit-substance-form', (evt, xhr, settings) ->
+    $('.error-message').remove()
+    $('.has-errors').removeClass('has-errors')
+  )
+$(document).on('ajax:success', '#edit-substance-form', (evt, data, status, xhr) ->
+    $form = $(this)
+    res = $.parseJSON(xhr.responseText)
+    url = '/laboratory/' + res['lab_id'] + '/admin_substances'
+    $.get(url, {}, (html) ->
+      $('#admin-substances').empty().html(html)
+    )
+    showFlash(res['flash']['notice'], 'success')
+  )
+
 
 #----------------------------
 # LAB ADMIN IMAGES

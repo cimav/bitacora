@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
   end
 
   def is_customer_service?
-    access.to_i == ACCESS_ADMIN || access.to_i == ACCESS_CUSTOMER_SERVICE
+    access.to_i == ACCESS_CUSTOMER_SERVICE
   end
 
 

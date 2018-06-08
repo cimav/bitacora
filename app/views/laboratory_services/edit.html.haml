@@ -1,4 +1,4 @@
-- editable = @laboratory_service.is_catalog == LaboratoryService::SERVICE_FREE || (@laboratory_service.is_catalog == LaboratoryService::SERVICE_CATALOG && !current_user.is_customer_service?)
+- editable = @laboratory_service.is_catalog == !current_user.is_customer_service? && (LaboratoryService::SERVICE_FREE || (@laboratory_service.is_catalog == LaboratoryService::SERVICE_CATALOG))
 
 %ul.nav.nav-tabs#admin-service-tabs
   %li.active#tab-service-details

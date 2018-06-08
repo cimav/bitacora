@@ -1,4 +1,4 @@
-- editable = @requested_service.laboratory_service.is_catalog == LaboratoryService::SERVICE_FREE || (@requested_service.laboratory_service.is_catalog == LaboratoryService::SERVICE_CATALOG && current_user.is_customer_service?)
+- editable = @requested_service.laboratory_service.is_catalog == !current_user.is_customer_service? &&  (LaboratoryService::SERVICE_FREE || (@requested_service.laboratory_service.is_catalog == LaboratoryService::SERVICE_CATALOG ))
 
 %table.table.table-striped.table-bordered.costeo_table
   %thead

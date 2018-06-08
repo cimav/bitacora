@@ -11,7 +11,8 @@
         = text_field_tag :q, nil, :id => 'admin-lab-services-search-box', :placeholder => 'Busqueda', :class => 'form-control'
     #admin-lab-services-list
     #admin-lab-services-buttons
-      = button_tag "Agregar nuevo servicio", {:class => 'btn btn-info', :id => 'add-new-service-button', :lab_id => @laboratory.id}
+      - if !current_user.is_customer_service?
+        = button_tag "Agregar nuevo servicio", {:class => 'btn btn-info', :id => 'add-new-service-button', :lab_id => @laboratory.id}
       = link_to "Descargar catálogo", "/laboratory/#{@laboratory.id}/services_catalog.xls"
 
   #admin-service-workarea

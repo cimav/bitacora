@@ -1,4 +1,4 @@
-- editable = @laboratory_service.is_catalog == LaboratoryService::SERVICE_FREE || (@laboratory_service.is_catalog == LaboratoryService::SERVICE_CATALOG && current_user.is_customer_service?)
+- editable = @laboratory_service.is_catalog == LaboratoryService::SERVICE_FREE || (@laboratory_service.is_catalog == LaboratoryService::SERVICE_CATALOG && !current_user.is_customer_service?)
 
 %ul.nav.nav-tabs#admin-service-tabs
   %li.active#tab-service-details
@@ -26,16 +26,17 @@
           = f.text_area :description, :class => 'form-control'
         - else
           = @laboratory_service.description
-      .field#field_laboratory_service_show_web
-        = f.label :show_web, 'Mostrar en página web'
-        - st_options = ''
-        - sel0 = ''
-        - sel1 = ''
-        - sel0 = 'selected="selected"' if !@laboratory_service.show_web
-        - sel1 = 'selected="selected"' if @laboratory_service.show_web
-        - st_options += "<option value=\"0\" #{sel0}>No</option>"
-        - st_options += "<option value=\"1\" #{sel1}>Si</option>"
-        = f.select :show_web, st_options.html_safe, {}, {:class => 'form-control'}
+      - if editable
+        .field#field_laboratory_service_show_web
+          = f.label :show_web, 'Mostrar en página web'
+          - st_options = ''
+          - sel0 = ''
+          - sel1 = ''
+          - sel0 = 'selected="selected"' if !@laboratory_service.show_web
+          - sel1 = 'selected="selected"' if @laboratory_service.show_web
+          - st_options += "<option value=\"0\" #{sel0}>No</option>"
+          - st_options += "<option value=\"1\" #{sel1}>Si</option>"
+          = f.select :show_web, st_options.html_safe, {}, {:class => 'form-control'}
       .field#field_laboratory_service_service_type_id
         = f.label :service_type_id, 'Tipo de Servicio:'
         - if editable
@@ -52,7 +53,7 @@
       .field#field_laboratory_service_internal_cost
         = f.label :internal_cost, 'Costo Interno:'
         %span.grand_total_value= number_to_currency(@laboratory_service.internal_cost)
-      - if current_user.is_customer_service?
+      - if current_user.is_admin?
         .field#field_laboratory_service_sale_price
           = f.label :sale_price, 'Precio de Venta:'
           = f.text_field :sale_price, :placeholder => 'Precio de Venta', :class => 'form-control'
@@ -71,43 +72,45 @@
           .field#field_laboratory_service_sale_price
             = f.label :sale_price, 'Precio de Venta:'
             %span= number_to_currency(@laboratory_service.sale_price)
-      .field#field_laboratory_service_service_type_id
-        = f.label :is_exclusive_vinculacion, 'Servicio Exclusivo para Vinculación'
-        - st_options = ''
-        - sel0 = ''
-        - sel1 = ''
-        - sel0 = 'selected="selected"' if @laboratory_service.is_exclusive_vinculacion.to_i == 0
-        - sel1 = 'selected="selected"' if @laboratory_service.is_exclusive_vinculacion.to_i == 1 
-        - st_options += "<option value=\"0\" #{sel0}>No</option>"
-        - st_options += "<option value=\"1\" #{sel1}>Si</option>"
-        = f.select :is_exclusive_vinculacion, st_options.html_safe, {}, {:class => 'form-control'}
+      - if editable
+        .field#field_laboratory_service_service_type_id
+          = f.label :is_exclusive_vinculacion, 'Servicio Exclusivo para Vinculación'
+          - st_options = ''
+          - sel0 = ''
+          - sel1 = ''
+          - sel0 = 'selected="selected"' if @laboratory_service.is_exclusive_vinculacion.to_i == 0
+          - sel1 = 'selected="selected"' if @laboratory_service.is_exclusive_vinculacion.to_i == 1 
+          - st_options += "<option value=\"0\" #{sel0}>No</option>"
+          - st_options += "<option value=\"1\" #{sel1}>Si</option>"
+          = f.select :is_exclusive_vinculacion, st_options.html_safe, {}, {:class => 'form-control'}
 
 
-      .field#field_laboratory_service_classification_id
-        = f.label :service_type_id, 'Clasificación del Servicio:'
+        .field#field_laboratory_service_classification_id
+          = f.label :service_type_id, 'Clasificación del Servicio:'
 
-        - st_options = '<option value=""></option>'
-        - @laboratory_service.laboratory.laboratory_service_classifications.order(:name).each do |item|
-          - if item.id == @laboratory_service.laboratory_service_classification_id
-            - sel = 'selected = "selected"'
-          - else
-            - sel = ''
-          - st_options += "<option value=\"#{item.id}\" #{sel}>#{item.name}</option>"
-        = f.select :laboratory_service_classification_id, st_options.html_safe, {}, {:class => 'form-control'}
+          - st_options = '<option value=""></option>'
+          - @laboratory_service.laboratory.laboratory_service_classifications.order(:name).each do |item|
+            - if item.id == @laboratory_service.laboratory_service_classification_id
+              - sel = 'selected = "selected"'
+            - else
+              - sel = ''
+            - st_options += "<option value=\"#{item.id}\" #{sel}>#{item.name}</option>"
+          = f.select :laboratory_service_classification_id, st_options.html_safe, {}, {:class => 'form-control'}
 
-      .field#field_laboratory_service_status
-        = f.label :status, 'Estado'
-        - st_options = ''
-        - sel0 = ''
-        - sel1 = ''
-        - sel0 = 'selected="selected"' if @laboratory_service.status.to_i == 0
-        - sel1 = 'selected="selected"' if @laboratory_service.status.to_i == 1
-        - st_options += "<option value=\"0\" #{sel0}>Activo</option>"
-        - st_options += "<option value=\"1\" #{sel1}>Inactivo</option>"
-        = f.select :status, st_options.html_safe, {}, {:class => 'form-control'}
+        .field#field_laboratory_service_status
+          = f.label :status, 'Estado'
+          - st_options = ''
+          - sel0 = ''
+          - sel1 = ''
+          - sel0 = 'selected="selected"' if @laboratory_service.status.to_i == 0
+          - sel1 = 'selected="selected"' if @laboratory_service.status.to_i == 1
+          - st_options += "<option value=\"0\" #{sel0}>Activo</option>"
+          - st_options += "<option value=\"1\" #{sel1}>Inactivo</option>"
+          = f.select :status, st_options.html_safe, {}, {:class => 'form-control'}
 
       .submit-button
-        = f.submit "Actualizar servicio", {:class => "btn btn-primary"}
+        - if editable
+          = f.submit "Actualizar servicio", {:class => "btn btn-primary"}
     - if !editable 
       .alert.alert-info
         = "Servicio de Catálogo de Vinculación"

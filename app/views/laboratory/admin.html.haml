@@ -1,48 +1,55 @@
 #admin-area 
   = render :partial => 'tabs', :locals => {:laboratory => @laboratory, :option_selected => 'details'}
-  %h3= "Editar detalles del laboratorio"
-  = form_for @laboratory, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-laboratory-form'} do |f|
-    .field#field_laboratory_name
-      = f.label :name, 'Nombre:'
-      = f.text_field :name, :placeholder => 'Nombre del laboratorio', :class => 'form-control'
-    .field#field_laboratory_prefix
-      = f.label :prefix, 'Prefijo:'
-      = f.text_field :prefix, :placeholder => 'Nombre corto', :class => 'form-control'
-    .field#field_laboratory_description
-      = f.label :description, 'Descripción:'
-      = f.text_area :description, :class => 'form-control'
-    .field#field_laboratory_business_unit_id
-      = f.label :business_unit_id, 'Sede:'
-      - bu_options = ''
-      - BusinessUnit.order(:name).each do |item|
-        - if item.id == @laboratory.business_unit_id
-          - sel = 'selected = "selected"'
-        - else
-          - sel = ''
-        - bu_options += "<option value=\"#{item.id}\" #{sel}>#{item.name}</option>"
-      = f.select :business_unit_id, bu_options.html_safe, { }, { :class => 'form-control' }
-    .field#field_laboratory_user_id
-      = f.label :user_id, 'Responsable:'
-      - resp_options = ''
-      - LaboratoryMember.where("laboratory_id = :lab AND access <> :a", {:lab => @laboratory.id, :a => LaboratoryMember::ACCESS_TRAINED}).each do |item|
-        - if item.user.id == @laboratory.user_id
-          - sel = 'selected = "selected"'
-        - else
-          - sel = ''
-        - resp_options += "<option value=\"#{item.user.id}\" #{sel}>#{item.user.full_name}</option>"
-      = f.select :user_id, resp_options.html_safe, { }, { :class => 'form-control' }
-    .field#field_laboratory_quote_needs_auth
-      = f.label :quote_needs_auth, 'Envio de costeos a Vinculación'
-      - st_options = ''
-      - sel0 = ''
-      - sel1 = ''
-      - sel0 = 'selected="selected"' if !@laboratory.quote_needs_auth
-      - sel1 = 'selected="selected"' if @laboratory.quote_needs_auth
-      - st_options += "<option value=\"0\" #{sel0}>No requiere autorización</option>"
-      - st_options += "<option value=\"1\" #{sel1}>Requiere autorización de administrador de laboratorio</option>"
-      = f.select :quote_needs_auth, st_options.html_safe, {}, {:class => 'form-control'}
+  - if !current_user.is_customer_service?
+    %h3= "Editar detalles del laboratorio"
+    = form_for @laboratory, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-laboratory-form'} do |f|
+      .field#field_laboratory_name
+        = f.label :name, 'Nombre:'
+        = f.text_field :name, :placeholder => 'Nombre del laboratorio', :class => 'form-control'
+      .field#field_laboratory_prefix
+        = f.label :prefix, 'Prefijo:'
+        = f.text_field :prefix, :placeholder => 'Nombre corto', :class => 'form-control'
+      .field#field_laboratory_description
+        = f.label :description, 'Descripción:'
+        = f.text_area :description, :class => 'form-control'
+      .field#field_laboratory_business_unit_id
+        = f.label :business_unit_id, 'Sede:'
+        - bu_options = ''
+        - BusinessUnit.order(:name).each do |item|
+          - if item.id == @laboratory.business_unit_id
+            - sel = 'selected = "selected"'
+          - else
+            - sel = ''
+          - bu_options += "<option value=\"#{item.id}\" #{sel}>#{item.name}</option>"
+        = f.select :business_unit_id, bu_options.html_safe, { }, { :class => 'form-control' }
+      .field#field_laboratory_user_id
+        = f.label :user_id, 'Responsable:'
+        - resp_options = ''
+        - LaboratoryMember.where("laboratory_id = :lab AND access <> :a", {:lab => @laboratory.id, :a => LaboratoryMember::ACCESS_TRAINED}).each do |item|
+          - if item.user.id == @laboratory.user_id
+            - sel = 'selected = "selected"'
+          - else
+            - sel = ''
+          - resp_options += "<option value=\"#{item.user.id}\" #{sel}>#{item.user.full_name}</option>"
+        = f.select :user_id, resp_options.html_safe, { }, { :class => 'form-control' }
+      .field#field_laboratory_quote_needs_auth
+        = f.label :quote_needs_auth, 'Envio de costeos a Vinculación'
+        - st_options = ''
+        - sel0 = ''
+        - sel1 = ''
+        - sel0 = 'selected="selected"' if !@laboratory.quote_needs_auth
+        - sel1 = 'selected="selected"' if @laboratory.quote_needs_auth
+        - st_options += "<option value=\"0\" #{sel0}>No requiere autorización</option>"
+        - st_options += "<option value=\"1\" #{sel1}>Requiere autorización de administrador de laboratorio</option>"
+        = f.select :quote_needs_auth, st_options.html_safe, {}, {:class => 'form-control'}
 
-    .submit-button
-      = f.submit "Actualizar laboratorio", {:class => 'btn btn-primary'}
+      .submit-button
+        = f.submit "Actualizar laboratorio", {:class => 'btn btn-primary'}
+  - else 
+    %br
+    %br
+    .field#lab-responsable
+      %strong= "Responsable:"
+      = @laboratory.user.full_name
   
   

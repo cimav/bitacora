@@ -8,7 +8,8 @@
       = text_field_tag :q, nil, :id => 'laboratories-search-box', :placeholder => 'Busqueda', :class => 'form-control'
   #laboratories-list.items-placeholder 
   #laboratories-buttons.bottom-box
-    = button_tag "Agregar nuevo laboratorio", {:class => 'btn btn-info', :id => 'add-new-admin-laboratory-button'}
+    - if current_user.is_admin?
+      = button_tag "Agregar nuevo laboratorio", {:class => 'btn btn-info', :id => 'add-new-admin-laboratory-button'}
     
 
 #laboratory-details

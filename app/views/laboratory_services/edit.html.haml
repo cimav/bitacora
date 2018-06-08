@@ -1,7 +1,10 @@
 - editable = @laboratory_service.is_catalog == !current_user.is_customer_service? && (LaboratoryService::SERVICE_FREE || (@laboratory_service.is_catalog == LaboratoryService::SERVICE_CATALOG))
 - if current_user.is_admin?
   - editable = true
-  
+
+- if current_user.id == @laboratory_service.laboratory.user_id 
+  - editable = true
+
 %ul.nav.nav-tabs#admin-service-tabs
   %li.active#tab-service-details
     %a{:href => "#admin-service-details", "data-toggle" => "tab", "id" => "service_details_tab"}= "Datos Generales"
@@ -55,7 +58,7 @@
       .field#field_laboratory_service_internal_cost
         = f.label :internal_cost, 'Costo Interno:'
         %span.grand_total_value= number_to_currency(@laboratory_service.internal_cost)
-      - if current_user.is_admin?
+      - if current_user.is_admin? || current_user.is_customer_service?
         .field#field_laboratory_service_sale_price
           = f.label :sale_price, 'Precio de Venta:'
           = f.text_field :sale_price, :placeholder => 'Precio de Venta', :class => 'form-control'
@@ -111,9 +114,9 @@
           = f.select :status, st_options.html_safe, {}, {:class => 'form-control'}
 
       .submit-button
-        - if editable
-          = f.submit "Actualizar servicio", {:class => "btn btn-primary"}
-    - if !editable 
+        = f.submit "Actualizar servicio", {:class => "btn btn-primary"}
+
+    - if @laboratory_service.is_catalog.to_i == 1
       .alert.alert-info
         = "Servicio de Catálogo de Vinculación"
       .clearfix

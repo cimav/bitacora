@@ -1,5 +1,7 @@
 - editable = @laboratory_service.is_catalog == !current_user.is_customer_service? && (LaboratoryService::SERVICE_FREE || (@laboratory_service.is_catalog == LaboratoryService::SERVICE_CATALOG))
-
+- if current_user.is_admin?
+  - editable = true
+  
 %ul.nav.nav-tabs#admin-service-tabs
   %li.active#tab-service-details
     %a{:href => "#admin-service-details", "data-toggle" => "tab", "id" => "service_details_tab"}= "Datos Generales"

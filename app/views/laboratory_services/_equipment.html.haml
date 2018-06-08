@@ -1,4 +1,6 @@
 - editable = @requested_service.laboratory_service.is_catalog == !current_user.is_customer_service? && (LaboratoryService::SERVICE_FREE || (@requested_service.laboratory_service.is_catalog == LaboratoryService::SERVICE_CATALOG ))
+- if current_user.is_admin?
+  - editable = true
 
 %table.table.table-striped.table-bordered.costeo_table
   %thead

@@ -4,6 +4,7 @@ class LaboratoryService < ActiveRecord::Base
   has_many :requested_service
   has_many :laboratory_service_additionals
   has_many :alerts
+  has_many :certifications
   has_many :users, :through => :requested_service
   belongs_to :service_type
   belongs_to :laboratory_service_classification

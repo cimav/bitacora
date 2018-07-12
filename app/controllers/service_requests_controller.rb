@@ -72,7 +72,8 @@ class ServiceRequestsController < ApplicationController
       @requests = @requests.where("(request_type_id = :t)", {:t => params[:folder_filter]}) 
     end
     
-    @requests = @requests.order('service_requests.created_at DESC').limit(@limit).offset(@offset)
+    #@requests = @requests.order('service_requests.created_at DESC').limit(@limit).offset(@offset)
+    @requests = @requests.order('service_requests.created_at DESC')
     render :layout => false
   end
 

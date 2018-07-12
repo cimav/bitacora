@@ -91,8 +91,8 @@
           .search-folder-status-message
             = r.system_status_text
 
-#div{:id => "load-more-sr-#{@offset.to_i + @limit.to_i}"} 
-  .load-more-sr-inner 
-    %a{:id => 'load-more-sr-a', 'data-q' => @q, 'data-o' => @offset.to_i + @limit.to_i}= "Cargar siguientes #{@limit}"
+/ #div{:id => "load-more-sr-#{@offset.to_i + @limit.to_i}"} 
+/   .load-more-sr-inner 
+/     %a{:id => 'load-more-sr-a', 'data-q' => @q, 'data-o' => @offset.to_i + @limit.to_i}= "Cargar siguientes #{@limit}"
 
 

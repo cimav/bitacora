@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180524212639) do
+ActiveRecord::Schema.define(version: 20180704234419) do
 
   create_table "P170080", id: false, force: :cascade do |t|
     t.integer  "id",                 limit: 4,        default: 0,   null: false
@@ -165,6 +165,34 @@ ActiveRecord::Schema.define(version: 20180524212639) do
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "certification_classifications", force: :cascade do |t|
+    t.string   "name",        limit: 255
+    t.text     "description", limit: 65535
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  create_table "certification_types", force: :cascade do |t|
+    t.string   "name",        limit: 255
+    t.text     "description", limit: 65535
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  create_table "certifications", force: :cascade do |t|
+    t.integer  "laboratory_service_id",           limit: 4
+    t.integer  "certification_type_id",           limit: 4
+    t.integer  "certification_classification_id", limit: 4
+    t.string   "reference",                       limit: 255
+    t.string   "identification",                  limit: 255
+    t.text     "description",                     limit: 65535
+    t.date     "expire_date"
+    t.integer  "user_id",                         limit: 4
+    t.integer  "status",                          limit: 4,     default: 1
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
   end
 
   create_table "client_contacts", force: :cascade do |t|

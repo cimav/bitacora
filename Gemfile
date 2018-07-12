@@ -30,8 +30,6 @@ gem 'jquery-ui-rails'
 gem 'omniauth-google-oauth2'
 
 gem 'carrierwave'
-gem 'rmagick'
-gem 'mini_magick'
 
 gem "rubyzip", '>= 1.0.0'
 gem 'zip-zip'

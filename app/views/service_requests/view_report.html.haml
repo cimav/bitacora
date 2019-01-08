@@ -10,8 +10,10 @@
     - totals[s['bitacora_id']][r] = 0
   
     - s[r].each do |i|
+
       - totals[s['bitacora_id']][r] += i['cantidad'] * i['precio_unitario']
-      - totals[s['bitacora_id']]['total'] += totals[s['bitacora_id']][r] 
+      - totals[s['bitacora_id']]['total'] += i['cantidad'] * i['precio_unitario']
+
   
   - global_total += totals[s['bitacora_id']]['total']
 
@@ -39,7 +41,7 @@
         = "Costeo final" 
         %span.total= number_to_currency(global_total)
       - rheader = {'personal' => ['Nombre', 'Horas', 'Costo x Hora'], 'equipos' => ['Equipo', 'Horas', 'Costo x Hora'], 'otros' => ['Concepto', 'Cantidad', 'Precio']}
-
+      
       - @details['servicios'].each do |s|
         %h4
           = "#{s['muestra_identificador']}: #{s['nombre_servicio']}"

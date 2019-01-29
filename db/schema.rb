@@ -28,6 +28,12 @@ ActiveRecord::Schema.define(version: 20180704234419) do
     t.integer  "system_id",          limit: 4
   end
 
+  create_table "SDI2018", id: false, force: :cascade do |t|
+    t.string "A", limit: 255
+    t.string "B", limit: 255
+    t.string "C", limit: 255
+  end
+
   create_table "activity_logs", force: :cascade do |t|
     t.integer  "user_id",                  limit: 4
     t.integer  "service_request_id",       limit: 4
@@ -41,8 +47,10 @@ ActiveRecord::Schema.define(version: 20180704234419) do
     t.integer  "maintenance_id",           limit: 4,        default: 0
   end
 
+  add_index "activity_logs", ["maintenance_id"], name: "index_maintenance_id", using: :btree
   add_index "activity_logs", ["requested_service_id"], name: "index_activity_logs_on_requested_service_id", using: :btree
   add_index "activity_logs", ["sample_id"], name: "index_activity_logs_on_sample_id", using: :btree
+  add_index "activity_logs", ["service_request_id", "sample_id", "requested_service_id", "maintenance_id"], name: "index_multid", using: :btree
   add_index "activity_logs", ["service_request_id"], name: "index_activity_logs_on_service_request_id", using: :btree
   add_index "activity_logs", ["user_id"], name: "index_activity_logs_on_user_id", using: :btree
 
@@ -117,6 +125,14 @@ ActiveRecord::Schema.define(version: 20180704234419) do
     t.decimal  "total",                                   precision: 42, scale: 4,  default: 0.0, null: false
     t.decimal  "porcentaje",                              precision: 53, scale: 8,  default: 0.0, null: false
     t.decimal  "corresponde",                             precision: 65, scale: 14, default: 0.0, null: false
+  end
+
+  create_table "auxrep", id: false, force: :cascade do |t|
+    t.string  "nombre",   limit: 511
+    t.string  "snombre",  limit: 511,                default: "", null: false
+    t.string  "lab",      limit: 255
+    t.integer "cuantos",  limit: 8,                  default: 0,  null: false
+    t.decimal "muestras",             precision: 32
   end
 
   create_table "bak_laboratory_services", id: false, force: :cascade do |t|
@@ -377,6 +393,10 @@ ActiveRecord::Schema.define(version: 20180704234419) do
 
   add_index "external_requests", ["client_contact_id"], name: "index_external_requests_on_client_contact_id", using: :btree
   add_index "external_requests", ["client_id"], name: "index_external_requests_on_client_id", using: :btree
+
+  create_table "goyo", id: false, force: :cascade do |t|
+    t.integer "requested_service_id", limit: 4
+  end
 
   create_table "ids_con", id: false, force: :cascade do |t|
     t.integer "requested_service_id", limit: 4
@@ -771,6 +791,8 @@ ActiveRecord::Schema.define(version: 20180704234419) do
     t.datetime "created_at",                                        null: false
     t.datetime "updated_at",                                        null: false
   end
+
+  add_index "sample_details", ["sample_id"], name: "indx_smpl_dtl", using: :btree
 
   create_table "samples", force: :cascade do |t|
     t.integer  "service_request_id", limit: 4

@@ -53,6 +53,10 @@
       .delivery
         %span.glyphicon.glyphicon-time
         = faltan
+      .priority
+        %span.glyphicon.glyphicon-tasks
+        = "Prioridad:"
+        = request.vinculacion_delivery
       .progress
         .progress-bar{'class' => klass,:role => 'progressbar', 'aria-valuenow' => percentage, 'aria-valuemin' => "0", 'aria-valuemax' => "100", :style => "width:#{percentage}%"}
           = "#{percentage_msg}"

@@ -48,7 +48,7 @@ class BitacoraMailer < ActionMailer::Base
 
     @requested_service = requested_service
 
-    subject = "Nuevo Servicio T1 #{requested_service.number}: #{requested_service.laboratory_service.name}"
+    subject = "#{requested_service.sample.service_request.vinculacion_delivery.upcase} Nuevo Servicio T1 #{requested_service.number}: #{requested_service.laboratory_service.name}"
 
     reply_to = requested_service.sample.service_request.user.email
 
@@ -75,7 +75,7 @@ class BitacoraMailer < ActionMailer::Base
 
     @requested_service = requested_service
 
-    subject = "Nuevo Servicio T2 #{requested_service.number}: #{requested_service.laboratory_service.name}"
+    subject = "#{requested_service.sample.service_request.vinculacion_delivery.upcase} Nuevo Servicio T2 #{requested_service.number}: #{requested_service.laboratory_service.name}"
 
     reply_to = requested_service.sample.service_request.user.email
 
@@ -93,7 +93,7 @@ class BitacoraMailer < ActionMailer::Base
     @service_request = service_request
     @reply_to = service_request.supervisor.email
 
-    subject = "Solicitud de Costeo #{service_request.number}: #{service_request.vinculacion_client_name}"
+    subject = "#{requested_service.sample.service_request.vinculacion_delivery.upcase} Solicitud de Costeo #{service_request.number}: #{service_request.vinculacion_client_name}"
 
     mail(:to => @to, :from => @from, :reply_to => @reply_to, :subject => subject)
   

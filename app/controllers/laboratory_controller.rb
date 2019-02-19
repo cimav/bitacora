@@ -37,6 +37,7 @@ class LaboratoryController < ApplicationController
                   samples.quantity AS sample_quantity,
                   vinculacion_start_date,
                   vinculacion_end_date,
+                  vinculacion_delivery,
                   system_status,
                   users.email
 

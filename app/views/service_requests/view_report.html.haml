@@ -35,7 +35,7 @@
           - @participants.each do |p|
             %tr
               %td= p.full_name
-              %td= number_field_tag "user[#{p.id}]", nil, {:class => 'form-control pvalor', :onkeyup => "this.value = this.value.split('.').join(''); if (this.value > 100) { this.value = 100; }; doSumatoria();",  :min => 0, :max => 100, :step => 1}
+              %td= number_field_tag "user[#{p.id}]", nil, {:class => 'form-control pvalor', :onkeyup => "if (this.value > 100) { this.value = 100; }; doSumatoria();",  :min => 0, :max => 100, :step => 1}
       
       %h3
         = "Costeo final" 

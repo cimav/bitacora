@@ -27,7 +27,7 @@ gem 'uglifier'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
-gem 'omniauth-google-oauth2'
+gem 'omniauth-google-oauth2', '~> 0.6.1'
 
 gem 'carrierwave'
 

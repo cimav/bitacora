@@ -65,10 +65,10 @@
                 %span.glyphicon.glyphicon-calendar
                 = "Entregar:"
                 = l r.vinculacion_end_date, format: :short
-              .vin_end.sodexo{:title => "Fecha límite para ejercer presupuesto"}
+              .vin_end.tooltip-fecha-limite{:title => "Fecha límite para ejercer presupuesto"}
                 %span.glyphicon.glyphicon-calendar
                 = "Presupuesto:"
-                = l r.vinculacion_end_date + 7.days, format: :short
+                = l r.vinculacion_end_date + 10.days, format: :short
               .delivery
                 %span.glyphicon.glyphicon-time
                 = faltan

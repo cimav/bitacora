@@ -93,7 +93,8 @@ class BitacoraMailer < ActionMailer::Base
     @service_request = service_request
     @reply_to = service_request.supervisor.email
 
-    subject = "#{requested_service.sample.service_request.vinculacion_delivery.upcase} Solicitud de Costeo #{service_request.number}: #{service_request.vinculacion_client_name}"
+    # subject = "#{requested_service.sample.service_request.vinculacion_delivery.upcase} Solicitud de Costeo #{service_request.number}: #{service_request.vinculacion_client_name}"
+    subject = "Solicitud de Costeo #{service_request.number}: #{service_request.vinculacion_client_name}"
 
     mail(:to => @to, :from => @from, :reply_to => @reply_to, :subject => subject)
   

@@ -87,6 +87,21 @@ class BitacoraMailer < ActionMailer::Base
   
   end
 
+  def arrancar_tipo3(service_request)
+    @from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"
+    @to = []
+
+    # Coordinator
+    @to << service_request.user.email
+
+    @service_request = service_request
+    @reply_to = service_request.supervisor.email
+
+    subject = "Servicio #{service_request.number} ha sido arrancado."
+
+    mail(:to => @to, :from => @from, :reply_to => @reply_to, :subject => subject)
+  end
+
   def new_tipo3(service_request)
     @from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"
     @to = []

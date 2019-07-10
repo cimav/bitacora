@@ -138,6 +138,7 @@ class VinculacionSubscriptions
               rs.save
             end
           end
+          Resque.enqueue(ArrancarTipo3Mailer, s.id)
         else 
           Rails.logger.debug  " LOG Error al guardar service_request"
         end

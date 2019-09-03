@@ -31,6 +31,12 @@
           = f.text_area :description, :class => 'form-control'
         - else
           = @laboratory_service.description
+      .field#field_laboratory_service_legend
+        = f.label :legend, 'Leyenda:'
+        - if editable
+          = f.text_area :legend, :class => 'form-control'
+        - else
+          = @laboratory_service.legend
       - if editable
         .field#field_laboratory_service_show_web
           = f.label :show_web, 'Mostrar en página web'

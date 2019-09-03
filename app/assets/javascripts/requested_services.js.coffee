@@ -28,3 +28,18 @@ $(document).on('change', '#start_service', () ->
     else 
       $('#requested_service_status').val("3")
 )
+
+### Update Legend ###
+$(document).on('ajax:beforeSend', '#edit-legend-requested-services-form', (evt, xhr, settings) ->
+ $('.error-message').remove()
+ $('.has-errors').removeClass('has-errors')
+)
+$(document).on('ajax:success', '#edit-legend-requested-services-form', (evt, data, status, xhr) ->
+ res = $.parseJSON(xhr.responseText)
+ showFlash(res['flash']['notice'], 'success')
+)
+$(document).on('ajax:error', '#edit-legend-requested-services-form', (evt, xhr, status, error) ->
+ alert('tres');
+ showFormErrors(xhr, status, error)
+)
+

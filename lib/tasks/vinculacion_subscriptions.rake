@@ -208,6 +208,7 @@ class VinculacionSubscriptions
         requested_service.laboratory_service_id = lab_service.id
         requested_service.sample_id = muestra.id
         requested_service.details = attributes['descripcion']
+        requested_service.legend = lab_service.legend
         # TODO:
         # requested_service.suggested_user_id = lab_service.default_user_id
         requested_service.status = RequestedService::INITIAL
@@ -290,6 +291,7 @@ class VinculacionSubscriptions
             requested_service.sample_id = muestra.id
             requested_service.details = s['nombre']
             requested_service.cedula_id = s['cedula_id']
+            requested_service.legend = lab_service.legend
             # TODO:
             # requested_service.suggested_user_id = lab_service.default_user_id
             requested_service.status = RequestedService::INITIAL

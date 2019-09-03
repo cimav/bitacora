@@ -172,7 +172,9 @@
       - unless @requested_service.sample.service_request.is_vinculacion?
         %li
           %a{:href => "#pts", "data-toggle" => "tab", :id => "active-pts-link"}= "Puntos Estímulos"
-    
+      %li
+        %a{:href => "#legend", "data-toggle" => "tab", "id" => "legend_tab"}= "Leyenda"
+
 
   .tab-content
 
@@ -281,5 +283,14 @@
                 %td.text-center= "#{p.participation}%"
                 %td.text-center= number_to_currency(total_user) 
                 %td.text-center= total_user / RequestedService::UN_PUNTO 
-            
-       
+
+    #legend.tab-pane
+      .media.write-message
+        .media-body
+          = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'edit-legend-requested-services-form'} do |f|
+            .legend-textarea
+              = f.text_area :legend, {:class => 'form-control', :rows => 6, :placeholder => 'Escribe aquí la leyenda'}
+            .edit-legend-button
+              = button_tag "Guardar", {:class => "btn btn-info", :type => "submit"}
+
+

@@ -531,7 +531,8 @@ class ServiceRequestsController < ApplicationController
       "es_catalogo"           => requested_service.service_quote_type == RequestedService::QUOTE_USE_CATALOG,
       "personal"              => technicians,
       "equipos"               => equipment,
-      "otros"                 => others
+      "otros"                 => others,
+      "legend"                => requested_service.legend
     }
 
     return details

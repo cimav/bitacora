@@ -65,7 +65,8 @@ GEM
       multipart-post (>= 1.2, < 3)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
-    haml (4.0.7)
+    haml (5.0.0)
+      temple (>= 0.8.0)
       tilt
     hashie (3.6.0)
     hike (1.2.3)
@@ -195,6 +196,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
+    temple (0.8.2)
     therubyracer (0.12.3)
       libv8 (~> 3.16.14.15)
       ref

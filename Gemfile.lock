@@ -117,7 +117,7 @@ GEM
     queue-bus (0.5.7)
       multi_json
       redis
-    rack (1.6.5)
+    rack (1.6.12)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)

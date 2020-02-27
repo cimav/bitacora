@@ -65,3 +65,12 @@
         .progress-bar{'class' => klass,:role => 'progressbar', 'aria-valuenow' => percentage, 'aria-valuemin' => "0", 'aria-valuemax' => "100", :style => "width:#{percentage}%"}
           = "#{percentage_msg}"
 
+      - if request.presupuesto_enviado
+        %div.archivo-presupuesto
+          %a{:href=>"http://localhost:3001/vinculacion/estimacion_costos_hash/#{request.vinculacion_hash}",  :target=>'_blank', :style=>"color: #0066cc; text-decoration: none; font-size: 12px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;"}
+            %span.glyphicon.glyphicon-file
+              = "Descargar presupuesto"
+      - elsif request.system_status != ServiceRequest::SYSTEM_REPORT_SENT
+        %div#solicitar-presupuesto-div
+          %button#solicitar-presupuesto-button.btn.btn-primary.btn-xs.btn-block.btn-vinculacion{'data-id' => request.id, 'data-vinculacion-hash' => request.vinculacion_hash}
+            = "Solicitar presupuesto"

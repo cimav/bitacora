@@ -166,6 +166,21 @@ class ServiceRequestsController < ApplicationController
     render :layout => false
   end
 
+  def solicitar_presupuesto_dialog
+    @service_request = ServiceRequest.find(params[:id])
+    render :layout => false
+  end
+
+  def enviar_solicitud_presupuesto
+    @service_request = ServiceRequest.find(params[:id])
+    BitacoraMailer.enviar_presupuesto(@service_request).deliver
+
+    @service_request.presupuesto_enviado = true
+    @service_request.save
+
+    render :inline => "Hoja de presupuesto enviada", :layout => false
+  end
+
   def update 
     @request = ServiceRequest.find(params[:id])
 

@@ -1,0 +1,36 @@
+#edit-folder
+  .sheet
+    .header-status{:class => "bg-edit-folder"}
+      %span.status= "Solicitar presupuesto"
+      %a.close{:class => 'service-request-link', 'data-id' => @service_request.id}="×"
+    .dialog-content.padded
+      = form_for @service_request, :remote => true, :html => {:'data-type' => 'html', :id => 'solicitar-presupuesto-form'} do |f|
+
+        .field#field_service_request_name
+          = f.label :request_type, 'Warning: solo se podrá enviar una vez.... blah, blah, blah,...'
+        .field#field_service_request_supervisor_id
+          = f.label :supervisor_id, 'Supervisor:', {:class => 'control-label'}
+          - supervisor_options = ''
+          - if current_user.supervisor1_id.blank? && current_user.supervisor2_id.blank?
+            - supervisor_options += "<option value=\"\">Ninguno</option>"
+          - User.where("access >= :a", {:a => User::ACCESS_EMPLOYEE}).order('first_name, last_name').each do |u|
+            - if @service_request.supervisor_id == u.id
+              - selected = 'selected = "selected"'
+            - else
+              - selected = ''
+            - supervisor_options += "<option value=\"#{u.id}\" #{selected}>#{u.full_name}</option>"
+          = f.select :supervisor_id, supervisor_options.html_safe, {}, {:class => 'form-control'}
+        -#.field#field_service_request_description
+          = f.label :description, 'Nota:', {:class => 'control-label'}
+          = f.text_area :description, {:class => 'form-control',:rows => 4}
+        .clearfix
+        .edit-folder-buttons
+          = button_tag "Enviar", {:class => "btn btn-primary solicitar-presupuesto-btn", :id=>"solicitar-presupuesto-btn", 'data-id' => @service_request.id, :type => "button"}
+          = button_tag "Cancelar", {:class => "btn btn-default service-request-link", 'data-id' => @service_request.id, :type => "button"}
+        .clearfix
+        .archivo
+          -#%a{:href => "http://sigre.cimav.edu.mx/vinculacion/descargar/cotizacion/#{@request.vinculacion_hash}"}
+          %a{:target=>"_blank", :href => "http://localhost:3001/vinculacion/estimacion_costos_hash/#{@service_request.vinculacion_hash}"}
+            %span.glyphicon.glyphicon-file
+            = "Descargar presupuesto"
+

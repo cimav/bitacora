@@ -1280,6 +1280,37 @@ $(document).on('change', '.pq_eq_hours', () ->
      )
   )
 
+#--------------------
+# Edit solicitar presupuesto dialog
+#--------------------
+###
+$(document).on('click', '#solicitar-presupuesto-button', () ->
+  id = $(this).data('id')
+  url = "/service_requests/solicitar_presupuesto_dialog/#{id}"
+  $.get(url, {}, (html) ->
+    $('#folder-workarea').empty().html(html)
+  )
+)
+###
+$(document).on('click', '#solicitar-presupuesto-button', () ->
+
+  if confirm "¿Enviar hoja de costos a Presupuesto?\n\nNota: Solo se puede enviar una vez.\nLas modificaciones se tendrán que solicitar a Vinculación."
+    id = $(this).data('id')
+    vinculacion_hash = $(this).attr('data-vinculacion-hash')
+    $(this).prop('disabled', true)
+    url = '/service_requests/enviar_solicitud_presupuesto/' + id
+    $.get(url, {}, (html) ->
+      html = "<div class='archivo-presupuesto'>
+                <a href='http://localhost:3001/vinculacion/estimacion_costos_hash/" + vinculacion_hash + "' target='_blank'>
+                  <span class='glyphicon glyphicon-file'></span>
+                  Descargar presupuesto
+                </a>
+              </div>"
+      $('#solicitar-presupuesto-div').empty().html(html)
+      showFlash('Hoja de costos enviada a presuesto', 'success')
+    )
+
+)
 
 #
 # Other

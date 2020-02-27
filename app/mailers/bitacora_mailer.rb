@@ -368,8 +368,24 @@ class BitacoraMailer < ActionMailer::Base
 
   end
 
+  def enviar_presupuesto(service_request)
 
+    @service_request = service_request
 
+    @from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"
+    @to = Rails.env.production? ? "teresa.mariscal@cimav.edu.mx" : "juan.calderon@cimav.edu.mx"
+    @reply_to = @service_request.user.email
+
+    subject = "Solicitud de presupuesto: #{@service_request.number}."
+
+    filename = "SolicitudPresupuesto#{@service_request.number}"
+    url_pdf = "http://localhost:3001/vinculacion/estimacion_costos_hash/#{@service_request.vinculacion_hash}"
+    attachments[filename] = {
+        mime_type: 'application/pdf',
+        content: open(url_pdf).read
+    }
+    mail(:to => @to, :from => @from, :reply_to => @reply_to, :subject => subject)
+  end
 
   # Si se actualiza el del controller se debe de actualizar aquí también. 
   private
@@ -444,7 +460,6 @@ class BitacoraMailer < ActionMailer::Base
   end
 
 
-  
 
 
 end

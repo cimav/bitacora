@@ -31,6 +31,8 @@ Bitacora::Application.routes.draw do
   
   get '/vinculacion_files/get/:id', to: 'vinculacion_files#file'
 
+  get '/service_requests/solicitar_presupuesto_dialog/:id' => 'service_requests#solicitar_presupuesto_dialog'
+  get '/service_requests/enviar_solicitud_presupuesto/:id' => 'service_requests#enviar_solicitud_presupuesto'
 
   resources :service_requests 
   get '/samples/:id/requested_services_list' => 'samples#requested_services_list'

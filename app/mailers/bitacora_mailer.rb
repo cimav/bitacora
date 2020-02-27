@@ -379,7 +379,8 @@ class BitacoraMailer < ActionMailer::Base
     subject = "Solicitud de presupuesto: #{@service_request.number}."
 
     filename = "SolicitudPresupuesto#{@service_request.number}"
-    url_pdf = "http://localhost:3001/vinculacion/estimacion_costos_hash/#{@service_request.vinculacion_hash}"
+    sigre = Rails.env.production? ? "sigre.cimav.edu.mx" : "localhost:3001"
+    url_pdf = "http://#{sigre}/vinculacion/estimacion_costos_hash/#{@service_request.vinculacion_hash}"
     attachments[filename] = {
         mime_type: 'application/pdf',
         content: open(url_pdf).read

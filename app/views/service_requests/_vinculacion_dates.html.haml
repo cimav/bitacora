@@ -67,7 +67,7 @@
 
       - if request.presupuesto_enviado
         %div.archivo-presupuesto
-          %a{:href=>"http://localhost:3001/vinculacion/estimacion_costos_hash/#{request.vinculacion_hash}",  :target=>'_blank', :style=>"color: #0066cc; text-decoration: none; font-size: 12px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;"}
+          %a{:href=>"http://sigre.cimav.edu.mx/vinculacion/estimacion_costos_hash/#{request.vinculacion_hash}",  :target=>'_blank', :style=>"color: #0066cc; text-decoration: none; font-size: 12px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;"}
             %span.glyphicon.glyphicon-file
               = "Descargar presupuesto"
       - elsif request.system_status != ServiceRequest::SYSTEM_REPORT_SENT

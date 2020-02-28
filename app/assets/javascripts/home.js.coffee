@@ -1301,7 +1301,7 @@ $(document).on('click', '#solicitar-presupuesto-button', () ->
     url = '/service_requests/enviar_solicitud_presupuesto/' + id
     $.get(url, {}, (html) ->
       html = "<div class='archivo-presupuesto'>
-                <a href='http://localhost:3001/vinculacion/estimacion_costos_hash/" + vinculacion_hash + "' target='_blank'>
+                <a href='http://sigre.cimav.edu.mx/vinculacion/estimacion_costos_hash/" + vinculacion_hash + "' target='_blank'>
                   <span class='glyphicon glyphicon-file'></span>
                   Descargar presupuesto
                 </a>

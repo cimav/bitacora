@@ -94,7 +94,7 @@ class MaintenancesController < ApplicationController
             json[:display] = @maintenance.name
             render :json => json
           else
-            redirect_to @maintenance
+            render :layout => false
           end
         end
       end
@@ -108,7 +108,7 @@ class MaintenancesController < ApplicationController
             json[:errors] = @maintenance.errors
             render :json => json, :status => :unprocessable_entity
           else
-            redirect_to @maintenance
+            render :layout => false
           end
         end
       end

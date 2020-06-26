@@ -13,12 +13,9 @@
     = f.label :description, 'Detalles:'
     = f.text_area :description, {:class => 'form-control', :rows => 10}
 
-  .field#field_maintenance_provider_id
-    = f.label :provider_id, 'Proveedor:'
-    - prov_options = ''
-    - Provider.order('name').each do |prov|
-      - prov_options += "<option value=\"#{prov.id}\">#{prov.name}</option>"
-    = f.select :provider_id, prov_options.html_safe, {}, :class => 'form-control maintenance-provider-combo'
+  .field#field_maintenance_provider_text
+    = f.label :provider_text, 'Proveedor:'
+    = f.text_field :provider_text, {:class => 'form-control', :placeholder => 'Nombre del proveedor'} 
 
   .submit-button
     = f.submit "Programar mantenimiento", {:class => "btn btn-primary"}

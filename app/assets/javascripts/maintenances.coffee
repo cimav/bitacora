@@ -67,6 +67,12 @@ $(document).on("click", ".back-maintenance", () ->
   )
 )
 
+@reloadMaintenances = (eq_id) ->
+  url = '/equipment/' + eq_id + '/maintenances'
+  $.get(url, {}, (html) ->
+    $('#maintenance-workarea').empty().html(html)
+  )
+
 $(document).on("click", ".btn-edit-maintenance", () ->
   eq_id = $(this).attr('data-eq-id')
   m_id = $(this).attr('data-id')
@@ -87,9 +93,9 @@ $(document).on("click", ".back-maintenances", () ->
 
 $(document).on("change", "#maintenance_status", () ->
   if ($("#maintenance_status" ).val() == "99") 
-    $("#man-show").show()
+    $(".man-show").show()
   else
-    $("#man-show").hide()
+    $(".man-show").hide()
 )
 
 

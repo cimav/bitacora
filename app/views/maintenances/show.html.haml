@@ -15,7 +15,7 @@
 
       %p= @maintenance.description
     %td
-      %a.btn.btn-primary.btn-xs.btn-edit-maintenance{"data-id" => @maintenance.id, "data-eq-id" => @maintenance.equipment_id}= "Actualizar"
+      %a.btn.btn-primary.btn-edit-maintenance{"data-id" => @maintenance.id, "data-eq-id" => @maintenance.equipment_id}= "Actualizar"
 
 #activity_log.maintenance-log
   = render :partial => 'activity_log/activity_log', :locals => {:activity_log => @maintenance.activity_log, 

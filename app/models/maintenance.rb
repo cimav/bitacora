@@ -1,6 +1,8 @@
 class Maintenance < ActiveRecord::Base
 
-  attr_accessible :equipment_id, :provider_id, :name, :expected_date, :real_date, :description, :status
+  attr_accessible :equipment_id, :provider_id, :name, :expected_date, :real_date, :description, :status, :provider_text, :file
+  mount_uploader :file, MaintenanceFileUploader
+
   belongs_to :equipment
   belongs_to :provider
   has_many :activity_log

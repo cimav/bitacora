@@ -1,4 +1,4 @@
-= form_for [@equipment, @maintenance], :remote => true, :html => {:'data-type' => 'html', :id => 'edit-maintenance-form'} do |f|
+= form_for [@equipment, @maintenance],  :html => {:'data-type' => 'html', :id => 'edit-maintenance-form', :target=>'uploadframe', :multipart => true} do |f|
   %h3= "Programar mantenimiento"
 
   .field#field_maintenance_expected_date
@@ -13,30 +13,40 @@
     = f.label :description, 'Detalles:'
     = f.text_area :description, {:class => 'form-control', :rows => 10}
 
-  .field#field_maintenance_provider_id
-    = f.label :provider_id, 'Proveedor:'
-    - prov_options = ''
-    - Provider.order('name').each do |prov|
-      - prov_options += "<option value=\"#{prov.id}\">#{prov.name}</option>"
-    = f.select :provider_id, prov_options.html_safe, {}, :class => 'form-control maintenance-provider-combo'
-
+  .field#field_maintenance_provider_text
+    = f.label :provider_text, 'Proveedor:'
+    = f.text_field :provider_text, {:class => 'form-control', :placeholder => 'Proveedor'} 
 
   .field#field_maintenance_status
     = f.label :provider_id, 'Estado:'
     = f.select :status, Maintenance::STATUS_TYPES.invert.sort {|a,b| (a[1] <=> b[1]) if a[1] > 0}, {}, :class => 'form-control maintenance-provider-combo'
 
   - if @maintenance.status.to_i == Maintenance::STATUS_DONE
-    - man_hidden = 'man-show'
+    - man_hidden = 'display: block;'
   - else
-    - man_hidden = 'man-hidden'
+    - man_hidden = 'display: none;'
   .field#field_maintenance_real_date
-    #man-show{:class => man_hidden}
-      = f.label :real_date, 'Fecha:'
+    .man-show{:style => man_hidden}
+      = f.label :real_date, 'Fecha de realización:'
       = f.date_field :real_date, {:class => 'form-control'} 
+
+  .field#field_maintenance_report
+    .man-show{:style => man_hidden}
+      = f.label :file, 'Archivo de reporte técnico:'
+      = f.file_field :file, {:class => 'form-control'} 
+      %br
+      = "Si ya existía un reporte técnico se reemplazara con el nuevo"
 
   .submit-button
     = f.submit "Actualizar mantenimiento", {:class => "btn btn-primary"}
 
+%iframe{"width" => 1, "height" => 1, "name"=>"uploadframe", "id" => "uploadframe"}
 %br
 %br
 %a.back-maintenance{"data-id" => @maintenance.id, "data-eq-id" => @maintenance.equipment_id}= "Regresar"
+
+
+:javascript
+  function reloadParent(eq) {
+    reloadMaintenances(eq);
+  }

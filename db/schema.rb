@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180704234419) do
+ActiveRecord::Schema.define(version: 20200626183849) do
 
   create_table "P170080", id: false, force: :cascade do |t|
     t.integer  "id",                 limit: 4,        default: 0,   null: false
@@ -150,7 +150,7 @@ ActiveRecord::Schema.define(version: 20180704234419) do
     t.decimal  "evaluation_cost",                                       precision: 10, scale: 2
     t.integer  "status",                               limit: 4,                                 default: 0
     t.integer  "laboratory_service_classification_id", limit: 4,                                 default: 0
-    t.boolean  "show_web",                             limit: 1,                                 default: false
+    t.boolean  "show_web",                                                                       default: false
   end
 
   create_table "bak_users", id: false, force: :cascade do |t|
@@ -166,7 +166,7 @@ ActiveRecord::Schema.define(version: 20180704234419) do
     t.datetime "updated_at",                                                           null: false
     t.integer  "supervisor1_id",   limit: 4
     t.integer  "supervisor2_id",   limit: 4
-    t.boolean  "require_auth",     limit: 1,                           default: false
+    t.boolean  "require_auth",                                         default: false
     t.integer  "business_unit_id", limit: 4,                           default: 1
   end
 
@@ -375,14 +375,14 @@ ActiveRecord::Schema.define(version: 20180704234419) do
     t.decimal  "purchase_price",                        precision: 10, scale: 2
     t.decimal  "internal_hourly_rate",                  precision: 10, scale: 2
     t.decimal  "suggested_price",                       precision: 10, scale: 2
-    t.boolean  "show_web",             limit: 1,                                 default: false
+    t.boolean  "show_web",                                                       default: false
   end
 
   create_table "external_requests", force: :cascade do |t|
     t.integer  "service_request_id", limit: 4
     t.date     "request_date"
     t.string   "service_number",     limit: 255
-    t.boolean  "is_acredited",       limit: 1
+    t.boolean  "is_acredited"
     t.text     "client_agreements",  limit: 16777215
     t.text     "notes",              limit: 16777215
     t.datetime "created_at",                          null: false
@@ -461,7 +461,7 @@ ActiveRecord::Schema.define(version: 20180704234419) do
     t.integer  "status",           limit: 4,        default: 1
     t.datetime "created_at",                                        null: false
     t.datetime "updated_at",                                        null: false
-    t.boolean  "quote_needs_auth", limit: 1,        default: false
+    t.boolean  "quote_needs_auth",                  default: false
   end
 
   add_index "laboratories", ["user_id"], name: "index_laboratories_on_user_id", using: :btree
@@ -522,7 +522,8 @@ ActiveRecord::Schema.define(version: 20180704234419) do
     t.decimal  "evaluation_cost",                                       precision: 10, scale: 2
     t.integer  "status",                               limit: 4,                                 default: 0
     t.integer  "laboratory_service_classification_id", limit: 4,                                 default: 0
-    t.boolean  "show_web",                             limit: 1,                                 default: false
+    t.boolean  "show_web",                                                                       default: false
+    t.text     "legend",                               limit: 65535
   end
 
   add_index "laboratory_services", ["laboratory_id"], name: "index_laboratory_services_on_laboratory_id", using: :btree
@@ -539,6 +540,8 @@ ActiveRecord::Schema.define(version: 20180704234419) do
     t.datetime "updated_at",                                   null: false
     t.date     "expected_date"
     t.date     "real_date"
+    t.string   "provider_text",    limit: 255
+    t.string   "file",             limit: 255
   end
 
   create_table "material_types", force: :cascade do |t|
@@ -569,6 +572,15 @@ ActiveRecord::Schema.define(version: 20180704234419) do
   create_table "oldtype", id: false, force: :cascade do |t|
     t.integer "id",  limit: 4, default: 0, null: false
     t.integer "old", limit: 4
+  end
+
+  create_table "orozco", id: false, force: :cascade do |t|
+    t.integer "id",     limit: 4,  default: 0, null: false
+    t.string  "number", limit: 20
+  end
+
+  create_table "ortiz", id: false, force: :cascade do |t|
+    t.integer "id", limit: 4, default: 0, null: false
   end
 
   create_table "other_types", force: :cascade do |t|
@@ -755,6 +767,7 @@ ActiveRecord::Schema.define(version: 20180704234419) do
     t.integer  "from_id",               limit: 4
     t.integer  "service_quote_type",    limit: 4
     t.integer  "cedula_id",             limit: 4,        default: 0
+    t.text     "legend",                limit: 65535
   end
 
   add_index "requested_services", ["laboratory_service_id"], name: "index_requested_services_on_laboratory_service_id", using: :btree
@@ -901,8 +914,8 @@ ActiveRecord::Schema.define(version: 20180704234419) do
     t.text     "request_link",                limit: 65535
     t.text     "description",                 limit: 16777215
     t.integer  "status",                      limit: 4,                                 default: 1
-    t.datetime "created_at",                                                                        null: false
-    t.datetime "updated_at",                                                                        null: false
+    t.datetime "created_at",                                                                            null: false
+    t.datetime "updated_at",                                                                            null: false
     t.integer  "supervisor_id",               limit: 4
     t.integer  "consecutive",                 limit: 4
     t.string   "system_id",                   limit: 255
@@ -926,6 +939,7 @@ ActiveRecord::Schema.define(version: 20180704234419) do
     t.string   "vinculacion_client_zip",      limit: 255
     t.integer  "estimated_time",              limit: 4,                                 default: 0
     t.string   "vinculacion_hash",            limit: 255
+    t.boolean  "presupuesto_enviado",                                                   default: false
   end
 
   add_index "service_requests", ["request_type_id"], name: "index_service_requests_on_request_type_id", using: :btree
@@ -1049,6 +1063,23 @@ ActiveRecord::Schema.define(version: 20180704234419) do
     t.datetime "ST99"
   end
 
+  create_table "tems", id: false, force: :cascade do |t|
+    t.integer  "id",       limit: 4, default: 0
+    t.integer  "labser",   limit: 4, default: 0
+    t.integer  "0",        limit: 4, default: 0,  null: false
+    t.integer  "id1",      limit: 4, default: 0,  null: false
+    t.string   "TEMPLATE", limit: 8, default: "", null: false
+    t.string   "a",        limit: 0, default: "", null: false
+    t.integer  "B",        limit: 4, default: 0,  null: false
+    t.binary   "c",        limit: 0
+    t.integer  "cero",     limit: 4, default: 0,  null: false
+    t.datetime "f1",                              null: false
+    t.datetime "f2",                              null: false
+    t.integer  "ce2",      limit: 4, default: 0,  null: false
+    t.binary   "N2",       limit: 0
+    t.integer  "Z1",       limit: 4, default: 0,  null: false
+  end
+
   create_table "units", force: :cascade do |t|
     t.string   "short_name", limit: 10
     t.string   "name",       limit: 255
@@ -1068,7 +1099,7 @@ ActiveRecord::Schema.define(version: 20180704234419) do
     t.datetime "updated_at",                                                           null: false
     t.integer  "supervisor1_id",   limit: 4
     t.integer  "supervisor2_id",   limit: 4
-    t.boolean  "require_auth",     limit: 1,                           default: false
+    t.boolean  "require_auth",                                         default: false
     t.integer  "business_unit_id", limit: 4,                           default: 1
     t.integer  "department_id",    limit: 4,                           default: 0
   end
@@ -1089,7 +1120,7 @@ ActiveRecord::Schema.define(version: 20180704234419) do
     t.datetime "updated_at",                                                           null: false
     t.integer  "supervisor1_id",   limit: 4
     t.integer  "supervisor2_id",   limit: 4
-    t.boolean  "require_auth",     limit: 1,                           default: false
+    t.boolean  "require_auth",                                         default: false
     t.integer  "business_unit_id", limit: 4,                           default: 1
   end
 

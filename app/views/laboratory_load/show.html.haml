@@ -1,0 +1,200 @@
+%h1= @laboratory.name
+
+- por_tipo = {}
+- por_servicio = {}
+
+- received_samples = 0
+
+- @received.each do |r|
+  - request_type_name = r.service_request.request_type.name rescue ' Sin tipo'
+  - service_name = r.laboratory_service.name rescue ' Sin tipo'
+  - received_samples += r.sample.quantity
+  - if !por_tipo[request_type_name].nil?
+    - if !por_tipo[request_type_name]['Recibidas'].nil?
+      - por_tipo[request_type_name]['Recibidas'] += r.sample.quantity
+    - else 
+      - por_tipo[request_type_name]['Recibidas'] = r.sample.quantity
+  - else
+    - por_tipo[request_type_name] = {} 
+    - por_tipo[request_type_name]['Recibidas'] = r.sample.quantity
+
+  - if !por_servicio[service_name].nil?
+    - if !por_servicio[service_name]['Recibidas'].nil?
+      - por_servicio[service_name]['Recibidas'] += r.sample.quantity
+    - else 
+      - por_servicio[service_name]['Recibidas'] = r.sample.quantity
+  - else
+    - por_servicio[service_name] = {} 
+    - por_servicio[service_name]['Recibidas'] = r.sample.quantity
+
+
+- assigned_samples = 0
+- @assigned.each do |r|
+  - request_type_name = r.service_request.request_type.name rescue ' Sin tipo'
+  - service_name = r.laboratory_service.name rescue ' Sin tipo'
+  - assigned_samples += r.sample.quantity
+  - if !por_tipo[request_type_name].nil?
+    - if !por_tipo[request_type_name]['Asignadas'].nil?
+      - por_tipo[request_type_name]['Asignadas'] += r.sample.quantity
+    - else 
+      - por_tipo[request_type_name]['Asignadas'] = r.sample.quantity
+  - else 
+    - por_tipo[request_type_name] = {}
+    - por_tipo[request_type_name]['Asignadas'] = r.sample.quantity
+
+  - if !por_servicio[service_name].nil?
+    - if !por_servicio[service_name]['Asignadas'].nil?
+      - por_servicio[service_name]['Asignadas'] += r.sample.quantity
+    - else 
+      - por_servicio[service_name]['Asignadas'] = r.sample.quantity
+  - else
+    - por_servicio[service_name] = {} 
+    - por_servicio[service_name]['Asignadas'] = r.sample.quantity
+
+- in_progress_samples = 0
+- @in_progress.each do |r|
+  - request_type_name = r.service_request.request_type.name rescue ' Sin tipo'
+  - service_name = r.laboratory_service.name rescue ' Sin tipo'
+  - in_progress_samples += r.sample.quantity
+  - if !por_tipo[request_type_name].nil?
+    - if !por_tipo[request_type_name]['En proceso'].nil?
+      - por_tipo[request_type_name]['En proceso'] += r.sample.quantity
+    - else 
+      - por_tipo[request_type_name]['En proceso'] = r.sample.quantity
+  - else
+    - por_tipo[request_type_name] = {} 
+    - por_tipo[request_type_name]['En proceso'] = r.sample.quantity
+
+  - if !por_servicio[service_name].nil?
+    - if !por_servicio[service_name]['En proceso'].nil?
+      - por_servicio[service_name]['En proceso'] += r.sample.quantity
+    - else 
+      - por_servicio[service_name]['En proceso'] = r.sample.quantity
+  - else
+    - por_servicio[service_name] = {} 
+    - por_servicio[service_name]['En proceso'] = r.sample.quantity
+
+- quote_samples = 0
+- @quote.each do |r|
+  - request_type_name = r.service_request.request_type.name rescue ' Sin tipo'
+  - service_name = r.laboratory_service.name rescue ' Sin tipo'
+  - quote_samples += r.sample.quantity
+  - if !por_tipo[request_type_name].nil?
+    - if !por_tipo[request_type_name]['Cotización'].nil?
+      - por_tipo[request_type_name]['Cotización'] += r.sample.quantity
+    - else 
+      - por_tipo[request_type_name]['Cotización'] = r.sample.quantity
+  - else 
+    - por_tipo[request_type_name] = {}
+    - por_tipo[request_type_name]['Cotización'] = r.sample.quantity
+
+  - if !por_servicio[service_name].nil?
+    - if !por_servicio[service_name]['Cotización'].nil?
+      - por_servicio[service_name]['Cotización'] += r.sample.quantity
+    - else 
+      - por_servicio[service_name]['Cotización'] = r.sample.quantity
+  - else
+    - por_servicio[service_name] = {} 
+    - por_servicio[service_name]['Cotización'] = r.sample.quantity
+
+- waiting_samples = 0
+- @waiting.each do |r|
+  - request_type_name = r.service_request.request_type.name rescue ' Sin tipo'
+  - service_name = r.laboratory_service.name rescue ' Sin tipo'
+  - waiting_samples += r.sample.quantity
+  - if !por_tipo[request_type_name].nil?
+    - if !por_tipo[request_type_name]['Espera cliente'].nil?
+      - por_tipo[request_type_name]['Espera cliente'] += r.sample.quantity
+    - else 
+      - por_tipo[request_type_name]['Espera cliente'] = r.sample.quantity
+  - else
+    - por_tipo[request_type_name] = {} 
+    - por_tipo[request_type_name]['Espera cliente'] = r.sample.quantity
+
+  - if !por_servicio[service_name].nil?
+    - if !por_servicio[service_name]['Espera cliente'].nil?
+      - por_servicio[service_name]['Espera cliente'] += r.sample.quantity
+    - else 
+      - por_servicio[service_name]['Espera cliente'] = r.sample.quantity
+  - else
+    - por_servicio[service_name] = {} 
+    - por_servicio[service_name]['Espera cliente'] = r.sample.quantity
+
+%table.load-table
+  %tr
+    %td
+      .load-lab-box
+        %h2.vinculacion= "Muestras en cotización"
+        .load-lab-qty= quote_samples + waiting_samples
+        .load-lab-services-qty
+          = "#{@quote.count} solicitudes en cotización"
+          %br
+          ="#{@waiting.count} solicitudes en espera del cliente"
+    %td
+      .load-lab-box
+        %h2.received= "Muestras recibidas"
+        .load-lab-qty= received_samples
+        .load-lab-services-qty
+          = "#{@received.count} solicitudes"
+          %br
+          %br
+
+    %td
+      .load-lab-box
+        %h2.assigned= "Muestras asignadas"
+        .load-lab-qty= assigned_samples
+        .load-lab-services-qty
+          = "#{@assigned.count} solicitudes"
+          %br
+          %br
+    %td
+      .load-lab-box
+        %h2.in_progress= "Muestras en proceso"
+        .load-lab-qty= in_progress_samples
+        .load-lab-services-qty
+          = "#{@in_progress.count} solicitudes"
+          %br
+          %br
+
+
+%h3= "Carga por tipo de solicitud"
+%table.table.table-bordered
+  %tr.title-solicitud
+    %th= "SOLICITUD"
+    %th.qty-cell= "Cotización"
+    %th.qty-cell= "Espera cliente"
+    %th.qty-cell= "Recibidas"
+    %th.qty-cell= "Asignadas"
+    %th.qty-cell= "En proceso"
+  - por_tipo.each do |k,v|
+    %tr 
+      %td
+        %strong= k
+      %td.qty-cell= v["Cotización"] rescue '--'
+      %td.qty-cell= v["Espera cliente"] rescue '--'
+      %td.qty-cell= v["Recibidas"] rescue '--'
+      %td.qty-cell= v["Asignadas"] rescue '--'
+      %td.qty-cell= v["En proceso"] rescue '--'
+
+%h3= "Carga por servicio de laboratorio"
+%table.table.table-bordered
+  %tr.title-servicio
+    %th= "SERVICIO"
+    %th.qty-cell= "Cotización"
+    %th.qty-cell= "Espera cliente"
+    %th.qty-cell= "Recibidas"
+    %th.qty-cell= "Asignadas"
+    %th.qty-cell= "En proceso"
+  - por_servicio.each do |k,v|
+    %tr 
+      %td
+        %strong= k
+      %td.qty-cell= v["Cotización"] rescue '--'
+      %td.qty-cell= v["Espera cliente"] rescue '--'
+      %td.qty-cell= v["Recibidas"] rescue '--'
+      %td.qty-cell= v["Asignadas"] rescue '--'
+      %td.qty-cell= v["En proceso"] rescue '--'
+    
+  
+
+    

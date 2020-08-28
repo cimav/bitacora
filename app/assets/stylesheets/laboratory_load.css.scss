@@ -1,0 +1,74 @@
+// Place all the styles related to the LaboratoryLoad controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.load-table {
+  width: 100%;
+  td {
+    padding: 1em;
+  }
+}
+
+.title-solicitud {
+  background: $brand-success;
+  color: #fff;
+}
+
+.title-servicio {
+  background: $brand-warning;
+  color: #fff;
+}
+
+.loading {
+  margin: 5em;
+  text-align: center;
+  color: #999;
+}
+
+.load-lab-box {
+  width: 100%;
+  border: 1px solid #ddd;
+  margin: 1em;
+  padding: 0;
+
+  h2 {
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #ddd;
+    padding: 0.5em;
+    &.vinculacion {
+      background: #a58ad5;
+      color: #fff;
+    }
+    &.received {
+      background: #f0842a;
+      color: #fff;
+    }
+    &.assigned {
+      background: #2ec6c8;
+      color: #fff;
+    }
+    &.in_progress {
+      background: $brand-primary;
+      color: #fff;
+    }
+    
+  }
+  .load-lab-qty {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 16px;
+  }
+
+  .load-lab-services-qty {
+    font-size: 90%;
+    text-align: center;
+    color: #555;
+    margin-bottom: 20px;
+  }
+}
+
+.qty-cell { text-align: center;}

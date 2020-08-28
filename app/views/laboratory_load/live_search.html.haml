@@ -1,0 +1,9 @@
+%ul
+  - @laboratories.each do |lab|
+    %li.laboratory-load-item.item{"data-id" => lab.id}
+      .laboratories-item-name{:id => "laboratories_name_#{lab.id}"}= lab.name
+      .laboratories-item-user{:id => "laboratories_user_#{lab.id}"}= lab.user.full_name
+      .laboratories-item-unit{:id => "laboratories_unit_#{lab.id}"}= lab.business_unit.name
+.items-counter
+  .items-counter-inner
+    = "#{@laboratories.count} laboratorios"

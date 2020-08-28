@@ -444,6 +444,11 @@ $(document).on("click", "#folders-link", () ->
   window.location = url
 )
 
+$(document).on("click", "#load-link", () ->
+  url = '/#!/laboratory-load'
+  window.location = url
+)
+
 $(document).on('click', '.lab-link', () ->
     lab_id = $(this).data('laboratory_id')
     url = '/laboratory/' + lab_id
@@ -1371,7 +1376,41 @@ $(document).on('change', '.pq_other_price', () ->
   )
 
 
+#-------------------
+# Laboratories Load
+#-------------------
 
+@LoadLiveSearch = LoadLiveSearch = () ->
+  form = $("#load-live-search")
+  url = "/laboratory-load/live_search"
+  formData = form.serialize()
+  $.get(url, formData, (html) ->
+    $("#laboratories-list").empty().html(html)
+    $("#laboratories-list .laboratory-load-item:first").click()
+  )
+
+$(document).on("change", '#load_search_laboratory_id', () ->
+  LoadLiveSearch()
+)
+
+$(document).on('change', '#load-laboratories-unit', () ->
+    LoadLiveSearch()
+  )
+
+$(document).on('keyup', '#load-laboratories-search-box', () ->
+    LoadLiveSearch()
+  )
+
+$(document).on("click", ".laboratory-load-item", () ->
+  id = $(this).attr('data-id')
+  url = '/laboratory-load/' + id 
+  $(".laboratory-load-item").removeClass("active")
+  $(this).addClass('active')
+  $('#laboratory-details').empty().html('<div class="loading">Cargando...</div>')
+  $.get(url, {}, (html) ->
+    $('#laboratory-details').empty().html(html)
+  )
+)
 
 
 

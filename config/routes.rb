@@ -278,6 +278,10 @@ Bitacora::Application.routes.draw do
   get '/admin/service_types' => 'admin#service_types'
   get '/admin/other_types' => 'admin#other_types'
 
+  get '/laboratory-load' => 'laboratory_load#index'
+  get '/laboratory-load/live_search' => 'laboratory_load#live_search'
+  get '/laboratory-load/:id' => 'laboratory_load#show'
+
 
   get '/reports' => 'reports#index'
   get '/reports/eficiencia' => 'reports#eficiencia'

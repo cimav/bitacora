@@ -1,0 +1,18 @@
+#header-bar
+  %h2= "Carga de laboratorios"
+#laboratories-panel
+  #laboratories-search-panel.search-box
+    = form_tag 'xxx', :id => 'load-live-search', :method => 'get', :remote => true do
+      - laboratory_type_options = "<option value=\"0\">Sede</option>"
+      - BusinessUnit.order('id').each do |ct|
+        - laboratory_type_options += "<option value=\"#{ct.id}\">#{ct.name}</option>"
+      = select_tag "load-laboratories-unit", laboratory_type_options.html_safe, :class => 'form-control'
+      = text_field_tag :q, nil, :id => 'load-laboratories-search-box', :placeholder => 'Busqueda', :class => 'form-control'
+  #laboratories-list.items-placeholder 
+  
+#laboratory-details
+:javascript
+  $( document ).ready(function() {
+    LoadLiveSearch()
+    activeSideNav('#load-link');
+  });

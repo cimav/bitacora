@@ -13,7 +13,7 @@
           = text_area_tag 'activity_log_msg', '', {:class => 'form-control'}
       .dialog-footer
         .send-mail-footer
-          = check_box_tag 'send_mail', 'yes', false, {:style => 'float: left;'}
-          = label_tag 'send_mail', 'Enviar por correo.', {:style => 'margin-left: 4px; float: left;'}
+          = hidden_field_tag 'send_mail', 'yes'
+          = label_tag 'send_mail', '√ Enviar por correo.', {:style => 'margin-left: 4px; float: left;'}
         = button_tag "Finalizar", {:class => "btn btn-primary", :type => "submit"}
       .clearfix

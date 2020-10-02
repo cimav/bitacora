@@ -43,6 +43,7 @@ Bitacora::Application.routes.draw do
     resources :requested_services do
       member do
         get 'initial_dialog'
+        get 'deliver_dialog'
         get 'receive_dialog'
         get 'assign_dialog'
         get 'suspend_dialog'
@@ -289,6 +290,11 @@ Bitacora::Application.routes.draw do
   get '/auth/:provider/callback' => 'sessions#create'
   get '/auth/failure' => 'sessions#failure'
   get "/logout" => 'sessions#destroy'
+
+  get "/survey/:token" => 'requested_services#survey'
+  post "/save_survey/:token" => 'requested_services#save_survey'
+  post "/return_to_lab/:token" => 'requested_services#return_to_lab'
+
 
   get '/go-folder/:number' => 'home#redirect_service_request', :constraints => {:number => /.*/} 
   get ':number' => 'home#redirect_requested_service', :constraints => {:number => /.*/} 

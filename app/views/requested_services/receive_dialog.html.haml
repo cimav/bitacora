@@ -32,13 +32,19 @@
                     - u_options += "<option value=\"#{m.user_id}\" #{sel}>#{sug}#{m.user.full_name}</option>"
                 = f.select :user_id, u_options.html_safe, {}, :class => "form-control"
             %td
+              .requested-user.field
+                = label_tag :results_date, 'Fecha de entrega:'
+                %br
+                - today = Date.today.strftime("%Y-%m-%d")
+                = f.date_field :results_date, :value => today
+            %td
               - display = sug == ''? "display: none;" : ""
               #service-start{:style => "#{display}"}
                 = check_box_tag 'start_service', 'yes', false, {:style => 'float: left;'}
                 = label_tag 'start_service', ' Iniciar servicio', {:style => 'white-space: pre;'}
       .dialog-footer
         .send-mail-footer
-          = check_box_tag 'send_mail', 'yes', false, {:style => 'float: left;'}
+          = check_box_tag 'send_mail', 'yes', true, {:style => 'float: left;'}
           = label_tag 'send_mail', 'Enviar por correo.', {:style => 'margin-left: 4px; float: left;'}
         = button_tag "Recibir", {:class => "btn btn-primary", :type => "submit"}
       .clearfix

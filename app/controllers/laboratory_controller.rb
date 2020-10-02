@@ -20,6 +20,7 @@ class LaboratoryController < ApplicationController
                   requested_services.number, 
                   requested_services.status,
                   requested_services.created_at, 
+                  requested_services.results_date, 
                   samples.service_request_id, 
                   samples.service_request_id AS sample_service_request,
                   service_requests.status AS service_request_status,
@@ -56,11 +57,13 @@ class LaboratoryController < ApplicationController
       if params[:lrs_status] == '-abiertos'
         abiertos = []
         abiertos << RequestedService::INITIAL
+        abiertos << RequestedService::DELIVERED
         abiertos << RequestedService::RECEIVED
         abiertos << RequestedService::ASSIGNED
         abiertos << RequestedService::SUSPENDED
         abiertos << RequestedService::REINIT
         abiertos << RequestedService::IN_PROGRESS
+        abiertos << RequestedService::RETURNED
         abiertos << RequestedService::TO_QUOTE
         abiertos << RequestedService::WAITING_START
         sql = sql + " AND (requested_services.status IN (#{abiertos.join(',')}))  "

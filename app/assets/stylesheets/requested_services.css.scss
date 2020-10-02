@@ -2,6 +2,24 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.results-date {
+  margin-left: 1em;
+  border-left: 1px solid #ddd;
+  padding-left: 1em;
+
+}
+.deliver-today { color: #DDDD24; }
+.deliver-ontime { color: #0a0; }
+.deliver-delayed { color: #a00; }
+
+.header-status {
+  .deliver-today,
+  .deliver-ontime,
+  .deliver-delayed { 
+     background: rgba(255, 255, 255, 0.3);
+     padding: 4px;
+  }
+}
 .status-initial     { color: $grey; }
 .status-received    { color: #f0842a; }
 .status-assigned    { color: #2ec6c8; }
@@ -10,6 +28,7 @@
 .status-in-progress { color: $brand-primary; }
 .status-finished    { color: $brand-success }
 .status-canceled    { color: $brand-danger; }
+.status-returned    { color: $brand-warning; }
 .status-deleted    { color: $brand-danger; }
 .status-auth        { color: $brand-warning; }
 .status-sup-auth        { color: $brand-warning; }
@@ -34,6 +53,7 @@
 .bg-status-finished    { background: $brand-success }
 .bg-status-canceled    { background: $brand-danger; }
 .bg-status-deleted    { background: $brand-danger; }
+.bg-status-returned        { background: $brand-warning; }
 .bg-status-auth        { background: $brand-warning; }
 .bg-status-sup-auth        { background: $brand-warning; }
 .bg-status-to-quote    { background: #a58ad5; }
@@ -203,4 +223,32 @@
   }
 }.edit-legend-button {
   float: right;
+}
+
+
+#action-confirm {
+  .btn {
+    margin: 0 0.5em;
+  }
+}
+
+#survey-area {
+  display: none;
+  padding: 1em;
+}
+
+#thanks-area {
+  display: none;
+  padding: 1em;
+  font-size: 1.2em;
+  text-align: center;
+}
+
+#return-area {
+  display: none;
+  padding: 1em;
+  text-align: center;
+  textarea {
+    text-align: left;
+  }
 }

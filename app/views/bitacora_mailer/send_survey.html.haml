@@ -12,7 +12,7 @@
                 = image_tag ("http://cimav.edu.mx/foto/#{@user.email.split('@')[0]}/100"), :style => "border-radius: 50em; -webkit-border-radius: 50em; -moz-border-radius: 50em;"
               %td
                 %h2{:style => "margin-bottom: 2px;"}= @user.full_name
-                = mail_to @user.email, @user.email, :subject =>  "[R] #{@requested_service.number}: #{@requested_service.laboratory_service.name}"
+                = mail_to @user.email, @user.email, :subject =>  "[R] #{@requested_service.number}: Encuesta de satisfacción"
 
       %div{:style => "background-color: #ffffff; padding: 20px; padding-bottom: 60px;"}
         %table
@@ -30,18 +30,7 @@
                           = "Mensaje"
                       %td{:style => 'vertical-align: top; padding-left: 20px;'}
                         = item["msg"]
-              - if @requested_service.status.to_i == RequestedService::FINISHED    
-                - surveys = @requested_service.requested_service_surveys
-                - survey = surveys.first if surveys && surveys.count > 0
-                %br
-                %br
-                %div{:style => 'margin: 0 auto; text-align: center; font-size: 150%; border: 1px solid #0d47a1; background-color: #1976d2; padding: 1em;' }
-                  - token = survey.token rescue '--'
-                  - if Rails.env.production?
-                    - url = "http://bitacora.cimav.edu.mx"
-                  - else
-                    - url = "http://localhost:3000"
-                  = link_to "Confirmar entrega y realizar encuesta de satisfacción", "#{url}/survey/#{token}", {:style => 'color: #fff; text-decoration: none;'}
+                  
               %br
               %br
               = link_to "Ir a #{@requested_service.number}: #{@requested_service.laboratory_service.name}", "http://bitacora.cimav.edu.mx/#{@requested_service.number}"

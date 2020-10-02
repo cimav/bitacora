@@ -291,10 +291,12 @@ class BitacoraMailer < ActionMailer::Base
     @to << requested_service.sample.service_request.user.email
 
     # Sender
-    @to << user.email
+    if requested_service.status.to_i != RequestedService::FINISHED
+      @to << user.email
+    end
 
     # Assigned
-    if !requested_service.user.blank?
+    if !requested_service.user.blank? && requested_service.status.to_i != RequestedService::FINISHED
       @to << requested_service.user.email
     end
 
@@ -321,6 +323,7 @@ class BitacoraMailer < ActionMailer::Base
     # end
 
     @requested_service = requested_service
+
     @user = user
     @msgs = msgs
 
@@ -330,6 +333,8 @@ class BitacoraMailer < ActionMailer::Base
     
     mail(:to => @to, :from => @from, :reply_to => reply_to, :subject => subject)
   end
+
+
 
   def request_department_auth(service_request)
     @from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"

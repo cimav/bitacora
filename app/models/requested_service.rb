@@ -1,6 +1,6 @@
 # coding: utf-8
 class RequestedService < ActiveRecord::Base
-  attr_accessible :laboratory_service_id, :sample_id, :details, :status, :suggested_user_id, :user_id, :from_id, :service_quote_type, :legend
+  attr_accessible :laboratory_service_id, :results_date, :sample_id, :details, :status, :suggested_user_id, :user_id, :from_id, :service_quote_type, :legend
   belongs_to :user
   belongs_to :suggested_user, :class_name => 'User', :foreign_key => 'suggested_user_id'
   belongs_to :sample
@@ -14,6 +14,8 @@ class RequestedService < ActiveRecord::Base
   has_many :requested_service_equipments
   has_many :requested_service_materials
   has_many :requested_service_others
+
+  has_many :requested_service_surveys
 
   after_create :set_consecutive
   after_create :set_auth_if_needed
@@ -32,14 +34,19 @@ class RequestedService < ActiveRecord::Base
   REQ_SUP_AUTH   = 7
   REQ_OWNER_AUTH = 8
 
+  DELIVERED = 31
+
   TO_QUOTE       = 21
   WAITING_START  = 22
   QUOTE_AUTH     = 23
 
   FINISHED       = 99
+  CONFIRMED      = 100
+  RETURNED = -3
 
   STATUS = {
     INITIAL        => 'Inicio',
+    DELIVERED      => 'Muestra Entregada',
     RECEIVED       => 'Muestra Recibida',
     ASSIGNED       => 'Técnico Asignado',
     SUSPENDED      => 'Servicio Suspendido',
@@ -53,11 +60,14 @@ class RequestedService < ActiveRecord::Base
     TO_QUOTE       => 'Costeando',
     WAITING_START  => 'Se envio costeo',
 
-    FINISHED       => 'Finalizado'
+    FINISHED       => 'Finalizado',
+    CONFIRMED      => 'Confirmada entrega de resultados',
+    RETURNED       => 'Solicitante no acepto resultados'
   }
 
   STATUS_CLASS = {
     INITIAL        => 'status-initial',
+    DELIVERED      => 'status-received',
     RECEIVED       => 'status-received',
     ASSIGNED       => 'status-assigned',
     SUSPENDED      => 'status-suspended',
@@ -70,7 +80,9 @@ class RequestedService < ActiveRecord::Base
     TO_QUOTE       => 'status-to-quote',
     WAITING_START  => 'status-waiting',
 
-    FINISHED       => 'status-finished'  
+    FINISHED       => 'status-finished',
+    CONFIRMED      => 'status-confirmed',  
+    RETURNED       => 'status-returned'    
   }
 
   QUOTE_USE_CATALOG = 1
@@ -202,11 +214,14 @@ class RequestedService < ActiveRecord::Base
   def icon_class
     icon = 'glyphicon-home'     if status.to_i == INITIAL
     icon = 'glyphicon-inbox'    if status.to_i == RECEIVED
+    icon = 'glyphicon-inbox'    if status.to_i == DELIVERED
     icon = 'glyphicon-user'     if status.to_i == ASSIGNED
     icon = 'glyphicon-minus'    if status.to_i == SUSPENDED
     icon = 'glyphicon-repeat'   if status.to_i == REINIT
     icon = 'glyphicon-cog'      if status.to_i == IN_PROGRESS
+    icon = 'glyphicon-cog'      if status.to_i == RETURNED
     icon = 'glyphicon-ok'       if status.to_i == FINISHED
+    icon = 'glyphicon-ok'       if status.to_i == CONFIRMED
     icon = 'glyphicon-remove'   if status.to_i == CANCELED
     icon = 'glyphicon-lock'     if status.to_i == REQ_SUP_AUTH
     icon = 'glyphicon-lock'     if status.to_i == REQ_OWNER_AUTH
@@ -218,11 +233,14 @@ class RequestedService < ActiveRecord::Base
   def status_class
     st = 'status-initial'     if status.to_i == INITIAL
     st = 'status-received'    if status.to_i == RECEIVED
+    st = 'status-received'    if status.to_i == DELIVERED
     st = 'status-assigned'    if status.to_i == ASSIGNED
     st = 'status-suspended'   if status.to_i == SUSPENDED
     st = 'status-reinit'      if status.to_i == REINIT
     st = 'status-in-progress' if status.to_i == IN_PROGRESS
+    st = 'status-returned'    if status.to_i == RETURNED
     st = 'status-finished'    if status.to_i == FINISHED
+    st = 'status-finished'    if status.to_i == CONFIRMED
     st = 'status-canceled'    if status.to_i == CANCELED
     st = 'status-auth'        if status.to_i == REQ_SUP_AUTH
     st = 'status-auth'        if status.to_i == REQ_OWNER_AUTH

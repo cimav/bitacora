@@ -29,6 +29,7 @@ $(document).on('change', '#start_service', () ->
       $('#requested_service_status').val("3")
 )
 
+
 ### Update Legend ###
 $(document).on('ajax:beforeSend', '#edit-legend-requested-services-form', (evt, xhr, settings) ->
  $('.error-message').remove()

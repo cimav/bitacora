@@ -5,7 +5,9 @@
 - im_req_supervisor = @requested_service.sample.service_request.user.supervisor1_id == current_user.id || @requested_service.sample.service_request.user.supervisor2_id == current_user.id || @requested_service.sample.service_request.supervisor_id == current_user.id
 
 
-- received_action = @requested_service.status.to_i == RequestedService::INITIAL && im_lab_admin
+- received_action = (@requested_service.status.to_i == RequestedService::INITIAL || @requested_service.status.to_i == RequestedService::DELIVERED || @requested_service.status.to_i == RequestedService::RETURNED) && im_lab_admin
+- delivered_action = @requested_service.status.to_i == RequestedService::INITIAL && im_requestor
+
 
 - assigned_action = @requested_service.status.to_i == RequestedService::RECEIVED && im_lab_admin
 
@@ -51,9 +53,12 @@
 -                      @requested_service.status.to_i < RequestedService::FINISHED && 
 -                      im_lab_admin) ||
 -                   (  (  @requested_service.status.to_i == RequestedService::INITIAL || 
--                         @requested_service.status.to_i == RequestedService::SUSPENDED) &&
+-                         @requested_service.status.to_i == RequestedService::SUSPENDED || 
+-                         @requested_service.status.to_i == RequestedService::RETURNED) &&
 -                      im_requestor ) ||
--                   ((@requested_service.status.to_i == RequestedService::REQ_OWNER_AUTH) && im_requestor)
+-                   ((@requested_service.status.to_i == RequestedService::REQ_OWNER_AUTH) && im_requestor) ||
+-                    (  @requested_service.status.to_i == RequestedService::RETURNED && 
+-                      im_lab_admin) 
 
 
 
@@ -66,6 +71,29 @@
 .sheet
   .header-status{:class => "bg-#{@requested_service.status_class}"}
     %span.status= @requested_service.status_text
+    - if !@requested_service.results_date.blank?
+      %span.results-date
+        - if @requested_service.status.to_i != RequestedService::CANCELED &&
+          -    @requested_service.status.to_i != RequestedService::CONFIRMED &&
+          -    @requested_service.status.to_i != RequestedService::FINISHED  
+          %strong= "Entrega programada: "
+          = "#{@requested_service.results_date},"
+          - days = (@requested_service.results_date - Date.today).to_i
+          - if days == 0
+            %span.deliver-today= ' entregar hoy'
+          - elsif days > 0
+            %span.deliver-ontime= " faltan #{days} días"
+          - else
+            %span.deliver-delayed= " retraso de #{days * -1} días"
+        - else
+          - days = (@requested_service.results_date - @requested_service.received_date.to_date).to_i
+          - if days == 0
+            %span.deliver-today= 'Finalizado a tiempo'
+          - elsif days > 0
+            %span.deliver-ontime= "Finalizado a tiempo"
+          - else
+            %span.deliver-delayed= "Retraso de #{days * -1} días"
+
     %span.number= @requested_service.sample.service_request.number
   %table#rs-header
     %tr
@@ -74,6 +102,7 @@
           = @requested_service.laboratory_service.name
         - if !@requested_service.details.blank?
           %p= @requested_service.details
+        
         %strong= "Laboratorio: "
         = @requested_service.laboratory_service.laboratory.name
         %br
@@ -86,16 +115,21 @@
         %br
           .numero-interno{:style => 'font-size: 95%; color: #888;'}
             = "Número Interno: #{@requested_service.number}"
+
         
       %td#requested-service-actions
         - if initial_action
           %button{:class => "btn btn-block btn-status bg-status-initial", :status_action => RequestedService::INITIAL, :id => 'change_status_initial'}
             %span.glyphicon.glyphicon-home
             = "Inicio"
+        - if delivered_action
+          %button{:class => "btn btn-block btn-status bg-status-received", :status_action => RequestedService::DELIVERED, :id => 'change_status_delivered'}
+            %span.glyphicon.glyphicon-th-large
+            = "Entregar muestra"
         - if received_action
           %button{:class => "btn btn-block btn-status bg-status-received", :status_action => RequestedService::RECEIVED, :id => 'change_status_received'}
             %span.glyphicon.glyphicon-th-large
-            = "Recibir"
+            = "Recibir muestra"
         - if assigned_action
           %button{:class => "btn btn-block btn-status bg-status-assigned", :status_action => RequestedService::ASSIGNED, :id => 'change_status_assigned'}
             %span.glyphicon.glyphicon-user

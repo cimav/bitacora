@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200626183849) do
+ActiveRecord::Schema.define(version: 20200930054501) do
 
   create_table "P170080", id: false, force: :cascade do |t|
     t.integer  "id",                 limit: 4,        default: 0,   null: false
@@ -739,6 +739,19 @@ ActiveRecord::Schema.define(version: 20200626183849) do
 
   add_index "requested_service_others", ["requested_service_id"], name: "index_requested_service_others_on_requested_service_id", using: :btree
 
+  create_table "requested_service_surveys", force: :cascade do |t|
+    t.integer  "requested_service_id", limit: 4
+    t.integer  "q1",                   limit: 4
+    t.integer  "q2",                   limit: 4
+    t.integer  "q3",                   limit: 4
+    t.integer  "q4",                   limit: 4
+    t.integer  "q5",                   limit: 4
+    t.text     "notes",                limit: 65535
+    t.string   "token",                limit: 255
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
   create_table "requested_service_technicians", force: :cascade do |t|
     t.integer  "requested_service_id", limit: 4
     t.integer  "user_id",              limit: 4
@@ -768,6 +781,9 @@ ActiveRecord::Schema.define(version: 20200626183849) do
     t.integer  "service_quote_type",    limit: 4
     t.integer  "cedula_id",             limit: 4,        default: 0
     t.text     "legend",                limit: 65535
+    t.date     "results_date"
+    t.datetime "received_date"
+    t.datetime "finished_date"
   end
 
   add_index "requested_services", ["laboratory_service_id"], name: "index_requested_services_on_laboratory_service_id", using: :btree

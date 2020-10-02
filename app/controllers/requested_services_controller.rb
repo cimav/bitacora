@@ -1,7 +1,7 @@
 # coding: utf-8
 require 'resque-bus'
 class RequestedServicesController < ApplicationController
-  before_filter :auth_required
+  before_filter :auth_required, :except => [:survey, :return_to_lab]
   respond_to :html, :json
 
   def initial_dialog
@@ -15,6 +15,11 @@ class RequestedServicesController < ApplicationController
   end
 
   def owner_auth_dialog
+    @requested_service = RequestedService.find(params['id'])
+    render :layout => false
+  end
+
+  def deliver_dialog
     @requested_service = RequestedService.find(params['id'])
     render :layout => false
   end
@@ -114,6 +119,40 @@ class RequestedServicesController < ApplicationController
     else 
       render :inline => '<div class="sheet"><div class="app-message">Servicio Eliminado</div></div>'.html_safe  
     end
+  end
+
+  def survey 
+    @survey = RequestedServiceSurvey.where(:token => params[:token]).first
+    @requested_service = @survey.requested_service
+
+    if @requested_service.status.to_i == RequestedService::CONFIRMED
+      @show_survey = "true"
+    else
+      @show_survey = "false"
+    end
+
+    if @requested_service.status.to_i != RequestedService::FINISHED && @requested_service.status.to_i != RequestedService::CONFIRMED
+      redirect_to '/'
+    else 
+      render :layout => 'standalone'
+    end
+    
+  end
+
+  def save_survey
+    @survey = RequestedServiceSurvey.where(:token => params[:token]).first
+    
+    @survey.q1 = params[:q1]
+    @survey.q2 = params[:q2]
+    @survey.q3 = params[:q3]
+    @survey.q4 = params[:q4]
+    @survey.q5 = params[:q5]
+    @survey.save
+
+    @requested_service = @survey.requested_service
+    @requested_service.status = RequestedService::CONFIRMED
+    @requested_service.save
+    render :layout => 'standalone'
   end
 
   def create
@@ -222,6 +261,43 @@ class RequestedServicesController < ApplicationController
     end
   end
 
+  def return_to_lab
+    @survey = RequestedServiceSurvey.where(:token => params[:token]).first
+    @requested_service = @survey.requested_service
+    @requested_service.status = RequestedService::RETURNED
+    @requested_service.results_date = nil
+    @requested_service.finished_date = nil
+    @requested_service.save
+    msg = "El servicio #{@requested_service.number} ha sido regresado al laboratorio por el solicitante" 
+    prv_msg = []
+    prv_msg << {:status => "STATUS", :msg => "#{msg}"}
+    if !params[:msg].blank?
+      msg = params[:msg]
+      prv_msg << {:status => "USER", :msg => "#{msg}"}
+    end
+    prv_msg.each do |item|
+      @requested_service.activity_log.create(user_id:  @requested_service.sample.service_request.user_id,
+                                           service_request_id: @requested_service.sample.service_request_id,
+                                           sample_id: @requested_service.sample_id,
+                                           message_type: "#{item[:status]}",
+                                           requested_service_status: @requested_service.status,
+                                           message: "#{item[:msg]}.")
+    end
+    # Sent mail to involved
+    Resque.enqueue(StatusChangeMailer, @requested_service.id, current_user.id, prv_msg)
+    respond_with do |format|
+      format.html do
+        if request.xhr?
+          json = {}
+          json[:msg] = msg
+          render :json => json
+        else
+          redirect_to @requested_service
+        end
+      end
+    end
+  end
+
   def update
     @requested_service = RequestedService.find(params[:id])
 
@@ -231,19 +307,36 @@ class RequestedServicesController < ApplicationController
     if @requested_service.update_attributes(params[:requested_service])
       flash[:notice] = "Servicio actualizado"
       msg = @requested_service.status
+
+
       if prev_status != @requested_service.status.to_i
 
         prv_msg = []
         if prev_status.to_i == RequestedService::INITIAL
           if @requested_service.status.to_i == RequestedService::ASSIGNED
-            prv_msg << {:status => RequestedService::RECEIVED, :msg => "Muestra para el servicio #{@requested_service.number} recibida"}
+            prv_msg << {:status => RequestedService::RECEIVED, :msg => "Muestra para el servicio #{@requested_service.number} recibida, fecha de entrega programada: #{@requested_service.results_date}"}
+            @requested_service.received_date = DateTime.now
+            @requested_service.save
           end
           
           if @requested_service.status.to_i == RequestedService::IN_PROGRESS
-            prv_msg << {:status => RequestedService::RECEIVED, :msg => "Muestra para el servicio #{@requested_service.number} recibida"}
+            prv_msg << {:status => RequestedService::RECEIVED, :msg => "Muestra para el servicio #{@requested_service.number} recibida, fecha de entrega programada: #{@requested_service.results_date}"}
             prv_msg << {:status => RequestedService::ASSIGNED, :msg => "El servicio #{@requested_service.number} ha sido asignada a #{@requested_service.user.full_name}"}
+            @requested_service.received_date = DateTime.now
+            @requested_service.save
           end
         end
+
+        if @requested_service.status.to_i == RequestedService::RECEIVED
+          @requested_service.received_date = DateTime.now
+          @requested_service.save
+        end
+
+        if @requested_service.status.to_i == RequestedService::FINISHED
+          @requested_service.finished_date = DateTime.now
+          @requested_service.save
+        end
+
 
         if prev_status.to_i == RequestedService::RECEIVED
           if @requested_service.status.to_i == RequestedService::IN_PROGRESS
@@ -267,7 +360,8 @@ class RequestedServicesController < ApplicationController
         msg = "La cotización del servicio #{@requested_service.number} ha sido enviada" if @requested_service.status.to_i == RequestedService::WAITING_START
         msg = "La solicitud de autorización de costeo del servicio #{@requested_service.number} ha sido enviada" if @requested_service.status.to_i == RequestedService::QUOTE_AUTH
         msg = "El costeo del servicio #{@requested_service.number} ha sido regresado" if @requested_service.status.to_i == RequestedService::TO_QUOTE
-        msg = "Muestra para el servicio #{@requested_service.number} recibida" if @requested_service.status.to_i == RequestedService::RECEIVED
+        msg = "Muestra para el servicio #{@requested_service.number} entregada" if @requested_service.status.to_i == RequestedService::DELIVERED
+        msg = "Muestra para el servicio #{@requested_service.number} recibida, fecha de entrega programada: #{@requested_service.results_date}" if @requested_service.status.to_i == RequestedService::RECEIVED
         msg = "El servicio #{@requested_service.number} ha sido asignada a #{@requested_service.user.full_name}" if @requested_service.status.to_i == RequestedService::ASSIGNED
         msg = "El servicio #{@requested_service.number} ha sido suspendida" if @requested_service.status.to_i == RequestedService::SUSPENDED
         msg = "El servicio #{@requested_service.number} ha reiniciado" if @requested_service.status.to_i == RequestedService::REINIT
@@ -298,6 +392,15 @@ class RequestedServicesController < ApplicationController
           Resque.enqueue(QuoteNeedsAuthMailer, @requested_service.id, current_user.id)
         end
 
+        # CREATE SURVEY
+        if @requested_service.status.to_i == RequestedService::FINISHED
+          # SURVEY
+          survey = @requested_service.requested_service_surveys.new
+          survey.token = ('a'..'z').to_a.shuffle[0,8].join
+          survey.save
+        end
+
+
         if params[:send_mail] == 'yes'
           prv_msg << {:status => @requested_service.status, :msg => msg}
           if !params[:activity_log_msg].blank?
@@ -312,8 +415,10 @@ class RequestedServicesController < ApplicationController
         set_folder_status(@requested_service.sample.service_request)
         sr = @requested_service.sample.service_request
 
-        # If status changed to FINISHED then change service_request status
+        # If status changed to FINISHED then change service_request status 
         if @requested_service.status.to_i == RequestedService::FINISHED
+
+
 
           # Enviar mensaje a Vinculación a traves del bus. 
           if (sr.request_type_id == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO)

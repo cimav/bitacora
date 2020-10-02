@@ -6,7 +6,21 @@
       .rs-type{:class => "label_#{rs.request_type_short_name}"}= rs.request_type_name
       .rs-status{:class => "bg-#{RequestedService::STATUS_CLASS[rs.status.to_i]}"}= RequestedService::STATUS[rs.status.to_i]
       .rs-number= rs.service_request_number  
-      .rs-date= date_text(rs.created_at)
+      .rs-date
+        = "Creado: "
+        = date_text(rs.created_at)
+        - if !rs.results_date.blank?
+          %span.results-date
+            %strong= "Entrega programada: "
+            = "#{rs.results_date},"
+            - days = (rs.results_date - Date.today).to_i
+            - if days == 0
+              %span.deliver-today= ' entregar hoy'
+            - elsif days > 0
+              %span.deliver-ontime= " faltan #{days} días"
+            - else
+              %span.deliver-delayed= " retraso de #{days * -1} días"
+
     %table.rs-area
       %tr
         %td.rs-user

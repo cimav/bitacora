@@ -361,6 +361,15 @@ $(document).on('click', '#change_status_initial', () ->
   )
 )
 
+# DELIVERED
+$(document).on('click', '#change_status_delivered', () ->
+  $(this).prop('disabled', true)
+  url = '/samples/' + current_sample + '/requested_services/' + current_requested_service + '/deliver_dialog'
+  $.get(url, {}, (html) ->
+    $('#folder-work-panel').empty().html(html)
+  )
+)
+
 # RECEIVED
 $(document).on('click', '#change_status_received', () ->
   $(this).prop('disabled', true)

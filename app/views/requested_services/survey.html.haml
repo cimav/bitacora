@@ -1,0 +1,253 @@
+
+#header-bar
+  .lab-name= @requested_service.laboratory_service.laboratory.name
+  .service-number
+    %span.glyphicon.glyphicon-file
+    = @requested_service.sample.service_request.number
+#lab-work-panel
+  #rs-info
+    - if @requested_service.sample.service_request.system_status != ServiceRequest::SYSTEM_FREE
+      #folder-status-message
+        = @requested_service.sample.service_request.system_status_text
+      .clearfix
+    .folder
+      %h3 Carpeta
+      .folder-icon 
+        %span.glyphicon.glyphicon-folder-close
+      .folder-data
+        %span.request-type.label.label-default{:class => "label_#{@requested_service.sample.service_request.request_type.short_name}"}= @requested_service.sample.service_request.request_type.name
+        %h4= @requested_service.sample.service_request.request_link
+        %p= @requested_service.sample.service_request.description
+        .folder-collaborators
+          = image_tag (@requested_service.sample.service_request.user.avatar_url), :class => 'img-circle folder-owner'
+          - if @requested_service.sample.service_request.supervisor
+            = image_tag (@requested_service.sample.service_request.supervisor.avatar_url), :class => 'img-circle folder-supervisor'
+
+        
+          - @requested_service.sample.service_request.collaborators.each do |collaborator|
+            = image_tag (collaborator.user.avatar_url), :class => 'img-circle folder-collaborator', :title => collaborator.user.full_name
+
+      .clearfix
+    
+    - if @requested_service.sample.service_request.is_vinculacion?
+      
+      .client
+        %h3= "Cliente"
+        %h4= @requested_service.sample.service_request.vinculacion_client_name
+        .contact
+          = render :partial => 'service_requests/vinculacion_contact', :locals => {:request => @requested_service.sample.service_request}
+        .clearfix
+
+      .cotizacion
+        - if @requested_service.sample.service_request.request_type_id == ServiceRequest::SERVICIO_VINCULACION_NO_COORDINADO || (@requested_service.sample.service_request.request_type_id == ServiceRequest::SERVICIO_VINCULACION && @requested_service.sample.service_request.system_status >= ServiceRequest::SYSTEM_ACCEPTED) || (@requested_service.sample.service_request.request_type_id == ServiceRequest::SERVICIO_VINCULACION_TIPO_2 && @requested_service.sample.service_request.system_status >= ServiceRequest::SYSTEM_ACCEPTED)
+        
+          %h3= "Cotizacion"
+          .archivo
+            %a{:href => "http://sigre.cimav.edu.mx/vinculacion/descargar/cotizacion/#{@requested_service.sample.service_request.vinculacion_hash}"}
+              %span.glyphicon.glyphicon-file
+              = "Descargar cotización"
+
+
+      .dates
+        %h3= "Fechas"
+        = render :partial => 'service_requests/vinculacion_dates', :locals => {:request => @requested_service.sample.service_request}
+        .clearfix
+
+    .sample 
+      %h3 Muestra
+      .sample-icon 
+        %span.label.label-info= @requested_service.sample.quantity 
+      .sample-data
+        %h4= @requested_service.sample.identification
+        .description= @requested_service.sample.description
+      .clearfix
+      - show_details = false
+      - @requested_service.sample.sample_details.each do |sd|
+        - if !sd.client_identification.blank? 
+          - show_details = true
+          - break
+      - if show_details
+        .table-container
+        %table.table.table-striped
+          %thead
+            %tr
+              %th= "ID CIMAV"
+              %th= "ID CLIENTE"
+          %tbody
+            - @requested_service.sample.sample_details.each do |sd|
+              %tr
+                %td.consecutive= "#{@requested_service.sample.service_request.number.to_s[0..6]}-#{sd.consecutive.to_s.rjust(3, '0')}"
+                %td.client-id
+                  = sd.client_identification
+                  - if sd.notes != ''
+                    .notes= sd.notes
+
+  #folder-work-panel
+    %table#rs-header
+      %tr
+        %td#requested-service-data
+          %h3
+            = @requested_service.laboratory_service.name
+          - if !@requested_service.details.blank?
+            %p= @requested_service.details
+          
+          %strong= "Laboratorio: "
+          = @requested_service.laboratory_service.laboratory.name
+          %br
+          %strong= "Fecha muestra recibida: "
+          = date_text(@requested_service.received_date)
+          %br
+          %strong= "Fecha compromiso: "
+          = @requested_service.results_date
+          - days = (@requested_service.results_date - @requested_service.received_date.to_date).to_i
+          - if days == 0
+            %span.deliver-today= ' Finalizado a tiempo'
+          - elsif days > 0
+            %span.deliver-ontime= " Finalizado a tiempo"
+          - else
+            %span.deliver-delayed= ", retraso de #{days * -1} días"
+          %br
+          %strong= "Técnico Sugerido: "
+          = "#{(@requested_service.suggested_user.full_name rescue 'Cualquier Técnico')}"
+          - if !@requested_service.user_id.blank?
+            %br
+            %strong=  "Técnico Asignado: "
+            = "#{(@requested_service.user.full_name)}"
+          %br
+            .numero-interno{:style => 'font-size: 95%; color: #888;'}
+              = "Número Interno: #{@requested_service.number}"
+
+
+    #action-confirm{:style => 'text-align: center;'}
+      %button.btn.btn-success#button_confirm_finished= "Confirmar finalización del servicio"
+      %button.btn.btn-danger#button_return_to_lab= "Regresar el servicio al laboratorio"
+
+    #thanks-area= "Gracias por confirmar la entrega del servicio y la encuesta de satisfacción"
+
+    #return-area
+      %textarea{:style => 'width: 95%; height: 100px; margin: 1em;', :placeholder => 'Describa los motivos para regresar al laboratorio', :id => 'msg', :name => 'msg', :class => 'textarea'}
+      %button.btn.btn-danger#button_post_return_to_lab= "Regresar el servicio al laboratorio"      
+
+    #survey-area
+      %table.table
+        %tr
+          %th= ""
+          %th{:style => "text-align: center;"}= "Insuficiente"
+          %th{:style => "text-align: center;"}= "Regular"
+          %th{:style => "text-align: center;"}= "Bueno"
+          %th{:style => "text-align: center;"}= "Muy bueno"
+          %th{:style => "text-align: center;"}= "Excelente"
+        - RequestedServiceSurvey::QUESTIONS.each do |k,q|
+          %tr
+            %td= q
+            %td{:style => "text-align: center;"}
+
+              
+              - if !@show_survey
+                %input{:type=>"radio",:id=>"q#{k}", :name => "q#{k}", :value => "1" "#{sel}"}
+              - else
+                - if @survey["q#{k}"].to_i == 1 
+                  %span{:class => 'glyphicon glyphicon-ok'}
+            %td{:style => "text-align: center;"}
+              
+              - if !@show_survey
+                %input{:type=>"radio",:id=>"q#{k}", :name => "q#{k}", :value => "2" "#{sel}"}
+              - else
+                - if @survey["q#{k}"].to_i == 2
+                  %span{:class => 'glyphicon glyphicon-ok'}
+
+            %td{:style => "text-align: center;"}
+              
+              - if !@show_survey
+                %input{:type=>"radio",:id=>"q#{k}", :name => "q#{k}", :value => "3" "#{sel}"}
+              - else
+                - if @survey["q#{k}"].to_i == 3
+                  %span{:class => 'glyphicon glyphicon-ok'}
+
+            %td{:style => "text-align: center;"}
+              
+              - if !@show_survey
+                %input{:type=>"radio",:id=>"q#{k}", :name => "q#{k}", :value => "4" "#{sel}"}
+              - else
+                - if @survey["q#{k}"].to_i == 4
+                  %span{:class => 'glyphicon glyphicon-ok'}
+
+            %td{:style => "text-align: center;"}
+              
+              - if !@show_survey
+                %input{:type=>"radio",:id=>"q#{k}", :name => "q#{k}", :value => "5" "#{sel}"}
+              - else
+                - if @survey["q#{k}"].to_i == 5
+                  %span{:class => 'glyphicon glyphicon-ok'}
+
+      - if !@show_survey
+        #action-survey{:style => 'text-align: center;'}
+          %button.btn.btn-success#button_send_survey= "Enviar encuesta"
+
+- validation = ''
+- q_values = ''
+- first = true
+- RequestedServiceSurvey::QUESTIONS.each do |k,q|
+  - validation +=  "alert('Q#{k} == ' + $(\"input[name='q#{k}']:checked\").val());"
+  - validation +=  "    if ($(\"input[name='q#{k}']:checked\").val() > 0) { "
+  - validation +=  "      filled = true;             "
+  - validation +=  "    } else {                     "
+  - validation +=  "      filled = false;            "
+  - validation +=  "    }                            "
+  - if !first 
+    - q_values += ","
+  - q_values +=  "q#{k}: $(\"input[name='q#{k}']:checked\").val()"
+  - first = false
+
+:javascript
+  if (#{@show_survey}) {
+    $('#action-confirm').hide();
+    $('#survey-area').show();
+  }
+  $(document).on('click', '#button_post_return_to_lab', function() {
+    if (confirm('¿Confirmar regreso a laboratorio?')) {
+      url = "/return_to_lab/#{@survey.token}";
+      $.post(url,
+           { msg: $('#msg').val() },
+           function (xhr) {
+             window.location = "/";
+          }
+      )
+      .fail( function (data) {
+          alert('Fallo al regresar');
+        }
+      );
+    }
+    
+  });
+
+  $(document).on('click', '#button_return_to_lab', function() {
+    $('#action-confirm').hide();
+    $('#return-area').show();
+  });
+
+  $(document).on('click', '#button_confirm_finished', function() {
+    $('#action-confirm').hide();
+    $('#survey-area').show();
+  });
+
+  $(document).on('click', '#button_send_survey', function() {
+    var filled = false
+    #{validation}
+    if (!filled) {
+      alert('Es necesario llenar todas las preguntas de la encuesta');
+    } else {
+      url = "/save_survey/#{@survey.token}";
+      $.post(url,
+           { #{q_values} },
+           function (xhr) {
+             $('#survey-area').hide();
+             $('#thanks-area').show();
+          });
+    }
+    
+  });
+      
+      
+      
+  

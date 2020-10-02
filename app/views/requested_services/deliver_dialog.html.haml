@@ -1,0 +1,23 @@
+.sheet
+  .header-status{:class => "bg-status-received"}
+    %span.status= "Entregar muestras"
+    %a.close{:class => 'requested-service-link', 'data-id' => @requested_service.id, 'data-sample-id' => @requested_service.sample_id}="×"
+  .dialog-content.padded
+    = form_for @requested_service, :remote => true, :html => {:'data-type' => 'html', :id => 'status-form'} do |f|
+      .dialog-title
+        %h3
+          - if @requested_service.sample.quantity > 1 
+            = "Entregar #{@requested_service.sample.quantity} muestras"
+          - else
+            = "Entregar muestra"
+      .dialog-body
+        = f.hidden_field :status, {:value => RequestedService::DELIVERED}
+        .notes.field
+          = label_tag 'activity_log_msg', 'Notas:'
+          = text_area_tag 'activity_log_msg', '', {:class => 'form-control'}
+      .dialog-footer
+        .send-mail-footer
+          = check_box_tag 'send_mail', 'yes', true, {:style => 'float: left;'}
+          = label_tag 'send_mail', 'Enviar por correo.', {:style => 'margin-left: 4px; float: left;'}
+        = button_tag "Entregar", {:class => "btn btn-primary", :type => "submit"}
+      .clearfix

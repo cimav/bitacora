@@ -208,6 +208,9 @@
           %a{:href => "#pts", "data-toggle" => "tab", :id => "active-pts-link"}= "Puntos Estímulos"
       %li
         %a{:href => "#legend", "data-toggle" => "tab", "id" => "legend_tab"}= "Leyenda"
+      - if @requested_service.status.to_i == RequestedService::CONFIRMED
+        %li
+          %a{:href => "#survey", "data-toggle" => "tab", "id" => "legend_tab"}= "Encuesta"
 
 
   .tab-content
@@ -326,5 +329,7 @@
               = f.text_area :legend, {:class => 'form-control', :rows => 6, :placeholder => 'Escribe aquí la leyenda'}
             .edit-legend-button
               = button_tag "Guardar", {:class => "btn btn-info", :type => "submit"}
+    #survey.tab-pane
+      = render :partial => 'show_survey', :locals => {:requested_service => @requested_service }
 
 

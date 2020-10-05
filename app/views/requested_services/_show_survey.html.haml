@@ -1,0 +1,31 @@
+- @survey = requested_service.requested_service_surveys.first
+#show-survey
+  %table.table
+    %tr
+      %th= ""
+      %th{:style => "text-align: center;"}= "Insuficiente"
+      %th{:style => "text-align: center;"}= "Regular"
+      %th{:style => "text-align: center;"}= "Bueno"
+      %th{:style => "text-align: center;"}= "Muy bueno"
+      %th{:style => "text-align: center;"}= "Excelente"
+    - RequestedServiceSurvey::QUESTIONS.each do |k,q|
+      %tr
+        %td= q
+        %td{:style => "text-align: center;"}
+          - if @survey["q#{k}"].to_i == 1 
+            %span{:class => 'glyphicon glyphicon-ok'}
+        %td{:style => "text-align: center;"}
+          - if @survey["q#{k}"].to_i == 2
+            %span{:class => 'glyphicon glyphicon-ok'}
+
+        %td{:style => "text-align: center;"}
+          - if @survey["q#{k}"].to_i == 3
+            %span{:class => 'glyphicon glyphicon-ok'}
+
+        %td{:style => "text-align: center;"}
+          - if @survey["q#{k}"].to_i == 4
+            %span{:class => 'glyphicon glyphicon-ok'}
+
+        %td{:style => "text-align: center;"}
+          - if @survey["q#{k}"].to_i == 5
+            %span{:class => 'glyphicon glyphicon-ok'}

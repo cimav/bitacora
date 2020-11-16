@@ -327,6 +327,11 @@ class RequestedServicesController < ApplicationController
           end
         end
 
+        if prev_status.to_i == RequestedService::DELIVERED
+          @requested_service.received_date = DateTime.now
+          @requested_service.save
+        end
+
         if @requested_service.status.to_i == RequestedService::RECEIVED
           @requested_service.received_date = DateTime.now
           @requested_service.save

@@ -1,0 +1,29 @@
+#header-bar
+  %h2= "Reporte de laboratorios"
+
+#lab-overview 
+  %table
+    %tr
+      %th
+        = "Sede"
+      %th
+        = "Laboratorio"
+      %th
+        = "Solicitudes abiertas"
+      %th
+        = "Solicitudes retrasadas"
+      %th
+        = "Tiempo esperado" 
+      %th
+        = "Tiempo real"
+    - @overview.each do |r|
+      %tr
+        %td= r[0]
+        %td= r[1]
+        %td{style: "text-align:right"}= r[2]
+        %td{style: "text-align:right; color: #b00;"}= r[3]
+        %td{style: "text-align:right"}= r[4]
+        %td{style: "text-align:right"}= r[5]
+
+
+

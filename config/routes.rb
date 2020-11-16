@@ -283,6 +283,8 @@ Bitacora::Application.routes.draw do
   get '/laboratory-load/live_search' => 'laboratory_load#live_search'
   get '/laboratory-load/:id' => 'laboratory_load#show'
 
+  get '/laboratories-overview' => 'laboratories_overview#index'
+
 
   get '/reports' => 'reports#index'
   get '/reports/eficiencia' => 'reports#eficiencia'

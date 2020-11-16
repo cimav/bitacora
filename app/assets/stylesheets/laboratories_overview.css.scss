@@ -1,0 +1,20 @@
+// Place all the styles related to the laboratories-overview controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#lab-overview {
+  position: absolute;
+  bottom: 0px;
+  top: 54px;
+  right: 0px;
+  left: 0px;
+  overflow: auto;
+  table {
+
+     width: 100%;
+     td, th {
+       padding: 1em;
+       border: 1px solid #ddd;
+     }
+  }
+}

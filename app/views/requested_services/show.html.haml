@@ -329,7 +329,8 @@
               = f.text_area :legend, {:class => 'form-control', :rows => 6, :placeholder => 'Escribe aquí la leyenda'}
             .edit-legend-button
               = button_tag "Guardar", {:class => "btn btn-info", :type => "submit"}
-    #survey.tab-pane
-      = render :partial => 'show_survey', :locals => {:requested_service => @requested_service }
+    - if @requested_service.status.to_i == RequestedService::CONFIRMED
+      #survey.tab-pane
+        = render :partial => 'show_survey', :locals => {:requested_service => @requested_service }
 
 

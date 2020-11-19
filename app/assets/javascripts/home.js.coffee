@@ -458,6 +458,11 @@ $(document).on("click", "#load-link", () ->
   window.location = url
 )
 
+$(document).on("click", "#overview-link", () ->
+  url = '/#!/laboratories-overview'
+  window.location = url
+)
+
 $(document).on('click', '.lab-link', () ->
     lab_id = $(this).data('laboratory_id')
     url = '/laboratory/' + lab_id

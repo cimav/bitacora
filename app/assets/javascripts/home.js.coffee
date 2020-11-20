@@ -453,13 +453,8 @@ $(document).on("click", "#folders-link", () ->
   window.location = url
 )
 
-$(document).on("click", "#load-link", () ->
-  url = '/#!/laboratory-load'
-  window.location = url
-)
-
-$(document).on("click", "#overview-link", () ->
-  url = '/#!/laboratories-overview'
+$(document).on("click", "#reports-link", () ->
+  url = '/#!/reports'
   window.location = url
 )
 

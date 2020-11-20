@@ -3,12 +3,6 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 #lab-overview {
-  position: absolute;
-  bottom: 0px;
-  top: 54px;
-  right: 0px;
-  left: 0px;
-  overflow: auto;
   table {
 
      width: 100%;
@@ -16,5 +10,6 @@
        padding: 1em;
        border: 1px solid #ddd;
      }
+     th { position: sticky !important; }
   }
 }

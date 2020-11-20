@@ -4,11 +4,14 @@
 #reports-workarea
   #reports-panel
     %ul#reports-nav.nav.nav-pills.nav-stacked
-      %li{"data-link" => "/reports/eficiencia"}= link_to "Eficiencia de servicios", "#"
+      %li{"data-link" => "/laboratories-overview", "class" => "active"}= link_to "Carga de laboratorios", "#"
+      %li{"data-link" => "/laboratory-load"}= link_to "Carga por laboratorio", "#"
+      %li{"data-link" => "/equipment-use"}= link_to "Uso de Equipos", "#"
 
   #reports-main-panel
 
 :javascript 
   $(function() {
+    activeSideNav('#reports-link');
     $('#reports-nav a:first').click()
   })

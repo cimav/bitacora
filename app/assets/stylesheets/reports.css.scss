@@ -6,11 +6,37 @@
   padding: 10px;	
 }
 
+#reports-panel {
+  position: fixed;
+  overflow: auto;
+  left: sidenav-width;
+  bottom: 0px;
+  top: 54px;
+}
+
 #reports-main-panel {
   position: fixed;
-  left: $side-panel-width + 10;
+  left: $sidenav-width + $side-panel-width;
   overflow: auto;
   right: 0px;
   bottom: 0px;
-  top: 96px;
+  top: 54px;
 }
+
+.reports-panel {
+  padding-left: $side-panel-width !important;
+}
+
+.reports-details {
+  padding-left: $side-panel-width + 10 !important;
+}
+
+#report-header-bar {
+  font-size: 130%;
+  font-weight: 500;
+  border-bottom: 1px solid #ddd;
+  padding: 0.5em;
+  background: #fff;
+}
+
+

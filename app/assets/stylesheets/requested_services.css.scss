@@ -27,6 +27,7 @@
 .status-reinit      { color: $brand-primary; }
 .status-in-progress { color: $brand-primary; }
 .status-finished    { color: $brand-success }
+.status-confirmed    { color: $brand-success }
 .status-canceled    { color: $brand-danger; }
 .status-returned    { color: $brand-warning; }
 .status-deleted    { color: $brand-danger; }
@@ -51,6 +52,7 @@
 .bg-status-reinit      { background: $brand-primary; }
 .bg-status-in-progress { background: $brand-primary; }
 .bg-status-finished    { background: $brand-success }
+.bg-status-confirmed    { background: $brand-success }
 .bg-status-canceled    { background: $brand-danger; }
 .bg-status-deleted    { background: $brand-danger; }
 .bg-status-returned        { background: $brand-warning; }

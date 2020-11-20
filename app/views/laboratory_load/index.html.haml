@@ -1,6 +1,4 @@
-#header-bar
-  %h2= "Carga de laboratorios"
-#laboratories-panel
+#laboratory-load-panel
   #laboratories-search-panel.search-box
     = form_tag 'xxx', :id => 'load-live-search', :method => 'get', :remote => true do
       - laboratory_type_options = "<option value=\"0\">Sede</option>"
@@ -10,9 +8,8 @@
       = text_field_tag :q, nil, :id => 'load-laboratories-search-box', :placeholder => 'Busqueda', :class => 'form-control'
   #laboratories-list.items-placeholder 
   
-#laboratory-details
+#laboratory-details.laboratory-load-details
 :javascript
   $( document ).ready(function() {
     LoadLiveSearch()
-    activeSideNav('#load-link');
   });

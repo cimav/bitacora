@@ -1422,6 +1422,40 @@ $(document).on("click", ".laboratory-load-item", () ->
 )
 
 
+#-------------------
+# Equipment Use
+#-------------------
+
+@EquipmentUseLiveSearch = EquipmentUseLiveSearch = () ->
+  form = $("#equipment-use-live-search")
+  url = "/equipment-use/live_search"
+  formData = form.serialize()
+  $.get(url, formData, (html) ->
+    $("#laboratories-list").empty().html(html)
+    $("#laboratories-list .equipment-use-item:first").click()
+  )
+
+
+$(document).on('change', '#equipment-use-lab', () ->
+    EquipmentUseLiveSearch()
+  )
+
+$(document).on('keyup', '#equipment-use-search-box', () ->
+    EquipmentUseLiveSearch()
+  )
+
+$(document).on("click", ".equipment-use-item", () ->
+  id = $(this).attr('data-id')
+  url = '/equipment-use/' + id 
+  $(".equipment-use-item").removeClass("active")
+  $(this).addClass('active')
+  $('#laboratory-details').empty().html('<div class="loading">Cargando...</div>')
+  $.get(url, {}, (html) ->
+    $('#laboratory-details').empty().html(html)
+  )
+)
+
+
 
 
 #-------

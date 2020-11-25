@@ -39,4 +39,27 @@
   background: #fff;
 }
 
+.equipment-item-name {
+  font-weight: bold;
+}
+
+.equipment-dates {
+  margin-top: 1em;
+  border: 1px solid #ddd;
+  width: 100%;
+  td,th {
+    padding: 0.5em;
+  }
+}
+
+.eq-header {
+  text-align: center;
+  h1 {
+    text-align: center;
+  }
+  p {
+    text-align: center;
+    font-size: 110%;
+  }
+}
 

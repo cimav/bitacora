@@ -1,0 +1,15 @@
+#laboratory-load-panel
+  #laboratories-search-panel.search-box
+    = form_tag 'xxx', :id => 'equipment-use-live-search', :method => 'get', :remote => true do
+      - labs_options = "<option value=\"0\">Laboratorio</option>"
+      - Laboratory.order('name').each do |ct|
+        - labs_options += "<option value=\"#{ct.id}\">#{ct.name}</option>"
+      = select_tag "equipment-use-lab", labs_options.html_safe, :class => 'form-control'
+      = text_field_tag :q, nil, :id => 'equipment-use-search-box', :placeholder => 'Busqueda', :class => 'form-control'
+  #laboratories-list.items-placeholder 
+  
+#laboratory-details.laboratory-load-details
+:javascript
+  $( document ).ready(function() {
+    EquipmentUseLiveSearch()
+  });

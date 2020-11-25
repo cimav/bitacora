@@ -1,0 +1,2 @@
+module EquipmentReportHelper
+end

@@ -533,7 +533,7 @@ class RequestedServicesController < ApplicationController
         end
 
 
-        if rs.status.to_i == RequestedService::FINISHED
+        if rs.status.to_i == RequestedService::FINISHED || rs.status.to_i == RequestedService::CONFIRMED 
             finished += 1
         end
 

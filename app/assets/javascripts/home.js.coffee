@@ -1455,6 +1455,20 @@ $(document).on("click", ".equipment-use-item", () ->
   )
 )
 
+#-------------------
+# Equipment summary
+#-------------------
+$(document).on("click", "#gen-eq-use", () ->
+  id = $(this).attr('data-id')
+  url = '/equipment-summary' 
+  $.post(url,
+        { eq_sum_unit: $('#eq_sum_unit').val(), eq_sum_lab: $('#eq_sum_lab').val(), start: $('#start').val(), end: $('#end').val() },
+        (html) ->
+          $('#lab-overview').empty().html(html)
+        )
+)
+
+
 
 
 

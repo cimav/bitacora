@@ -1,0 +1,139 @@
+#lab-overview 
+  %table{:style => "border-bottom: 1px solid #ddd;"}
+    %tr
+      %td{:style => "width: 15em; border: 0"}
+        = "Sede: "
+        - unit_options = "<option value=\"\">-- Selecciona --</option>"
+        - unit_options += "<option value=\"*\">Todas</option>"
+        - BusinessUnit.order('id').each do |ct|
+          - if ct.id.to_i == params[:eq_sum_unit].to_i
+            - sel = 'selected="selected"'
+          - else
+            - sel = ''
+          - unit_options += "<option #{sel} value=\"#{ct.id}\">#{ct.name}</option>"
+        = select_tag "eq_sum_unit", unit_options.html_safe, :class => 'form-control'
+      %td{:style => "border: 0;"}
+        = "Laboratorio: "
+        - lab_options = "<option value=\"0\">-- Selecciona --</option>"
+        - labs = Laboratory
+        - if !params[:eq_sum_unit].blank? && params[:eq_sum_unit] != '*'
+          - labs = labs.where(:business_unit_id => params[:eq_sum_unit])
+        - labs = labs.order('name')
+        - labs.each do |ct|
+          - if ct.id.to_i == params[:eq_sum_lab].to_i
+            - sel = 'selected="selected"'
+          - else
+            - sel = ''
+          - lab_options += "<option #{sel} value=\"#{ct.id}\">#{ct.name}</option>"
+        = select_tag "eq_sum_lab", lab_options.html_safe, :class => 'form-control'
+      %td{:style => "border: 0;"}
+        = "Desde: "
+        %input{:type => "date", :id => "start", :name => "start", :value => "#{@start}", :class => "form-control"}
+      %td{:style => "border: 0;"}
+        = "Hasta: "
+        %input{:type => "date", :id => "end", :name => "end", :value => "#{@end}", :class => "form-control"}
+      %td{:style => "border: 0; text-align: right;"}
+        %button#gen-eq-use.btn.btn-success= "Generar"
+
+  - rep = []
+  - if @equipment 
+    - @equipment.each do |e|
+      - total = 0
+      - total_samples = 0
+      - samples = 0
+      - in_proc = 0
+      - delayed = 0
+      - avg = 0
+      - req_samples = 0
+      - req_in_proc = 0 
+      - req_delayed = 0
+      - in_proc_delayed = 0
+      - row = {}
+      - row["sede"] = e.laboratory.business_unit.name
+      - row["laboratorio"] = e.laboratory.name
+      - row["equipo"] = e.name
+      - row["muestras"] = ''
+      - row["solicitudes"] = ''
+      - row["retrasos"] = ''
+      - row["promedio"] = ''
+      - row["muestras_proceso"] = ''
+      - row["solicitudes_proceso"] = ''
+      - row["retrasos_proceso"] = ''
+      - e.requested_services.where("requested_services.created_at BETWEEN '#{@start}' AND '#{@end}'").each do |rs|
+        - if rs.sample  && rs.status.to_i != RequestedService::CANCELED && rs.status.to_i != RequestedService::DELETED
+          - total += rs.sample.quantity
+          - total_samples += rs.sample.quantity
+          - if rs.status.to_i == RequestedService::FINISHED || rs.status.to_i == RequestedService::CONFIRMED
+            - samples += rs.sample.quantity
+            - req_samples += 1
+          
+            - if rs.results_date 
+              - res_days = (rs.results_date - rs.finished_date.to_date).to_i
+              - if res_days < 0
+                - req_delayed += 1
+          
+
+          - if rs.status.to_i == RequestedService::IN_PROGRESS || rs.status.to_i == RequestedService::RECEIVED || rs.status.to_i == RequestedService::ASSIGNED || rs.status.to_i == RequestedService::SUSPENDED || rs.status.to_i == RequestedService::REINIT || rs.status.to_i == RequestedService::DELIVERED || rs.status.to_i == RequestedService::RETURNED || rs.status.to_i == RequestedService::TO_QUOTE || rs.status.to_i == RequestedService::WAITING_START || rs.status.to_i == RequestedService::QUOTE_AUTH 
+            - in_proc += rs.sample.quantity
+            - req_in_proc += 1
+            - if rs.results_date 
+              - res_days = (rs.results_date - Date.today).to_i
+              - if res_days < 0
+                - req_delayed += 1
+      
+
+
+      - avg = (samples.to_f / @days.to_f).round(2)
+      - row["muestras"] = samples
+      - row["solicitudes"] = req_samples
+      - row["muestras_proceso"] = in_proc
+      - row["solicitudes_proceso"] = req_in_proc
+      - row["retrasos"] = req_delayed
+      - row["retrasos_proceso"] = in_proc_delayed
+      - row["promedio"] = avg
+      - rep << row
+
+      - rep.sort! { |a,b| a["muestras"] <=> b["muestras"] }.reverse!
+    /- rep.sort_by { |a| a["muestras"] }.reverse! }
+
+  - if rep.count > 0
+    %table
+      %tr
+        %th
+          = "Sede"
+        %th
+          = "Laboratorio"
+        %th
+          = "Equipo"
+        %th
+          = "Muestras realizadas"
+        %th
+          = "Solicitudes realizadas" 
+        %th
+          = "Entregas con retraso"
+        %th
+          = "Promedio muestras diario (#{@days} días)"
+        / %th
+        /   = "Muestras en proceso"
+        / %th
+        /   = "Solicitudes en proceso" 
+        / %th
+        /   = "Solicitudes con retraso"
+      
+        - rep.each do |r|
+          %tr
+            %td= r["sede"]
+            %td= r["laboratorio"]
+            %td= r["equipo"]
+            %td{:style => 'text-align: right;'}= r["muestras"]
+            %td{:style => 'text-align: right;'}= r["solicitudes"]
+            %td{:style => 'text-align: right;'}= r["retrasos"]
+            %td{:style => 'text-align: right;'}= r["promedio"]
+            / %td{:style => 'text-align: right;'}= r["muestras_proceso"]
+            / %td{:style => 'text-align: right;'}= r["solicitudes_proceso"]
+            / %td{:style => 'text-align: right;'}= r["retrasos_proceso"]
+
+:javascript
+  $( document ).ready(function() {
+    
+  });

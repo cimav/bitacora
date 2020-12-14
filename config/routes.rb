@@ -289,6 +289,9 @@ Bitacora::Application.routes.draw do
   get '/equipment-use/live_search' => 'equipment_report#live_search'
   get '/equipment-use/:id' => 'equipment_report#show'
 
+  get '/equipment-summary' => 'equipment_summary#index'
+  post '/equipment-summary' => 'equipment_summary#index'
+
 
   get '/reports' => 'reports#index'
   get '/reports/eficiencia' => 'reports#eficiencia'

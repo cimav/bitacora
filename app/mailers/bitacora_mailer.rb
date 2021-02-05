@@ -378,7 +378,7 @@ class BitacoraMailer < ActionMailer::Base
     @service_request = service_request
 
     @from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"
-    @to = Rails.env.production? ? "teresa.mariscal@cimav.edu.mx" : "juan.calderon@cimav.edu.mx"
+    @to = Rails.env.production? ? "maria.gonzalez@cimav.edu.mx" : "juan.calderon@cimav.edu.mx"
     @reply_to = @service_request.user.email
 
     subject = "Solicitud de presupuesto: #{@service_request.number}."

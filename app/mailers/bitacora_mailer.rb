@@ -393,6 +393,25 @@ class BitacoraMailer < ActionMailer::Base
     mail(:to => @to, :from => @from, :reply_to => @reply_to, :subject => subject)
   end
 
+  def notify_new_collaborator(service_request, collaborator_email)
+
+    @service_request = service_request
+
+    @from = "Bitácora Electrónica <bitacora.electronica@cimav.edu.mx>"
+    @to = []
+
+    @to << collaborator_email
+
+    subject = "Nueva colaboración en la carpeta #{service_request.number}"
+
+    @user = service_request.user
+    reply_to = @user.email
+
+    mail(:to => @to, :from => @from, :reply_to => reply_to, :subject => subject)
+
+  end
+
+
   # Si se actualiza el del controller se debe de actualizar aquí también. 
   private
   def cost_details(service_request)

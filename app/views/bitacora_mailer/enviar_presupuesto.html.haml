@@ -8,11 +8,15 @@
         %table
           %tbody
             %tr
-              %td{:style => "width: 120px; text-align: center;"}
-                = image_tag ("http://cimav.edu.mx/foto/#{@service_request.user.email.split('@')[0]}/100"), :style => "border-radius: 50em; -webkit-border-radius: 50em; -moz-border-radius: 50em;"
-              %td
-                %h2{:style => "margin-bottom: 2px;"}= @service_request.user.full_name
-                = mail_to @service_request.user.email, @service_request.user.email, :subject =>  "[R] Solicitud #{@service_request.number}"
+              -if @service_request.user.present?		
+                %td{:style => "width: 120px; text-align: center;"}
+                  = image_tag ("http://cimav.edu.mx/foto/#{@service_request.user.email.split('@')[0]}/100"), :style => "border-radius: 50em; -webkit-border-radius: 50em; -moz-border-radius: 50em;"
+                %td
+                  %h2{:style => "margin-bottom: 2px;"}= @service_request.user.full_name
+                  = mail_to @service_request.user.email, @service_request.user.email, :subject =>  "[R] Solicitud #{@service_request.number}"
+               -else
+                 %td
+                   %h2{:style => "margin-bottom: 2px;"} Sin responsable
 
       %div{:style => "background-color: #ffffff; padding: 20px; padding-bottom: 60px;"}
         %table
@@ -21,6 +25,9 @@
               %h2{:style => "font-size: 18px;"}= "Solicitud de presupuesto #{@service_request.number}"
               %table
                 %tbody
+                  %tr
+                    %th{:style => "vertical-align: top; text-align: left;"}= "Agente vinculación:"
+                    %td= @service_request.supervisor.full_name
                   %tr
                     %th{:style => "vertical-align: top; text-align: left;"}= "Fecha de solicitud:"
                     %td= l @service_request.created_at, :format => :long

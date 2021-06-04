@@ -1,7 +1,7 @@
 # coding: utf-8
 require 'resque-bus'
 class ServiceRequestsController < ApplicationController
-  before_filter :auth_required
+  before_filter :auth_required, :except => [:enviar_solicitud_presupuesto]
   respond_to :html, :json
 
   def index
@@ -173,12 +173,24 @@ class ServiceRequestsController < ApplicationController
 
   def enviar_solicitud_presupuesto
     @service_request = ServiceRequest.find(params[:id])
-    BitacoraMailer.enviar_presupuesto(@service_request).deliver
+    begin  
+	    sql_stmt = "select sum(price) from requested_services rs
+        	join requested_service_others others on rs.id = others.requested_service_id
+        	where rs.number like '#{@service_request.number}%'"
+    		price =  ActiveRecord::Base.connection.execute(sql_stmt)
+        	if price && price.first[0] > 10
+     			 BitacoraMailer.enviar_presupuesto(@service_request).deliver
 
-    @service_request.presupuesto_enviado = true
-    @service_request.save
+      			@service_request.presupuesto_enviado = true
+      			@service_request.save
 
-    render :inline => "Hoja de presupuesto enviada", :layout => false
+      			render :inline => "Hoja de presupuesto enviada", :layout => false
+    		else
+      			render :inline => "No se solicitan presupuestos en ceros", :layout => false
+    		end
+    rescue => e
+        render :inline => "Excepción: No se solicitan presupuestos en ceros", :layout => false
+    end	
   end
 
   def update 
@@ -346,6 +358,13 @@ class ServiceRequestsController < ApplicationController
     collaborator = @request.collaborators.new
     collaborator.user_id = params[:collaborator_id]
     collaborator.save
+
+    # Send mail to Collaborator
+    collab_email= User.find(collaborator.user_id).email rescue "no-email-de-colaborador"
+    Resque.enqueue(NotifyNewCollaboratorMailer, @request.id, collab_email)
+
+    #BitacoraMailer.notify_new_collaborator(@request, collab_email).deliver
+
     render :layout => false
   end
 
